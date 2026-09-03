@@ -67,9 +67,9 @@ def main():
     events['volatility_regime']=pd.cut(events.vol,[-np.inf,.3,.7,.9,np.inf],labels=['LOW','NORMAL','HIGH','EXTREME'],right=False)
     wide=pd.DataFrame({p:f.set_index('event_time').z for p,f in method_a.items()}); method_b=[]
     for p in PAIRS:
-        residual=rolling_ols_residuals(wide,p); frame=method_a[p][['event_time','session','vol']].copy(); frame['residual']=residual.reindex(pd.DatetimeIndex(frame.event_time)).to_numpy(); frame['abs_residual']=frame.residual.abs(); frame['residual_percentile']=causal_percentile_valid(frame.abs_residual,WINDOW); frame['bucket']=bucket(frame.residual_percentile); frame['year']=pd.to_datetime(frame.event_time,utc=True).dt.year; selected=outcomes(dedup(entry_events(frame))); selected['pair']=p; method_b.append(selected)
+        residual=rolling_ols_residuals(wide,p); frame=method_a[p][['event_time','session','vol']].copy(); frame['residual']=residual.reindex(pd.DatetimeIndex(frame.event_time)).to_numpy(); frame['abs_residual']=frame.residual.abs(); frame['residual_percentile']=causal_percentile_valid(frame.abs_residual,WINDOW); frame['bucket']=bucket(frame.residual_percentile); frame['year']=pd.to_datetime(frame.event_time,utc=True).dt.year; complete=outcomes(frame); selected=dedup(entry_events(complete)); selected['pair']=p; method_b.append(selected)
     method_b_events=pd.concat(method_b,ignore_index=True)
-    if method_b_events.empty: raise RuntimeError('Method B produced no eligible events')
+    if method_b_events.empty or any(method_b_events[f'outcome_{h}m_status'].eq('AVAILABLE').sum()==0 for h in HORIZONS): raise RuntimeError('Method B produced no eligible exact endpoints')
     method_b_summary=summarize(method_b_events)
     old=json.loads((root/'reports/phase21a/residual_convergence.json').read_text()); corrected={r['pair']:r for r in primary if r['horizon_minutes']==60}; comparison=[{'pair':r['pair'],'old_invalid_mean_change_60m':r['mean_change_60m'],'corrected_mean_change_60m':corrected[r['pair']]['mean_absolute_residual_change'],'difference':corrected[r['pair']]['mean_absolute_residual_change']-r['mean_change_60m']} for r in old]
     stable=all(t['survives_fdr'] and t['effect_size']<0 for t in tests) and all(r['mean']<0 for r in yearly) and all(r['mean_change_60m']<0 for r in loo)
