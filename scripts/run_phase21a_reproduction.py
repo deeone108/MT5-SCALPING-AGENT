@@ -19,8 +19,7 @@ def rolling_ols_residuals(wide,target):
     x=np.column_stack((np.ones(len(values)),values[:,1:])); y=values[:,0]; xtx=x[:WINDOW].T@x[:WINDOW]; xty=x[:WINDOW].T@y[:WINDOW]
     output=np.full(len(values),np.nan)
     for i in range(WINDOW,len(values)):
-        try: output[i]=y[i]-x[i]@np.linalg.solve(xtx,xty)
-        except np.linalg.LinAlgError: pass
+        output[i]=y[i]-x[i]@np.linalg.pinv(xtx,hermitian=True)@xty
         old=x[i-WINDOW]; xtx+=np.outer(x[i],x[i])-np.outer(old,old); xty+=x[i]*y[i]-old*y[i-WINDOW]
     result.loc[joined.index]=output; return result
 def summarize(events):
@@ -57,7 +56,7 @@ def main():
     for p,g in events.groupby('pair'):
         full=method_a[p].reset_index(drop=True); timeline=pd.DatetimeIndex(full.event_time); pos=timeline.get_indexer(pd.DatetimeIndex(g.event_time)); metrics=path_metrics(full.residual.to_numpy(),timeline,pos)
         valid=metrics['valid']; initial=full.residual.to_numpy()[pos]; _,endpoint_positions=__import__('mt5_scalping_agent.research.time_alignment',fromlist=['exact_positions']).exact_positions(timeline,timeline[pos],HORIZONS); path_values=np.full(endpoint_positions.shape,np.nan); path_values[endpoint_positions>=0]=full.residual.to_numpy()[endpoint_positions[endpoint_positions>=0]]; zero=np.where((path_values==0)|(np.sign(path_values)!=np.sign(initial)[:,None]),np.array(HORIZONS),np.nan); first_zero=np.where(np.isfinite(zero).any(1),np.nanmin(zero,axis=1),np.nan)
-        path_rows.append({'pair':p,'events':len(g),'complete_paths':int(valid.sum()),'missing_paths':int((~valid).sum()),'median_time_to_75_minutes':float(np.nanmedian(metrics['time_to_75'])),'median_time_to_50_minutes':float(np.nanmedian(metrics['time_to_50'])),'median_time_to_25_minutes':float(np.nanmedian(metrics['time_to_25'])),'median_zero_cross_time_minutes':float(np.nanmedian(first_zero)),'median_maximum_widening':float(np.nanmedian(metrics['maximum_widening'])),'median_time_to_maximum_widening_minutes':float(np.nanmedian(metrics['time_to_max_widening'])),'no_convergence_within_60m_rate':float(np.mean(np.isnan(metrics['time_to_50'])))})
+        path_rows.append({'pair':p,'events':len(g),'complete_paths':int(valid.sum()),'missing_paths':int((~valid).sum()),'median_time_to_75_minutes':float(np.nanmedian(metrics['time_to_75'])),'median_time_to_50_minutes':float(np.nanmedian(metrics['time_to_50'])),'median_time_to_25_minutes':float(np.nanmedian(metrics['time_to_25'])),'median_zero_cross_time_minutes':float(np.nanmedian(first_zero)),'median_maximum_widening':float(np.nanmedian(metrics['maximum_widening'])),'median_time_to_maximum_widening_minutes':float(np.nanmedian(metrics['time_to_max_widening'])),'no_convergence_within_60m_rate':float(np.mean(np.isnan(metrics['time_to_50'][valid])))})
     yearly=grouped(events,['pair','year']); loo=[]
     for p,g in events.groupby('pair'):
         for year in range(2019,2024): loo.append({'pair':p,'excluded_year':year,'n':int((g.year!=year).sum()),'mean_change_60m':float(g.loc[g.year!=year,'change_60m'].mean())})
@@ -67,7 +66,9 @@ def main():
     wide=pd.DataFrame({p:f.set_index('event_time').z for p,f in method_a.items()}); method_b=[]
     for p in PAIRS:
         residual=rolling_ols_residuals(wide,p); frame=method_a[p][['event_time','session','vol']].copy(); frame['residual']=residual.reindex(pd.DatetimeIndex(frame.event_time)).to_numpy(); frame['abs_residual']=frame.residual.abs(); frame['residual_percentile']=frame.abs_residual.rolling(WINDOW+1,min_periods=WINDOW+1).rank(method='max').sub(1).div(WINDOW); frame['bucket']=bucket(frame.residual_percentile); frame['year']=pd.to_datetime(frame.event_time,utc=True).dt.year; selected=outcomes(dedup(entry_events(frame))); selected['pair']=p; method_b.append(selected)
-    method_b_events=pd.concat(method_b,ignore_index=True); method_b_summary=summarize(method_b_events)
+    method_b_events=pd.concat(method_b,ignore_index=True)
+    if method_b_events.empty: raise RuntimeError('Method B produced no eligible events')
+    method_b_summary=summarize(method_b_events)
     old=json.loads((root/'reports/phase21a/residual_convergence.json').read_text()); corrected={r['pair']:r for r in primary if r['horizon_minutes']==60}; comparison=[{'pair':r['pair'],'old_invalid_mean_change_60m':r['mean_change_60m'],'corrected_mean_change_60m':corrected[r['pair']]['mean_absolute_residual_change'],'difference':corrected[r['pair']]['mean_absolute_residual_change']-r['mean_change_60m']} for r in old]
     stable=all(t['survives_fdr'] and t['effect_size']<0 for t in tests) and all(r['mean']<0 for r in yearly) and all(r['mean_change_60m']<0 for r in loo)
     classification='MEAN_REVERSION_PHENOMENON' if stable else 'NO_RELATIVE_VALUE_STRUCTURE'; decision='PHASE_21A_REPRODUCTION_SURVIVED' if stable else 'PHASE_21_FAMILY_CLOSED'

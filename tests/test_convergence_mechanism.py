@@ -12,6 +12,11 @@ def test_path_metrics_reports_missing_exact_path_and_rejects_duplicates():
  with np.testing.assert_raises_regex(ValueError,'duplicate'):
   path_metrics(np.array([2.,1.]),pd.to_datetime(['2020-01-01T09:00Z']*2),np.array([0]),5)
 
+def test_maximum_widening_is_clamped_to_zero_at_event_time():
+ times=pd.date_range('2020-01-01',periods=4,freq='5min',tz='UTC')
+ result=path_metrics(np.array([2.,1.5,1.,.5]),times,np.array([0]),15)
+ assert result['maximum_widening'][0]==0 and result['time_to_max_widening'][0]==0
+
 def test_event_timestamp_identity_survives_reset_index():
  import pandas as pd
  full=pd.DataFrame({'event_time':pd.date_range('2020-01-01',periods=100,freq='5min',tz='UTC')})
