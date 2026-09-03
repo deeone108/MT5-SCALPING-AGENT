@@ -4,6 +4,8 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
+from mt5_scalping_agent.data.validation import validate_ohlcv
+from mt5_scalping_agent.research.time_alignment import exact_positions
 PIP_SIZES={"EURUSD":.0001,"GBPUSD":.0001,"USDJPY":.01,"USDCAD":.0001}; USD_SIGN={"EURUSD":-1.,"GBPUSD":-1.,"USDJPY":1.,"USDCAD":1.}; HORIZONS=(5,10,15,30,60)
 def pip_size(pair):
     if pair.upper() not in PIP_SIZES: raise ValueError(f"unsupported pair: {pair}")
@@ -11,7 +13,7 @@ def pip_size(pair):
 def oriented_return(pair, returns): return returns.astype(float)*USD_SIGN[pair.upper()]
 def causal_bars(m1, minutes):
     if minutes not in (5,15): raise ValueError("Phase 19A supports only M5 and M15")
-    frame=m1.set_index("time").resample(f"{minutes}min",label="left",closed="left").agg(open=("open","first"),high=("high","max"),low=("low","min"),close=("close","last"),count=("close","count")).dropna().reset_index(); frame=frame.loc[frame["count"]==minutes].copy(); frame["completed_time"]=frame["time"]+pd.to_timedelta(int(minutes)-1,unit="min"); frame["return"]=frame["close"].pct_change(); return frame.reset_index(drop=True)
+    source=validate_ohlcv(m1); frame=source.set_index("time").resample(f"{minutes}min",label="left",closed="left").agg(open=("open","first"),high=("high","max"),low=("low","min"),close=("close","last"),count=("close","count")).dropna().reset_index(); frame=frame.loc[frame["count"]==minutes].copy(); frame["completed_time"]=frame["time"]+pd.to_timedelta(int(minutes)-1,unit="min"); frame["return"]=frame["close"].pct_change(); return frame.reset_index(drop=True)
 def causal_standardize(values, window): return values/values.shift(1).rolling(window,min_periods=window).std(ddof=1).replace(0,np.nan)
 def causal_percentile(values, window):
     """Exact empirical <= rank against prior finite window; current is algebraically removed."""
@@ -33,9 +35,9 @@ def leave_one_out_factor(frames):
 def structural_events(pair,m5,m15):
     pip=pip_size(pair); f=m5.copy(); high=f.high.shift(1).rolling(12,min_periods=12).max(); low=f.low.shift(1).rolling(12,min_periods=12).min(); direction=pd.Series(np.where(f.close>high,1,np.where(f.close<low,-1,0)),index=f.index); c1,c2=f.close.shift(-1),f.close.shift(-2); valid=(direction!=0)&high.notna()&c2.notna(); accepted=((direction==1)&(c1>=high)&(c2>=high))|((direction==-1)&(c1<=low)&(c2<=low)); boundary=pd.Series(np.where(direction>0,high,low),index=f.index); e=pd.DataFrame({"pair":pair,"break_time":f.completed_time[valid].to_numpy(),"event_time":f.completed_time.shift(-2)[valid].to_numpy(),"direction":direction[valid].to_numpy(),"state":np.where(accepted[valid],"acceptance","rejection"),"break_distance_pips":(direction[valid]*(f.close[valid]-boundary[valid])/pip).to_numpy(),"session":f.completed_time.shift(-2)[valid].map(session_label).to_numpy(),"displacement_percentile":f.displacement_percentile[valid].to_numpy(),"volatility_percentile":f.volatility_percentile[valid].to_numpy()}); return e.join(m15.set_index("completed_time")[["usd_factor","factor_breadth"]],on="event_time")
 def attach_forward_outcomes(events,m1,pair):
-    out=events.copy(); prices=m1.set_index("time").close; array=prices.to_numpy(float); loc=prices.index.get_indexer(pd.DatetimeIndex(out.event_time)); ref=np.where(loc>=0,array[np.maximum(loc,0)],np.nan); direction=out.direction.to_numpy(float)[:,None]
+    out=events.copy(); prices=validate_ohlcv(m1).set_index("time").close; array=prices.to_numpy(float); loc,_=exact_positions(prices.index,out.event_time,(0,)); ref=np.where(loc>=0,array[np.maximum(loc,0)],np.nan); direction=out.direction.to_numpy(float)[:,None]
     for horizon in HORIZONS:
-        positions=loc[:,None]+np.arange(1,horizon+1); ok=(loc>=0)&(positions[:,-1]<len(array)); path=np.full((len(out),horizon),np.nan); path[ok]=array[positions[ok]]; moves=direction*(path-ref[:,None])/pip_size(pair); out[f"forward_{horizon}m_pips"]=moves[:,-1]; out[f"mfe_{horizon}m_pips"]=np.where(np.isfinite(moves).any(1),np.nanmax(moves,1),np.nan); out[f"mae_{horizon}m_pips"]=np.where(np.isfinite(moves).any(1),np.nanmin(moves,1),np.nan)
+        _,positions=exact_positions(prices.index,out.event_time,range(1,horizon+1)); ok=(loc>=0)&(positions>=0).all(1); path=np.full((len(out),horizon),np.nan); path[ok]=array[positions[ok]]; moves=direction*(path-ref[:,None])/pip_size(pair); out[f"outcome_{horizon}m_status"]=np.where(ok,"AVAILABLE","MISSING_EXACT_PATH"); out[f"forward_{horizon}m_pips"]=moves[:,-1]; out[f"mfe_{horizon}m_pips"]=np.where(ok,np.nanmax(moves,1),np.nan); out[f"mae_{horizon}m_pips"]=np.where(ok,np.nanmin(moves,1),np.nan)
     return out
 def deduplicate_events(events,minutes=60):
     keep=[]

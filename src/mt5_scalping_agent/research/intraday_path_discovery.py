@@ -4,6 +4,7 @@ from datetime import UTC, datetime
 from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
+from mt5_scalping_agent.data.validation import validate_ohlcv
 from mt5_scalping_agent.research.cross_pair_edge_discovery import causal_percentile, pip_size, session_label, benjamini_hochberg
 
 PATH_WINDOWS=(5,15,30,60); FORWARD_WINDOWS=(5,10,15,30,60)
@@ -57,7 +58,8 @@ def transition_label(times: pd.Series) -> pd.Series:
 
 def build_observations(pair: str, m1: pd.DataFrame) -> pd.DataFrame:
     """Build completed-M5 observations and causal path/state measures from M1 closes."""
-    require_development_only(m1); frame=m1.reset_index(drop=True); prices=frame.close.to_numpy(float); pip=pip_size(pair); returns=np.diff(prices,prepend=prices[0])
+    require_development_only(m1); frame=validate_ohlcv(m1).reset_index(drop=True); prices=frame.close.to_numpy(float); pip=pip_size(pair); returns=np.diff(prices,prepend=prices[0])
+    if not frame.time.diff().iloc[1:].eq(pd.Timedelta(minutes=1)).all(): raise ValueError('build_observations requires consecutive M1 timestamps')
     positions=np.arange(60, len(frame)-60, 5, dtype=int); times=pd.to_datetime(frame.time.iloc[positions],utc=True).reset_index(drop=True)
     out=pd.DataFrame({'pair':pair,'event_time':times,'session':times.map(session_label),'transition':transition_label(times)})
     for width in PATH_WINDOWS:

@@ -15,7 +15,7 @@ def records(frame,by,columns):
     result.columns=[str(a) if not b else f'{a}_{b}' for a,b in result.columns.to_flat_index()]
     return result.to_dict(orient='records')
 def main():
-    root=Path('.').resolve(); archive=LocalResearchArchive(root/'data'); costs=json.loads((root/'reports/cross_pair_feasibility/roboforex_ecn_cross_pair_cost_models.json').read_text())['models']; frozen={p:{'base':float(costs[p]['base']['round_trip_cost_pips']),'stress':float(costs[p]['stress']['round_trip_cost_pips'])} for p in PAIRS}; primary=[]; attrition=[]; quality=[]
+    root=Path('.').resolve(); archive=LocalResearchArchive(root/'data'); costs=json.loads((root/'config/cross_pair_cost_models.json').read_text())['models']; frozen={p:{'base':float(costs[p]['base']['round_trip_cost_pips']),'stress':float(costs[p]['stress']['round_trip_cost_pips'])} for p in PAIRS}; primary=[]; attrition=[]; quality=[]
     for pair in PAIRS:
         m1=archive.load_m1(pair,DEVELOPMENT_START,DEVELOPMENT_END); events=build_observations(pair,m1); dedup=deduplicate_observations(events); primary.append(dedup); attrition.append({'pair':pair,'raw_observations':len(events),'eligible_observations':len(events),'deduplicated_events':len(dedup),'suppressed_percent':float(100*(1-len(dedup)/len(events)))}); quality.append({'pair':pair,'m1_rows':len(m1),'first_timestamp':m1.time.iloc[0].isoformat(),'last_timestamp':m1.time.iloc[-1].isoformat()})
     events=pd.concat(primary,ignore_index=True); tests=[]

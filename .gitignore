@@ -1,10 +1,19 @@
 # Python
 __pycache__/
 *.py[cod]
+*$py.class
 *.egg-info/
+.eggs/
+build/
+dist/
 .pytest_cache/
 .mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
 .coverage
+.coverage.*
+coverage.xml
 htmlcov/
 
 # Virtual environments
@@ -14,9 +23,17 @@ env/
 
 # Secrets and local configuration
 .env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
 
 # Runtime output
 logs/*.log
+*.log
+*.log.*
 data/*.db
 reports/*
 !reports/.gitkeep
@@ -26,5 +43,16 @@ reports/*
 # Editors and operating systems
 .vscode/
 .idea/
+*.code-workspace
+*.swp
+*.swo
+*~
 .DS_Store
 Thumbs.db
+Desktop.ini
+
+# Test and analysis artefacts
+.cache/
+.hypothesis/
+junit.xml
+test-results/

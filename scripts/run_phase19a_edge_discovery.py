@@ -37,7 +37,7 @@ def main() -> int:
         events=attach_forward_outcomes(structural_events(pair,features[pair][0],factored[pair]),m1[pair],pair)
         raw.append(events)
     unrestricted=pd.concat(raw,ignore_index=True); primary=deduplicate_events(unrestricted)
-    costs=json.loads(Path("reports/cross_pair_feasibility/roboforex_ecn_cross_pair_cost_models.json").read_text(encoding="utf-8"))["models"]
+    costs=json.loads(Path("config/cross_pair_cost_models.json").read_text(encoding="utf-8"))["models"]
     opportunity={pair:opportunity_to_cost(primary.loc[primary.pair==pair],float(costs[pair]["base"]["round_trip_cost_pips"]),float(costs[pair]["stress"]["round_trip_cost_pips"])) for pair in PAIRS}
     summary=_summary(primary)
     quality={pair:{"m1_rows":len(m1[pair]),"m5_rows":len(features[pair][0]),"m15_rows":len(features[pair][1])} for pair in PAIRS}

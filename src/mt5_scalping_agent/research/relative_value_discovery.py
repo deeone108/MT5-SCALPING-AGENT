@@ -2,6 +2,7 @@
 from __future__ import annotations
 import numpy as np
 import pandas as pd
+from mt5_scalping_agent.research.time_alignment import validated_time_index
 from mt5_scalping_agent.research.cross_pair_edge_discovery import causal_bars, causal_percentile, oriented_return, session_label, benjamini_hochberg, pip_size
 BUCKETS=(0,.5,.7,.8,.9,.95,.99,1.000001)
 def require_development(frame):
@@ -28,9 +29,9 @@ def dedup(frame,minutes=60):
   if last is None or t>=last+pd.Timedelta(minutes,unit='min'): keep.append(i); last=t
  return frame.iloc[keep].copy()
 def outcomes(frame,horizons=(5,10,15,30,60)):
- out=frame.copy(); r=out.residual.to_numpy(float); pos=np.arange(len(out));
+ out=frame.copy(); r=out.residual.to_numpy(float); times=validated_time_index(out.event_time,name='event_time'); lookup=pd.Series(np.arange(len(out)),index=times)
  for h in horizons:
-  future=np.full(len(out),np.nan); future[:-h]=r[h:]; current=np.abs(r); f=np.abs(future); out[f'change_{h}m']=f-current; out[f'ratio_{h}m']=np.divide(f,current,out=np.full(len(out),np.nan),where=current>0); out[f'sign_persistence_{h}m']=(np.sign(r)==np.sign(future)); out[f'zero_cross_{h}m']=(np.sign(r)!=np.sign(future))
+  target=times+pd.Timedelta(minutes=h); pos=lookup.reindex(target).to_numpy(); future=np.full(len(out),np.nan); valid=pd.notna(pos); future[valid]=r[pos[valid].astype(int)]; current=np.abs(r); f=np.abs(future); out[f'outcome_{h}m_status']=np.where(valid,'AVAILABLE','MISSING_EXACT_ENDPOINT'); out[f'change_{h}m']=f-current; out[f'ratio_{h}m']=np.divide(f,current,out=np.full(len(out),np.nan),where=current>0); out[f'sign_persistence_{h}m']=pd.array(np.where(valid,np.sign(r)==np.sign(future),None),dtype='boolean'); out[f'zero_cross_{h}m']=pd.array(np.where(valid,np.sign(r)!=np.sign(future),None),dtype='boolean')
  return out
 def pairwise(frames):
  wide=pd.DataFrame({p:f.set_index('event_time').z for p,f in frames.items()}); rows=[]

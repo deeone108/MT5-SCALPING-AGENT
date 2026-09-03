@@ -9,15 +9,17 @@
                    "EURUSD":  {
                                   "pip_size":  0.0001,
                                   "spread_report":  "reports/cross_pair_feasibility/roboforex_ecn_EURUSD_new_york_spread.json",
-                                  "commission_per_lot_per_side_usd":  2,
+                                  "commission_per_lot_per_side_usd":  3,
                                   "commission_basis":  "100,000 EUR per lot multiplied by a conservative 1.50 USD/EUR ceiling, then 20/1,000,000 and rounded up from 3.00 USD.",
                                   "base":  {
                                                "spread_points":  2,
-                                               "slippage_points":  1
+                                               "slippage_points":  1,
+                                               "round_trip_cost_pips":  0.9
                                            },
                                   "stress":  {
                                                  "spread_points":  4,
-                                                 "slippage_points":  2
+                                                 "slippage_points":  2,
+                                                 "round_trip_cost_pips":  1.2
                                              }
                               },
                    "GBPUSD":  {
@@ -27,11 +29,13 @@
                                   "commission_basis":  "100,000 GBP per lot multiplied by the maximum observed 2019-2023 high 1.42491, then 20/1,000,000 and rounded up from 2.84982 USD.",
                                   "base":  {
                                                "spread_points":  2.0,
-                                               "slippage_points":  1.0
+                                               "slippage_points":  1.0,
+                                               "round_trip_cost_pips":  0.87
                                            },
                                   "stress":  {
                                                  "spread_points":  5.0,
-                                                 "slippage_points":  2.0
+                                                 "slippage_points":  2.0,
+                                                 "round_trip_cost_pips":  1.27
                                              }
                               },
                    "USDJPY":  {
@@ -41,11 +45,13 @@
                                   "commission_basis":  "100,000 USD per lot times the published 20/1,000,000 USD-notional schedule.",
                                   "base":  {
                                                "spread_points":  3.0,
-                                               "slippage_points":  1.0
+                                               "slippage_points":  1.0,
+                                               "round_trip_cost_pips":  1.039172
                                            },
                                   "stress":  {
                                                  "spread_points":  8.0,
-                                                 "slippage_points":  2.0
+                                                 "slippage_points":  2.0,
+                                                 "round_trip_cost_pips":  1.639172
                                              }
                               },
                    "USDCAD":  {
@@ -55,11 +61,13 @@
                                   "commission_basis":  "100,000 USD per lot times the published 20/1,000,000 USD-notional schedule.",
                                   "base":  {
                                                "spread_points":  4.0,
-                                               "slippage_points":  1.0
+                                               "slippage_points":  1.0,
+                                               "round_trip_cost_pips":  1.055004
                                            },
                                   "stress":  {
                                                  "spread_points":  5.0,
-                                                 "slippage_points":  2.0
+                                                 "slippage_points":  2.0,
+                                                 "round_trip_cost_pips":  1.255004
                                              }
                               }
                }

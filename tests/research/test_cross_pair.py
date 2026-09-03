@@ -69,8 +69,8 @@ def test_loads_matching_frozen_cost_scenario(tmp_path: Path) -> None:
                 "spread_report": "spread.json",
                 "commission_per_lot_per_side_usd": 2.0,
                 "commission_basis": "published schedule",
-                "base": {"spread_points": 4.0, "slippage_points": 1.0},
-                "stress": {"spread_points": 5.0, "slippage_points": 2.0},
+                "base": {"spread_points": 4.0, "slippage_points": 1.0, "round_trip_cost_pips": 0.9},
+                "stress": {"spread_points": 5.0, "slippage_points": 2.0, "round_trip_cost_pips": 1.1},
             }
         },
     }

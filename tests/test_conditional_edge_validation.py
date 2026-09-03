@@ -5,7 +5,8 @@ from mt5_scalping_agent.research.conditional_edge_validation import attach_path,
 
 def test_paths_are_direction_adjusted_and_use_future_only_as_outcomes():
     times = pd.date_range("2019-01-01", periods=100, freq="min", tz="UTC")
-    m1 = pd.DataFrame({"time": times, "close": 1 + np.arange(100) * .0001})
+    close=1+np.arange(100)*.0001
+    m1=pd.DataFrame({"time":times,"open":close,"high":close+.0001,"low":close-.0001,"close":close,"tick_volume":1})
     events = pd.DataFrame({"pair":["EURUSD"], "event_time":[times[10]], "direction":[1], "family":["raw"]})
     output = attach_path(events, m1, "EURUSD")
     assert output.path_5m_pips.iat[0] == pytest.approx(5)

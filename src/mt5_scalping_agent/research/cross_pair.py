@@ -118,13 +118,17 @@ def load_frozen_cost_model(
     if document.get("schema_version") != 1 or entry.get("pip_size") != spec.pip_size:
         raise CrossPairResearchError("frozen pair cost model does not match pair pip convention")
     report = project_root / str(entry.get("spread_report", ""))
-    return CrossPairCostModel(
+    model=CrossPairCostModel(
         spread_points=float(selected["spread_points"]),
         slippage_points=float(selected["slippage_points"]),
         commission_per_lot_per_side_usd=float(entry["commission_per_lot_per_side_usd"]),
         calibration_report=report,
         commission_evidence=str(entry["commission_basis"]),
     )
+    declared=float(selected["round_trip_cost_pips"])
+    if abs(model.round_trip_cost_pips(spec)-declared)>1e-6:
+        raise CrossPairResearchError("declared round-trip cost does not match canonical components")
+    return model
 
 def evaluate_pair_development(
     spec: CrossPairDevelopmentSpec,
