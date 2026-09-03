@@ -1,0 +1,66 @@
+{
+    "schema_version":  1,
+    "purpose":  "Frozen research-only cross-pair transaction-cost inputs before any strategy evaluation.",
+    "broker":  "RoboForex Ltd",
+    "account_type":  "ECN demo",
+    "account_currency":  "USD",
+    "commission_schedule":  "20 USD per 1,000,000 USD notional per side, as published by RoboForex ECN contract specifications.",
+    "models":  {
+                   "EURUSD":  {
+                                  "pip_size":  0.0001,
+                                  "spread_report":  "reports/cross_pair_feasibility/roboforex_ecn_EURUSD_new_york_spread.json",
+                                  "commission_per_lot_per_side_usd":  2,
+                                  "commission_basis":  "100,000 EUR per lot multiplied by a conservative 1.50 USD/EUR ceiling, then 20/1,000,000 and rounded up from 3.00 USD.",
+                                  "base":  {
+                                               "spread_points":  2,
+                                               "slippage_points":  1
+                                           },
+                                  "stress":  {
+                                                 "spread_points":  4,
+                                                 "slippage_points":  2
+                                             }
+                              },
+                   "GBPUSD":  {
+                                  "pip_size":  0.0001,
+                                  "spread_report":  "reports/cross_pair_feasibility/roboforex_ecn_GBPUSD_new_york_spread.json",
+                                  "commission_per_lot_per_side_usd":  2.85,
+                                  "commission_basis":  "100,000 GBP per lot multiplied by the maximum observed 2019-2023 high 1.42491, then 20/1,000,000 and rounded up from 2.84982 USD.",
+                                  "base":  {
+                                               "spread_points":  2.0,
+                                               "slippage_points":  1.0
+                                           },
+                                  "stress":  {
+                                                 "spread_points":  5.0,
+                                                 "slippage_points":  2.0
+                                             }
+                              },
+                   "USDJPY":  {
+                                  "pip_size":  0.01,
+                                  "spread_report":  "reports/cross_pair_feasibility/roboforex_ecn_USDJPY_new_york_spread.json",
+                                  "commission_per_lot_per_side_usd":  2.0,
+                                  "commission_basis":  "100,000 USD per lot times the published 20/1,000,000 USD-notional schedule.",
+                                  "base":  {
+                                               "spread_points":  3.0,
+                                               "slippage_points":  1.0
+                                           },
+                                  "stress":  {
+                                                 "spread_points":  8.0,
+                                                 "slippage_points":  2.0
+                                             }
+                              },
+                   "USDCAD":  {
+                                  "pip_size":  0.0001,
+                                  "spread_report":  "reports/cross_pair_feasibility/roboforex_ecn_USDCAD_new_york_spread.json",
+                                  "commission_per_lot_per_side_usd":  2.0,
+                                  "commission_basis":  "100,000 USD per lot times the published 20/1,000,000 USD-notional schedule.",
+                                  "base":  {
+                                               "spread_points":  4.0,
+                                               "slippage_points":  1.0
+                                           },
+                                  "stress":  {
+                                                 "spread_points":  5.0,
+                                                 "slippage_points":  2.0
+                                             }
+                              }
+               }
+}

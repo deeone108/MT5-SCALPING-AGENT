@@ -1,0 +1,13 @@
+{
+  "source": "HistData Generic ASCII M1 bid bars, fixed EST normalized to UTC",
+  "symbol": "EURUSD",
+  "start_year": 2019,
+  "end_year": 2019,
+  "files": [],
+  "failures": [
+    {
+      "year": 2019,
+      "error": "HistData archive failed OHLCV validation: OHLCV data contains duplicate timestamps"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "source": "HistData Generic ASCII M1 bid bars, fixed EST normalized to UTC",
+  "symbol": "EURUSD",
+  "start_year": 2003,
+  "end_year": 2005,
+  "files": [
+    {
+      "path": "data\\histdata\\EURUSD_m1_2003.csv.gz",
+      "year": 2003,
+      "rows": 316351,
+      "first_time": "2003-01-02T00:00:00+00:00",
+      "last_time": "2003-12-31T19:58:00+00:00"
+    },
+    {
+      "path": "data\\histdata\\EURUSD_m1_2004.csv.gz",
+      "year": 2004,
+      "rows": 328426,
+      "first_time": "2004-01-02T00:00:00+00:00",
+      "last_time": "2004-12-31T21:28:00+00:00"
+    },
+    {
+      "path": "data\\histdata\\EURUSD_m1_2005.csv.gz",
+      "year": 2005,
+      "rows": 315635,
+      "first_time": "2005-01-03T06:48:00+00:00",
+      "last_time": "2005-12-29T21:58:00+00:00"
+    }
+  ],
+  "failures": []
+}

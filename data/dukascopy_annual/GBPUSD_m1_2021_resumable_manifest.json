@@ -1,0 +1,200 @@
+{
+  "symbol": "GBPUSD",
+  "year": 2021,
+  "chunk_days": 14,
+  "fetched_this_run": 3,
+  "complete": true,
+  "chunks": [
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210101_20210115.csv.gz",
+      "start": "2021-01-01T00:00:00+00:00",
+      "end": "2021-01-15T00:00:00+00:00",
+      "rows": 13048,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210115_20210129.csv.gz",
+      "start": "2021-01-15T00:00:00+00:00",
+      "end": "2021-01-29T00:00:00+00:00",
+      "rows": 14383,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210129_20210212.csv.gz",
+      "start": "2021-01-29T00:00:00+00:00",
+      "end": "2021-02-12T00:00:00+00:00",
+      "rows": 14369,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210212_20210226.csv.gz",
+      "start": "2021-02-12T00:00:00+00:00",
+      "end": "2021-02-26T00:00:00+00:00",
+      "rows": 14349,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210226_20210312.csv.gz",
+      "start": "2021-02-26T00:00:00+00:00",
+      "end": "2021-03-12T00:00:00+00:00",
+      "rows": 14376,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210312_20210326.csv.gz",
+      "start": "2021-03-12T00:00:00+00:00",
+      "end": "2021-03-26T00:00:00+00:00",
+      "rows": 14405,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210326_20210409.csv.gz",
+      "start": "2021-03-26T00:00:00+00:00",
+      "end": "2021-04-09T00:00:00+00:00",
+      "rows": 14293,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210409_20210423.csv.gz",
+      "start": "2021-04-09T00:00:00+00:00",
+      "end": "2021-04-23T00:00:00+00:00",
+      "rows": 14280,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210423_20210507.csv.gz",
+      "start": "2021-04-23T00:00:00+00:00",
+      "end": "2021-05-07T00:00:00+00:00",
+      "rows": 14251,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210507_20210521.csv.gz",
+      "start": "2021-05-07T00:00:00+00:00",
+      "end": "2021-05-21T00:00:00+00:00",
+      "rows": 14261,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210521_20210604.csv.gz",
+      "start": "2021-05-21T00:00:00+00:00",
+      "end": "2021-06-04T00:00:00+00:00",
+      "rows": 14222,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210604_20210618.csv.gz",
+      "start": "2021-06-04T00:00:00+00:00",
+      "end": "2021-06-18T00:00:00+00:00",
+      "rows": 14253,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210618_20210702.csv.gz",
+      "start": "2021-06-18T00:00:00+00:00",
+      "end": "2021-07-02T00:00:00+00:00",
+      "rows": 14272,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210702_20210716.csv.gz",
+      "start": "2021-07-02T00:00:00+00:00",
+      "end": "2021-07-16T00:00:00+00:00",
+      "rows": 14243,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210716_20210730.csv.gz",
+      "start": "2021-07-16T00:00:00+00:00",
+      "end": "2021-07-30T00:00:00+00:00",
+      "rows": 14248,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210730_20210813.csv.gz",
+      "start": "2021-07-30T00:00:00+00:00",
+      "end": "2021-08-13T00:00:00+00:00",
+      "rows": 14246,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210813_20210827.csv.gz",
+      "start": "2021-08-13T00:00:00+00:00",
+      "end": "2021-08-27T00:00:00+00:00",
+      "rows": 14195,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210827_20210910.csv.gz",
+      "start": "2021-08-27T00:00:00+00:00",
+      "end": "2021-09-10T00:00:00+00:00",
+      "rows": 14244,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210910_20210924.csv.gz",
+      "start": "2021-09-10T00:00:00+00:00",
+      "end": "2021-09-24T00:00:00+00:00",
+      "rows": 14289,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20210924_20211008.csv.gz",
+      "start": "2021-09-24T00:00:00+00:00",
+      "end": "2021-10-08T00:00:00+00:00",
+      "rows": 14309,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20211008_20211022.csv.gz",
+      "start": "2021-10-08T00:00:00+00:00",
+      "end": "2021-10-22T00:00:00+00:00",
+      "rows": 14305,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20211022_20211105.csv.gz",
+      "start": "2021-10-22T00:00:00+00:00",
+      "end": "2021-11-05T00:00:00+00:00",
+      "rows": 14252,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20211105_20211119.csv.gz",
+      "start": "2021-11-05T00:00:00+00:00",
+      "end": "2021-11-19T00:00:00+00:00",
+      "rows": 14290,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20211119_20211203.csv.gz",
+      "start": "2021-11-19T00:00:00+00:00",
+      "end": "2021-12-03T00:00:00+00:00",
+      "rows": 14285,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20211203_20211217.csv.gz",
+      "start": "2021-12-03T00:00:00+00:00",
+      "end": "2021-12-17T00:00:00+00:00",
+      "rows": 14304,
+      "status": "downloaded"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20211217_20211231.csv.gz",
+      "start": "2021-12-17T00:00:00+00:00",
+      "end": "2021-12-31T00:00:00+00:00",
+      "rows": 14297,
+      "status": "downloaded"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\GBPUSD\\2021\\GBPUSD_m1_20211231_20220101.csv.gz",
+      "start": "2021-12-31T00:00:00+00:00",
+      "end": "2022-01-01T00:00:00+00:00",
+      "rows": 1311,
+      "status": "downloaded"
+    }
+  ],
+  "annual_path": "data\\dukascopy_annual\\GBPUSD_m1_2021.csv.gz",
+  "annual_rows": 371580
+}

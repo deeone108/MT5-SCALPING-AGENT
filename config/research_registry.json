@@ -1,0 +1,1887 @@
+{
+  "schema_version": 2,
+  "registry_id": "eurusd_m1_strategy_research",
+  "updated_at": "2026-08-31T09:17:27.562361Z",
+  "retrospective_registration_notice": "This registry was reconstructed from code, reports, and the handoff after the recorded experiments. It preserves known failures but does not claim those historical experiments were preregistered. Gates declared here govern future promotion decisions only.",
+  "development_datasets": [
+    {
+      "dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "provider": "Dukascopy public bid-side M1 archive",
+      "symbol": "EURUSD",
+      "timeframe": "M1",
+      "start": "2019-01-01",
+      "end_exclusive": "2024-01-01",
+      "path_pattern": "data/dukascopy_annual/EURUSD_m1_{year}.csv.gz",
+      "permitted_use": "Development and candidate rejection only; provider boundary enforced by LocalResearchArchive.",
+      "excluded_from_tuning": [
+        "2024",
+        "2025",
+        "2026"
+      ]
+    }
+  ],
+  "broker_cost_models": [
+    {
+      "cost_model_id": "provisional_archive_cost_v1",
+      "broker": "Unverified research assumption",
+      "account_type": "Not broker calibrated",
+      "symbol": "EURUSD",
+      "point_size": 1e-05,
+      "spread_points": 1.0,
+      "slippage_points": 0.5,
+      "commission_per_lot_per_side": 0.0,
+      "currency": "USD",
+      "calibration_evidence": "Assumptions embedded in reports/chronological_validation/eurusd_2019_2026_all_strategies_four_month_summary.json; not deployment costs."
+    },
+    {
+      "cost_model_id": "roboforex_ecn_eurusd_v1",
+      "broker": "RoboForex Ltd",
+      "account_type": "RoboForex-ECN demo",
+      "symbol": "EURUSD",
+      "point_size": 1e-05,
+      "spread_points": 2.0,
+      "slippage_points": 1.0,
+      "commission_per_lot_per_side": 2.0,
+      "currency": "USD",
+      "calibration_evidence": "Read-only New York tick capture at data/mt5_ticks/roboforex_ecn/EURUSD_ticks.csv plus published ECN commission of USD 20 per million."
+    },
+    {
+      "cost_model_id": "roboforex_ecn_eurusd_stress_v1",
+      "broker": "RoboForex Ltd",
+      "account_type": "RoboForex-ECN demo research stress",
+      "symbol": "EURUSD",
+      "point_size": 1e-05,
+      "spread_points": 4.0,
+      "slippage_points": 2.0,
+      "commission_per_lot_per_side": 2.0,
+      "currency": "USD",
+      "calibration_evidence": "Predeclared Strategy 15 stress: captured New York maximum spread of 4 points, twice-base slippage assumption of 2 points, and published USD 2 per standard lot per side commission; this is research friction, not execution evidence."
+    },
+    {
+      "cost_model_id": "roboforex_ecn_eurusd_news_base_v1",
+      "broker": "RoboForex Ltd",
+      "account_type": "RoboForex-ECN demo news-window research base",
+      "symbol": "EURUSD",
+      "point_size": 1e-05,
+      "spread_points": 4.0,
+      "slippage_points": 2.0,
+      "commission_per_lot_per_side": 2.0,
+      "currency": "USD",
+      "calibration_evidence": "Conservative predeclared Strategy 16 news-window base: prior captured New York maximum spread of 4 points, 2-point slippage assumption, and published USD 2 per standard lot per side commission. No claim of event-tick calibration."
+    },
+    {
+      "cost_model_id": "roboforex_ecn_eurusd_news_stress_v1",
+      "broker": "RoboForex Ltd",
+      "account_type": "RoboForex-ECN demo news-window research stress",
+      "symbol": "EURUSD",
+      "point_size": 1e-05,
+      "spread_points": 10.0,
+      "slippage_points": 5.0,
+      "commission_per_lot_per_side": 2.0,
+      "currency": "USD",
+      "calibration_evidence": "Predeclared Strategy 16 news stress chosen before results to model quote withdrawal and adverse entry around 08:30 New York. It is intentionally harsher than captured normal-session costs but is not historical event-tick execution evidence."
+    },
+    {
+      "cost_model_id": "roboforex_ecn_eurusd_intraday_base_v1",
+      "broker": "RoboForex Ltd",
+      "account_type": "RoboForex-ECN demo normal-session intraday research",
+      "symbol": "EURUSD",
+      "point_size": 1e-05,
+      "spread_points": 1.0,
+      "slippage_points": 1.0,
+      "commission_per_lot_per_side": 2.0,
+      "currency": "USD",
+      "calibration_evidence": "Predeclared normal-session base from the RoboForex London/New York captures; one-point slippage remains a conservative assumption."
+    },
+    {
+      "cost_model_id": "roboforex_ecn_eurusd_intraday_stress_v1",
+      "broker": "RoboForex Ltd",
+      "account_type": "RoboForex-ECN demo normal-session intraday stress",
+      "symbol": "EURUSD",
+      "point_size": 1e-05,
+      "spread_points": 3.0,
+      "slippage_points": 2.0,
+      "commission_per_lot_per_side": 2.0,
+      "currency": "USD",
+      "calibration_evidence": "Predeclared normal-session intraday stress, deliberately above observed p95 spread; not a historical execution replay."
+    }
+  ],
+  "promotion_gates": [
+    {
+      "gate_schema_version": 1,
+      "gate_id": "research_promotion_gate_v1",
+      "declared_on": "2026-08-24",
+      "provenance_note": "Declared during the infrastructure phase after existing experiments; must not be represented as a historical preregistration.",
+      "minimum_development_trades": 300,
+      "require_positive_after_cost_expectancy": true,
+      "minimum_profit_factor": 1.15,
+      "minimum_positive_window_ratio": 0.6,
+      "minimum_positive_years": 4,
+      "development_year_count": 5,
+      "maximum_drawdown_percent": 10.0,
+      "maximum_strongest_window_profit_contribution": 0.35,
+      "require_predefined_cost_stress_pass": true,
+      "require_tick_replay_pass": true
+    },
+    {
+      "gate_schema_version": 2,
+      "gate_id": "strategy_15_economic_gate_v1",
+      "declared_on": "2026-08-24",
+      "provenance_note": "Predeclared from docs/STRATEGY_15_RESEARCH_BRIEF.md before Strategy 15 implementation or development-result access; thresholds must not be weakened after results.",
+      "base_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "stress_cost_model_id": "roboforex_ecn_eurusd_stress_v1",
+      "minimum_gross_expectancy_pips": 1.5,
+      "minimum_gross_block_bootstrap_lower_bound_pips": 1.0,
+      "minimum_base_net_expectancy_pips": 0.8,
+      "minimum_stress_net_expectancy_pips": 0.5,
+      "minimum_median_mfe_pips": 4.0,
+      "mfe_exceedance_threshold_pips": 3.0,
+      "minimum_mfe_exceedance_ratio": 0.6,
+      "minimum_median_mfe_mae_ratio": 1.5,
+      "maximum_base_cost_mfe_ratio": 0.2,
+      "maximum_stress_cost_mfe_ratio": 0.25,
+      "minimum_annual_signals": 250,
+      "maximum_annual_signals": 500,
+      "maximum_entries_per_day": 2,
+      "minimum_median_holding_minutes": 15,
+      "maximum_median_holding_minutes": 120,
+      "hard_maximum_holding_minutes": 120,
+      "allow_overnight_positions": false,
+      "minimum_stop_pips": 4.0,
+      "minimum_stop_stress_cost_multiple": 4.0,
+      "minimum_reward_stress_cost_multiple": 6.0,
+      "minimum_cost_adjusted_reward_risk": 1.5,
+      "bootstrap_confidence_level": 0.95,
+      "bootstrap_units": [
+        "day",
+        "week"
+      ],
+      "minimum_effective_sample_formula": "ceil(((1.96 + 0.84) * sample_standard_deviation_of_stress_net_pips / 0.5)^2)",
+      "require_block_bootstrap_pass": true,
+      "require_effective_sample_size_pass": true,
+      "require_downside_tail_diagnostic": true,
+      "minimum_base_profit_factor": 1.25,
+      "minimum_stress_profit_factor": 1.1,
+      "minimum_positive_years": 4,
+      "development_year_count": 5,
+      "minimum_positive_active_month_ratio": 0.55,
+      "maximum_drawdown_percent": 10.0,
+      "maximum_strongest_year_profit_contribution": 0.35,
+      "maximum_top_decile_trade_profit_contribution": 0.5,
+      "require_unit_exposure_pass": true,
+      "require_risk_sized_portfolio_pass": true,
+      "require_predefined_cost_stress_pass": true,
+      "require_parameter_neighborhood_pass": true,
+      "parameter_neighborhood_policy": "Only after all primary fixed-candidate unit-economics gates pass, run ten one-factor cases without selection: compression bars 9/15; baseline quantile 0.20/0.30; expansion range multiple 1.75/2.25; retest allowance 2 with confirmation deadline 3 and 4 with deadline 5; target box multiple 1.25/1.75. Every case must have positive stress expectancy; at least 8/10 must retain gross expectancy >=1.5 pips and stress net expectancy >=0.5 pip; median neighbor base/stress PF must be >=1.25/1.10. Never replace the frozen candidate with a neighbor.",
+      "require_tick_replay_pass": true
+    },
+    {
+      "gate_schema_version": 2,
+      "gate_id": "strategy_16_event_economic_gate_v1",
+      "declared_on": "2026-08-30",
+      "provenance_note": "Prospectively frozen in docs/STRATEGY_16_RESEARCH_BRIEF.md before implementation and before any Strategy 16 development-result access; thresholds must not be weakened after results.",
+      "base_cost_model_id": "roboforex_ecn_eurusd_news_base_v1",
+      "stress_cost_model_id": "roboforex_ecn_eurusd_news_stress_v1",
+      "minimum_gross_expectancy_pips": 3.0,
+      "minimum_gross_block_bootstrap_lower_bound_pips": 1.5,
+      "minimum_base_net_expectancy_pips": 2.0,
+      "minimum_stress_net_expectancy_pips": 1.0,
+      "minimum_median_mfe_pips": 8.0,
+      "mfe_exceedance_threshold_pips": 6.0,
+      "minimum_mfe_exceedance_ratio": 0.6,
+      "minimum_median_mfe_mae_ratio": 1.5,
+      "maximum_base_cost_mfe_ratio": 0.15,
+      "maximum_stress_cost_mfe_ratio": 0.25,
+      "minimum_annual_signals": 40,
+      "maximum_annual_signals": 180,
+      "maximum_entries_per_day": 1,
+      "minimum_median_holding_minutes": 10,
+      "maximum_median_holding_minutes": 60,
+      "hard_maximum_holding_minutes": 80,
+      "allow_overnight_positions": false,
+      "minimum_stop_pips": 5.0,
+      "minimum_stop_stress_cost_multiple": 2.5,
+      "minimum_reward_stress_cost_multiple": 4.0,
+      "minimum_cost_adjusted_reward_risk": 1.25,
+      "bootstrap_confidence_level": 0.95,
+      "bootstrap_units": [
+        "day",
+        "week"
+      ],
+      "minimum_effective_sample_formula": "ceil(((1.96 + 0.84) * sample_standard_deviation_of_stress_net_pips / 1.0)^2)",
+      "require_block_bootstrap_pass": true,
+      "require_effective_sample_size_pass": true,
+      "require_downside_tail_diagnostic": true,
+      "minimum_base_profit_factor": 1.35,
+      "minimum_stress_profit_factor": 1.15,
+      "minimum_positive_years": 4,
+      "development_year_count": 5,
+      "minimum_positive_active_month_ratio": 0.55,
+      "maximum_drawdown_percent": 10.0,
+      "maximum_strongest_year_profit_contribution": 0.4,
+      "maximum_top_decile_trade_profit_contribution": 0.5,
+      "require_unit_exposure_pass": true,
+      "require_risk_sized_portfolio_pass": true,
+      "require_predefined_cost_stress_pass": true,
+      "require_parameter_neighborhood_pass": true,
+      "parameter_neighborhood_policy": "Only after every primary fixed-candidate gate passes, run ten one-factor cases without selection: shock displacement 6/8 pips; shock/baseline range multiple 1.75/2.25; retained displacement 0.60/0.80; maximum stabilization retracement 0.30/0.50; target reward/risk 2.00/2.50. Every case must have positive stress expectancy; at least 8/10 must retain gross expectancy >=3.0 pips and stress net expectancy >=1.0 pip; median neighbor base/stress PF must be >=1.35/1.15. Never replace the frozen candidate with a neighbor.",
+      "require_tick_replay_pass": true
+    },
+    {
+      "gate_schema_version": 2,
+      "gate_id": "strategy_17_intraday_economic_gate_v1",
+      "declared_on": "2026-08-30",
+      "provenance_note": "Prospectively frozen in docs/STRATEGY_17_RESEARCH_BRIEF.md before implementation or Strategy 17 development-data access.",
+      "base_cost_model_id": "roboforex_ecn_eurusd_intraday_base_v1",
+      "stress_cost_model_id": "roboforex_ecn_eurusd_intraday_stress_v1",
+      "minimum_gross_expectancy_pips": 5.0,
+      "minimum_gross_block_bootstrap_lower_bound_pips": 2.5,
+      "minimum_base_net_expectancy_pips": 4.0,
+      "minimum_stress_net_expectancy_pips": 3.0,
+      "minimum_median_mfe_pips": 20.0,
+      "mfe_exceedance_threshold_pips": 12.0,
+      "minimum_mfe_exceedance_ratio": 0.65,
+      "minimum_median_mfe_mae_ratio": 1.5,
+      "maximum_base_cost_mfe_ratio": 0.05,
+      "maximum_stress_cost_mfe_ratio": 0.08,
+      "minimum_annual_signals": 40,
+      "maximum_annual_signals": 160,
+      "maximum_entries_per_day": 1,
+      "minimum_median_holding_minutes": 60,
+      "maximum_median_holding_minutes": 240,
+      "hard_maximum_holding_minutes": 300,
+      "allow_overnight_positions": false,
+      "minimum_stop_pips": 12.0,
+      "minimum_stop_stress_cost_multiple": 10.0,
+      "minimum_reward_stress_cost_multiple": 30.0,
+      "minimum_cost_adjusted_reward_risk": 1.5,
+      "bootstrap_confidence_level": 0.95,
+      "bootstrap_units": [
+        "day",
+        "week"
+      ],
+      "minimum_effective_sample_formula": "ceil(((1.96 + 0.84) * sample_standard_deviation_of_stress_net_pips / 3.0)^2)",
+      "require_block_bootstrap_pass": true,
+      "require_effective_sample_size_pass": true,
+      "require_downside_tail_diagnostic": true,
+      "minimum_base_profit_factor": 1.35,
+      "minimum_stress_profit_factor": 1.2,
+      "minimum_positive_years": 4,
+      "development_year_count": 5,
+      "minimum_positive_active_month_ratio": 0.55,
+      "maximum_drawdown_percent": 10.0,
+      "maximum_strongest_year_profit_contribution": 0.4,
+      "maximum_top_decile_trade_profit_contribution": 0.5,
+      "require_unit_exposure_pass": true,
+      "require_risk_sized_portfolio_pass": true,
+      "require_predefined_cost_stress_pass": true,
+      "require_parameter_neighborhood_pass": true,
+      "parameter_neighborhood_policy": "Only after all primary gates pass, run frozen one-factor neighbours for impulse 22/28 pips, pullback 0.35/0.45, reclaim 0.75/0.85, target 1.75/2.25R, and stop buffer 0.5/1.5 pips. Every case must have positive stress expectancy; at least 8/10 must retain gross >=5 and stress net >=3 pips. Never select a neighbour.",
+      "require_tick_replay_pass": true
+    }
+  ],
+  "strategies": [
+    {
+      "research_id": "eurusd_m1_london_range_breakout_v1",
+      "strategy_name": "london_range_breakout",
+      "implementation": "mt5_scalping_agent.backtesting.london_range_breakout.LondonRangeBreakoutStrategy",
+      "hypothesis": "A break of the completed Asian range during the configured London window continues far enough to earn two units of reward per unit of range risk.",
+      "economic_rationale": "Liquidity and volatility expansion near the London open may carry price beyond the overnight range.",
+      "date_proposed": "2026-08-22",
+      "date_provenance": "Earliest dated handoff evidence; retrospective, not preregistered.",
+      "frozen_rules": [
+        "Accumulate the UTC 00:00-07:00 high and low.",
+        "Between 07:00 and 12:00 UTC, enter the first close outside that range.",
+        "Place the stop at the opposite range boundary and target 2R.",
+        "Emit no more than one trade per UTC day."
+      ],
+      "frozen_parameters": {
+        "range_start_utc": "00:00:00",
+        "breakout_start_utc": "07:00:00",
+        "breakout_end_utc": "12:00:00",
+        "target_reward_risk_ratio": 2.0,
+        "maximum_trades_per_day": 1
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "four_month_fixed_windows_v1",
+          "report_path": "reports\\chronological_validation\\eurusd_2019_2026_all_strategies_four_month_summary.json",
+          "cost_model_id": "provisional_archive_cost_v1",
+          "role": "Fixed-window development and post-selection robustness; not a blind holdout.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 269,
+              "net_profit": 1170.6899999995223,
+              "positive_windows": 9,
+              "worst_window_net_profit": -246.61000000003287
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 134,
+              "net_profit": -546.5650000001486,
+              "positive_windows": 2,
+              "worst_window_net_profit": -294.2000000000377
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "Development consistency was below the future 60% gate and performance reversed in later windows."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Only 9/20 development windows and 2/11 later windows were positive; later net PnL was negative even before calibrated broker commission."
+    },
+    {
+      "research_id": "eurusd_m1_bollinger_mean_reversion_v1",
+      "strategy_name": "bollinger_mean_reversion",
+      "implementation": "mt5_scalping_agent.backtesting.classic_baselines.BollingerMeanReversionStrategy",
+      "hypothesis": "A close beyond a two-standard-deviation 20-bar band mean-reverts to its rolling mean.",
+      "economic_rationale": "Short-lived M1 price dislocations may revert after liquidity replenishes.",
+      "date_proposed": "2026-08-22",
+      "date_provenance": "Earliest dated handoff evidence; retrospective, not preregistered.",
+      "frozen_rules": [
+        "Compute the 20-close population mean and standard deviation.",
+        "Buy below mean minus 2 standard deviations or sell above mean plus 2 standard deviations.",
+        "Stop one standard deviation beyond entry and target the rolling mean.",
+        "Apply no session filter."
+      ],
+      "frozen_parameters": {
+        "close_lookback": 20,
+        "band_standard_deviations": 2.0,
+        "stop_standard_deviations": 1.0,
+        "target": "rolling_mean",
+        "session_filter": null
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "four_month_fixed_windows_v1",
+          "report_path": "reports\\chronological_validation\\eurusd_2019_2026_all_strategies_four_month_summary.json",
+          "cost_model_id": "provisional_archive_cost_v1",
+          "role": "Fixed-window development and post-selection robustness; not a blind holdout.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 17817,
+              "net_profit": 6407.250786252606,
+              "positive_windows": 6,
+              "worst_window_net_profit": -1018.4611697615803
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 11894,
+              "net_profit": 43.41481371463087,
+              "positive_windows": 5,
+              "worst_window_net_profit": -839.5314142450649
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "Aggregate development profit was concentrated in few windows and virtually disappeared later under provisional costs."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Only 6/20 development windows were positive and later net profit was approximately flat before calibrated commission; the apparent edge was unstable."
+    },
+    {
+      "research_id": "eurusd_m1_donchian_breakout_v1",
+      "strategy_name": "donchian_breakout",
+      "implementation": "mt5_scalping_agent.backtesting.classic_baselines.DonchianBreakoutStrategy",
+      "hypothesis": "A close beyond the previous 20-bar price channel persists as a directional breakout.",
+      "economic_rationale": "Fresh local extremes can reveal order-flow imbalance and momentum continuation.",
+      "date_proposed": "2026-08-22",
+      "date_provenance": "Earliest dated handoff evidence; retrospective, not preregistered.",
+      "frozen_rules": [
+        "Build a channel from the prior 20 completed bars.",
+        "Enter in the direction of a close beyond the channel.",
+        "Use one channel width as stop distance and a 2R target."
+      ],
+      "frozen_parameters": {
+        "channel_lookback": 20,
+        "stop_channel_widths": 1.0,
+        "reward_risk_ratio": 2.0
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "four_month_fixed_windows_v1",
+          "report_path": "reports\\chronological_validation\\eurusd_2019_2026_all_strategies_four_month_summary.json",
+          "cost_model_id": "provisional_archive_cost_v1",
+          "role": "Fixed-window development and post-selection robustness; not a blind holdout.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 2409,
+              "net_profit": -10793.710000010771,
+              "positive_windows": 2,
+              "worst_window_net_profit": -928.3000000004697
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 1465,
+              "net_profit": -1501.640000005993,
+              "positive_windows": 3,
+              "worst_window_net_profit": -993.4100000004283
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "The breakout rule lost money in both chronological segments."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Development net loss exceeded USD 10,000 with only 2/20 positive windows; later results remained negative."
+    },
+    {
+      "research_id": "eurusd_m1_moving_average_crossover_v1",
+      "strategy_name": "moving_average_crossover",
+      "implementation": "mt5_scalping_agent.backtesting.classic_baselines.MovingAverageCrossoverStrategy",
+      "hypothesis": "A fresh 5-bar/20-bar mean crossover identifies a persistent short-term trend.",
+      "economic_rationale": "A fast mean crossing a slow mean can proxy acceleration in directional order flow.",
+      "date_proposed": "2026-08-22",
+      "date_provenance": "Earliest dated handoff evidence; retrospective, not preregistered.",
+      "frozen_rules": [
+        "Detect a new crossover of the 5-close mean and 20-close mean.",
+        "Trade in the crossover direction.",
+        "Set risk to the absolute distance from price to the slow mean and target 2R."
+      ],
+      "frozen_parameters": {
+        "fast_close_lookback": 5,
+        "slow_close_lookback": 20,
+        "reward_risk_ratio": 2.0,
+        "stop_reference": "current_slow_mean_distance"
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "four_month_fixed_windows_v1",
+          "report_path": "reports\\chronological_validation\\eurusd_2019_2026_all_strategies_four_month_summary.json",
+          "cost_model_id": "provisional_archive_cost_v1",
+          "role": "Fixed-window development and post-selection robustness; not a blind holdout.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 7850,
+              "net_profit": -15528.230343182237,
+              "positive_windows": 1,
+              "worst_window_net_profit": -1021.4612857163603
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 5859,
+              "net_profit": -7294.358844320735,
+              "positive_windows": 1,
+              "worst_window_net_profit": -988.271500000837
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "The crossover family was consistently unprofitable."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Only one positive window in each segment and large negative net PnL demonstrate no credible M1 edge."
+    },
+    {
+      "research_id": "eurusd_m1_atr_filter_v1",
+      "strategy_name": "atr_filter",
+      "implementation": "mt5_scalping_agent.backtesting.classic_baselines.AtrFilterStrategy",
+      "hypothesis": "A close extending at least one quarter-channel beyond a 20-bar range confirms an unusually strong breakout.",
+      "economic_rationale": "Requiring extension beyond the channel may filter marginal breaks, despite the historical registry name referring to ATR.",
+      "date_proposed": "2026-08-22",
+      "date_provenance": "Earliest dated handoff evidence; retrospective, not preregistered.",
+      "frozen_rules": [
+        "Build a high-low channel from the prior 20 bars.",
+        "Buy above the high plus 0.25 channel widths or sell below the low minus 0.25 widths.",
+        "Use one channel width as stop distance and target 2R.",
+        "No ATR calculation is present in the frozen implementation despite its historical name."
+      ],
+      "frozen_parameters": {
+        "channel_lookback": 20,
+        "entry_extension_channel_widths": 0.25,
+        "stop_channel_widths": 1.0,
+        "reward_risk_ratio": 2.0,
+        "uses_atr": false
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "four_month_fixed_windows_v1",
+          "report_path": "reports\\chronological_validation\\eurusd_2019_2026_all_strategies_four_month_summary.json",
+          "cost_model_id": "provisional_archive_cost_v1",
+          "role": "Fixed-window development and post-selection robustness; not a blind holdout.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 2989,
+              "net_profit": -9393.390000015936,
+              "positive_windows": 3,
+              "worst_window_net_profit": -1043.335000000348
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 1510,
+              "net_profit": -6243.615000008691,
+              "positive_windows": 1,
+              "worst_window_net_profit": -1007.8300000006601
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "The extended channel breakout lost substantially in both segments."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Large losses and only 3/20 development positive windows reject the hypothesis before broker-cost validation."
+    },
+    {
+      "research_id": "eurusd_m1_new_york_reversal_v1",
+      "strategy_name": "new_york_reversal",
+      "implementation": "mt5_scalping_agent.backtesting.classic_baselines.NewYorkReversalStrategy",
+      "hypothesis": "Extreme Bollinger-band moves during the fixed New York UTC window mean-revert more reliably than all-day dislocations.",
+      "economic_rationale": "US-session liquidity may absorb short-lived EURUSD extremes, but the signal must overcome higher turnover costs.",
+      "date_proposed": "2026-08-22",
+      "date_provenance": "Dated handoff evidence; retrospective, not preregistered.",
+      "frozen_rules": [
+        "Apply the 20-bar, two-standard-deviation Bollinger mean-reversion rule.",
+        "Allow entries only from 12:00 inclusive to 17:00 exclusive UTC.",
+        "Stop one standard deviation beyond entry and target the rolling mean."
+      ],
+      "frozen_parameters": {
+        "close_lookback": 20,
+        "band_standard_deviations": 2.0,
+        "stop_standard_deviations": 1.0,
+        "target": "rolling_mean",
+        "session_start_utc": "12:00:00",
+        "session_end_utc": "17:00:00"
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "four_month_fixed_windows_v1",
+          "report_path": "reports\\chronological_validation\\eurusd_2019_2026_all_strategies_four_month_summary.json",
+          "cost_model_id": "provisional_archive_cost_v1",
+          "role": "Fixed-window development and post-selection robustness under provisional costs.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 6530,
+              "net_profit": 5962.588157190604,
+              "positive_windows": 11,
+              "worst_window_net_profit": -858.9632933293287
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 3710,
+              "net_profit": 672.675730303266,
+              "positive_windows": 6,
+              "worst_window_net_profit": -1015.9439818786246
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "Provisional profitability deteriorated materially after 2023."
+        },
+        {
+          "experiment_id": "roboforex_ecn_cost_validation_v1",
+          "report_path": "reports\\chronological_validation\\new_york_candidates_roboforex_ecn_cost.json",
+          "cost_model_id": "roboforex_ecn_eurusd_v1",
+          "role": "Broker-calibrated cost rejection across the same 31 fixed windows.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 3337,
+              "net_profit": -15256.2399610607,
+              "positive_windows": 2,
+              "worst_window_net_profit": -1013.5304688424776
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 1985,
+              "net_profit": -9574.99149914434,
+              "positive_windows": 0,
+              "worst_window_net_profit": -1011.2992282514974
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "Measured spread, modeled slippage, and commission eliminated the provisional edge."
+        },
+        {
+          "experiment_id": "continuous_development_2019_2023_v1",
+          "report_path": "reports\\continuous_evaluation\\eurusd_2019_2023_new_york_leaders_research_diagnostics.json",
+          "cost_model_id": "roboforex_ecn_eurusd_v1",
+          "role": "Continuous 2019-2023 development diagnosis with nonbinding loss/rate circuit breakers; sizing, minimum volume, spread, stale-data, reward/risk, exposure, and single-position gates retained.",
+          "report_run_id": "continuous_development_evaluation:7acb480aaad215a4",
+          "aggregates": [],
+          "continuous_summary": {
+            "period_start": "2019-01-01T00:00:00Z",
+            "period_end_exclusive": "2024-01-01T00:00:00Z",
+            "trade_count": 5144,
+            "total_lots": 2211.38,
+            "gross_pnl": 5491.960103888522,
+            "total_transaction_cost": 15479.66,
+            "net_profit": -9987.699896111479,
+            "gross_expectancy_per_trade": 1.0676438771167422,
+            "net_expectancy_per_trade": -1.941621286180303,
+            "profit_factor": 0.7410338630561984,
+            "max_drawdown": 9995.300017012536,
+            "positive_years": 0,
+            "year_count": 5,
+            "positive_months": 4,
+            "month_count": 60
+          },
+          "finding": "Gross +5491.96, costs 15479.66, net -9987.70; transaction costs dominate and subsequent minimum-volume rejection follows capital depletion."
+        },
+        {
+          "experiment_id": "constant_exposure_signal_economics_v1",
+          "report_path": "reports\\signal_economics\\eurusd_2019_2023_new_york_leaders_fixed_1lot.json",
+          "cost_model_id": "roboforex_ecn_eurusd_v1",
+          "role": "Final constant-1-lot development diagnostic separating signal economics from balance, compounding, and minimum-volume survival effects; strategies remain closed research paths.",
+          "report_run_id": "constant_exposure_signal_economics:46effe3c7bd8a796",
+          "aggregates": [],
+          "continuous_summary": {
+            "period_start": "2019-01-01T00:00:00Z",
+            "period_end_exclusive": "2024-01-01T00:00:00Z",
+            "trade_count": 25148,
+            "total_lots": 25148.0,
+            "gross_pnl": 55766.057570468394,
+            "total_transaction_cost": 176036.0,
+            "net_profit": -120269.94242953161,
+            "gross_expectancy_per_trade": 2.217514616290297,
+            "net_expectancy_per_trade": -4.782485383709703,
+            "profit_factor": 0.7992272843528958,
+            "max_drawdown": 120620.11580266921,
+            "positive_years": 0,
+            "year_count": 5,
+            "positive_months": 3,
+            "month_count": 60
+          },
+          "finding": "At fixed 1.0 lot, 25,148 system signals earned 0.2218 gross pip/signal against 0.7 pip modeled cost, losing USD 120,270 with 0/5 positive years; rejection is unchanged and the path is permanently closed."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Under RoboForex ECN costs, development lost USD 15,256 with 2/20 positive windows and every later window aggregate was negative."
+    },
+    {
+      "research_id": "eurusd_m1_new_york_bollinger_rsi_reversal_v1",
+      "strategy_name": "new_york_bollinger_rsi_reversal",
+      "implementation": "mt5_scalping_agent.backtesting.classic_baselines.NewYorkBollingerRsiReversalStrategy",
+      "hypothesis": "RSI exhaustion confirms which New York Bollinger extremes are most likely to mean-revert.",
+      "economic_rationale": "An oscillator filter may remove weaker extremes and improve gross edge per trade.",
+      "date_proposed": "2026-08-22",
+      "date_provenance": "Dated handoff evidence; retrospective, not preregistered.",
+      "frozen_rules": [
+        "Apply the New York Bollinger reversal only from 12:00 to 17:00 UTC.",
+        "For buys require RSI(14) at or below 30; for sells require RSI(14) at or above 70.",
+        "Stop one standard deviation beyond entry and target the rolling mean."
+      ],
+      "frozen_parameters": {
+        "close_lookback": 20,
+        "band_standard_deviations": 2.0,
+        "rsi_lookback": 14,
+        "buy_rsi_maximum": 30.0,
+        "sell_rsi_minimum": 70.0,
+        "session_start_utc": "12:00:00",
+        "session_end_utc": "17:00:00",
+        "target": "rolling_mean"
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "four_month_fixed_windows_v1",
+          "report_path": "reports\\chronological_validation\\eurusd_2019_2026_all_strategies_four_month_summary.json",
+          "cost_model_id": "provisional_archive_cost_v1",
+          "role": "Fixed-window development and post-selection robustness under provisional costs.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 3581,
+              "net_profit": 4921.355859567665,
+              "positive_windows": 10,
+              "worst_window_net_profit": -902.7121910462607
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 2178,
+              "net_profit": 3943.0822245161485,
+              "positive_windows": 7,
+              "worst_window_net_profit": -793.9319302872485
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "This was the leading provisional-cost candidate but did not satisfy a broker-cost gate."
+        },
+        {
+          "experiment_id": "roboforex_ecn_cost_validation_v1",
+          "report_path": "reports\\chronological_validation\\new_york_candidates_roboforex_ecn_cost.json",
+          "cost_model_id": "roboforex_ecn_eurusd_v1",
+          "role": "Broker-calibrated cost rejection across the same 31 fixed windows.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 2951,
+              "net_profit": -10117.11095486628,
+              "positive_windows": 3,
+              "worst_window_net_profit": -1035.9027946230233
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 1672,
+              "net_profit": -6126.63722348881,
+              "positive_windows": 3,
+              "worst_window_net_profit": -1025.2003168953017
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "The smaller filtered signal remained decisively negative after measured broker costs."
+        },
+        {
+          "experiment_id": "continuous_development_2019_2023_v1",
+          "report_path": "reports\\continuous_evaluation\\eurusd_2019_2023_new_york_leaders_research_diagnostics.json",
+          "cost_model_id": "roboforex_ecn_eurusd_v1",
+          "role": "Continuous 2019-2023 development diagnosis with nonbinding loss/rate circuit breakers; sizing, minimum volume, spread, stale-data, reward/risk, exposure, and single-position gates retained.",
+          "report_run_id": "continuous_development_evaluation:7acb480aaad215a4",
+          "aggregates": [],
+          "continuous_summary": {
+            "period_start": "2019-01-01T00:00:00Z",
+            "period_end_exclusive": "2024-01-01T00:00:00Z",
+            "trade_count": 7512,
+            "total_lots": 2328.24,
+            "gross_pnl": 6321.507272404629,
+            "total_transaction_cost": 16297.68,
+            "net_profit": -9976.172727595373,
+            "gross_expectancy_per_trade": 0.8415212023967823,
+            "net_expectancy_per_trade": -1.32803151325817,
+            "profit_factor": 0.786366694686485,
+            "max_drawdown": 9976.172727595365,
+            "positive_years": 0,
+            "year_count": 5,
+            "positive_months": 6,
+            "month_count": 60
+          },
+          "finding": "Gross +6321.51, costs 16297.68, net -9976.17; transaction costs dominate, gross edge per trade remains below break-even, and capital depletion limits later exposure."
+        },
+        {
+          "experiment_id": "constant_exposure_signal_economics_v1",
+          "report_path": "reports\\signal_economics\\eurusd_2019_2023_new_york_leaders_fixed_1lot.json",
+          "cost_model_id": "roboforex_ecn_eurusd_v1",
+          "role": "Final constant-1-lot development diagnostic separating signal economics from balance, compounding, and minimum-volume survival effects; strategies remain closed research paths.",
+          "report_run_id": "constant_exposure_signal_economics:46effe3c7bd8a796",
+          "aggregates": [],
+          "continuous_summary": {
+            "period_start": "2019-01-01T00:00:00Z",
+            "period_end_exclusive": "2024-01-01T00:00:00Z",
+            "trade_count": 13846,
+            "total_lots": 13846.0,
+            "gross_pnl": 39225.6962832661,
+            "total_transaction_cost": 96922.0,
+            "net_profit": -57696.3037167339,
+            "gross_expectancy_per_trade": 2.832998431551791,
+            "net_expectancy_per_trade": -4.1670015684482085,
+            "profit_factor": 0.8502972434626893,
+            "max_drawdown": 58048.60020294547,
+            "positive_years": 0,
+            "year_count": 5,
+            "positive_months": 8,
+            "month_count": 60
+          },
+          "finding": "At fixed 1.0 lot, 13,846 system signals earned 0.2833 gross pip/signal against 0.7 pip modeled cost, losing USD 57,696 with 0/5 positive years; rejection is unchanged and the path is permanently closed."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "RoboForex ECN development lost USD 10,117 with only 3/20 positive windows; the provisional edge was transaction-cost fragile."
+    },
+    {
+      "research_id": "eurusd_m1_new_york_opening_range_breakout_v1",
+      "strategy_name": "new_york_opening_range_breakout",
+      "implementation": "mt5_scalping_agent.backtesting.new_york_opening_range.NewYorkOpeningRangeBreakoutStrategy",
+      "hypothesis": "A trend-aligned break of the first configured New York hour continues intraday.",
+      "economic_rationale": "Opening liquidity and information arrival may establish a directional range expansion.",
+      "date_proposed": "2026-08-22",
+      "date_provenance": "Dated handoff evidence; retrospective, not preregistered.",
+      "frozen_rules": [
+        "Accumulate the 12:00-13:00 UTC range.",
+        "Until 17:00 UTC, enter the first range break aligned with the 20-close mean.",
+        "Stop at the opposite range boundary, target 2R, and trade at most once daily."
+      ],
+      "frozen_parameters": {
+        "range_start_utc": "12:00:00",
+        "range_end_utc": "13:00:00",
+        "entry_end_utc": "17:00:00",
+        "trend_close_lookback": 20,
+        "target_reward_risk_ratio": 2.0,
+        "maximum_trades_per_day": 1
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "four_month_fixed_windows_v1",
+          "report_path": "reports\\chronological_validation\\eurusd_2019_2026_all_strategies_four_month_summary.json",
+          "cost_model_id": "provisional_archive_cost_v1",
+          "role": "Fixed-window development and post-selection robustness; not a blind holdout.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 303,
+              "net_profit": -1256.7900000005689,
+              "positive_windows": 7,
+              "worst_window_net_profit": -480.4600000000438
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 172,
+              "net_profit": -373.46500000030085,
+              "positive_windows": 5,
+              "worst_window_net_profit": -476.4950000000491
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "The rule barely reached the future trade-count gate and lost in both segments."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Negative development and later net profit with low window consistency reject the opening-range continuation hypothesis."
+    },
+    {
+      "research_id": "eurusd_m1_double_bollinger_breakout_v1",
+      "strategy_name": "double_bollinger_breakout",
+      "implementation": "mt5_scalping_agent.backtesting.classic_baselines.DoubleBollingerBreakoutStrategy",
+      "hypothesis": "A close through the outer Bollinger band continues rather than reverts, with the inner band acting as invalidation.",
+      "economic_rationale": "An outer-band breach can indicate volatility expansion when momentum dominates mean reversion.",
+      "date_proposed": "2026-08-22",
+      "date_provenance": "Dated handoff evidence; retrospective, not preregistered.",
+      "frozen_rules": [
+        "Compute 20-bar mean and population standard deviation.",
+        "Trade outward on a close beyond the two-standard-deviation band.",
+        "Stop at the one-standard-deviation band and target 2R."
+      ],
+      "frozen_parameters": {
+        "close_lookback": 20,
+        "entry_band_standard_deviations": 2.0,
+        "stop_band_standard_deviations": 1.0,
+        "reward_risk_ratio": 2.0
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "four_month_fixed_windows_v1",
+          "report_path": "reports\\chronological_validation\\eurusd_2019_2026_all_strategies_four_month_summary.json",
+          "cost_model_id": "provisional_archive_cost_v1",
+          "role": "Fixed-window development and post-selection robustness; not a blind holdout.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 6543,
+              "net_profit": -14242.797299163407,
+              "positive_windows": 1,
+              "worst_window_net_profit": -1005.8304896689731
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 4370,
+              "net_profit": -6902.619265411497,
+              "positive_windows": 0,
+              "worst_window_net_profit": -1004.3618683236024
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "Outer-band continuation failed consistently."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Only one development window and no later windows were positive, with large losses before calibrated commission."
+    },
+    {
+      "research_id": "eurusd_m1_rsi_trend_breakout_v1",
+      "strategy_name": "rsi_trend_breakout",
+      "implementation": "mt5_scalping_agent.backtesting.classic_baselines.RsiTrendBreakoutStrategy",
+      "hypothesis": "A 20-bar channel break confirmed by trend alignment and RSI momentum persists for 2R.",
+      "economic_rationale": "Independent price, trend, and momentum confirmation may filter false channel breaks.",
+      "date_proposed": "2026-08-22",
+      "date_provenance": "Dated handoff evidence; retrospective, not preregistered.",
+      "frozen_rules": [
+        "Enter on a break of the prior 20-bar high or low.",
+        "Require price alignment with the prior 20-close mean.",
+        "Require RSI(14) at least 55 for buys or at most 45 for sells.",
+        "Stop at the opposite channel boundary and target 2R."
+      ],
+      "frozen_parameters": {
+        "channel_lookback": 20,
+        "trend_close_lookback": 20,
+        "rsi_lookback": 14,
+        "buy_rsi_minimum": 55.0,
+        "sell_rsi_maximum": 45.0,
+        "reward_risk_ratio": 2.0
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "four_month_fixed_windows_v1",
+          "report_path": "reports\\chronological_validation\\eurusd_2019_2026_all_strategies_four_month_summary.json",
+          "cost_model_id": "provisional_archive_cost_v1",
+          "role": "Fixed-window development and post-selection robustness; not a blind holdout.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 1713,
+              "net_profit": -6642.020000006325,
+              "positive_windows": 6,
+              "worst_window_net_profit": -1018.4900000002575
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 971,
+              "net_profit": -3651.955000003291,
+              "positive_windows": 3,
+              "worst_window_net_profit": -977.3100000002804
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "Multiple confirmations did not create positive expectancy."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Both chronological segments were materially negative and development consistency was only 6/20 windows."
+    },
+    {
+      "research_id": "eurusd_m1_atr_filtered_mean_reversion_v1",
+      "strategy_name": "atr_filtered_mean_reversion",
+      "implementation": "mt5_scalping_agent.backtesting.classic_baselines.AtrFilteredMeanReversionStrategy",
+      "hypothesis": "Bollinger extremes mean-revert more reliably when current ATR is not abnormally high relative to recent true range.",
+      "economic_rationale": "Filtering volatility shocks may avoid fading genuine regime transitions.",
+      "date_proposed": "2026-08-22",
+      "date_provenance": "Dated handoff evidence; retrospective, not preregistered.",
+      "frozen_rules": [
+        "Require ATR(14) to be positive and no more than twice the median true range of the preceding 20 bars.",
+        "When allowed, apply the 20-bar two-standard-deviation Bollinger mean-reversion rule.",
+        "Stop one standard deviation beyond entry and target the rolling mean."
+      ],
+      "frozen_parameters": {
+        "atr_lookback": 14,
+        "true_range_baseline_lookback": 20,
+        "maximum_atr_to_baseline_ratio": 2.0,
+        "bollinger_lookback": 20,
+        "band_standard_deviations": 2.0,
+        "target": "rolling_mean"
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "four_month_fixed_windows_v1",
+          "report_path": "reports\\chronological_validation\\eurusd_2019_2026_all_strategies_four_month_summary.json",
+          "cost_model_id": "provisional_archive_cost_v1",
+          "role": "Fixed-window development and post-selection robustness; not a blind holdout.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 17428,
+              "net_profit": 2990.5917300725155,
+              "positive_windows": 7,
+              "worst_window_net_profit": -1013.8561136994434
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 11364,
+              "net_profit": -2523.8420634775734,
+              "positive_windows": 3,
+              "worst_window_net_profit": -881.3766254568411
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "Development profit reversed in later data and window consistency was poor."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Only 7/20 development windows were positive and the later segment lost USD 2,524 under already optimistic costs."
+    },
+    {
+      "research_id": "eurusd_m1_new_york_opening_range_retest_v1",
+      "strategy_name": "new_york_opening_range_retest",
+      "implementation": "mt5_scalping_agent.backtesting.online_baselines.NewYorkOpeningRangeRetestStrategy",
+      "hypothesis": "A New York opening-range break that retests and then re-breaks with trend alignment is less prone to false continuation.",
+      "economic_rationale": "A successful boundary retest may demonstrate acceptance outside the opening range.",
+      "date_proposed": "2026-08-22",
+      "date_provenance": "Dated online-screening handoff evidence; retrospective, not preregistered.",
+      "frozen_rules": [
+        "Build the 12:00-12:30 UTC opening range.",
+        "Record the first close outside the range, then require a boundary retest and directional re-break.",
+        "Require alignment with the 20-close mean, stop at the opposite range boundary, target 2R, and trade once daily before 17:00 UTC."
+      ],
+      "frozen_parameters": {
+        "range_start_utc": "12:00:00",
+        "range_end_utc": "12:30:00",
+        "entry_end_utc": "17:00:00",
+        "trend_close_lookback": 20,
+        "target_reward_risk_ratio": 2.0,
+        "maximum_trades_per_day": 1
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "four_month_fixed_windows_v1",
+          "report_path": "reports\\chronological_validation\\eurusd_2019_2026_all_strategies_four_month_summary.json",
+          "cost_model_id": "provisional_archive_cost_v1",
+          "role": "Fixed-window development and post-selection robustness; not a blind holdout.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 347,
+              "net_profit": -1385.0000000008797,
+              "positive_windows": 7,
+              "worst_window_net_profit": -714.1250000000421
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 187,
+              "net_profit": -1082.875000000611,
+              "positive_windows": 4,
+              "worst_window_net_profit": -306.7150000000598
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "Retest confirmation did not produce positive expectancy."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Both segments were negative with fewer than 60% positive windows, so no broker-cost promotion was justified."
+    },
+    {
+      "research_id": "eurusd_m1_previous_day_range_breakout_v1",
+      "strategy_name": "previous_day_range_breakout",
+      "implementation": "mt5_scalping_agent.backtesting.online_baselines.PreviousDayRangeBreakoutStrategy",
+      "hypothesis": "A break of the completed prior UTC day's range continues intraday.",
+      "economic_rationale": "Prior-day extremes can concentrate resting orders and trigger momentum when breached.",
+      "date_proposed": "2026-08-22",
+      "date_provenance": "Dated online-screening handoff evidence; retrospective, not preregistered.",
+      "frozen_rules": [
+        "Track the completed prior UTC day's high and low.",
+        "From 07:00 to 17:00 UTC, trade the first close beyond either boundary.",
+        "Stop at the opposite prior-day boundary, target 2R, and trade at most once daily."
+      ],
+      "frozen_parameters": {
+        "range_period": "previous_utc_day",
+        "entry_start_utc": "07:00:00",
+        "entry_end_utc": "17:00:00",
+        "reward_risk_ratio": 2.0,
+        "maximum_trades_per_day": 1
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "four_month_fixed_windows_v1",
+          "report_path": "reports\\chronological_validation\\eurusd_2019_2026_all_strategies_four_month_summary.json",
+          "cost_model_id": "provisional_archive_cost_v1",
+          "role": "Fixed-window development and post-selection robustness; not a blind holdout.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 64,
+              "net_profit": 112.75499999996401,
+              "positive_windows": 11,
+              "worst_window_net_profit": -172.96500000000447
+            },
+            {
+              "split": "post_selection_holdout",
+              "window_count": 11,
+              "trade_count": 39,
+              "net_profit": 88.88999999998173,
+              "positive_windows": 7,
+              "worst_window_net_profit": -138.04500000000152
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "Small positive aggregates came from only 103 total trades and do not meet the 300-trade development gate."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Only 64 development trades and a tiny provisional-cost profit provide insufficient evidence; sparse positive results are not promoted."
+    },
+    {
+      "research_id": "eurusd_m1_new_york_bollinger_reentry_v1",
+      "strategy_name": "new_york_bollinger_reentry",
+      "implementation": "mt5_scalping_agent.backtesting.new_york_reentry.NewYorkBollingerReentryStrategy",
+      "hypothesis": "Waiting for an exhausted Bollinger extreme to re-enter its band can preserve reversal edge while limiting turnover to one trade daily.",
+      "economic_rationale": "Re-entry confirmation and lower trade frequency were intended to improve signal quality relative to commission.",
+      "date_proposed": "2026-08-24",
+      "date_provenance": "Dated implementation and development-screen evidence; retrospective registry entry.",
+      "frozen_rules": [
+        "During 12:00-17:00 UTC, require the prior close outside a 20-bar two-standard-deviation band and the current close back inside its recalculated band.",
+        "Require RSI(14) at or below 30 for buys or at or above 70 for sells.",
+        "Use ATR(14) times 1.0 as stop distance and target 2R.",
+        "Emit at most one trade per UTC day."
+      ],
+      "frozen_parameters": {
+        "session_start_utc": "12:00:00",
+        "session_end_utc": "17:00:00",
+        "bollinger_lookback": 20,
+        "band_standard_deviations": 2.0,
+        "rsi_lookback": 14,
+        "buy_rsi_maximum": 30.0,
+        "sell_rsi_minimum": 70.0,
+        "atr_lookback": 14,
+        "atr_stop_multiplier": 1.0,
+        "reward_risk_ratio": 2.0,
+        "maximum_trades_per_day": 1
+      },
+      "frozen_specification": null,
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "research_promotion_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "roboforex_development_screen_v1",
+          "report_path": "reports\\chronological_validation\\new_york_bollinger_reentry_roboforex_development.json",
+          "cost_model_id": "roboforex_ecn_eurusd_v1",
+          "role": "Development-only broker-cost screen; 2024-2026 intentionally not run.",
+          "report_run_id": null,
+          "aggregates": [
+            {
+              "split": "development",
+              "window_count": 20,
+              "trade_count": 321,
+              "net_profit": -1215.1164285723175,
+              "positive_windows": 6,
+              "worst_window_net_profit": -371.5000000000093
+            }
+          ],
+          "continuous_summary": null,
+          "finding": "Turnover fell substantially, but after-cost development expectancy remained negative."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "The development-only broker-cost screen lost USD 1,215 with 6/20 positive windows; later data remains intentionally untested for this rejected rule."
+    },
+    {
+      "research_id": "strategy_15_compression_expansion_controlled_continuation_v1",
+      "strategy_name": "compression_expansion_controlled_continuation",
+      "implementation": "mt5_scalping_agent.backtesting.compression_expansion_continuation.CompressionExpansionControlledContinuationStrategy",
+      "hypothesis": "During the liquid New York morning, an objectively compressed M5 balance that breaks with strong range/body expansion in the direction of an already-established completed-M15 trend can continue after price retests and accepts the broken boundary, because the retest filters failed displacement and renewed impulse indicates directional liquidity consumption without chasing the first burst.",
+      "economic_rationale": "Recurring New York liquidity arrival, clustered volatility, boundary order concentration, and staged large-order execution can repeatedly create balance-displacement-retest-continuation behavior. Waiting for renewed continuation seeks a larger structural measured move at low turnover, with at least 4 pips planned risk and 6 pips remaining reward against a frozen 1-pip stress cost.",
+      "date_proposed": "2026-08-24",
+      "date_provenance": "Prospectively preregistered before implementation and before any Strategy 15 development backtest or result access.",
+      "frozen_rules": [
+        "Use UTC M1 bid OHLCV and construct only M5/M15 bars having exactly 5/15 consecutive one-minute constituents; a higher-timeframe bar becomes usable only at its end instant.",
+        "Evaluate only on completion of a new M5 bar. For candidate expansion E, use the immediately prior 12 M5 bars as compression B and the immediately preceding 48 M5 bars as baseline A; all 61 bars must be consecutive.",
+        "Require compression median range <= the linearly interpolated 25th percentile of baseline ranges and a nonzero compression box width W <= 15 pips.",
+        "Use 24 completed M15 bars ending no later than E start. BUY context requires last close > current SMA20 > SMA20 lagged four M15 bars; SELL is the exact inverse.",
+        "E must start on Monday-Friday at 08:00 <= America/New_York local time < 11:30. Its range must be >= max(2 times compression median range, baseline range Q75), <= 3 times baseline median range, body/range >= 0.65, and close in the directional outer 20 percent.",
+        "E must clear the compression boundary by at least 0.5 pip but no more than 0.50 of W in the aligned direction.",
+        "The first retest R must occur one to three completed M5 bars after E. BUY low must be within [H-0.25W,H+0.20W] and close >= H; SELL is mirrored at L. A deeper intervening close invalidates the setup.",
+        "Confirmation C must be the first later qualifying bar, no later than E+4 and complete by 12:00 New York on E's local date. It must renew beyond E close and all pullback extremes by 0.2 pip, have aligned body, body/range >= 0.50, and close in the directional outer 25 percent.",
+        "No E-through-C candle may touch the structural target. BUY stop is min low from E+1 through C minus 0.5 pip and target is H+1.5W; SELL stop is max high plus 0.5 pip and target is L-1.5W.",
+        "At signal close and actual next-M1 open require stop distance >=4 pips, reward distance >=6 pips, (reward-1 pip)/(risk+1 pip) >=1.5, spread <=4 points, and all-in reference cost <=1 pip.",
+        "Emit at most two intents per America/New_York date; a risk-rejected intent consumes one emission. Emit once per expansion setup ID, both directions allowed, with no pyramiding or concurrent position.",
+        "Enter only on the exact next M1 bar, exit at stop or target, otherwise close at the first M1 close at or after 120 elapsed minutes; stop precedes target and target precedes time exit on a shared candle. No overnight position is allowed."
+      ],
+      "frozen_parameters": {
+        "pip_size": 0.0001,
+        "m1_per_m5": 5,
+        "m1_per_m15": 15,
+        "compression_bars_m5": 12,
+        "baseline_bars_m5": 48,
+        "compression_baseline_quantile": 0.25,
+        "maximum_compression_box_pips": 15.0,
+        "context_sma_bars_m15": 20,
+        "context_slope_lag_bars_m15": 4,
+        "context_required_bars_m15": 24,
+        "expansion_min_compression_range_multiple": 2.0,
+        "expansion_min_baseline_quantile": 0.75,
+        "expansion_max_baseline_median_multiple": 3.0,
+        "expansion_min_body_fraction": 0.65,
+        "expansion_max_close_edge_fraction": 0.2,
+        "breakout_min_clearance_pips": 0.5,
+        "breakout_max_extension_box_fraction": 0.5,
+        "retest_max_bars": 3,
+        "confirmation_max_bars_after_expansion": 4,
+        "retest_outer_box_fraction": 0.2,
+        "retest_inner_box_fraction": 0.25,
+        "confirmation_min_body_fraction": 0.5,
+        "confirmation_max_close_edge_fraction": 0.25,
+        "confirmation_clearance_pips": 0.2,
+        "stop_buffer_pips": 0.5,
+        "target_box_multiple": 1.5,
+        "stress_reference_cost_pips": 1.0,
+        "minimum_stop_pips": 4.0,
+        "minimum_reward_pips": 6.0,
+        "minimum_cost_adjusted_reward_risk": 1.5,
+        "maximum_spread_points": 4.0,
+        "maximum_all_in_cost_pips": 1.0,
+        "maximum_emitted_signals_per_ny_day": 2,
+        "maximum_holding_minutes": 120,
+        "expansion_start_local": "08:00",
+        "expansion_end_local_exclusive": "11:30",
+        "confirmation_end_local_inclusive": "12:00",
+        "timezone": "America/New_York",
+        "quantile_interpolation": "linear",
+        "entry_delay_bars_m1": 1,
+        "require_exact_next_m1": true,
+        "parameter_neighborhoods": [
+          {
+            "parameter": "compression_bars_m5",
+            "values": [
+              9,
+              15
+            ]
+          },
+          {
+            "parameter": "compression_baseline_quantile",
+            "values": [
+              0.2,
+              0.3
+            ]
+          },
+          {
+            "parameter": "expansion_min_compression_range_multiple",
+            "values": [
+              1.75,
+              2.25
+            ]
+          },
+          {
+            "parameter": "retest_max_bars",
+            "values": [
+              2,
+              4
+            ],
+            "paired_confirmation_deadlines": [
+              3,
+              5
+            ]
+          },
+          {
+            "parameter": "target_box_multiple",
+            "values": [
+              1.25,
+              1.75
+            ]
+          }
+        ],
+        "unit_exposure_model": {
+          "sizing_mode": "research_fixed_lot",
+          "fixed_volume_lots": 1.0,
+          "initial_equity_usd": 10000.0,
+          "purpose": "Primary constant-unit signal economics; account equity and portfolio loss circuit breakers do not alter volume or censor signals."
+        },
+        "risk_sized_portfolio_model": {
+          "sizing_mode": "risk_percent",
+          "initial_equity_usd": 10000.0,
+          "risk_percent_per_trade": 0.25,
+          "max_lot_size": 1.0,
+          "max_exposure_lots": 1.0,
+          "max_symbol_exposure_lots": 1.0,
+          "max_open_positions": 1,
+          "min_reward_risk_ratio": 1.5,
+          "max_spread_points": 4.0,
+          "max_market_data_age_seconds": 60.0,
+          "portfolio_circuit_breakers": "nonbinding during diagnostic so measured drawdown is not mechanically capped",
+          "maximum_daily_entries": 2
+        },
+        "robustness_settings": {
+          "random_seed": 20260824,
+          "bootstrap_samples": 10000,
+          "confidence_level": 0.95,
+          "bootstrap_units": [
+            "UTC calendar day",
+            "ISO UTC calendar week"
+          ],
+          "bootstrap_method": "complete observed-block resampling with replacement to the original number of blocks",
+          "interval_method": "percentile with linear quantiles",
+          "downside_tail_probability": 0.05,
+          "promotion_order": "primary unit-exposure base and stress gates first; block bootstrap, concentration, risk-sized simulation, and frozen neighborhoods only if primary gates pass"
+        },
+        "open_position_data_gap_policy": "Fail the research run loudly when consecutive M1 candles during an open position are more than 60 seconds apart."
+      },
+      "frozen_specification": {
+        "specification_schema_version": 1,
+        "market_behavior": "New York-session transition from a causal low-volatility M5 balance area to aligned directional expansion, followed by boundary acceptance/retest and renewed continuation.",
+        "persistence_rationale": "Recurring session liquidity arrival, clustered volatility, boundary order concentration, and staged large-order execution can repeatedly create balance-displacement-retest-continuation behavior.",
+        "timeframe_hierarchy": [
+          "M1 bid OHLCV execution and next-bar entry",
+          "Strict completed M5 compression, expansion, retest, and confirmation",
+          "Strict completed pre-expansion M15 directional context"
+        ],
+        "session_restrictions": [
+          "America/New_York civil clock via zoneinfo",
+          "Expansion M5 start >=08:00 and <11:30",
+          "Confirmation complete <=12:00 on the same local date",
+          "Monday-Friday only"
+        ],
+        "features_and_indicators": [
+          "Strict constituent-complete M5 and M15 aggregation",
+          "M5 raw range median and linear Q25/Q75",
+          "Twelve-bar M5 compression high/low box",
+          "M5 candle body fraction and directional close-edge location",
+          "Completed-M15 SMA20 level and four-bar SMA20 slope",
+          "Boundary retest depth and renewed continuation clearance",
+          "Structural box measured-move target"
+        ],
+        "lookback_periods": {
+          "compression_m5": 12,
+          "baseline_m5": 48,
+          "context_sma_m15": 20,
+          "context_slope_lag_m15": 4,
+          "context_required_m15": 24,
+          "retest_max_m5": 3,
+          "confirmation_deadline_m5_after_expansion": 4
+        },
+        "entry_logic": [
+          "Recognize a valid compression and completed-M15 aligned expansion E under every frozen threshold.",
+          "Require the first valid boundary retest within E+1 through E+3 without deep invalidation.",
+          "Require the first renewed directional confirmation by E+4 and by 12:00 New York.",
+          "Emit the oldest unused valid expansion setup for the current confirmation only and enter on the exact next M1 open after actual-entry economic revalidation."
+        ],
+        "exit_logic": [
+          "Single full-position stop loss or take profit only.",
+          "If neither price exit occurs, close at the first M1 close at or after 120 elapsed minutes.",
+          "On one candle use conservative order: stop, target, time exit.",
+          "No trailing stop, break-even move, partial exit, pyramiding, or overnight hold."
+        ],
+        "stop_loss_logic": "BUY: minimum low of completed M5 bars E+1 through C minus 0.5 pip; SELL: maximum high plus 0.5 pip. Actual-entry risk must be at least 4 pips.",
+        "take_profit_logic": "BUY: compression high H plus 1.5 times box width W; SELL: compression low L minus 1.5W. Remaining actual-entry reward must be at least 6 pips and pass the frozen adjusted reward/risk test.",
+        "time_exit_logic": "120 wall-clock minutes from actual entry, closed on the first available M1 close at or after the deadline after stop and target checks.",
+        "maximum_trades_per_day": 2,
+        "direction_rules": [
+          "BUY only with upward completed-M15 context and upward expansion/retest/confirmation.",
+          "SELL only with exact mirrored downward context and pattern.",
+          "Never emit both directions from one expansion setup."
+        ],
+        "spread_cost_gate": "Signal and actual-entry plan use a frozen 1.0-pip all-in stress reference, require spread <=4 points, risk >=4 pips, reward >=6 pips, and (reward-1)/(risk+1)>=1.5.",
+        "expected_minimum_holding_minutes": 15,
+        "expected_maximum_holding_minutes": 120,
+        "hard_maximum_holding_minutes": 120,
+        "allow_overnight_positions": false,
+        "forbidden_conditions": [
+          "Any required incomplete, off-grid, duplicated, or nonconsecutive M1/M5/M15 constituent sequence",
+          "Insufficient 60-M5 baseline/compression or 24-M15 context warmup",
+          "Weekend, off-session, cross-local-date, late expansion, or late confirmation",
+          "Nonfinite or zero ranges, excessive box width, failed compression/context/expansion/body/edge/clearance criterion",
+          "Deep retest invalidation, missing retest, missing or non-first confirmation, or target touched before entry",
+          "Reused setup, third emitted intent on a New York date, non-exact next-M1 entry, or existing/pending position",
+          "Stop/reward/adjusted-RR/spread/all-in-cost failure at signal or actual entry",
+          "News filtering, because no causal news calendar is present",
+          "Any trailing stop, break-even move, partial exit, pyramiding, or concurrent position"
+        ]
+      },
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_v1",
+      "promotion_gate_id": "strategy_15_economic_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "strategy15_development_base_2019_2023",
+          "report_path": "reports\\strategy15\\eurusd_2019_2023_strategy15_development_details\\base.json",
+          "cost_model_id": "roboforex_ecn_eurusd_v1",
+          "role": "prospectively_frozen_development_base_cost",
+          "report_run_id": "strategy15_development_unit_economics:c8fef5ea193c028e",
+          "aggregates": [],
+          "continuous_summary": {
+            "period_start": "2019-01-01T00:00:00Z",
+            "period_end_exclusive": "2024-01-01T00:00:00Z",
+            "trade_count": 0,
+            "total_lots": 0.0,
+            "gross_pnl": 0.0,
+            "total_transaction_cost": 0.0,
+            "net_profit": 0.0,
+            "gross_expectancy_per_trade": null,
+            "net_expectancy_per_trade": null,
+            "profit_factor": null,
+            "max_drawdown": 0.0,
+            "positive_years": 0,
+            "year_count": 5,
+            "positive_months": 0,
+            "month_count": 60
+          },
+          "finding": "Zero emitted signals and zero accepted trades across 2019-2023; primary development gates failed."
+        },
+        {
+          "experiment_id": "strategy15_development_stress_2019_2023",
+          "report_path": "reports\\strategy15\\eurusd_2019_2023_strategy15_development_details\\stress.json",
+          "cost_model_id": "roboforex_ecn_eurusd_stress_v1",
+          "role": "prospectively_frozen_development_stress_cost",
+          "report_run_id": "strategy15_development_unit_economics:c8fef5ea193c028e",
+          "aggregates": [],
+          "continuous_summary": {
+            "period_start": "2019-01-01T00:00:00Z",
+            "period_end_exclusive": "2024-01-01T00:00:00Z",
+            "trade_count": 0,
+            "total_lots": 0.0,
+            "gross_pnl": 0.0,
+            "total_transaction_cost": 0.0,
+            "net_profit": 0.0,
+            "gross_expectancy_per_trade": null,
+            "net_expectancy_per_trade": null,
+            "profit_factor": null,
+            "max_drawdown": 0.0,
+            "positive_years": 0,
+            "year_count": 5,
+            "positive_months": 0,
+            "month_count": 60
+          },
+          "finding": "Zero emitted signals and zero accepted trades across 2019-2023 under stress costs; robustness was not eligible."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Rejected prospectively: the frozen 2019-2023 base and stress evaluations emitted zero signals and accepted zero trades, failing 19 primary development gates including signal frequency, expectancy, MFE, profit factor, and temporal consistency. Robustness was not eligible; rules were not modified and 2024-2026 was not accessed."
+    },
+    {
+      "research_id": "strategy_16_scheduled_us_macro_shock_continuation_v1",
+      "strategy_name": "scheduled_us_macro_shock_continuation",
+      "implementation": "mt5_scalping_agent.backtesting.scheduled_macro_shock.ScheduledMacroShockContinuationStrategy",
+      "hypothesis": "An unusually large and directionally efficient EURUSD displacement during the fixed 08:30 America/New_York U.S. macro-release window that retains most of its move during a five-minute stabilization period can continue after 08:40 because interpretation and risk transfer may remain incomplete after the first illiquid burst.",
+      "economic_rationale": "Scheduled public information arrival repeatedly concentrates volatility and price discovery at 08:30 New York. Waiting through the first ten minutes avoids the initial jump and seeks a larger residual move at no more than one trade per day, with structural 5-15 pip risk and 2.25R reward under conservative 1.0/1.9-pip research costs.",
+      "date_proposed": "2026-08-30",
+      "date_provenance": "Prospectively preregistered after explicit user authorization and before implementation or any Strategy 16 development-data access.",
+      "frozen_rules": [
+        "Use validated UTC EURUSD bid M1 OHLCV and America/New_York zoneinfo civil time; Monday-Friday only.",
+        "Require every exact M1 bar from 07:30 through 08:39 New York time. Form twelve non-overlapping completed M5 baseline bars over 07:30-08:29, the 08:30-08:34 shock, and the 08:35-08:39 stabilization.",
+        "Let P0 be 08:29 close, D be 08:34 close minus P0, A=abs(D), and R be aggregate 08:30-08:34 high-low. Require A>=7 pips, R>=max(2 times baseline median M5 range, baseline linear Q90), A/R>=0.70, and directional adverse excursion<=0.20R.",
+        "BUY uses D>0 and SELL D<0. During stabilization no close may cross the 50% retained-displacement level; maximum retracement from the shock close is 40% of A.",
+        "The 08:39 close must retain at least 70% of A and reaccelerate at least 0.5 pip beyond the 08:37 close in the shock direction.",
+        "Emit at most one intent per New York date at 08:39 and enter only on the exact 08:40 M1 open. A rejected emitted intent consumes the date.",
+        "BUY stop is min(stabilization low, P0+0.50A)-0.5 pip; SELL mirrors with max(stabilization high, P0-0.50A)+0.5 pip. At actual entry require 5-15 pips risk.",
+        "Target is exactly 2.25 times actual planned risk from entry and remaining reward must be at least 8 pips. Under 1.9-pip stress reference require (reward-1.9)/(risk+1.9)>=1.25, spread<=10 points, and all-in reference cost<=1.9 pips.",
+        "Exit a single full position at stop or target, else the first M1 close at or after 10:00 New York, never later than 80 elapsed minutes; stop precedes target and target precedes time exit on a shared candle.",
+        "No external release calendar, survey expectation, realized announcement, volume/order flow, future candle, pyramiding, averaging, partial exit, trailing stop, break-even move, concurrent position, or overnight position is permitted. Fail on an open-position M1 gap over 60 seconds."
+      ],
+      "frozen_parameters": {
+        "pip_size": 0.0001,
+        "timezone": "America/New_York",
+        "eligible_weekdays": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "required_start_local": "07:30",
+        "baseline_end_local": "08:29",
+        "shock_start_local": "08:30",
+        "shock_end_local": "08:34",
+        "stabilization_start_local": "08:35",
+        "signal_time_local": "08:39",
+        "entry_time_local": "08:40",
+        "hard_exit_time_local": "10:00",
+        "baseline_m5_bars": 12,
+        "shock_minutes": 5,
+        "stabilization_minutes": 5,
+        "minimum_shock_displacement_pips": 7.0,
+        "minimum_shock_baseline_range_multiple": 2.0,
+        "baseline_range_quantile": 0.9,
+        "quantile_interpolation": "linear",
+        "minimum_directional_efficiency": 0.7,
+        "maximum_adverse_excursion_fraction": 0.2,
+        "minimum_intrastabilization_retained_fraction": 0.5,
+        "maximum_stabilization_retracement_fraction": 0.4,
+        "minimum_final_retained_fraction": 0.7,
+        "reacceleration_reference_minute_local": "08:37",
+        "minimum_reacceleration_pips": 0.5,
+        "stop_buffer_pips": 0.5,
+        "minimum_stop_pips": 5.0,
+        "maximum_stop_pips": 15.0,
+        "target_reward_risk_multiple": 2.25,
+        "minimum_reward_pips": 8.0,
+        "stress_reference_cost_pips": 1.9,
+        "minimum_cost_adjusted_reward_risk": 1.25,
+        "maximum_spread_points": 10.0,
+        "maximum_all_in_cost_pips": 1.9,
+        "maximum_emitted_signals_per_ny_day": 1,
+        "maximum_holding_minutes": 80,
+        "entry_delay_bars_m1": 1,
+        "require_exact_next_m1": true,
+        "parameter_neighborhoods": [
+          {
+            "parameter": "minimum_shock_displacement_pips",
+            "values": [
+              6.0,
+              8.0
+            ]
+          },
+          {
+            "parameter": "minimum_shock_baseline_range_multiple",
+            "values": [
+              1.75,
+              2.25
+            ]
+          },
+          {
+            "parameter": "minimum_final_retained_fraction",
+            "values": [
+              0.6,
+              0.8
+            ]
+          },
+          {
+            "parameter": "maximum_stabilization_retracement_fraction",
+            "values": [
+              0.3,
+              0.5
+            ]
+          },
+          {
+            "parameter": "target_reward_risk_multiple",
+            "values": [
+              2.0,
+              2.5
+            ]
+          }
+        ],
+        "unit_exposure_model": {
+          "sizing_mode": "research_fixed_lot",
+          "fixed_volume_lots": 1.0,
+          "initial_equity_usd": 10000.0
+        },
+        "risk_sized_portfolio_model": {
+          "sizing_mode": "risk_percent",
+          "initial_equity_usd": 10000.0,
+          "risk_percent_per_trade": 0.25,
+          "max_lot_size": 1.0,
+          "max_exposure_lots": 1.0,
+          "max_symbol_exposure_lots": 1.0,
+          "max_open_positions": 1,
+          "min_reward_risk_ratio": 1.25,
+          "max_spread_points": 10.0,
+          "max_market_data_age_seconds": 60.0,
+          "portfolio_circuit_breakers": "nonbinding during diagnostic",
+          "maximum_daily_entries": 1
+        },
+        "robustness_settings": {
+          "random_seed": 20260830,
+          "bootstrap_samples": 10000,
+          "confidence_level": 0.95,
+          "bootstrap_units": [
+            "UTC calendar day",
+            "ISO UTC calendar week"
+          ],
+          "interval_method": "percentile with linear quantiles",
+          "promotion_order": "primary base/stress unit economics first; conditional robustness only after complete primary pass"
+        },
+        "open_position_data_gap_policy": "Fail loudly when consecutive M1 candles during an open position are more than 60 seconds apart."
+      },
+      "frozen_specification": {
+        "specification_schema_version": 1,
+        "market_behavior": "Scheduled-news-clock abnormal EURUSD displacement followed by short stabilization, retention, and delayed same-direction price discovery.",
+        "persistence_rationale": "Recurring scheduled public information, heterogeneous interpretation, staged risk transfer, and temporarily impaired liquidity can repeatedly delay complete price discovery beyond the first five-minute jump.",
+        "timeframe_hierarchy": [
+          "UTC M1 bid OHLCV execution",
+          "Twelve completed non-overlapping M5 baseline bars",
+          "America/New_York event clock and five-minute shock/stabilization composites"
+        ],
+        "session_restrictions": [
+          "Monday-Friday America/New_York dates",
+          "Exact 07:30-08:40 local sequence",
+          "Signal only at 08:39 and entry only at 08:40",
+          "Hard exit at or before 10:00 local"
+        ],
+        "features_and_indicators": [
+          "Baseline M5 raw-range median and linear Q90",
+          "Five-minute shock displacement/range/efficiency",
+          "Directional adverse excursion",
+          "Stabilization retained displacement and retracement",
+          "08:37-to-08:39 reacceleration",
+          "Structural stabilization stop and fixed 2.25R target"
+        ],
+        "lookback_periods": {
+          "baseline_m5": 12,
+          "shock_m1": 5,
+          "stabilization_m1": 5,
+          "total_required_pre_signal_m1": 70
+        },
+        "entry_logic": [
+          "At 08:39 recognize only a shock satisfying every frozen abnormality and efficiency threshold.",
+          "Require all stabilization retention, retracement, and reacceleration conditions.",
+          "Emit one intent for the date and enter only on exact next-minute 08:40 open after actual-entry economics revalidation."
+        ],
+        "exit_logic": [
+          "Single full-position stop or target.",
+          "Otherwise exit at first M1 close at or after 10:00 New York and no later than 80 elapsed minutes.",
+          "Conservative shared-candle order: stop, target, time exit."
+        ],
+        "stop_loss_logic": "BUY uses min stabilization low and 50%-retention level minus 0.5 pip; SELL mirrors. Actual risk must remain 5-15 pips.",
+        "take_profit_logic": "Exactly 2.25 times actual planned risk from entry, at least 8 pips, and passing the frozen stress-cost-adjusted reward/risk gate.",
+        "time_exit_logic": "First M1 close at or after 10:00 America/New_York, never more than 80 elapsed minutes after exact 08:40 entry.",
+        "maximum_trades_per_day": 1,
+        "direction_rules": [
+          "BUY only after positive qualifying shock and retained/reaccelerating stabilization.",
+          "SELL is the exact mirror.",
+          "No opposite or second signal on the same New York date."
+        ],
+        "spread_cost_gate": "Use 1.9-pip stress reference; spread<=10 points; risk 5-15 pips; reward>=8 pips; (reward-1.9)/(risk+1.9)>=1.25.",
+        "expected_minimum_holding_minutes": 10,
+        "expected_maximum_holding_minutes": 60,
+        "hard_maximum_holding_minutes": 80,
+        "allow_overnight_positions": false,
+        "forbidden_conditions": [
+          "Missing, duplicate, off-grid, nonfinite, or nonconsecutive required M1 bar",
+          "Weekend or any local time/date mismatch",
+          "Failed shock size/range/efficiency/adverse-excursion condition",
+          "Failed stabilization retention/retracement/reacceleration condition",
+          "Non-exact 08:40 entry or second emitted daily intent",
+          "Stop/reward/cost-adjusted-RR/spread/all-in-cost failure",
+          "External news calendar, release value, market expectation, order flow, volume, future bar, or discretionary classification",
+          "Pyramiding, averaging, partial exit, trailing stop, break-even move, concurrent or overnight position"
+        ]
+      },
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_news_base_v1",
+      "promotion_gate_id": "strategy_16_event_economic_gate_v1",
+      "experiments_performed": [
+        {
+          "experiment_id": "strategy16_development_base_2019_2023",
+          "report_path": "reports\\strategy16\\eurusd_2019_2023_strategy16_development_details\\base.json",
+          "cost_model_id": "roboforex_ecn_eurusd_news_base_v1",
+          "role": "prospectively_frozen_development_base_cost",
+          "report_run_id": "strategy16_development_unit_economics:004fbf64773b3cb4",
+          "aggregates": [],
+          "continuous_summary": {
+            "period_start": "2019-01-01T00:00:00Z",
+            "period_end_exclusive": "2024-01-01T00:00:00Z",
+            "trade_count": 21,
+            "total_lots": 21.0,
+            "gross_pnl": 244.8750000000515,
+            "total_transaction_cost": 210.0,
+            "net_profit": 34.875000000051486,
+            "gross_expectancy_per_trade": 11.660714285716738,
+            "net_expectancy_per_trade": 1.6607142857167374,
+            "profit_factor": 1.0275800711744165,
+            "max_drawdown": 511.6249999999982,
+            "positive_years": 2,
+            "year_count": 5,
+            "positive_months": 6,
+            "month_count": 60
+          },
+          "finding": "21 fixed-lot trades across 2019-2023; gross expectancy 1.1661 pips and base net expectancy 0.1661 pips failed frozen primary development gates."
+        },
+        {
+          "experiment_id": "strategy16_development_stress_2019_2023",
+          "report_path": "reports\\strategy16\\eurusd_2019_2023_strategy16_development_details\\stress.json",
+          "cost_model_id": "roboforex_ecn_eurusd_news_stress_v1",
+          "role": "prospectively_frozen_development_stress_cost",
+          "report_run_id": "strategy16_development_unit_economics:004fbf64773b3cb4",
+          "aggregates": [],
+          "continuous_summary": {
+            "period_start": "2019-01-01T00:00:00Z",
+            "period_end_exclusive": "2024-01-01T00:00:00Z",
+            "trade_count": 21,
+            "total_lots": 21.0,
+            "gross_pnl": 357.3749999999278,
+            "total_transaction_cost": 398.99999999999994,
+            "net_profit": -41.62500000007218,
+            "gross_expectancy_per_trade": 17.017857142853707,
+            "net_expectancy_per_trade": -1.9821428571462942,
+            "profit_factor": 0.9692691029899865,
+            "max_drawdown": 572.8750000001128,
+            "positive_years": 2,
+            "year_count": 5,
+            "positive_months": 6,
+            "month_count": 60
+          },
+          "finding": "21 fixed-lot trades across 2019-2023; stress net expectancy -0.1982 pips and PF 0.9693 failed frozen primary development gates; robustness was not eligible."
+        }
+      ],
+      "status": "REJECTED",
+      "decision": "REJECTED",
+      "decision_reason": "Rejected prospectively: frozen 2019-2023 base and stress evaluations produced only 21 trades (3/2/6/2/8 annually), failed gross/base/stress expectancy, MFE exceedance/MAE quality, profit-factor, and temporal-consistency gates. Robustness was not eligible; rules were not modified and 2024-2026 was not accessed."
+    },
+    {
+      "research_id": "strategy_17_london_new_york_intraday_continuation_v1",
+      "strategy_name": "london_new_york_intraday_continuation",
+      "implementation": null,
+      "hypothesis": "A sufficiently large and efficient four-hour London impulse that survives a shallow one-hour pullback may continue into the New York overlap.",
+      "economic_rationale": "Holding for hours and requiring a 30-pip minimum reward targets movements large enough that normal-session broker friction is not the main economic determinant.",
+      "date_proposed": "2026-08-30",
+      "date_provenance": "Initially registered before development-data access. Corrected on 2026-08-31 with explicit user authorization to add omitted runtime cost/economic defaults; no implementation, archive load, result, or completed experiment existed.",
+      "frozen_rules": [
+        "Use only validated UTC EURUSD bid M1 OHLCV converted with Europe/London zoneinfo; Monday-Friday only.",
+        "At 11:00 London require every exact M1 candle from 06:00 through 11:00 and derive completed hourly impulse/pullback composites causally.",
+        "Require 06:00-10:00 directional impulse >=25 pips, efficiency >=0.60, 10:00-11:00 pullback <=40% of impulse, and 11:00 close retaining >=80% of impulse.",
+        "Enter only at exact next M1 open at 11:01; emit at most one intent per London date and a rejected intent consumes its date.",
+        "Use pullback extreme plus one pip as stop; actual risk 12-35 pips; target exactly 2R from actual entry and at least 30 pips reward.",
+        "Exit at stop or target, otherwise first M1 close at or after 16:00 London, no later than 300 minutes and never overnight.",
+        "Do not use calendars, volume, order flow, future prices, pyramiding, averaging, partial exits, trailing, break-even moves, concurrent positions, or discretionary handling."
+      ],
+      "frozen_parameters": {
+        "timezone": "Europe/London",
+        "required_start_local": "06:00",
+        "signal_time_local": "11:00",
+        "entry_time_local": "11:01",
+        "hard_exit_time_local": "16:00",
+        "impulse_hours": 4,
+        "pullback_hours": 1,
+        "minimum_impulse_pips": 25.0,
+        "minimum_impulse_efficiency": 0.6,
+        "maximum_pullback_fraction": 0.4,
+        "minimum_reclaim_fraction": 0.8,
+        "stop_buffer_pips": 1.0,
+        "minimum_stop_pips": 12.0,
+        "maximum_stop_pips": 35.0,
+        "target_reward_risk_multiple": 2.0,
+        "minimum_reward_pips": 30.0,
+        "maximum_holding_minutes": 300,
+        "maximum_emitted_signals_per_london_day": 1,
+        "unit_exposure_model": {
+          "fixed_volume_lots": 1.0,
+          "initial_equity_usd": 10000.0
+        },
+        "pip_size": 0.0001,
+        "stress_reference_cost_pips": 0.9,
+        "minimum_cost_adjusted_reward_risk": 1.5,
+        "maximum_spread_points": 3.0,
+        "maximum_all_in_cost_pips": 0.9
+      },
+      "frozen_specification": {
+        "specification_schema_version": 1,
+        "market_behavior": "London directional price discovery persisting into the New York overlap after a shallow contained pullback.",
+        "persistence_rationale": "A multi-hour impulse and retained reclaim seek residual intraday order-flow adjustment with a planned reward far larger than normal-session friction.",
+        "timeframe_hierarchy": [
+          "UTC M1 execution",
+          "completed London civil-time hourly composites"
+        ],
+        "session_restrictions": [
+          "Monday-Friday London dates",
+          "only 11:00 signal and 11:01 entry",
+          "16:00 hard exit"
+        ],
+        "features_and_indicators": [
+          "four-hour signed impulse",
+          "impulse high-low efficiency",
+          "one-hour pullback magnitude",
+          "reclaimed impulse fraction"
+        ],
+        "lookback_periods": {
+          "M1_minutes": 301,
+          "impulse_hours": 4,
+          "pullback_hours": 1
+        },
+        "entry_logic": [
+          "Require every frozen impulse, efficiency, pullback, and reclaim condition at 11:00.",
+          "Enter only on the exact next M1 open."
+        ],
+        "exit_logic": [
+          "Full stop or fixed target.",
+          "Otherwise hard exit at 16:00 London."
+        ],
+        "stop_loss_logic": "Pullback extreme plus one pip buffer.",
+        "take_profit_logic": "Exactly two times actual entry risk with at least 30 pips reward.",
+        "time_exit_logic": "First M1 close at or after 16:00 London and never after 300 minutes.",
+        "maximum_trades_per_day": 1,
+        "direction_rules": [
+          "Buy after positive impulse and retained reclaim.",
+          "Sell mirrors the same rule."
+        ],
+        "spread_cost_gate": "Only frozen normal-session base/stress cost models; no execution inference.",
+        "expected_minimum_holding_minutes": 60,
+        "expected_maximum_holding_minutes": 240,
+        "hard_maximum_holding_minutes": 300,
+        "allow_overnight_positions": false,
+        "forbidden_conditions": [
+          "Missing/nonconsecutive required M1",
+          "weekend/time mismatch",
+          "external data",
+          "future data",
+          "position management variation",
+          "multiple or overnight positions"
+        ]
+      },
+      "permitted_development_dataset_id": "dukascopy_eurusd_m1_development_2019_2023",
+      "required_broker_cost_model_id": "roboforex_ecn_eurusd_intraday_base_v1",
+      "promotion_gate_id": "strategy_17_intraday_economic_gate_v1",
+      "experiments_performed": [],
+      "status": "PROPOSED",
+      "decision": "UNDECIDED",
+      "decision_reason": "Prospectively frozen after user-authorized pre-evaluation metadata correction; implementation and development evaluation have not started."
+    }
+  ]
+}

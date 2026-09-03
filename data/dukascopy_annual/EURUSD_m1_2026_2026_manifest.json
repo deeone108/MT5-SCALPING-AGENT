@@ -1,0 +1,16 @@
+{
+  "source": "Dukascopy public bid-side M1 feed, UTC timestamps",
+  "symbol": "EURUSD",
+  "start_year": 2026,
+  "end_year": 2026,
+  "files": [
+    {
+      "path": "data\\dukascopy_annual\\EURUSD_m1_2026.csv.gz",
+      "year": 2026,
+      "rows": 238066,
+      "first_time": "2026-01-01T22:04:00+00:00",
+      "last_time": "2026-08-21T20:59:00+00:00"
+    }
+  ],
+  "failures": []
+}

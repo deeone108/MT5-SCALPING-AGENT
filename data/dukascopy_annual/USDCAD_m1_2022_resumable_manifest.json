@@ -1,0 +1,200 @@
+{
+  "symbol": "USDCAD",
+  "year": 2022,
+  "chunk_days": 14,
+  "fetched_this_run": 0,
+  "complete": true,
+  "chunks": [
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220101_20220115.csv.gz",
+      "start": "2022-01-01T00:00:00+00:00",
+      "end": "2022-01-15T00:00:00+00:00",
+      "rows": 14333,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220115_20220129.csv.gz",
+      "start": "2022-01-15T00:00:00+00:00",
+      "end": "2022-01-29T00:00:00+00:00",
+      "rows": 14371,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220129_20220212.csv.gz",
+      "start": "2022-01-29T00:00:00+00:00",
+      "end": "2022-02-12T00:00:00+00:00",
+      "rows": 14373,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220212_20220226.csv.gz",
+      "start": "2022-02-12T00:00:00+00:00",
+      "end": "2022-02-26T00:00:00+00:00",
+      "rows": 14353,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220226_20220312.csv.gz",
+      "start": "2022-02-26T00:00:00+00:00",
+      "end": "2022-03-12T00:00:00+00:00",
+      "rows": 14348,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220312_20220326.csv.gz",
+      "start": "2022-03-12T00:00:00+00:00",
+      "end": "2022-03-26T00:00:00+00:00",
+      "rows": 14288,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220326_20220409.csv.gz",
+      "start": "2022-03-26T00:00:00+00:00",
+      "end": "2022-04-09T00:00:00+00:00",
+      "rows": 14247,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220409_20220423.csv.gz",
+      "start": "2022-04-09T00:00:00+00:00",
+      "end": "2022-04-23T00:00:00+00:00",
+      "rows": 14278,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220423_20220507.csv.gz",
+      "start": "2022-04-23T00:00:00+00:00",
+      "end": "2022-05-07T00:00:00+00:00",
+      "rows": 14274,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220507_20220521.csv.gz",
+      "start": "2022-05-07T00:00:00+00:00",
+      "end": "2022-05-21T00:00:00+00:00",
+      "rows": 14297,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220521_20220604.csv.gz",
+      "start": "2022-05-21T00:00:00+00:00",
+      "end": "2022-06-04T00:00:00+00:00",
+      "rows": 14308,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220604_20220618.csv.gz",
+      "start": "2022-06-04T00:00:00+00:00",
+      "end": "2022-06-18T00:00:00+00:00",
+      "rows": 14287,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220618_20220702.csv.gz",
+      "start": "2022-06-18T00:00:00+00:00",
+      "end": "2022-07-02T00:00:00+00:00",
+      "rows": 14279,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220702_20220716.csv.gz",
+      "start": "2022-07-02T00:00:00+00:00",
+      "end": "2022-07-16T00:00:00+00:00",
+      "rows": 14297,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220716_20220730.csv.gz",
+      "start": "2022-07-16T00:00:00+00:00",
+      "end": "2022-07-30T00:00:00+00:00",
+      "rows": 14313,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220730_20220813.csv.gz",
+      "start": "2022-07-30T00:00:00+00:00",
+      "end": "2022-08-13T00:00:00+00:00",
+      "rows": 14327,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220813_20220827.csv.gz",
+      "start": "2022-08-13T00:00:00+00:00",
+      "end": "2022-08-27T00:00:00+00:00",
+      "rows": 14316,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220827_20220910.csv.gz",
+      "start": "2022-08-27T00:00:00+00:00",
+      "end": "2022-09-10T00:00:00+00:00",
+      "rows": 14329,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220910_20220924.csv.gz",
+      "start": "2022-09-10T00:00:00+00:00",
+      "end": "2022-09-24T00:00:00+00:00",
+      "rows": 14313,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20220924_20221008.csv.gz",
+      "start": "2022-09-24T00:00:00+00:00",
+      "end": "2022-10-08T00:00:00+00:00",
+      "rows": 14298,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20221008_20221022.csv.gz",
+      "start": "2022-10-08T00:00:00+00:00",
+      "end": "2022-10-22T00:00:00+00:00",
+      "rows": 14224,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20221022_20221105.csv.gz",
+      "start": "2022-10-22T00:00:00+00:00",
+      "end": "2022-11-05T00:00:00+00:00",
+      "rows": 14243,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20221105_20221119.csv.gz",
+      "start": "2022-11-05T00:00:00+00:00",
+      "end": "2022-11-19T00:00:00+00:00",
+      "rows": 14204,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20221119_20221203.csv.gz",
+      "start": "2022-11-19T00:00:00+00:00",
+      "end": "2022-12-03T00:00:00+00:00",
+      "rows": 14202,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20221203_20221217.csv.gz",
+      "start": "2022-12-03T00:00:00+00:00",
+      "end": "2022-12-17T00:00:00+00:00",
+      "rows": 14250,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20221217_20221231.csv.gz",
+      "start": "2022-12-17T00:00:00+00:00",
+      "end": "2022-12-31T00:00:00+00:00",
+      "rows": 14062,
+      "status": "existing"
+    },
+    {
+      "path": "data\\dukascopy_annual\\chunks\\USDCAD\\2022\\USDCAD_m1_20221231_20230101.empty.json",
+      "start": "2022-12-31T00:00:00+00:00",
+      "end": "2023-01-01T00:00:00+00:00",
+      "rows": 0,
+      "status": "empty"
+    }
+  ],
+  "annual_path": "data\\dukascopy_annual\\USDCAD_m1_2022.csv.gz",
+  "annual_rows": 371414
+}

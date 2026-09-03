@@ -1,0 +1,21 @@
+{
+  "source": "Dukascopy public bid-side M1 feed",
+  "symbol": "EURUSD",
+  "start": "2025-01-06T00:00:00+00:00",
+  "end": "2025-02-03T00:00:00+00:00",
+  "chunk_days": 14,
+  "files": [
+    {
+      "path": "data\\dukascopy\\EURUSD_m1_20250106_20250119.csv.gz",
+      "rows": 14355,
+      "first_time": "2025-01-06T00:00:00+00:00",
+      "last_time": "2025-01-19T23:59:00+00:00"
+    },
+    {
+      "path": "data\\dukascopy\\EURUSD_m1_20250120_20250202.csv.gz",
+      "rows": 14377,
+      "first_time": "2025-01-20T00:00:00+00:00",
+      "last_time": "2025-02-02T23:59:00+00:00"
+    }
+  ]
+}

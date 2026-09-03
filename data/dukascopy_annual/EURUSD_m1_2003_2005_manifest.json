@@ -1,0 +1,13 @@
+{
+  "source": "Dukascopy public bid-side M1 feed, UTC timestamps",
+  "symbol": "EURUSD",
+  "start_year": 2003,
+  "end_year": 2005,
+  "files": [],
+  "failures": [
+    {
+      "year": 2003,
+      "error": "No Dukascopy M1 chunks returned for EURUSD 2003"
+    }
+  ]
+}

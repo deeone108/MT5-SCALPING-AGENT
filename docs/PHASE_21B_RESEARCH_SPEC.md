@@ -1,0 +1,3 @@
+# Phase 21B Convergence Mechanism and Economic Attribution
+
+Phase 21B is a descriptive follow-up to the repaired Phase 21A Method A event population. It attributes residual convergence to target reversal, common-component catch-up, both, or ambiguous movement. It uses only the existing 2019-2023 Dukascopy archive, frozen costs, deterministic bootstrap/FDR, and has no strategy, PnL, execution, or MT5 capability.

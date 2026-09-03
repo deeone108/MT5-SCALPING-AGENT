@@ -1,0 +1,16 @@
+{
+  "source": "Dukascopy public bid-side M1 feed, UTC timestamps",
+  "symbol": "GBPUSD",
+  "start_year": 2019,
+  "end_year": 2019,
+  "files": [
+    {
+      "path": "data\\dukascopy_annual\\GBPUSD_m1_2019.csv.gz",
+      "year": 2019,
+      "rows": 373119,
+      "first_time": "2019-01-01T22:06:00+00:00",
+      "last_time": "2019-12-31T21:59:00+00:00"
+    }
+  ],
+  "failures": []
+}
