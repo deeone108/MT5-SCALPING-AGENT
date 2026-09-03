@@ -46,3 +46,5 @@ MT5 terminal installation and broker login are not part of this phase.
 ## Strategy exits
 
 An actionable `TrendScalper` proposal now contains an indicative entry, stop loss, and take profit. The research baseline places a stop one M1 ATR from entry and a target two M1 ATRs from entry, yielding a nominal 2:1 reward/risk before transaction costs. `SignalProposal` validates this price geometry, and `TradeIntent.from_signal()` converts only actionable proposals for the backtester. ATR multiples are configuration values covered by tests, not validated profitability parameters.
+
+hey
