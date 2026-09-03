@@ -9,7 +9,7 @@ from mt5_scalping_agent.data import LocalResearchArchive
 from mt5_scalping_agent.research.convergence_mechanism import path_metrics
 from mt5_scalping_agent.research.cross_pair import DEVELOPMENT_END,DEVELOPMENT_START
 from mt5_scalping_agent.research.manifest import fingerprint_files,local_archive_dataset,sha256_value,write_json_atomic
-from mt5_scalping_agent.research.relative_value_discovery import BUCKETS,bootstrap_difference,bucket,common_residuals,dedup,entry_events,fdr,outcomes
+from mt5_scalping_agent.research.relative_value_discovery import BUCKETS,bootstrap_difference,bucket,causal_percentile_valid,common_residuals,dedup,entry_events,fdr,outcomes
 
 PAIRS=('EURUSD','GBPUSD','USDJPY','USDCAD'); HORIZONS=(5,10,15,30,60); WINDOW=20*24*12
 def records(frame): return json.loads(frame.to_json(orient='records',date_format='iso'))
@@ -65,7 +65,7 @@ def main():
     events['volatility_regime']=pd.cut(events.vol,[-np.inf,.3,.7,.9,np.inf],labels=['LOW','NORMAL','HIGH','EXTREME'],right=False)
     wide=pd.DataFrame({p:f.set_index('event_time').z for p,f in method_a.items()}); method_b=[]
     for p in PAIRS:
-        residual=rolling_ols_residuals(wide,p); frame=method_a[p][['event_time','session','vol']].copy(); frame['residual']=residual.reindex(pd.DatetimeIndex(frame.event_time)).to_numpy(); frame['abs_residual']=frame.residual.abs(); frame['residual_percentile']=frame.abs_residual.rolling(WINDOW+1,min_periods=WINDOW+1).rank(method='max').sub(1).div(WINDOW); frame['bucket']=bucket(frame.residual_percentile); frame['year']=pd.to_datetime(frame.event_time,utc=True).dt.year; selected=outcomes(dedup(entry_events(frame))); selected['pair']=p; method_b.append(selected)
+        residual=rolling_ols_residuals(wide,p); frame=method_a[p][['event_time','session','vol']].copy(); frame['residual']=residual.reindex(pd.DatetimeIndex(frame.event_time)).to_numpy(); frame['abs_residual']=frame.residual.abs(); frame['residual_percentile']=causal_percentile_valid(frame.abs_residual,WINDOW); frame['bucket']=bucket(frame.residual_percentile); frame['year']=pd.to_datetime(frame.event_time,utc=True).dt.year; selected=outcomes(dedup(entry_events(frame))); selected['pair']=p; method_b.append(selected)
     method_b_events=pd.concat(method_b,ignore_index=True)
     if method_b_events.empty: raise RuntimeError('Method B produced no eligible events')
     method_b_summary=summarize(method_b_events)
