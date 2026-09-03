@@ -13,6 +13,8 @@ from mt5_scalping_agent.research.relative_value_discovery import BUCKETS,bootstr
 
 PAIRS=('EURUSD','GBPUSD','USDJPY','USDCAD'); HORIZONS=(5,10,15,30,60); WINDOW=20*24*12
 def records(frame): return json.loads(frame.to_json(orient='records',date_format='iso'))
+def nullable(value):
+    return None if pd.isna(value) else float(value)
 def rolling_ols_residuals(wide,target):
     columns=[p for p in PAIRS if p!=target]; joined=wide[[target,*columns]].dropna(); values=joined.to_numpy(float); result=pd.Series(np.nan,index=wide.index)
     if len(values)<=WINDOW:return result
@@ -27,7 +29,7 @@ def summarize(events):
     for pair,g in events.groupby('pair'):
         for h in HORIZONS:
             valid=g[f'outcome_{h}m_status'].eq('AVAILABLE'); x=g.loc[valid]
-            rows.append({'pair':pair,'horizon_minutes':h,'events':len(g),'valid_endpoints':int(valid.sum()),'missing_exact_endpoints':int((~valid).sum()),'mean_absolute_residual_change':float(x[f'change_{h}m'].mean()),'median_magnitude_ratio':float(x[f'ratio_{h}m'].median()),'signed_persistence_probability':float(x[f'sign_persistence_{h}m'].mean()),'zero_cross_probability':float(x[f'zero_cross_{h}m'].mean()),'convergence_probability':float((x[f'change_{h}m']<0).mean())})
+            rows.append({'pair':pair,'horizon_minutes':h,'events':len(g),'valid_endpoints':int(valid.sum()),'missing_exact_endpoints':int((~valid).sum()),'mean_absolute_residual_change':nullable(x[f'change_{h}m'].mean()),'median_magnitude_ratio':nullable(x[f'ratio_{h}m'].median()),'signed_persistence_probability':nullable(x[f'sign_persistence_{h}m'].mean()),'zero_cross_probability':nullable(x[f'zero_cross_{h}m'].mean()),'convergence_probability':nullable((x[f'change_{h}m']<0).mean()) if len(x) else None})
     return rows
 def grouped(events,keys):
     return records(events.groupby(keys,dropna=False).change_60m.agg(['count','mean','median']).reset_index())
