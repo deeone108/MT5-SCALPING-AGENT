@@ -29,7 +29,13 @@ def delta_boot(g,seed):
  for start in range(0,5000,250):
   ix=rng.integers(len(table),size=(min(250,5000-start),len(table))); b[start:start+len(ix)]=(target[ix].sum(1)-common[ix].sum(1))/total[ix].sum(1)
  return {'n':len(g),'effect':obs,'ci95':[float(np.quantile(b,.025)),float(np.quantile(b,.975))],'p_value_target':float((b<=0).mean()),'p_value_common':float((b>=0).mean()),'samples':5000,'seed':seed}
-def fdr(rows,key='p_value'):
+def block_medians(frame,column,seed):
+ x=frame[['event_time',column]].dropna().copy(); days=pd.to_datetime(x.event_time,utc=True).dt.date; unique=sorted(days.unique()); mapping={d:i for i,d in enumerate(unique)}; codes=days.map(mapping).to_numpy(); values=x[column].to_numpy(float); order=np.argsort(values); values=values[order]; codes=codes[order]; rng=np.random.default_rng(seed); result=np.empty(5000)
+ for start in range(0,5000,100):
+  size=min(100,5000-start); draws=rng.integers(len(unique),size=(size,len(unique))); counts=np.zeros((size,len(unique)),dtype=np.int16)
+  for i in range(size): counts[i]=np.bincount(draws[i],minlength=len(unique))
+  weights=counts[:,codes]; cumulative=np.cumsum(weights,axis=1); totals=cumulative[:,-1]; lo=(totals-1)//2+1; hi=totals//2+1; ilo=(cumulative>=lo[:,None]).argmax(1); ihi=(cumulative>=hi[:,None]).argmax(1); result[start:start+size]=(values[ilo]+values[ihi])/2
+ return resultdef fdr(rows,key='p_value'):
  use=[r for r in rows if r.get(key) is not None]; a=benjamini_hochberg([r[key] for r in use]); return [{**r,**z} for r,z in zip(use,a,strict=True)]
 def grouped(events,keys): return [{**dict(zip(keys,k if isinstance(k,tuple) else (k,),strict=True)),**summary(g)} for k,g in events.groupby(keys,dropna=False,observed=True)]
 def main():
@@ -68,8 +74,8 @@ def main():
  # Descriptive path risk and economics; family tests use frozen one-sided median screens.
  adverse=[]; b3=[]; economics=[]; b4=[]
  for p,g in pathdf.groupby('pair'):
-  x=g.widening_ratio.dropna(); adverse.append({'pair':p,'n':len(x),'median':val(x.median()),'p75':val(x.quantile(.75)),'p90':val(x.quantile(.9)),'p95':val(x.quantile(.95)),'p99':val(x.quantile(.99)),**{f'p_gt_{k}':float((x>k).mean()) for k in (.1,.25,.5,1)}}); boot=trading_day_bootstrap(g.dropna(subset=['widening_ratio']),lambda y:float(y.widening_ratio.median()),seed=21100); b3.append({'pair':p,'n':len(x),'effect':val(x.median()),'ci95':[val(np.quantile(boot,.025)),val(np.quantile(boot,.975))],'p_value':float((boot>.25).mean())})
-  e=primary[(primary.pair==p)&(primary.mechanism=='TARGET_REVERSAL')].copy(); stress=float(costs[p]['stress']['round_trip_cost_pips']); base=float(costs[p]['base']['round_trip_cost_pips']); e['stress_multiple']=e.mfe_pips/stress; economics.append({'pair':p,'n':len(e),'median_favourable_pips':val(e.mfe_pips.median()),'median_adverse_pips':val(e.mae_pips.median()),'median_base_multiple':val((e.mfe_pips/base).median()),'median_stress_multiple':val(e.stress_multiple.median()),**{f'p_ge_{k}x_stress':float((e.stress_multiple>=k).mean()) if len(e) else None for k in (1,2,4,6,8)}}); boot=trading_day_bootstrap(e,lambda y:float(y.stress_multiple.median()),seed=21200) if len(e) else np.array([]); b4.append({'pair':p,'n':len(e),'effect':val(e.stress_multiple.median()),'ci95':[val(np.quantile(boot,.025)),val(np.quantile(boot,.975))] if len(boot) else [None,None],'p_value':float((boot<2).mean()) if len(boot) else None})
+  x=g.widening_ratio.dropna(); adverse.append({'pair':p,'n':len(x),'median':val(x.median()),'p75':val(x.quantile(.75)),'p90':val(x.quantile(.9)),'p95':val(x.quantile(.95)),'p99':val(x.quantile(.99)),**{f'p_gt_{k}':float((x>k).mean()) for k in (.1,.25,.5,1)}}); boot=block_medians(g,'widening_ratio',21100); b3.append({'pair':p,'n':len(x),'effect':val(x.median()),'ci95':[val(np.quantile(boot,.025)),val(np.quantile(boot,.975))],'p_value':float((boot>.25).mean())})
+  e=primary[(primary.pair==p)&(primary.mechanism=='TARGET_REVERSAL')].copy(); stress=float(costs[p]['stress']['round_trip_cost_pips']); base=float(costs[p]['base']['round_trip_cost_pips']); e['stress_multiple']=e.mfe_pips/stress; economics.append({'pair':p,'n':len(e),'median_favourable_pips':val(e.mfe_pips.median()),'median_adverse_pips':val(e.mae_pips.median()),'median_base_multiple':val((e.mfe_pips/base).median()),'median_stress_multiple':val(e.stress_multiple.median()),**{f'p_ge_{k}x_stress':float((e.stress_multiple>=k).mean()) if len(e) else None for k in (1,2,4,6,8)}}); boot=block_medians(e,'stress_multiple',21200) if len(e) else np.array([]); b4.append({'pair':p,'n':len(e),'effect':val(e.stress_multiple.median()),'ci95':[val(np.quantile(boot,.025)),val(np.quantile(boot,.975))] if len(boot) else [None,None],'p_value':float((boot<2).mean()) if len(boot) else None})
  b3=fdr(b3); b4=fdr(b4)
  years=grouped(primary,['pair','year']); loo=[]
  for p,g in primary.groupby('pair'):
