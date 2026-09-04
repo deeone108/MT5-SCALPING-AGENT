@@ -677,3 +677,10 @@ path risk, economics, pairwise evidence, Method B, relationship stability
 and artifact validation.
 
 Proceed by freezing this addendum first.
+## PRE-ANALYSIS CONSERVATIVE OPERATIONALISATION
+
+Following explicit instruction to continue, the remaining combination rules are frozen conservatively before data access:
+
+- Aggregate B1 proportions and delta are pooled across all eligible target events. A directional aggregate B1 claim survives only when all four pair-level B1 tests survive BH FDR in that same direction. The pooled value is descriptive and is not added as a fifth B1 test.
+- Method A has no estimated beta: its frozen common component is the equal-weight mean of three contributors. Its relationship coefficients therefore remain exactly one third, coefficient drift and sign reversal are zero by construction, and its relationship screen is determined by the already-required annual residual-volatility ratios.
+- B4 remains the frozen four target-leg tests. Two-leg economics are descriptive because no two-leg inferential family was frozen. Consequently a COMMON_CATCH_UP or MIXED result cannot satisfy prospective B4 escalation; it retains its appropriate phenomenon classification. No additional test is invented.
