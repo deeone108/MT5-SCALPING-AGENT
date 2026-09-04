@@ -35,7 +35,8 @@ def block_medians(frame,column,seed):
   size=min(100,5000-start); draws=rng.integers(len(unique),size=(size,len(unique))); counts=np.zeros((size,len(unique)),dtype=np.int16)
   for i in range(size): counts[i]=np.bincount(draws[i],minlength=len(unique))
   weights=counts[:,codes]; cumulative=np.cumsum(weights,axis=1); totals=cumulative[:,-1]; lo=(totals-1)//2+1; hi=totals//2+1; ilo=(cumulative>=lo[:,None]).argmax(1); ihi=(cumulative>=hi[:,None]).argmax(1); result[start:start+size]=(values[ilo]+values[ihi])/2
- return resultdef fdr(rows,key='p_value'):
+ return result
+def fdr(rows,key='p_value'):
  use=[r for r in rows if r.get(key) is not None]; a=benjamini_hochberg([r[key] for r in use]); return [{**r,**z} for r,z in zip(use,a,strict=True)]
 def grouped(events,keys): return [{**dict(zip(keys,k if isinstance(k,tuple) else (k,),strict=True)),**summary(g)} for k,g in events.groupby(keys,dropna=False,observed=True)]
 def main():
