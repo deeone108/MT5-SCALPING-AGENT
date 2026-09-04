@@ -11,6 +11,8 @@ from mt5_scalping_agent.research.cross_pair_edge_discovery import USD_SIGN,causa
 from mt5_scalping_agent.research.relative_value_discovery import common_residuals,entry_events,dedup
 from mt5_scalping_agent.research.convergence_mechanism import contribution_arithmetic,mechanism_labels,adverse_path_metrics,target_excursions,trading_day_bootstrap
 from mt5_scalping_agent.research.manifest import fingerprint_files,local_archive_dataset,sha256_value,write_json_atomic
+import sys
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from scripts.run_phase21a_reproduction import rolling_ols_residuals
 PAIRS=('EURUSD','GBPUSD','USDJPY','USDCAD'); H=(5,10,15,30,60); OFF=np.arange(5,61,5); EPS=1e-10; REQUIRED=('mechanism_by_horizon','target_movement','common_movement','joint_mechanism','contribution_fractions','path_geometry','adverse_widening','target_mfe_mae','pairwise_decomposition','one_leg_economics','two_leg_economics','year_analysis','leave_one_year_out','session_analysis','volatility_analysis','extremeness_analysis','concentration','bootstrap','fdr','method_b','relationship_stability')
 def rec(x): return json.loads(x.to_json(orient='records',date_format='iso'))
