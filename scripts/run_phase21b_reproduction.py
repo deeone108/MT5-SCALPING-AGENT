@@ -25,7 +25,9 @@ def stats(g,cols):
   x=g[c].dropna(); out[c]={'mean':val(x.mean()),'median':val(x.median()),'p25':val(x.quantile(.25)),'p75':val(x.quantile(.75))}
  return out
 def delta_boot(g,seed):
- obs=summary(g)['delta']; b=trading_day_bootstrap(g,lambda x:summary(x)['delta'],samples=5000,seed=seed)
+ obs=summary(g)['delta']; x=g.assign(day=pd.to_datetime(g.event_time,utc=True).dt.date); table=x.groupby('day').mechanism.value_counts().unstack(fill_value=0); total=table.sum(1).to_numpy(float); target=table.get('TARGET_REVERSAL',pd.Series(0,index=table.index)).to_numpy(float); common=table.get('COMMON_CATCH_UP',pd.Series(0,index=table.index)).to_numpy(float); rng=np.random.default_rng(seed); b=np.empty(5000)
+ for start in range(0,5000,250):
+  ix=rng.integers(len(table),size=(min(250,5000-start),len(table))); b[start:start+len(ix)]=(target[ix].sum(1)-common[ix].sum(1))/total[ix].sum(1)
  return {'n':len(g),'effect':obs,'ci95':[float(np.quantile(b,.025)),float(np.quantile(b,.975))],'p_value_target':float((b<=0).mean()),'p_value_common':float((b>=0).mean()),'samples':5000,'seed':seed}
 def fdr(rows,key='p_value'):
  use=[r for r in rows if r.get(key) is not None]; a=benjamini_hochberg([r[key] for r in use]); return [{**r,**z} for r,z in zip(use,a,strict=True)]
