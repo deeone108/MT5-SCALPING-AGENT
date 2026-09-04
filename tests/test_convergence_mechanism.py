@@ -1,4 +1,5 @@
 import numpy as np
+import pytest
 import pandas as pd
 from mt5_scalping_agent.research.convergence_mechanism import attribute,path_metrics
 def test_attribution_and_path_metrics():
@@ -22,3 +23,20 @@ def test_event_timestamp_identity_survives_reset_index():
  full=pd.DataFrame({'event_time':pd.date_range('2020-01-01',periods=100,freq='5min',tz='UTC')})
  event=full.iloc[[20]].copy().reset_index(drop=True)
  assert pd.DatetimeIndex(full.event_time).get_indexer(pd.DatetimeIndex(event.event_time)).tolist()==[20]
+
+def test_phase21b_contributions_labels_and_zero_cross_remainder():
+ from mt5_scalping_agent.research.convergence_mechanism import contribution_arithmetic,mechanism_labels
+ d,t,c,r=contribution_arithmetic(np.array([2.,2.,2.]),np.array([1.,1.,-1.]),np.array([-.5,0.,-3.]),np.array([0.,.5,0.]))
+ assert np.allclose(d,t+c+r)
+ assert mechanism_labels(d,t,c).tolist()==['TARGET_REVERSAL','COMMON_CATCH_UP','TARGET_REVERSAL']
+ assert r[2] == -2.
+
+def test_phase21b_adverse_path_stops_before_first_half_convergence():
+ from mt5_scalping_agent.research.convergence_mechanism import adverse_path_metrics
+ x=adverse_path_metrics(np.array([2.]),np.array([[2.5,3.,.9,4.]]),np.array([5,10,15,20]))
+ assert x['max_pre_convergence_widening'][0]==1. and x['time_to_worst_widening'][0]==10
+
+def test_phase21b_target_excursions_are_directional_native_pips():
+ from mt5_scalping_agent.research.convergence_mechanism import target_excursions
+ x=target_excursions(np.array([1.]),np.array([[1.001,0.999]]),np.array([1.]),.0001,np.array([5,10]))
+ assert x['mfe'][0]==pytest.approx(10) and x['mae'][0]==pytest.approx(-10)
