@@ -63,7 +63,7 @@ def classify(e:Mapping[str,object])->str:
  return 'NO_ACTIONABLE_MECHANISM'
 
 def validate_run(directory:Path,run_id:str,spec_hash:str)->dict:
- required=('manifest','mechanism_by_horizon','target_movement','common_movement','joint_mechanism','contribution_fractions','path_geometry','adverse_widening','target_mfe_mae','pairwise_decomposition','one_leg_economics','two_leg_economics','year_analysis','leave_one_year_out','session_analysis','volatility_analysis','extremeness_analysis','concentration','bootstrap','fdr','method_b','relationship_stability','b4a_one_leg_economics','b4b_two_leg_economics','b5_pairwise_attribution','b6_regime_stability','b7_method_b_robustness','method_a_relationship_stability','method_b_relationship_stability','trading_day_concentration'); missing=[]; invalid=[]
+ required=('manifest','mechanism_by_horizon','target_movement','common_movement','joint_mechanism','contribution_fractions','path_geometry','adverse_widening','target_mfe_mae','pairwise_decomposition','one_leg_economics','two_leg_economics','year_analysis','leave_one_year_out','session_analysis','volatility_analysis','extremeness_analysis','concentration','bootstrap','fdr','method_b','relationship_stability','b4a_one_leg_economics','b4b_two_leg_economics','b5_pairwise_attribution','b6_regime_stability','b7_method_b_robustness','method_a_relationship_stability','method_b_relationship_stability','trading_day_concentration'); missing=[]; invalid=[]; docs={}
  for name in required:
   p=directory/f'{name}.json'
   if not p.exists():missing.append(name);continue
@@ -72,6 +72,39 @@ def validate_run(directory:Path,run_id:str,spec_hash:str)->dict:
   if doc.get('schema_version')!=1 or doc.get('run_id')!=run_id or doc.get('phase21b_specification_hash')!=spec_hash:invalid.append(f'{name}:provenance')
   if doc.get('research_period',{}).get('end_exclusive')!='2024-01-01T00:00:00+00:00':invalid.append(f'{name}:period')
   if 'payload' not in doc:invalid.append(f'{name}:payload')
+  else:docs[name]=doc['payload']
  text=''.join(p.read_text() for p in directory.glob('*.json')); 
  if 'NaN' in text or 'Infinity' in text:invalid.append('nonfinite')
+ if docs:
+  expected={(p,h) for p in PAIRS for h in HORIZONS}
+  for name in ('mechanism_by_horizon','target_mfe_mae'):
+   rows=docs.get(name,[]); found={(r.get('pair'),r.get('horizon')) for r in rows if isinstance(r,dict)} if isinstance(rows,list) else set()
+   if found!=expected:invalid.append(f'{name}:pair_horizon_coverage')
+  mfe=docs.get('target_mfe_mae',[]); required_mfe={'N_eligible','N_unavailable','MFE_mean','MFE_median','MFE_p25','MFE_p75','MFE_p90','MAE_mean','MAE_median','MAE_p25','MAE_p75','MAE_p90','MFE_before_MAE_rate','MAE_before_MFE_rate','median_time_to_MFE','median_time_to_MAE','status'}
+  for row in mfe if isinstance(mfe,list) else []:
+   if not required_mfe.issubset(row) or row.get('status') not in ('AVAILABLE','UNAVAILABLE') or (row.get('status')=='AVAILABLE' and any(row.get(k) is None for k in required_mfe-{'status'})):
+    invalid.append('target_mfe_mae:required_fields');break
+  families={'b4a_one_leg_economics':(4,'B4A_pass'),'b4b_two_leg_economics':(6,'economic_pass'),'b5_pairwise_attribution':(12,None),'b6_regime_stability':(1,'group_pass'),'b7_method_b_robustness':(4,'pair_pass')}
+  for name,(minimum,pass_key) in families.items():
+   payload=docs.get(name,{}); rows=payload.get('tests',[]) if isinstance(payload,dict) else []
+   if len(rows)<minimum:invalid.append(f'{name}:test_family')
+   for row in rows:
+    if row.get('bootstrap_replicates',0)<SAMPLES or 'BH_q' not in row or 'FDR_survival' not in row or (pass_key and pass_key not in row):invalid.append(f'{name}:inference_fields');break
+   if name!='b5_pairwise_attribution' and (not isinstance(payload,dict) or 'overall_pass' not in payload):invalid.append(f'{name}:overall_pass')
+  b5=docs.get('b5_pairwise_attribution',{})
+  if not isinstance(b5,dict) or len(b5.get('unordered',[]))!=6 or 'overall_pass' not in b5:invalid.append('b5_pairwise_attribution:unordered_or_pass')
+  b6=docs.get('b6_regime_stability',{})
+  kinds={r.get('group_type') for r in b6.get('tests',[])} if isinstance(b6,dict) else set()
+  if kinds!={'year','leave_one_year_out','session','volatility'}:invalid.append('b6_regime_stability:groups')
+  for name in ('method_a_relationship_stability','method_b_relationship_stability'):
+   payload=docs.get(name,{}); rows=payload.get('pairs',[]) if isinstance(payload,dict) else []
+   if {r.get('pair') for r in rows}!=set(PAIRS) or not isinstance(payload,dict) or 'overall_pass' not in payload:invalid.append(f'{name}:pairs_or_pass')
+  summary_path=directory/'phase21b_summary.json'
+  if not summary_path.exists():missing.append('phase21b_summary')
+  else:
+   try:payload=json.loads(summary_path.read_text())['payload']; recomputed=classify(payload['classification_evidence'])
+   except Exception:invalid.append('phase21b_summary:classification_inputs')
+   else:
+    if payload.get('classification')!=recomputed or payload.get('status')!=recomputed:invalid.append('phase21b_summary:classification_mismatch')
+ if any(token in text.lower() for token in ('provisional: true','incomplete: true')):invalid.append('provisional_or_incomplete')
  return {'valid':not missing and not invalid,'missing_components':missing,'invalid_components':invalid,'warnings':[]}
