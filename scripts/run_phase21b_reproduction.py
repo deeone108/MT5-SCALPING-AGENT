@@ -48,7 +48,14 @@ def main():
  datasets={p:local_archive_dataset(archive_root=root/'data',archive=archive,symbol=p,periods=[(DEVELOPMENT_START,DEVELOPMENT_END)],project_root=root) for p in PAIRS}; costs=json.loads(costp.read_text())['models']
  codefiles=fingerprint_files([Path(__file__),root/'src/mt5_scalping_agent/research/convergence_mechanism.py',root/'src/mt5_scalping_agent/research/relative_value_discovery.py'],root)
  meta={'schema_version':1,'run_id':a.run_id,'run_timestamp':now.isoformat(),'git_commit':commit,'parent_phase21a_run_id':'reproduction_20260903T224000Z_860ce89','phase21b_specification_hash':'sha256:'+hashlib.sha256(spec.read_bytes()).hexdigest(),'research_period':{'start':DEVELOPMENT_START.isoformat(),'end_exclusive':DEVELOPMENT_END.isoformat()},'data_hashes':{p:d['identifier'] for p,d in datasets.items()},'cost_model_hash':'sha256:'+hashlib.sha256(costp.read_bytes()).hexdigest(),'code_hash':sha256_value(codefiles),'safety':{'mt5':False,'strategy':False,'pnl':False,'execution':False,'post_2023':False}}
- def emit(n,p): write_json_atomic(out/f'{n}.json',{**meta,'component':n,'payload':p})
+ def clean(x):
+  if isinstance(x,dict): return {str(k):clean(v) for k,v in x.items()}
+  if isinstance(x,(list,tuple)): return [clean(v) for v in x]
+  if isinstance(x,np.generic): return clean(x.item())
+  if isinstance(x,(pd.Timestamp,datetime)): return x.isoformat()
+  if isinstance(x,float) and not np.isfinite(x): return None
+  return x
+ def emit(n,p): write_json_atomic(out/f'{n}.json',clean({**meta,'component':n,'payload':p}))
  frames=common_residuals(raw); prices={p:causal_bars(raw[p],5).set_index('completed_time').close for p in PAIRS}; wide=pd.DataFrame({p:f.set_index('event_time').z for p,f in frames.items()})
  allrows=[]; paths=[]; populations=[]; pairrows=[]
  for pair,full in frames.items():
