@@ -1,10 +1,25 @@
 {
-  "schema_version": 1,
-  "reason": "Elapsed-minute outcomes were calculated using positional row offsets.",
-  "status": "SUPERSEDED_INVALID_TIME_ALIGNMENT",
-  "artifacts": [
-    "reports/phase21a",
-    "reports/phase21b"
-  ],
-  "regeneration_permitted_in_sprint_1": false
+  "schema_version": 2,
+  "updated_at": "2026-09-05T14:41:22Z",
+  "superseded_artifacts": {
+    "status": "SUPERSEDED_INVALID_TIME_ALIGNMENT",
+    "reason": "Elapsed-minute outcomes were calculated using positional row offsets.",
+    "artifacts": ["reports/phase21a", "reports/phase21b"],
+    "regeneration_permitted_in_sprint_1": false
+  },
+  "phase21_lineage": {
+    "phase21a": "MEAN_REVERSION_PHENOMENON",
+    "phase21b": "MIXED_CONVERGENCE_PHENOMENON",
+    "phase21c": "PROSPECTIVE_HYPOTHESIS_FROZEN",
+    "phase21d": "PROSPECTIVE_HYPOTHESIS_FAILED",
+    "family": "CLOSED_FOR_THIS_HYPOTHESIS",
+    "accepted_run_id": "phase21d_20260904T230000Z_886b656",
+    "closure_document": "docs/PHASE_21_FAILURE_POSTMORTEM.md",
+    "holdout_evidence_policy": {
+      "development_discovery": "2019-2023",
+      "previously_exposed_evidence": "2024-2026",
+      "future_use_of_2024_2026": "Explicitly labelled robustness evidence only; never pristine untouched holdout.",
+      "strongest_future_validation": "New data gathered after an independently developed hypothesis is frozen."
+    }
+  }
 }

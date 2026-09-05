@@ -422,3 +422,11 @@ Decision: reject this candidate at development screening. The one-trade-per-day 
 - Phase 21B was explicitly approved as a research-only convergence-mechanism follow-up. Files: `docs/PHASE_21B_RESEARCH_SPEC.md`, `src/mt5_scalping_agent/research/convergence_mechanism.py`, `scripts/run_phase21b_convergence_mechanism.py`, and `tests/test_convergence_mechanism.py`.
 - Phase 21B status is `INCOMPLETE_EVIDENCE`: initial target-reversal/common-catch-up/both/ambiguous attribution and path metrics are implemented, but stability, six-pair comparison, frozen-cost context, bootstrap/FDR, and a final Phase 21B classification have not been completed.
 - No Phase 21A or 21B work accessed 2024+, MT5, broker execution, strategy PnL, equity curves, or created a strategy/registry candidate. Do not interpret either phase as approval for trading.
+
+## Phase 21 prospective closure (2026-09-05)
+
+- Final labels: Phase 21A `MEAN_REVERSION_PHENOMENON`; Phase 21B `MIXED_CONVERGENCE_PHENOMENON`; Phase 21C `PROSPECTIVE_HYPOTHESIS_FROZEN`; Phase 21D `PROSPECTIVE_HYPOTHESIS_FAILED`; family `CLOSED_FOR_THIS_HYPOTHESIS`.
+- Accepted run `phase21d_20260904T230000Z_886b656` passed content validation. Across 25,464 available events, equal-weight STRESS-net mean was `-1.116578` pips; bootstrap 95% CI `[-1.298087, -0.935122]`, p-value `1.0`. C1-C5 failed; C6-C8 passed.
+- Immutable record: `docs/PHASE_21_FAILURE_POSTMORTEM.md`; machine record: `reports/phase21e/phase21e_20260905T144122Z_886b656/phase21e_summary.json`.
+- Do not tune or rerun Phase 21 variants, change horizon/pairs/filters/Method A/entry/exit, or use MFE/MAE or BASE costs to rescue it.
+- 2019-2023 is development/discovery data. The 2024-2026 archive is exposed evidence and only robustness evidence for future independent hypotheses. Strong prospective validation requires new post-freeze data.

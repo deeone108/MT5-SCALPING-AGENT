@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "run_id": "phase21e_20260905T144122Z_886b656",
+  "analysis_type": "IMMUTABLE_ARTIFACT_ONLY_FAILURE_POSTMORTEM",
+  "source_run_id": "phase21d_20260904T230000Z_886b656",
+  "source_runner_commit": "886b6566e21cf02ea0df4a178da09f48fb19af67",
+  "prospective_verdict": "PROSPECTIVE_HYPOTHESIS_FAILED",
+  "phase21_family_status": "CLOSED_FOR_THIS_HYPOTHESIS",
+  "market_data_rerun": false,
+  "rules_changed": false,
+  "source_validation": {"valid": true, "invalid_components": [], "classification_recomputed": "PROSPECTIVE_HYPOTHESIS_FAILED"},
+  "criteria": {
+    "C1": {"pass": false, "reason": "Equal-weight STRESS-net mean -1.116578077415491 pips is not greater than zero."},
+    "C2": {"pass": false, "reason": "Zero of four pair net means are positive."},
+    "C3": {"pass": false, "reason": "All four pair net means are negative; there are no positive means to offset them."},
+    "C4": {"pass": false, "reason": "Bootstrap 95% CI [-1.2980874268694467, -0.9351215245534386] is wholly below zero."},
+    "C5": {"pass": false, "reason": "One-sided bootstrap p-value is 1.0, above 0.05."},
+    "C6": {"pass": true, "reason": "25464 overall and at least 6203 per pair exceed frozen minima."},
+    "C7": {"pass": true, "reason": "Largest absolute pair contribution is 0.2873063828073694, below 0.50."},
+    "C8": {"pass": true, "reason": "Top-ten absolute event contribution is 0.007846129934759326, below 0.20."}
+  },
+  "aggregate": {
+    "eligible_events": 27488,
+    "available_events": 25464,
+    "availability_rate": 0.9263678696158324,
+    "equal_weight_gross_mean_pips": 0.22446592258450914,
+    "equal_weight_stress_cost_pips": 1.3410439999999997,
+    "equal_weight_net_mean_pips": -1.116578077415491,
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 21003,
+    "bootstrap_ci95": [-1.2980874268694467, -0.9351215245534386],
+    "bootstrap_raw_p_one_sided": 1.0
+  },
+  "failure_mechanisms": ["COST_EROSION", "NO_GROSS_EDGE", "PAIR_INSTABILITY", "TEMPORAL_INSTABILITY"],
+  "non_mechanisms": ["CONCENTRATION", "INSUFFICIENT_BREADTH", "STATISTICAL_UNCERTAINTY"],
+  "evidence_policy": {
+    "development_discovery": "2019-2023",
+    "previously_exposed": "2024-2026",
+    "future_2024_2026_use": "ROBUSTNESS_ONLY",
+    "strongest_future_prospective_validation": "NEW_POST_FREEZE_DATA"
+  }
+}
