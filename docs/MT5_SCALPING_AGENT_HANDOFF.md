@@ -430,3 +430,10 @@ Decision: reject this candidate at development screening. The one-trade-per-day 
 - Immutable record: `docs/PHASE_21_FAILURE_POSTMORTEM.md`; machine record: `reports/phase21e/phase21e_20260905T144122Z_886b656/phase21e_summary.json`.
 - Do not tune or rerun Phase 21 variants, change horizon/pairs/filters/Method A/entry/exit, or use MFE/MAE or BASE costs to rescue it.
 - 2019-2023 is development/discovery data. The 2024-2026 archive is exposed evidence and only robustness evidence for future independent hypotheses. Strong prospective validation requires new post-freeze data.
+
+## Phase 22 source-access gate (2026-09-05)
+
+- Phase 22 true-tick build run `phase22_data_build_20260905T150855Z_715c0bc` stopped before all network access. The frozen pilot is EURUSD `[2019-01-07, 2019-01-14)` UTC.
+- The available `dukascopy-python==4.0.1` path automates Dukascopy's `freeserv` `chart/json3` TICK endpoint with browser-like headers. Dukascopy's current Terms of Use require prior express written consent for automated acquisition; no consent or authorized JForex credential/export is recorded.
+- Status: `HUMAN_GATE_REQUIRED_SOURCE_ACCESS`. No pilot ticks, Parquet files, Phase 22 research, Strategy 22, PnL, MT5 connection, or order submission were produced. Resolve using provider consent, an authorized official JForex export/API, provider-supplied files, or approval for another licensed source.
+- Gate evidence: `docs/PHASE_22_TICK_DATA_BUILD.md` and `reports/phase22_data_build/phase22_data_build_20260905T150855Z_715c0bc/`. Do not start Phase 22A.

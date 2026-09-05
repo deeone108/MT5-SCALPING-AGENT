@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "HUMAN_GATE_REQUIRED_SOURCE_ACCESS",
+  "verified_at_utc": "2026-09-05T15:08:55Z",
+  "callable_mechanism": {
+    "package": "dukascopy-python==4.0.1",
+    "package_license": "MIT_CODE_ONLY",
+    "module_sha256": "0e72e2c35a7ab3bb08c2aba7fae66090b20a6c8d0dcdbba0e6ba89ab0cd8141bf",
+    "endpoint": "https://freeserv.dukascopy.com/2.0/index.php",
+    "path_parameter": "chart/json3",
+    "interval": "TICK",
+    "page_limit": 30000,
+    "encoding": "uncompressed JSONP",
+    "timestamp": "Unix epoch milliseconds normalized by client to UTC",
+    "fields": ["timestamp", "bidPrice", "askPrice", "bidVolume", "askVolume"],
+    "represents": "quotes_not_trades",
+    "retries": "default seven retries with fixed one-second wait; no explicit rate limiter"
+  },
+  "symbols": {"EURUSD": "EUR/USD", "GBPUSD": "GBP/USD", "USDJPY": "USD/JPY", "USDCAD": "USD/CAD"},
+  "provider_terms": {
+    "terms_url": "https://www.dukascopy.com/swiss/english/legal-pages/terms-of-use/",
+    "disclaimer_url": "https://www.dukascopy.com/trading-tools/disclaimer",
+    "finding": "Automated website acquisition requires prior express written consent; no such evidence is present."
+  },
+  "network_requests_made": 0
+}
