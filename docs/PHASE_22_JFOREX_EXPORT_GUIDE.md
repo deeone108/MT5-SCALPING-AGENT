@@ -16,12 +16,12 @@ Official references:
 
 ## Export exactly one pilot
 
-1. Install/open the current JForex4 Desktop application from Dukascopy and sign in to an eligible demo or live account yourself. Codex must not handle the login.
+1. Install/open the current 64-bit JForex4 Desktop application using Dukascopy's official installation page (<https://www.dukascopy.com/wiki/en/manuals/jforex4-desktop/installation/>) and sign in to an eligible demo or live account yourself. Codex must not handle the login.
 2. Confirm the account is **DEMO** if you do not intend to use a live account. Do not submit or enable orders.
-3. Open `View → Strategies`.
+3. Open `View â†’ Strategies`.
 4. Choose the local import/open action and select `jforex/Phase22TickExporter.java` from this repository. If JForex imports source into JCloud, verify the displayed source matches the local file.
 5. Select the strategy and click **Compile**. Continue only after `Compiling... OK`.
-6. Open `View → Strategy Tester` (called Historical Tester in older documentation).
+6. Open `View â†’ Strategy Tester` (called Historical Tester in older documentation).
 7. Select `Phase22TickExporter`.
 8. Open **Instruments** and select **EUR/USD only**.
 9. Set **Sample Period** from `2019-01-07 00:00:00 UTC` through `2019-01-14 00:00:00 UTC`.
@@ -29,13 +29,13 @@ Official references:
 11. Leave Visual Mode and Optimization disabled.
 12. Click **Start**. In Define Parameters set:
     - Instrument: `EUR/USD`
-    - Output CSV: a local path you control, such as `C:\Users\derek\Downloads\phase22_jforex_eurusd_2019w02.csv`
+    - Output CSV: a local path you control, such as `C:\Users\derek\Desktop\Vcodeee\data\ticks\incoming\jforex\EURUSD_20190107T000000Z_20190114T000000Z_JFOREX_TICKS.csv`
     - Start UTC inclusive: `2019-01-07 00:00:00.000`
     - End UTC exclusive: `2019-01-14 00:00:00.000`
 13. Click **Run** and wait for completion. The strategy contains no `IEngine`, order submission, or trading logic. File access may trigger JForex's full-access confirmation because writing a local CSV requires it.
 14. Do not edit, rename, sort, or re-save the CSV. Import it from the repository terminal:
 
-    `.\.venv\Scripts\python.exe scripts\import_jforex_ticks.py "C:\Users\derek\Downloads\phase22_jforex_eurusd_2019w02.csv"`
+    `.\.venv\Scripts\python.exe scripts\import_jforex_ticks.py --pilot`
 
 The CSV schema is `timestamp_utc_ms,pair,bid,ask,bid_volume,ask_volume,source_sequence`. The timestamp is the JForex `ITick.getTime()` Unix epoch millisecond value and is normalized deterministically to UTC. Bid/Ask and their corresponding best-price volumes are preserved without reconstruction.
 

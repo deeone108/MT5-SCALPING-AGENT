@@ -1,13 +1,18 @@
-"""Import a provider-authorized JForex historical-tick CSV export."""
+"""Import and validate the frozen provider-authorized JForex tick pilot."""
 
 import argparse
 import json
 from pathlib import Path
 
-from mt5_scalping_agent.data.jforex_tick_source import import_jforex_ticks
+from mt5_scalping_agent.data.jforex_pilot import PILOT_FILENAME, PILOT_LANDING, validate_jforex_pilot
 
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument("exported_file", type=Path)
+parser.add_argument("exported_file", nargs="?", type=Path)
+parser.add_argument("--pilot", action="store_true", help="import the frozen pilot from its deterministic landing path")
 parser.add_argument("--data-root", type=Path, default=Path("data/ticks"))
 args = parser.parse_args()
-print(json.dumps(import_jforex_ticks(args.exported_file, args.data_root), indent=2, sort_keys=True))
+if args.pilot == (args.exported_file is not None):
+    parser.error("provide exactly one of exported_file or --pilot")
+source = PILOT_LANDING / PILOT_FILENAME if args.pilot else args.exported_file
+assert source is not None
+print(json.dumps(validate_jforex_pilot(source, args.data_root), indent=2, sort_keys=True))

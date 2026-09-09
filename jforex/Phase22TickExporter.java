@@ -10,7 +10,7 @@ import java.util.*;
 @RequiresFullAccess
 public class Phase22TickExporter implements IStrategy {
     @Configurable("Instrument") public Instrument instrument = Instrument.EURUSD;
-    @Configurable("Output CSV") public File outputFile = new File("phase22_jforex_eurusd_2019w02.csv");
+    @Configurable("Output CSV") public File outputFile = new File("EURUSD_20190107T000000Z_20190114T000000Z_JFOREX_TICKS.csv");
     @Configurable("Start UTC inclusive") public String startUtc = "2019-01-07 00:00:00.000";
     @Configurable("End UTC exclusive") public String endUtc = "2019-01-14 00:00:00.000";
 
@@ -27,6 +27,7 @@ public class Phase22TickExporter implements IStrategy {
             start = format.parse(startUtc).getTime();
             end = format.parse(endUtc).getTime();
             if (start >= end) throw new IllegalArgumentException("start must precede end");
+            if (outputFile.exists()) throw new IOException("refusing to overwrite existing export: " + outputFile);
             writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), StandardCharsets.UTF_8));
             writer.write("timestamp_utc_ms,pair,bid,ask,bid_volume,ask_volume,source_sequence\n");
         } catch (Exception error) {
