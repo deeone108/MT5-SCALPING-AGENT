@@ -91,6 +91,27 @@ class MT5ReadOnlyClient:
         self._require_nonempty_symbol(symbol)
         return self._named_value(self._mt5.symbol_info_tick(symbol), f"tick for {symbol}")
 
+    def historical_ticks_raw(self, symbol: str, start: datetime, end: datetime) -> Any:
+        """Return the exact read-only COPY_TICKS_ALL response for preservation."""
+        self._require_nonempty_symbol(symbol)
+        if start.tzinfo is None or end.tzinfo is None:
+            raise ValueError("historical tick bounds must be timezone-aware")
+        if start >= end:
+            raise ValueError("historical tick start must precede end")
+        ticks = self._mt5.copy_ticks_range(
+            symbol, start.astimezone(UTC), end.astimezone(UTC), self._mt5.COPY_TICKS_ALL
+        )
+        if ticks is None:
+            raise MT5DataError(f"No historical ticks returned for {symbol}: {self._last_error()}")
+        return ticks
+
+    def historical_ticks(self, symbol: str, start: datetime, end: datetime) -> Any:
+        """Return broker ticks filtered to the canonical UTC half-open interval."""
+        ticks = self.historical_ticks_raw(symbol, start, end)
+        start_ms = int(start.timestamp() * 1_000)
+        end_ms = int(end.timestamp() * 1_000)
+        return ticks[(ticks["time_msc"] >= start_ms) & (ticks["time_msc"] < end_ms)]
+
     def historical_ohlcv(self, symbol: str, timeframe: int, bars: int) -> pd.DataFrame:
         """Read completed OHLCV bars and normalize timestamps to UTC."""
         self._require_nonempty_symbol(symbol)

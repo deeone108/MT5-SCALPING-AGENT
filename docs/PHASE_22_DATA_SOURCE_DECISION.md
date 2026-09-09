@@ -1,8 +1,10 @@
-﻿# Phase 22 Data Source Decision
+# Phase 22 Data Source Decision
 
-Status: `HUMAN_GATE_REQUIRED_TRUEFX_DOWNLOAD_METHOD`
-Evaluation date: 2026-09-05
-Scope: data engineering only; no Phase 22A research, PnL, predictive analysis, MT5 access, or 2024+ data access.
+> Update (2026-09-09): The manual JForex bulk route is **ABANDONED_FOR_OPERATIONAL_COMPLEXITY**, not scientifically invalid. RoboForex MT5 read-only historical ticks are now approved; see [PHASE_22_MT5_SOURCE_TRANSITION.md](PHASE_22_MT5_SOURCE_TRANSITION.md).
+
+Status: `MT5_PHASE22_HISTORICAL_SOURCE_APPROVED`
+Evaluation date: 2026-09-09
+Scope: read-only MT5 source probing and data engineering only; no Phase 22A research, PnL, predictive analysis, execution, or 2024+ data access.
 
 ## Decision
 

@@ -1,6 +1,7 @@
 from types import SimpleNamespace
 
 import numpy as np
+import pandas as pd
 import pytest
 
 from mt5_scalping_agent.config import load_settings
@@ -8,6 +9,8 @@ from mt5_scalping_agent.data import MT5ConnectionError, MT5DataError, MT5ReadOnl
 
 
 class FakeMT5:
+    COPY_TICKS_ALL = -1
+
     def __init__(self, *, initializes: bool = True) -> None:
         self.initializes = initializes
         self.initialize_options = None
@@ -54,6 +57,15 @@ class FakeMT5:
     def symbol_info_tick(self, symbol):
         return SimpleNamespace(_asdict=lambda: {"symbol": symbol, "bid": 1.1, "ask": 1.2})
 
+    def copy_ticks_range(self, symbol, start, end, flags):
+        return np.array(
+            [
+                (1, 1.1, 1.2, 0.0, 1, int(start.timestamp() * 1000), 6, 1.0),
+                (2, 1.1, 1.2, 0.0, 1, int(end.timestamp() * 1000), 6, 1.0),
+            ],
+            dtype=[("time", "i8"), ("bid", "f8"), ("ask", "f8"), ("last", "f8"),
+                   ("volume", "u8"), ("time_msc", "i8"), ("flags", "u4"), ("volume_real", "f8")],
+        )
     def copy_rates_from_pos(self, symbol, timeframe, start, bars):
         return self.rates
 
@@ -131,3 +143,14 @@ def test_rejects_empty_symbol_and_empty_historical_data() -> None:
     terminal.rates = None
     with pytest.raises(MT5DataError, match="No historical rates"):
         client.historical_ohlcv("EURUSD", timeframe=1, bars=2)
+
+
+def test_historical_ticks_preserve_raw_and_enforce_half_open_view() -> None:
+    client = MT5ReadOnlyClient(load_settings({}), FakeMT5())
+    start = pd.Timestamp("2019-01-01T00:00:00Z").to_pydatetime()
+    end = pd.Timestamp("2019-02-01T00:00:00Z").to_pydatetime()
+    raw = client.historical_ticks_raw("EURUSD", start, end)
+    filtered = client.historical_ticks("EURUSD", start, end)
+    assert len(raw) == 2
+    assert len(filtered) == 1
+    assert filtered["time_msc"][0] == int(start.timestamp() * 1000)
