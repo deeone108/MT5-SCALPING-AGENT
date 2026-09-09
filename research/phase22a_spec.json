@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "phase": "22A",
+  "purpose": "broker-native FX microstructure phenomenon discovery; no strategy or economics",
+  "dataset": {
+    "provider": "ROBOFOREX_MT5",
+    "normalized_root_sha256": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "pairs": [
+      "EURUSD",
+      "GBPUSD",
+      "USDJPY",
+      "USDCAD"
+    ],
+    "interval": "[2019-01-01T00:00:00Z,2024-01-01T00:00:00Z)",
+    "timestamp": "time_msc normalized to timestamp_utc_ns",
+    "unit": "pair/calendar-month"
+  },
+  "partitions": {
+    "discovery": "[2019-01-01T00:00:00Z,2022-01-01T00:00:00Z)",
+    "confirmation": "[2022-01-01T00:00:00Z,2023-01-01T00:00:00Z)",
+    "internal_holdout": "[2023-01-01T00:00:00Z,2024-01-01T00:00:00Z)",
+    "forbidden": "[2024-01-01T00:00:00Z,+inf)"
+  },
+  "anchors": {
+    "interval_seconds": 10,
+    "alignment": "UTC epoch multiples of 10 seconds",
+    "quote_lookup": "latest quote timestamp <= anchor",
+    "maximum_quote_age_seconds": 2,
+    "ineligible_if_stale": true,
+    "interpolation": false
+  },
+  "causality": {
+    "trailing_interval": "(anchor-lookback,anchor]",
+    "future_lookup": "latest quote timestamp <= anchor+horizon",
+    "future_quote_must_be_after_anchor": true,
+    "maximum_future_quote_age_seconds": 2,
+    "no_lookup_after_horizon": true,
+    "baselines": "past-only and exclude the recent lookback where specified"
+  },
+  "lookbacks_seconds": [
+    1,
+    5,
+    15
+  ],
+  "horizons_seconds": [
+    1,
+    5,
+    15,
+    30,
+    60
+  ],
+  "features": {
+    "quote_direction_imbalance": "(N_up-N_down)/(N_up+N_down) over meaningful nonzero mid changes; preserve counts and positive/negative magnitudes",
+    "micro_price_impulse": "anchor mid minus causal as-of mid at anchor-lookback, in pips and current-spread units",
+    "quote_activity_burst": "recent tick rate divided by tick rate in the immediately preceding nonoverlapping 60 seconds",
+    "spread_dislocation": "current spread divided by median of the preceding six eligible 10-second anchor spreads, excluding current",
+    "micro_volatility_burst": "sum absolute mid changes in lookback divided by lookback-scaled sum absolute mid changes in preceding nonoverlapping 60 seconds"
+  },
+  "outcomes": {
+    "directional": [
+      "future_mid_change_pips",
+      "future_mid_change_spread_units",
+      "sign_feature_x_future_mid_change"
+    ],
+    "nondirectional": [
+      "absolute_future_mid_move_pips",
+      "absolute_future_mid_move_spread_units"
+    ],
+    "probabilities": [
+      "abs_move_ge_0.5_spread",
+      "abs_move_ge_1.0_spread",
+      "abs_move_ge_2.0_spread"
+    ],
+    "spread_state_extra": "future_spread/current_spread minus 1"
+  },
+  "binning": {
+    "method": "pair-specific empirical quintiles",
+    "fit_partition": "discovery only",
+    "quantiles": [
+      0.2,
+      0.4,
+      0.6,
+      0.8
+    ],
+    "confirmation_and_holdout": "apply frozen discovery boundaries",
+    "extreme_deciles": false
+  },
+  "inference": {
+    "unit": "UTC trading-day aggregate",
+    "bootstrap": "deterministic iid resampling of trading-day blocks",
+    "bootstrap_resamples": 10000,
+    "seed": 22001,
+    "confidence_interval": [
+      0.025,
+      0.975
+    ],
+    "multiple_testing": "Benjamini-Hochberg within candidate family",
+    "fdr_q": 0.05,
+    "report": [
+      "mean_effect",
+      "median_daily_effect",
+      "daily_block_95pct_ci",
+      "fraction_positive_days",
+      "fraction_negative_days",
+      "effect_pips",
+      "effect_spread_units"
+    ]
+  },
+  "discovery_gate": {
+    "requirements": [
+      "FDR survives",
+      "stable sign across 2019,2020,2021",
+      "same sign in at least 3 of 4 pairs",
+      "pooled daily-block CI excludes zero",
+      "top five days contribute less than 50 percent of absolute aggregate effect",
+      "effect reported in spread units"
+    ],
+    "rejected_candidates_must_not_access_later_partitions": true
+  },
+  "confirmation_gate": "identical frozen candidate, bin contrast, lookback, horizon, direction and statistic; pooled daily-block CI excludes zero and same sign in at least 3 pairs",
+  "holdout_gate": "identical frozen candidate; pooled daily-block CI excludes zero and same sign in at least 3 pairs",
+  "practical_relevance": {
+    "below_0.10_spread": "statistically detectable",
+    "0.10_to_below_0.25": "microstructurally interesting",
+    "at_least_0.25": "potentially research-worthy for scalping investigation"
+  },
+  "stability": {
+    "only_after_holdout_survival": true,
+    "sessions_utc": {
+      "asian": "00:00-08:00",
+      "london": "08:00-16:00",
+      "new_york": "13:00-21:00",
+      "overlap": "13:00-16:00"
+    },
+    "dimensions": [
+      "pair",
+      "year",
+      "month",
+      "weekday",
+      "session",
+      "spread_quintile",
+      "micro_volatility_quintile"
+    ]
+  },
+  "concentration": {
+    "top_five_days_max_absolute_share": 0.5,
+    "report_pair_year_month_day_concentration": true
+  },
+  "random_seed": 22001,
+  "prohibited": [
+    "2024+ access",
+    "strategy construction",
+    "entries/exits",
+    "PnL",
+    "cost model",
+    "optimization",
+    "machine learning",
+    "order APIs",
+    "broker execution"
+  ]
+}

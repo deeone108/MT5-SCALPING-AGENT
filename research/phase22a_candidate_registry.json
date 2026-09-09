@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "id_format": "P22A_{family}_{lookback_seconds}s_{horizon_seconds}s",
+  "pair_scope": [
+    "EURUSD",
+    "GBPUSD",
+    "USDJPY",
+    "USDCAD"
+  ],
+  "feature_bins": "discovery-fitted pair-specific quintiles; primary contrast Q5 minus Q1",
+  "families": [
+    {
+      "family": "QDI",
+      "feature": "quote_direction_imbalance",
+      "lookbacks": [
+        1,
+        5,
+        15
+      ],
+      "horizons": [
+        1,
+        5,
+        15,
+        30,
+        60
+      ],
+      "primary_effect": "signed continuation effect"
+    },
+    {
+      "family": "IMP",
+      "feature": "micro_price_impulse_pips",
+      "lookbacks": [
+        1,
+        5,
+        15
+      ],
+      "horizons": [
+        1,
+        5,
+        15,
+        30,
+        60
+      ],
+      "primary_effect": "signed continuation effect"
+    },
+    {
+      "family": "ACT_ABS",
+      "feature": "quote_activity_burst",
+      "lookbacks": [
+        1,
+        5,
+        15
+      ],
+      "horizons": [
+        1,
+        5,
+        15,
+        30,
+        60
+      ],
+      "primary_effect": "Q5-Q1 absolute move in spread units"
+    },
+    {
+      "family": "ACT_DIR",
+      "feature": "quote_activity_burst_x_impulse_sign",
+      "lookbacks": [
+        1,
+        5,
+        15
+      ],
+      "horizons": [
+        1,
+        5,
+        15,
+        30,
+        60
+      ],
+      "primary_effect": "Q5 activity signed continuation effect"
+    },
+    {
+      "family": "SPR_ABS",
+      "feature": "spread_dislocation",
+      "lookbacks": [
+        15
+      ],
+      "horizons": [
+        1,
+        5,
+        15,
+        30,
+        60
+      ],
+      "primary_effect": "Q5-Q1 absolute move in spread units"
+    },
+    {
+      "family": "SPR_NORM",
+      "feature": "spread_dislocation",
+      "lookbacks": [
+        15
+      ],
+      "horizons": [
+        1,
+        5,
+        15,
+        30,
+        60
+      ],
+      "primary_effect": "Q5-Q1 future spread normalization"
+    },
+    {
+      "family": "VOL_DIR",
+      "feature": "micro_volatility_burst",
+      "lookbacks": [
+        1,
+        5,
+        15
+      ],
+      "horizons": [
+        1,
+        5,
+        15,
+        30,
+        60
+      ],
+      "primary_effect": "Q5 volatility signed impulse continuation effect"
+    }
+  ],
+  "total_comparisons": 85,
+  "direction_is_not_flippable_after_discovery": true
+}
