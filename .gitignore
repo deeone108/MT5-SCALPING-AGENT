@@ -57,3 +57,6 @@ Desktop.ini
 .hypothesis/
 junit.xml
 test-results/
+
+jforex/*.jfx
+jforex/*.xml
