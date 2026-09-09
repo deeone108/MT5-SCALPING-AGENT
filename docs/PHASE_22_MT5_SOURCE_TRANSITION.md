@@ -64,3 +64,6 @@ Retrieve one monthly unit:
     .\.venv\Scripts\python.exe scripts\download_mt5_phase22_ticks.py --next
 
 The five-year acquisition was not started during source approval.
+## Dataset completion
+
+The 2019-2023 build is **PHASE_22_DATA_READY**: 240/240 monthly units validated, 0 failed, covering 618,387,844 ticks. Semantic validation and 20/20 deterministic replay samples passed. Full statistics and hierarchical hashes are recorded in [PHASE_22_MT5_DATASET_COMPLETION.md](PHASE_22_MT5_DATASET_COMPLETION.md).

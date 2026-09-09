@@ -437,3 +437,13 @@ Decision: reject this candidate at development screening. The one-trade-per-day 
 - The available `dukascopy-python==4.0.1` path automates Dukascopy's `freeserv` `chart/json3` TICK endpoint with browser-like headers. Dukascopy's current Terms of Use require prior express written consent for automated acquisition; no consent or authorized JForex credential/export is recorded.
 - Status: `HUMAN_GATE_REQUIRED_SOURCE_ACCESS`. No pilot ticks, Parquet files, Phase 22 research, Strategy 22, PnL, MT5 connection, or order submission were produced. Resolve using provider consent, an authorized official JForex export/API, provider-supplied files, or approval for another licensed source.
 - Gate evidence: `docs/PHASE_22_TICK_DATA_BUILD.md` and `reports/phase22_data_build/phase22_data_build_20260905T150855Z_715c0bc/`. Do not start Phase 22A.
+
+## Phase 22 MT5 historical dataset completion (2026-09-09)
+
+- Status: **PHASE_22_DATA_READY**.
+- Primary provider: **ROBOFOREX_MT5**; JForex bulk is **ABANDONED_FOR_OPERATIONAL_COMPLEXITY** and retained only for independent characterization.
+- Run: `phase22_mt5_validation_20260909T211110Z`; 240/240 units, 0 failed, 618,387,844 ticks.
+- Raw root: `ee863a5687814ff080bd386c7691192ced85b24e139528a526e8627ce18b9746`.
+- Normalized root: `ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91`.
+- Evidence: [PHASE_22_MT5_DATASET_COMPLETION.md](PHASE_22_MT5_DATASET_COMPLETION.md).
+- Phase 22A has not started. No predictive analysis, PnL, optimization, 2024+ access, or broker execution occurred.
