@@ -35,6 +35,7 @@ logs/*.log
 *.log
 *.log.*
 data/*.db
+data/ticks/
 reports/*
 !reports/.gitkeep
 !data/.gitkeep
