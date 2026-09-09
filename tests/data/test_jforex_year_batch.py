@@ -1,6 +1,14 @@
-import pandas as pd
+from pathlib import Path
 
-from mt5_scalping_agent.data.jforex_year_batch import month_bounds, partition_year_ticks
+import pandas as pd
+import pytest
+
+from mt5_scalping_agent.data.jforex_year_batch import (
+    month_bounds,
+    partition_year_ticks,
+    routed_months,
+    validate_batch_directory,
+)
 
 
 def test_month_rotation_boundaries_preserve_every_tick_and_field() -> None:
@@ -22,3 +30,25 @@ def test_leap_february_and_december_year_boundary_are_exact() -> None:
     dec_start, dec_end = month_bounds(2020, 12)
     assert (feb_start.isoformat(), feb_end.isoformat()) == ("2020-02-01T00:00:00+00:00", "2020-03-01T00:00:00+00:00")
     assert (dec_start.isoformat(), dec_end.isoformat()) == ("2020-12-01T00:00:00+00:00", "2021-01-01T00:00:00+00:00")
+
+
+@pytest.mark.parametrize(
+    ("protected", "expected"),
+    [
+        ({1}, [2, 3]),
+        ({1, 2}, [3]),
+        ({6}, [1, 2, 3]),
+        (set(), [1, 2, 3]),
+        (set(range(1, 13)), []),
+    ],
+)
+def test_protected_month_never_terminates_later_routing(protected: set[int], expected: list[int]) -> None:
+    assert routed_months([1, 2, 3], protected) == expected
+
+
+def test_batch_directory_must_be_absolute_existing_and_writable(tmp_path: Path) -> None:
+    assert validate_batch_directory(tmp_path) == tmp_path.resolve()
+    with pytest.raises(ValueError, match="absolute"):
+        validate_batch_directory(Path("data/ticks/incoming/jforex"))
+    with pytest.raises(FileNotFoundError):
+        validate_batch_directory(tmp_path / "missing")
