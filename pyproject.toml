@@ -16,6 +16,7 @@ dependencies = [
     "python-dotenv>=1.0,<2",
     "dukascopy-python==4.0.1",
     "requests>=2.31,<3",
+    "pyarrow>=17,<22",
 ]
 
 [project.optional-dependencies]
@@ -30,4 +31,3 @@ addopts = "-ra"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
