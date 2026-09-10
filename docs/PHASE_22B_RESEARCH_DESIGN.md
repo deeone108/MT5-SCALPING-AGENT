@@ -1,6 +1,6 @@
 # Phase 22B Mechanism-Validation Research Design
 
-Status: **FROZEN PENDING INDEPENDENT REVIEW**  
+Status: **FROZEN PENDING INDEPENDENT REVIEW**
 Task: `PH22B-RL-001`
 
 Phase 22B asks whether `P22A_SPR_ABS_15s_60s` reflects a genuine raw-price microstructure relationship or a normalization/confounding mechanism. The raw-pip contrast is primary because Phase 22A reported a large negative current-spread-unit contrast alongside a small positive raw-pip contrast. Current-spread-normalized evidence cannot establish genuineness alone.
