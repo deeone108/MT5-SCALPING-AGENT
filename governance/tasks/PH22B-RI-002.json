@@ -8,6 +8,11 @@
     "inputs":  [
                    {
                        "hash_mode":  "canonical_json",
+                       "path":  "research/phase22b_spec_v7.json",
+                       "sha256":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d"
+                   },
+                   {
+                       "hash_mode":  "canonical_json",
                        "path":  "research/phase22b_spec_v6.json",
                        "sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d"
                    },
@@ -37,7 +42,8 @@
                           "tests/research/test_phase22b_analysis.py",
                           "tests/orchestration/test_phase22b_guarded_resolver.py",
                           "reports/phase22b/",
-                          "governance/results/PH22B-RI-002.json"
+                          "governance/results/PH22B-RI-002.json",
+                          "governance/tasks/PH22B-RI-002.json"
                       ],
     "forbidden_paths":  [
                             "research/phase22b_spec_v6.json",
@@ -53,11 +59,11 @@
                                 "2020",
                                 "2021"
                             ],
-    "required_spec_hash":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+    "required_spec_hash":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
     "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
-    "base_commit":  "03d32abd834a992bbd6832a5a8c404feb4e342ba",
+    "base_commit":  "d6f3a9341798912d064d11d1c354cff730e6a3f9",
     "branch":  "task/ph22b-ri-002",
-    "worktree":  "C:/Users/derek/Desktop/Vcodeee-ph22b-ri-002",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-ri-002",
     "required_tests":  [
                            "guard-before-catalog-and-file-open",
                            "content-hash-substitution-denial",
