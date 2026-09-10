@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Agent Task Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "task_id",
+    "phase_id",
+    "assigned_role",
+    "base_commit",
+    "branch",
+    "worktree",
+    "objective",
+    "allowed_paths",
+    "allowed_data",
+    "prohibited_actions",
+    "required_outputs"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "phase_id": {
+      "type": "string"
+    },
+    "assigned_role": {
+      "enum": [
+        "project_orchestrator",
+        "research_lead",
+        "data_engineer",
+        "research_implementer",
+        "statistical_validator",
+        "backtesting_engineer",
+        "safety_reviewer",
+        "qa_reviewer",
+        "documentation_agent"
+      ]
+    },
+    "base_commit": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "branch": {
+      "type": "string"
+    },
+    "worktree": {
+      "type": "string"
+    },
+    "objective": {
+      "type": "string"
+    },
+    "allowed_paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allowed_data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "root_sha256",
+          "partitions"
+        ],
+        "properties": {
+          "root_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "partitions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "prohibited_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "required_outputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
