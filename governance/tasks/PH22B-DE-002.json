@@ -1,0 +1,113 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-DE-002",
+    "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "assigned_role":  "data_engineer",
+    "objective":  "Create access-separated 2019-2021 metadata and locator catalogs from the authoritative Phase 22 acquisition manifest without opening market files or disclosing locked entries.",
+    "inputs":  [
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "reports/phase22_data_build/mt5_historical_manifest.json",
+                       "sha256":  "CONTROL_PLANE_MANIFEST_VALIDATE_INTERNAL"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/approvals/PH22B-DEV-2019-2021-AUTH-001.json",
+                       "sha256":  "2649058a3326c37cdb6c4d0dc0946f70fadc3ae7b1d6c35a0022fcade950f41b"
+                   }
+               ],
+    "allowed_paths":  [
+                          "governance/data_catalogs/phase22b_2019_2021_metadata.json",
+                          "governance/data_catalogs/phase22b_2019_2021_locators.json",
+                          "governance/results/PH22B-DE-002.json",
+                          "governance/tasks/PH22B-DE-002.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/phase22b_spec_v6.json",
+                            "research/phase22b_spec_v7.json",
+                            "src/",
+                            "scripts/",
+                            "tests/",
+                            "reports/phase22a/"
+                        ],
+    "allowed_data_window":  [
+                                "2019",
+                                "2020",
+                                "2021"
+                            ],
+    "required_spec_hash":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "base_commit":  "e568b46d5be82d0d551dfeab5e4bfd907828cdee",
+    "branch":  "task/ph22b-de-002",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-de-002",
+    "required_tests":  [
+                           "only four authorized pairs",
+                           "only 2019-2021",
+                           "all emitted units VALIDATED",
+                           "no market file opened",
+                           "catalog canonical hashes reproduce",
+                           "no locked entry emitted"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "completion_conditions":  [
+                                  "authorized subcatalogs committed",
+                                  "locked entries absent",
+                                  "result manifest complete"
+                              ],
+    "status":  "READY",
+    "allowed_data":  [
+                         {
+                             "partitions":  [
+                                                "2019",
+                                                "2020",
+                                                "2021"
+                                            ],
+                             "root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91"
+                         }
+                     ],
+    "data_authorization":  {
+                               "symbols":  [
+                                               "EURUSD",
+                                               "GBPUSD",
+                                               "USDJPY",
+                                               "USDCAD"
+                                           ],
+                               "partitions":  [
+                                                  "EURUSD-2019",
+                                                  "EURUSD-2020",
+                                                  "EURUSD-2021",
+                                                  "GBPUSD-2019",
+                                                  "GBPUSD-2020",
+                                                  "GBPUSD-2021",
+                                                  "USDJPY-2019",
+                                                  "USDJPY-2020",
+                                                  "USDJPY-2021",
+                                                  "USDCAD-2019",
+                                                  "USDCAD-2020",
+                                                  "USDCAD-2021"
+                                              ],
+                               "years":  [
+                                             2019,
+                                             2020,
+                                             2021
+                                         ],
+                               "authorization_id":  "PH22B-DEV-2019-2021-AUTH-001",
+                               "dataset_root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91"
+                           },
+    "prohibited_actions":  [
+                               "open/hash/sample market files",
+                               "emit 2022/2023 entries",
+                               "2024+",
+                               "research inference",
+                               "strategy/PnL/execution"
+                           ],
+    "required_outputs":  [
+                             "metadata catalog",
+                             "locator catalog",
+                             "catalog hashes",
+                             "result manifest"
+                         ]
+}
