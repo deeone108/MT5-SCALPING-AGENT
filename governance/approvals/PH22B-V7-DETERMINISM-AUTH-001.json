@@ -1,0 +1,50 @@
+{
+    "schema_version":  1,
+    "authorization_id":  "PH22B-V7-DETERMINISM-AUTH-001",
+    "authorized_by":  "human_owner",
+    "authorized_at_utc":  "2026-09-10T22:22:35.4445793Z",
+    "authorization_source":  "Explicit user authorization in current thread",
+    "decision":  "Authorize Phase 22B v7 creation, independent review, freeze, and automatic continuation when changes are exclusively deterministic implementation clarifications.",
+    "immutable_predecessor":  {
+                                  "canonical_sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+                                  "path":  "research/phase22b_spec_v6.json"
+                              },
+    "must_not_change":  [
+                            "candidate",
+                            "hypotheses",
+                            "pairs",
+                            "horizons",
+                            "direction",
+                            "temporal partitions",
+                            "data authority",
+                            "protected-data boundaries",
+                            "strategy authority",
+                            "risk authority",
+                            "execution authority",
+                            "LIVE authority",
+                            "safety controls"
+                        ],
+    "standing_autonomy_rule":  "Future revisions exclusively limited to deterministic implementation clarification may be created, independently reviewed, frozen, and implemented autonomously.",
+    "human_gate_reserved_for":  [
+                                    "scientific scope or hypotheses",
+                                    "protected or locked data access",
+                                    "temporal partitions",
+                                    "strategy/risk/execution/LIVE authority",
+                                    "reviewer overrides",
+                                    "weakened safety controls"
+                                ],
+    "allowed_years":  [
+                          2019,
+                          2020,
+                          2021
+                      ],
+    "locked_years":  [
+                         2022,
+                         2023
+                     ],
+    "forbidden":  "2024+",
+    "strategy_authorized":  false,
+    "pnl_authorized":  false,
+    "execution_authorized":  false,
+    "live_authorized":  false
+}
