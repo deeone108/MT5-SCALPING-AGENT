@@ -63,7 +63,7 @@
                                   "v7 committed and hashed",
                                   "independent review pending"
                               ],
-    "status":  "RUNNING",
+    "status":  "FROZEN_PENDING_REVIEW",
     "allowed_data":  [
 
                      ],

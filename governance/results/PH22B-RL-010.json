@@ -4,7 +4,7 @@
     "role":  "research_lead",
     "status":  "COMPLETE",
     "base_commit":  "c98039c4987c2f6a21152f5523a3a6cc51457fcc",
-    "result_commit":  null,
+    "result_commit":  "2a16c1840a8e2997f13754c76b39a1b11730d681",
     "inputs":  [
                    {
                        "sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
