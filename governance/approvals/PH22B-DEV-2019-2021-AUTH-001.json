@@ -1,0 +1,29 @@
+{
+    "schema_version":  1,
+    "authorization_id":  "PH22B-DEV-2019-2021-AUTH-001",
+    "authorized_by":  "human_owner",
+    "authorization_source":  "explicit instruction attached cf95e7a1-84e8-4586-baf2-d9357054ac9b",
+    "phase":  "PHASE_22B",
+    "specification_canonical_sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+    "dataset_root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "years":  [
+                  2019,
+                  2020,
+                  2021
+              ],
+    "symbols":  [
+                    "EURUSD",
+                    "GBPUSD",
+                    "USDJPY",
+                    "USDCAD"
+                ],
+    "locked_years":  [
+                         2022,
+                         2023
+                     ],
+    "forbidden":  "2024+",
+    "strategy_authorized":  false,
+    "pnl_authorized":  false,
+    "execution_authorized":  false,
+    "live_authorized":  false
+}

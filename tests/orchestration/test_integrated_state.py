@@ -4,9 +4,9 @@ from mt5_scalping_agent.orchestration.validator import load_json, validate_ledge
 ROOT = Path(__file__).resolve().parents[2]
 def test_integrated_project_state_is_valid_and_fail_closed():
     state = StateStore(ROOT / "governance/state/project_state.json").read()
-    assert state["current_phase"] == "PHASE_22B_PENDING_DESIGN"
+    assert state["current_phase"] == "PHASE_22B_RETROSPECTIVE_DEVELOPMENT"
     assert state["live_execution_authorized"] is False
-    assert state["allowed_data_windows"] == []
+    assert state["allowed_data_windows"] == ["2019", "2020", "2021"]
     assert state["forbidden_data_windows"] == ["2024+"]
 def test_integrated_ledger_records_accepted_phase22a():
     ledger = validate_ledger(load_json(ROOT / "governance/memory/project_ledger.json"))

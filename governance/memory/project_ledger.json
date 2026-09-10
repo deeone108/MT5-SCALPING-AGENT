@@ -1,57 +1,99 @@
 {
-  "schema_version": 1,
-  "current_phase": "PHASE_22B_PENDING_DESIGN",
-  "live_execution_authorized": false,
-  "decisions": [
-    {
-      "id": "PHASE_21_CLOSED",
-      "status": "CLOSED_FOR_THIS_HYPOTHESIS",
-      "reference": "docs/PHASE_21_FAILURE_POSTMORTEM.md"
-    },
-    {
-      "id": "JFOREX_PATH",
-      "status": "ABANDONED_FOR_OPERATIONAL_COMPLEXITY",
-      "reference": "docs/PHASE_22_DATA_SOURCE_DECISION.md"
-    },
-    {
-      "id": "PHASE_22_DATASET",
-      "status": "PHASE_22_DATA_READY",
-      "provider": "ROBOFOREX_MT5",
-      "normalized_root_sha256": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
-      "reference": "docs/PHASE_22_MT5_DATASET_COMPLETION.md"
-    },
-    {
-      "id": "PHASE_22A_COMPLETION",
-      "status": "PHASE_22A_ROBUST_PHENOMENON_FOUND",
-      "run_id": "phase22a_20260909T220000Z",
-      "commit": "4ae2e3329e23574d66d89278931aeaa6756c7149",
-      "specification_sha256": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
-      "dataset_root_sha256": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
-      "final_report_sha256": "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a",
-      "discovery_survivors": 55,
-      "confirmation_survivors": 36,
-      "holdout_survivors": 26,
-      "concentration_qualified": 22,
-      "leading_phenomenon": "P22A_SPR_ABS_15s_60s",
-      "accessed_through_year": 2023,
-      "accessed_2024_plus": false,
-      "reference": "reports/phase22a/phase22a_20260909T220000Z/final_report.json"
-    }
-  ],
-  "holdout_access_history": [
-    {
-      "phase": "PHASE_22A",
-      "partition": "2023_INTERNAL_HOLDOUT",
-      "opened_after": "2022_SURVIVORS_FROZEN",
-      "survivor_artifact_sha256": "94036c2e5491b7217e0d42d6b5c18ea5d76ee4024efc7cc6a10c101f6f6d3025",
-      "accessed_2024_plus": false
-    }
-  ],
-  "rejected_hypothesis_families": [
-    {
-      "family": "PHASE_21",
-      "status": "CLOSED_FOR_THIS_HYPOTHESIS",
-      "reference": "docs/PHASE_21_FAILURE_POSTMORTEM.md"
-    }
-  ]
+    "schema_version":  1,
+    "current_phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "live_execution_authorized":  false,
+    "decisions":  [
+                      {
+                          "id":  "PHASE_21_CLOSED",
+                          "status":  "CLOSED_FOR_THIS_HYPOTHESIS",
+                          "reference":  "docs/PHASE_21_FAILURE_POSTMORTEM.md"
+                      },
+                      {
+                          "id":  "JFOREX_PATH",
+                          "status":  "ABANDONED_FOR_OPERATIONAL_COMPLEXITY",
+                          "reference":  "docs/PHASE_22_DATA_SOURCE_DECISION.md"
+                      },
+                      {
+                          "id":  "PHASE_22_DATASET",
+                          "status":  "PHASE_22_DATA_READY",
+                          "provider":  "ROBOFOREX_MT5",
+                          "normalized_root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+                          "reference":  "docs/PHASE_22_MT5_DATASET_COMPLETION.md"
+                      },
+                      {
+                          "id":  "PHASE_22A_COMPLETION",
+                          "status":  "PHASE_22A_ROBUST_PHENOMENON_FOUND",
+                          "run_id":  "phase22a_20260909T220000Z",
+                          "commit":  "4ae2e3329e23574d66d89278931aeaa6756c7149",
+                          "specification_sha256":  "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
+                          "dataset_root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+                          "final_report_sha256":  "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a",
+                          "discovery_survivors":  55,
+                          "confirmation_survivors":  36,
+                          "holdout_survivors":  26,
+                          "concentration_qualified":  22,
+                          "leading_phenomenon":  "P22A_SPR_ABS_15s_60s",
+                          "accessed_through_year":  2023,
+                          "accessed_2024_plus":  false,
+                          "reference":  "reports/phase22a/phase22a_20260909T220000Z/final_report.json"
+                      },
+                      {
+                          "reference":  "docs/PROJECT_MISSION_AND_ROADMAP.md",
+                          "status":  "ACTIVE",
+                          "id":  "MASTER_PROJECT_MISSION"
+                      },
+                      {
+                          "specification_sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+                          "status":  "APPROVED",
+                          "id":  "PHASE_22B_V6_REVIEW",
+                          "reference":  "governance/results/PH22B-REVIEW-009.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DEVELOPMENT_ACCESS",
+                          "approval_sha256":  "2649058a3326c37cdb6c4d0dc0946f70fadc3ae7b1d6c35a0022fcade950f41b",
+                          "forbidden":  "2024+",
+                          "years":  [
+                                        2019,
+                                        2020,
+                                        2021
+                                    ],
+                          "locked":  [
+                                         2022,
+                                         2023
+                                     ],
+                          "status":  "AUTHORIZED",
+                          "symbols":  [
+                                          "EURUSD",
+                                          "GBPUSD",
+                                          "USDJPY",
+                                          "USDCAD"
+                                      ]
+                      },
+                      {
+                          "id":  "PHASE_22B_IMPLEMENTATION_ATTEMPT_001",
+                          "status":  "PHASE_22B_INVALID_RESEARCH_RUN",
+                          "task_id":  "PH22B-RI-001",
+                          "incident_sha256":  "e6c56489cdfdc90e97675ce9c0a34944e93b32554323f267e37b2d88bf4dff8c",
+                          "market_content_opened":  false,
+                          "locked_metadata_exposed":  "at least 2022 filenames",
+                          "next_gate":  "HUMAN_GATE_REQUIRED",
+                          "reference":  "governance/incidents/PH22B-RI-001-LOCKED-DATA-ENUMERATION.json"
+                      }
+                  ],
+    "holdout_access_history":  [
+                                   {
+                                       "phase":  "PHASE_22A",
+                                       "partition":  "2023_INTERNAL_HOLDOUT",
+                                       "opened_after":  "2022_SURVIVORS_FROZEN",
+                                       "survivor_artifact_sha256":  "94036c2e5491b7217e0d42d6b5c18ea5d76ee4024efc7cc6a10c101f6f6d3025",
+                                       "accessed_2024_plus":  false
+                                   }
+                               ],
+    "rejected_hypothesis_families":  [
+                                         {
+                                             "family":  "PHASE_21",
+                                             "status":  "CLOSED_FOR_THIS_HYPOTHESIS",
+                                             "reference":  "docs/PHASE_21_FAILURE_POSTMORTEM.md"
+                                         }
+                                     ]
 }

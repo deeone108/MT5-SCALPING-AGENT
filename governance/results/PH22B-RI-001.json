@@ -1,0 +1,95 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-RI-001",
+    "role":  "research_implementer",
+    "status":  "INVALID",
+    "base_commit":  "5c2cb81bd9451fe1ee087037ba2b0c2883943b96",
+    "result_commit":  null,
+    "inputs":  [
+                   {
+                       "sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+                       "path":  "research/phase22b_spec_v6.json"
+                   },
+                   {
+                       "sha256":  "2649058a3326c37cdb6c4d0dc0946f70fadc3ae7b1d6c35a0022fcade950f41b",
+                       "path":  "governance/approvals/PH22B-DEV-2019-2021-AUTH-001.json"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "sha256":  "e6c56489cdfdc90e97675ce9c0a34944e93b32554323f267e37b2d88bf4dff8c",
+                          "path":  "governance/incidents/PH22B-RI-001-LOCKED-DATA-ENUMERATION.json"
+                      }
+                  ],
+    "commands":  [
+                     "synthetic pytest suites",
+                     "prohibited recursive reports filename enumeration recorded in incident artifact"
+                 ],
+    "tests":  [
+                  {
+                      "result":  "51 passed",
+                      "scope":  "synthetic Phase 22B plus governance"
+                  }
+              ],
+    "data_accessed":  [
+                          "No parquet contents opened, sampled, counted, or hashed",
+                          "At least 2022 confirmation filename metadata enumerated without authorization"
+                      ],
+    "prohibitions_verified":  [
+                                  "2024+ content not accessed",
+                                  "broker/order APIs not accessed",
+                                  "strategy and PnL work not performed"
+                              ],
+    "handoff":  {
+                    "requested_decision":  "Disposition of invalid Phase 22B implementation attempt and authority to create a fresh isolated implementation task",
+                    "limitations":  [
+                                        "Independent QA REJECTED",
+                                        "Independent Statistical Validator REJECTED",
+                                        "2022 filename-enumeration policy violation"
+                                    ],
+                    "to_role":  "human_owner"
+                },
+    "data_windows_accessed":  [
+                                  "LOCKED_2022_FILENAME_METADATA_ONLY"
+                              ],
+    "tests_executed":  [
+                           "pytest Phase22B/governance synthetic suite: 51 passed"
+                       ],
+    "review_status":  [
+                          {
+                              "verdict":  "REJECTED",
+                              "role":  "statistical_validator"
+                          },
+                          {
+                              "verdict":  "REJECTED",
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "end_time":  "2026-09-10T21:37:34.3336179Z",
+    "safety_checks":  [
+                          {
+                              "order_submission":  false,
+                              "live_execution_authorized":  false
+                          },
+                          {
+                              "market_content_opened":  false
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "synthetic implementation and governance artifacts only"
+                      ],
+    "test_results":  [
+                         {
+                             "scope":  "latest independent QA synthetic suite",
+                             "failed":  0,
+                             "passed":  51
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "incident":  "e6c56489cdfdc90e97675ce9c0a34944e93b32554323f267e37b2d88bf4dff8c"
+                        },
+    "terminal_result":  "PHASE_22B_INVALID_RESEARCH_RUN",
+    "start_time":  "2026-09-10T00:00:00Z",
+    "specification_hash_used":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d"
+}

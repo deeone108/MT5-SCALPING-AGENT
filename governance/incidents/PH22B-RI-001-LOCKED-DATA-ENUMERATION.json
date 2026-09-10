@@ -1,0 +1,24 @@
+{
+    "schema_version":  1,
+    "incident_id":  "PH22B-RI-001-LOCKED-DATA-ENUMERATION",
+    "detected_at_utc":  "2026-09-10T21:37:34.3336179Z",
+    "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "task_id":  "PH22B-RI-001",
+    "classification":  "PHASE_22B_INVALID_RESEARCH_RUN",
+    "policy":  "governance/DATA_ACCESS_POLICY.md",
+    "event":  "Recursive filename enumeration under reports exposed at least Phase 22A 2022 confirmation partition names before the Phase 22B 2022 unlock gate.",
+    "command":  "Get-ChildItem reports -Recurse -File | Where-Object { $_.FullName -match \u0027phase22a\u0027 } | Select-Object -First 80 FullName",
+    "content_opened":  false,
+    "content_sampled":  false,
+    "content_hashed":  false,
+    "reported_2024_plus_access":  false,
+    "scope_certainty":  "At least 2022 filename metadata was exposed; exact emitted path list was not re-requested or re-enumerated after detection.",
+    "response":  [
+                     "stopped implementation immediately",
+                     "performed no further report access",
+                     "kept 2019-2021 research content unopened",
+                     "kept 2022 and 2023 locked",
+                     "recorded independent QA and Statistical Validator rejection"
+                 ],
+    "human_gate":  "Owner disposition required before a fresh Phase 22B implementation context may be created."
+}
