@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "run_id": "synthetic_orchestration_dry_run_v1",
+  "uses_real_research_data": false,
+  "success_path": ["SPEC_FROZEN", "TASK_ASSIGNED", "WORKTREE_ISOLATED", "IMPLEMENTED", "STATISTICALLY_APPROVED", "QA_APPROVED", "RESULT_ACCEPTED", "PHASE_ADVANCED"],
+  "fail_closed_cases": {
+    "wrong_spec_hash": "RESULT_REJECTED",
+    "wrong_dataset_hash": "RESULT_REJECTED",
+    "unauthorized_data": "DATA_ACCESS_GATE_DENIED",
+    "missing_qa": "RESULT_REJECTED",
+    "failed_test": "RESULT_REJECTED",
+    "safety_veto": "RESULT_REJECTED",
+    "live_activation": "HUMAN_GATE_REQUIRED"
+  },
+  "test": "tests/orchestration/test_runtime.py::test_synthetic_multi_agent_success_and_fail_closed",
+  "status": "PASSED"
+}

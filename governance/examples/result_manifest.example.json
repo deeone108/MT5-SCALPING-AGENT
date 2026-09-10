@@ -1,0 +1,79 @@
+{
+    "schema_version":  1,
+    "task_id":  "phase22a-implement-discovery",
+    "role":  "research_implementer",
+    "status":  "COMPLETE",
+    "base_commit":  "d7c79e40d98316bf957f0e7428d464b959b0206a",
+    "result_commit":  "1111111111111111111111111111111111111111",
+    "inputs":  [
+                   {
+                       "path":  "research/phase22a_spec.json",
+                       "sha256":  "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "path":  "reports/phase22a/result.json",
+                          "sha256":  "2222222222222222222222222222222222222222222222222222222222222222"
+                      }
+                  ],
+    "commands":  [
+                     "python -m pytest tests/research"
+                 ],
+    "tests":  [
+                  {
+                      "command":  "python -m pytest tests/research",
+                      "result":  "PASSED",
+                      "summary":  "focused suite passed"
+                  }
+              ],
+    "data_accessed":  [
+                          "DISCOVERY"
+                      ],
+    "prohibitions_verified":  [
+                                  "no later partitions",
+                                  "no order APIs"
+                              ],
+    "handoff":  {
+                    "to_role":  "qa_reviewer",
+                    "requested_decision":  "implementation fidelity review",
+                    "limitations":  [
+
+                                    ]
+                },
+    "data_windows_accessed":  [
+                                  "2019"
+                              ],
+    "tests_executed":  [
+                           "unit"
+                       ],
+    "review_status":  [
+                          {
+                              "decision":  "APPROVED",
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "end_time":  "2026-01-01T00:01:00Z",
+    "safety_checks":  [
+                          {
+                              "name":  "no_live",
+                              "status":  "PASSED"
+                          }
+                      ],
+    "dataset_hash_used":  "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "files_changed":  [
+                          "synthetic/output.txt"
+                      ],
+    "test_results":  [
+                         {
+                             "name":  "unit",
+                             "status":  "PASSED"
+                         }
+                     ],
+    "artifact_hashes":  {
+
+                        },
+    "terminal_result":  "COMPLETE",
+    "start_time":  "2026-01-01T00:00:00Z",
+    "specification_hash_used":  "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+}

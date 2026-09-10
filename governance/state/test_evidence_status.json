@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "classification": "REQUIRED_EXTERNAL_EVIDENCE_MISSING",
+  "full_suite": {"passed": 428, "failed": 9, "warnings": 13},
+  "evidence_independent_suite": {"passed": 416, "failed": 0, "warnings": 13},
+  "focused_governance_runtime": {"passed": 15, "failed": 0},
+  "missing_dependencies": [
+    "reports/chronological_validation/eurusd_2019_2026_all_strategies_four_month_summary.json",
+    "reports/strategy16/eurusd_2019_2023_strategy16_development_details/stress.json"
+  ],
+  "reason": "reports/ is Git-ignored local evidence and is therefore absent from a clean linked worktree",
+  "policy": "Failures remain failures; classification does not weaken or skip assertions."
+}

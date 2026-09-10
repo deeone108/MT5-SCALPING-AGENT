@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Project Decision Ledger",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "current_phase", "live_execution_authorized", "decisions", "holdout_access_history", "rejected_hypothesis_families"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "current_phase": {"type": "string"},
+    "live_execution_authorized": {"const": false},
+    "decisions": {"type": "array", "items": {"type": "object", "required": ["id", "status", "reference"]}},
+    "holdout_access_history": {"type": "array", "items": {"type": "object", "required": ["phase", "partition", "accessed_2024_plus"]}},
+    "rejected_hypothesis_families": {"type": "array", "items": {"type": "object", "required": ["family", "status", "reference"]}}
+  }
+}

@@ -1,0 +1,200 @@
+{
+    "$schema":  "https://json-schema.org/draft/2020-12/schema",
+    "title":  "Agent Result Manifest",
+    "type":  "object",
+    "additionalProperties":  false,
+    "required":  [
+                     "schema_version",
+                     "task_id",
+                     "role",
+                     "status",
+                     "base_commit",
+                     "result_commit",
+                     "inputs",
+                     "artifacts",
+                     "commands",
+                     "tests",
+                     "data_accessed",
+                     "prohibitions_verified",
+                     "handoff",
+                     "data_windows_accessed",
+                     "tests_executed",
+                     "review_status",
+                     "end_time",
+                     "safety_checks",
+                     "dataset_hash_used",
+                     "files_changed",
+                     "test_results",
+                     "artifact_hashes",
+                     "terminal_result",
+                     "start_time",
+                     "specification_hash_used"
+                 ],
+    "properties":  {
+                       "schema_version":  {
+                                              "const":  1
+                                          },
+                       "task_id":  {
+                                       "type":  "string"
+                                   },
+                       "role":  {
+                                    "type":  "string"
+                                },
+                       "status":  {
+                                      "enum":  [
+                                                   "COMPLETE",
+                                                   "BLOCKED",
+                                                   "FAILED",
+                                                   "INVALID",
+                                                   "VETOED"
+                                               ]
+                                  },
+                       "base_commit":  {
+                                           "type":  "string",
+                                           "pattern":  "^[0-9a-f]{40}$"
+                                       },
+                       "result_commit":  {
+                                             "type":  [
+                                                          "string",
+                                                          "null"
+                                                      ],
+                                             "pattern":  "^[0-9a-f]{40}$"
+                                         },
+                       "inputs":  {
+                                      "type":  "array",
+                                      "items":  {
+                                                    "$ref":  "#/$defs/artifact"
+                                                }
+                                  },
+                       "artifacts":  {
+                                         "type":  "array",
+                                         "items":  {
+                                                       "$ref":  "#/$defs/artifact"
+                                                   }
+                                     },
+                       "commands":  {
+                                        "type":  "array",
+                                        "items":  {
+                                                      "type":  "string"
+                                                  }
+                                    },
+                       "tests":  {
+                                     "type":  "array",
+                                     "items":  {
+                                                   "type":  "object"
+                                               }
+                                 },
+                       "data_accessed":  {
+                                             "type":  "array",
+                                             "items":  {
+                                                           "type":  "string"
+                                                       }
+                                         },
+                       "prohibitions_verified":  {
+                                                     "type":  "array",
+                                                     "items":  {
+                                                                   "type":  "string"
+                                                               }
+                                                 },
+                       "handoff":  {
+                                       "type":  "object",
+                                       "required":  [
+                                                        "to_role",
+                                                        "requested_decision",
+                                                        "limitations"
+                                                    ],
+                                       "properties":  {
+                                                          "to_role":  {
+                                                                          "type":  "string"
+                                                                      },
+                                                          "requested_decision":  {
+                                                                                     "type":  "string"
+                                                                                 },
+                                                          "limitations":  {
+                                                                              "type":  "array",
+                                                                              "items":  {
+                                                                                            "type":  "string"
+                                                                                        }
+                                                                          }
+                                                      },
+                                       "additionalProperties":  false
+                                   },
+                       "data_windows_accessed":  {
+                                                     "items":  {
+                                                                   "type":  "string"
+                                                               },
+                                                     "type":  "array"
+                                                 },
+                       "tests_executed":  {
+                                              "items":  {
+                                                            "type":  "string"
+                                                        },
+                                              "type":  "array"
+                                          },
+                       "review_status":  {
+                                             "items":  {
+                                                           "type":  "object"
+                                                       },
+                                             "type":  "array"
+                                         },
+                       "end_time":  {
+                                        "type":  "string",
+                                        "format":  "date-time"
+                                    },
+                       "safety_checks":  {
+                                             "items":  {
+                                                           "type":  "object"
+                                                       },
+                                             "type":  "array"
+                                         },
+                       "dataset_hash_used":  {
+                                                 "type":  "string",
+                                                 "pattern":  "^[0-9a-f]{64}$"
+                                             },
+                       "files_changed":  {
+                                             "items":  {
+                                                           "type":  "string"
+                                                       },
+                                             "type":  "array"
+                                         },
+                       "test_results":  {
+                                            "items":  {
+                                                          "type":  "object"
+                                                      },
+                                            "type":  "array"
+                                        },
+                       "artifact_hashes":  {
+                                               "type":  "object"
+                                           },
+                       "terminal_result":  {
+                                               "type":  "string"
+                                           },
+                       "start_time":  {
+                                          "type":  "string",
+                                          "format":  "date-time"
+                                      },
+                       "specification_hash_used":  {
+                                                       "type":  "string",
+                                                       "pattern":  "^[0-9a-f]{64}$"
+                                                   }
+                   },
+    "$defs":  {
+                  "artifact":  {
+                                   "type":  "object",
+                                   "required":  [
+                                                    "path",
+                                                    "sha256"
+                                                ],
+                                   "properties":  {
+                                                      "path":  {
+                                                                   "type":  "string"
+                                                               },
+                                                      "sha256":  {
+                                                                     "type":  "string",
+                                                                     "pattern":  "^[0-9a-f]{64}$"
+                                                                 }
+                                                  },
+                                   "additionalProperties":  false
+                               }
+              }
+}
