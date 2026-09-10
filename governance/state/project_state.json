@@ -1,0 +1,92 @@
+{
+    "schema_version":  1,
+    "phase_id":  "PHASE_22A",
+    "current_phase":  "PHASE_22A",
+    "status":  "DISCOVERY_RUNNING",
+    "phase_status":  "DISCOVERY_RUNNING",
+    "base_commit":  "d7c79e40d98316bf957f0e7428d464b959b0206a",
+    "orchestrator":  "project_orchestrator",
+    "research_spec_hash":  "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
+    "spec_sha256":  "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
+    "dataset_root_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "allowed_data_windows":  [
+                                 "2019",
+                                 "2020",
+                                 "2021"
+                             ],
+    "locked_data_windows":  [
+                                "2022",
+                                "2023"
+                            ],
+    "forbidden_data_windows":  [
+                                   "2024+"
+                               ],
+    "active_tasks":  [
+
+                     ],
+    "completed_tasks":  [
+
+                        ],
+    "blocked_tasks":  [
+
+                      ],
+    "candidate_registry_hash":  null,
+    "last_validated_commit":  "d7c79e40d98316bf957f0e7428d464b959b0206a",
+    "phase_transition_history":  [
+
+                                 ],
+    "safety_state":  {
+                         "status":  "ENFORCED",
+                         "order_submission":  false,
+                         "execution_api":  false
+                     },
+    "live_execution_authorized":  false,
+    "gates":  {
+                  "data":  {
+                               "status":  "PASSED",
+                               "reviewer_role":  "data_engineer",
+                               "evidence_sha256":  "c59da3c714e839f847606af664c47c8e72d629148538cb5ece8f73427e54710d"
+                           },
+                  "freeze":  {
+                                 "status":  "PASSED",
+                                 "reviewer_role":  "research_lead",
+                                 "evidence_sha256":  "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323"
+                             },
+                  "implementation":  {
+                                         "status":  "PENDING",
+                                         "reviewer_role":  "qa_reviewer",
+                                         "evidence_sha256":  null
+                                     },
+                  "statistics":  {
+                                     "status":  "PENDING",
+                                     "reviewer_role":  "statistical_validator",
+                                     "evidence_sha256":  null
+                                 },
+                  "qa":  {
+                             "status":  "PENDING",
+                             "reviewer_role":  "qa_reviewer",
+                             "evidence_sha256":  null
+                         },
+                  "safety":  {
+                                 "status":  "NOT_REQUIRED",
+                                 "reviewer_role":  "safety_reviewer",
+                                 "evidence_sha256":  null
+                             }
+              },
+    "data_access":  {
+                        "allowed_partitions":  [
+                                                   "2019",
+                                                   "2020",
+                                                   "2021"
+                                               ],
+                        "locked_partitions":  [
+                                                  "2022",
+                                                  "2023",
+                                                  "2024+"
+                                              ],
+                        "unlock_manifest_sha256":  null
+                    },
+    "transitions":  [
+
+                    ]
+}

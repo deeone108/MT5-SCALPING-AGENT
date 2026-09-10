@@ -1,176 +1,264 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Project Phase State",
-  "type": "object",
-  "additionalProperties": false,
-  "required": [
-    "schema_version",
-    "phase_id",
-    "status",
-    "base_commit",
-    "orchestrator",
-    "gates",
-    "data_access",
-    "transitions"
-  ],
-  "properties": {
-    "schema_version": {
-      "const": 1
-    },
-    "phase_id": {
-      "type": "string"
-    },
-    "status": {
-      "enum": [
-        "PROPOSED",
-        "DATA_PREPARATION",
-        "DESIGN_FROZEN",
-        "IMPLEMENTATION_REVIEW",
-        "DISCOVERY_RUNNING",
-        "DISCOVERY_FROZEN",
-        "CONFIRMATION_UNLOCKED",
-        "CONFIRMATION_RUNNING",
-        "CONFIRMATION_FROZEN",
-        "HOLDOUT_UNLOCKED",
-        "HOLDOUT_RUNNING",
-        "VALIDATION",
-        "COMPLETE",
-        "CLOSED",
-        "BLOCKED",
-        "INVALID"
-      ]
-    },
-    "base_commit": {
-      "type": "string",
-      "pattern": "^[0-9a-f]{40}$"
-    },
-    "spec_sha256": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "pattern": "^[0-9a-f]{64}$"
-    },
-    "orchestrator": {
-      "const": "project_orchestrator"
-    },
-    "gates": {
-      "type": "object",
-      "required": [
-        "data",
-        "freeze",
-        "implementation",
-        "statistics",
-        "qa",
-        "safety"
-      ],
-      "additionalProperties": {
-        "$ref": "#/$defs/gate"
-      }
-    },
-    "data_access": {
-      "type": "object",
-      "required": [
-        "allowed_partitions",
-        "locked_partitions"
-      ],
-      "properties": {
-        "allowed_partitions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "locked_partitions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "unlock_manifest_sha256": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "pattern": "^[0-9a-f]{64}$"
-        }
-      },
-      "additionalProperties": false
-    },
-    "transitions": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "from",
-          "to",
-          "authorized_by",
-          "at_utc",
-          "evidence_sha256"
-        ],
-        "properties": {
-          "from": {
-            "type": "string"
-          },
-          "to": {
-            "type": "string"
-          },
-          "authorized_by": {
-            "const": "project_orchestrator"
-          },
-          "at_utc": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "evidence_sha256": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{64}$"
-          },
-          "human_owner_approval_sha256": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "pattern": "^[0-9a-f]{64}$"
-          }
-        },
-        "additionalProperties": false
-      }
-    }
-  },
-  "$defs": {
-    "gate": {
-      "type": "object",
-      "required": [
-        "status",
-        "reviewer_role",
-        "evidence_sha256"
-      ],
-      "properties": {
-        "status": {
-          "enum": [
-            "NOT_REQUIRED",
-            "PENDING",
-            "PASSED",
-            "FAILED",
-            "VETOED"
-          ]
-        },
-        "reviewer_role": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "evidence_sha256": {
-          "type": [
-            "string",
-            "null"
-          ],
-          "pattern": "^[0-9a-f]{64}$"
-        }
-      },
-      "additionalProperties": false
-    }
-  }
+    "$schema":  "https://json-schema.org/draft/2020-12/schema",
+    "title":  "Project Phase State",
+    "type":  "object",
+    "additionalProperties":  false,
+    "required":  [
+                     "schema_version",
+                     "phase_id",
+                     "status",
+                     "base_commit",
+                     "orchestrator",
+                     "gates",
+                     "data_access",
+                     "transitions",
+                     "candidate_registry_hash",
+                     "forbidden_data_windows",
+                     "active_tasks",
+                     "phase_transition_history",
+                     "completed_tasks",
+                     "live_execution_authorized",
+                     "research_spec_hash",
+                     "blocked_tasks",
+                     "locked_data_windows",
+                     "last_validated_commit",
+                     "phase_status",
+                     "dataset_root_hash",
+                     "allowed_data_windows",
+                     "current_phase",
+                     "safety_state"
+                 ],
+    "properties":  {
+                       "schema_version":  {
+                                              "const":  1
+                                          },
+                       "phase_id":  {
+                                        "type":  "string"
+                                    },
+                       "status":  {
+                                      "enum":  [
+                                                   "PROPOSED",
+                                                   "DATA_PREPARATION",
+                                                   "DESIGN_FROZEN",
+                                                   "IMPLEMENTATION_REVIEW",
+                                                   "DISCOVERY_RUNNING",
+                                                   "DISCOVERY_FROZEN",
+                                                   "CONFIRMATION_UNLOCKED",
+                                                   "CONFIRMATION_RUNNING",
+                                                   "CONFIRMATION_FROZEN",
+                                                   "HOLDOUT_UNLOCKED",
+                                                   "HOLDOUT_RUNNING",
+                                                   "VALIDATION",
+                                                   "COMPLETE",
+                                                   "CLOSED",
+                                                   "BLOCKED",
+                                                   "INVALID"
+                                               ]
+                                  },
+                       "base_commit":  {
+                                           "type":  "string",
+                                           "pattern":  "^[0-9a-f]{40}$"
+                                       },
+                       "spec_sha256":  {
+                                           "type":  [
+                                                        "string",
+                                                        "null"
+                                                    ],
+                                           "pattern":  "^[0-9a-f]{64}$"
+                                       },
+                       "orchestrator":  {
+                                            "const":  "project_orchestrator"
+                                        },
+                       "gates":  {
+                                     "type":  "object",
+                                     "required":  [
+                                                      "data",
+                                                      "freeze",
+                                                      "implementation",
+                                                      "statistics",
+                                                      "qa",
+                                                      "safety"
+                                                  ],
+                                     "additionalProperties":  {
+                                                                  "$ref":  "#/$defs/gate"
+                                                              }
+                                 },
+                       "data_access":  {
+                                           "type":  "object",
+                                           "required":  [
+                                                            "allowed_partitions",
+                                                            "locked_partitions"
+                                                        ],
+                                           "properties":  {
+                                                              "allowed_partitions":  {
+                                                                                         "type":  "array",
+                                                                                         "items":  {
+                                                                                                       "type":  "string"
+                                                                                                   }
+                                                                                     },
+                                                              "locked_partitions":  {
+                                                                                        "type":  "array",
+                                                                                        "items":  {
+                                                                                                      "type":  "string"
+                                                                                                  }
+                                                                                    },
+                                                              "unlock_manifest_sha256":  {
+                                                                                             "type":  [
+                                                                                                          "string",
+                                                                                                          "null"
+                                                                                                      ],
+                                                                                             "pattern":  "^[0-9a-f]{64}$"
+                                                                                         }
+                                                          },
+                                           "additionalProperties":  false
+                                       },
+                       "transitions":  {
+                                           "type":  "array",
+                                           "items":  {
+                                                         "type":  "object",
+                                                         "required":  [
+                                                                          "from",
+                                                                          "to",
+                                                                          "authorized_by",
+                                                                          "at_utc",
+                                                                          "evidence_sha256"
+                                                                      ],
+                                                         "properties":  {
+                                                                            "from":  {
+                                                                                         "type":  "string"
+                                                                                     },
+                                                                            "to":  {
+                                                                                       "type":  "string"
+                                                                                   },
+                                                                            "authorized_by":  {
+                                                                                                  "const":  "project_orchestrator"
+                                                                                              },
+                                                                            "at_utc":  {
+                                                                                           "type":  "string",
+                                                                                           "format":  "date-time"
+                                                                                       },
+                                                                            "evidence_sha256":  {
+                                                                                                    "type":  "string",
+                                                                                                    "pattern":  "^[0-9a-f]{64}$"
+                                                                                                },
+                                                                            "human_owner_approval_sha256":  {
+                                                                                                                "type":  [
+                                                                                                                             "string",
+                                                                                                                             "null"
+                                                                                                                         ],
+                                                                                                                "pattern":  "^[0-9a-f]{64}$"
+                                                                                                            }
+                                                                        },
+                                                         "additionalProperties":  false
+                                                     }
+                                       },
+                       "candidate_registry_hash":  {
+                                                       "type":  [
+                                                                    "string",
+                                                                    "null"
+                                                                ],
+                                                       "pattern":  "^[0-9a-f]{64}$"
+                                                   },
+                       "forbidden_data_windows":  {
+                                                      "items":  {
+                                                                    "type":  "string"
+                                                                },
+                                                      "type":  "array"
+                                                  },
+                       "active_tasks":  {
+                                            "items":  {
+                                                          "type":  "string"
+                                                      },
+                                            "type":  "array"
+                                        },
+                       "phase_transition_history":  {
+                                                        "items":  {
+                                                                      "type":  "object"
+                                                                  },
+                                                        "type":  "array"
+                                                    },
+                       "completed_tasks":  {
+                                               "items":  {
+                                                             "type":  "string"
+                                                         },
+                                               "type":  "array"
+                                           },
+                       "live_execution_authorized":  {
+                                                         "const":  false
+                                                     },
+                       "research_spec_hash":  {
+                                                  "type":  "string",
+                                                  "pattern":  "^[0-9a-f]{64}$"
+                                              },
+                       "blocked_tasks":  {
+                                             "items":  {
+                                                           "type":  "string"
+                                                       },
+                                             "type":  "array"
+                                         },
+                       "locked_data_windows":  {
+                                                   "items":  {
+                                                                 "type":  "string"
+                                                             },
+                                                   "type":  "array"
+                                               },
+                       "last_validated_commit":  {
+                                                     "type":  "string",
+                                                     "pattern":  "^[0-9a-f]{40}$"
+                                                 },
+                       "phase_status":  {
+                                            "type":  "string"
+                                        },
+                       "dataset_root_hash":  {
+                                                 "type":  "string",
+                                                 "pattern":  "^[0-9a-f]{64}$"
+                                             },
+                       "allowed_data_windows":  {
+                                                    "items":  {
+                                                                  "type":  "string"
+                                                              },
+                                                    "type":  "array"
+                                                },
+                       "current_phase":  {
+                                             "type":  "string"
+                                         },
+                       "safety_state":  {
+                                            "type":  "object"
+                                        }
+                   },
+    "$defs":  {
+                  "gate":  {
+                               "type":  "object",
+                               "required":  [
+                                                "status",
+                                                "reviewer_role",
+                                                "evidence_sha256"
+                                            ],
+                               "properties":  {
+                                                  "status":  {
+                                                                 "enum":  [
+                                                                              "NOT_REQUIRED",
+                                                                              "PENDING",
+                                                                              "PASSED",
+                                                                              "FAILED",
+                                                                              "VETOED"
+                                                                          ]
+                                                             },
+                                                  "reviewer_role":  {
+                                                                        "type":  [
+                                                                                     "string",
+                                                                                     "null"
+                                                                                 ]
+                                                                    },
+                                                  "evidence_sha256":  {
+                                                                          "type":  [
+                                                                                       "string",
+                                                                                       "null"
+                                                                                   ],
+                                                                          "pattern":  "^[0-9a-f]{64}$"
+                                                                      }
+                                              },
+                               "additionalProperties":  false
+                           }
+              }
 }

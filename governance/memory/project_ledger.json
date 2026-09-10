@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "current_phase": "PHASE_22A",
+  "decisions": [
+    {"id": "PHASE_21_CLOSED", "status": "CLOSED_FOR_THIS_HYPOTHESIS", "reference": "docs/PHASE_21_FAILURE_POSTMORTEM.md"},
+    {"id": "JFOREX_PATH", "status": "ABANDONED_FOR_OPERATIONAL_COMPLEXITY", "reference": "docs/PHASE_22_DATA_SOURCE_DECISION.md"},
+    {"id": "PHASE_22_DATASET", "status": "PHASE_22_DATA_READY", "provider": "ROBOFOREX_MT5", "normalized_root_sha256": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91", "reference": "docs/PHASE_22_MT5_DATASET_COMPLETION.md"},
+    {"id": "PHASE_22A_SPEC", "status": "FROZEN", "sha256": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323", "reference": "research/phase22a_spec.json"}
+  ],
+  "holdout_access_history": [],
+  "rejected_hypothesis_families": [{"family": "PHASE_21", "status": "CLOSED_FOR_THIS_HYPOTHESIS", "reference": "docs/PHASE_21_FAILURE_POSTMORTEM.md"}]
+}

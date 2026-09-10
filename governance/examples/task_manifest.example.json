@@ -1,36 +1,60 @@
 {
-  "schema_version": 1,
-  "task_id": "phase22a-implement-discovery",
-  "phase_id": "PHASE_22A",
-  "assigned_role": "research_implementer",
-  "base_commit": "d7c79e40d98316bf957f0e7428d464b959b0206a",
-  "branch": "phase22a-implementation",
-  "worktree": "C:/worktrees/phase22a-implementation",
-  "objective": "Implement the frozen discovery stage without opening later partitions.",
-  "allowed_paths": [
-    "src/mt5_scalping_agent/research/",
-    "tests/research/",
-    "reports/phase22a/"
-  ],
-  "allowed_data": [
-    {
-      "root_sha256": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
-      "partitions": [
-        "DISCOVERY"
-      ]
-    }
-  ],
-  "prohibited_actions": [
-    "modify frozen specification",
-    "access confirmation or holdout",
-    "submit broker orders"
-  ],
-  "required_outputs": [
-    "implementation",
-    "leakage tests",
-    "result manifest"
-  ],
-  "dependencies": [
-    "phase22a-design-freeze"
-  ]
+    "schema_version":  1,
+    "task_id":  "phase22a-implement-discovery",
+    "phase_id":  "PHASE_22A",
+    "assigned_role":  "research_implementer",
+    "base_commit":  "d7c79e40d98316bf957f0e7428d464b959b0206a",
+    "branch":  "phase22a-implementation",
+    "worktree":  "C:/worktrees/phase22a-implementation",
+    "objective":  "Implement the frozen discovery stage without opening later partitions.",
+    "allowed_paths":  [
+                          "src/mt5_scalping_agent/research/",
+                          "tests/research/",
+                          "reports/phase22a/"
+                      ],
+    "allowed_data":  [
+                         {
+                             "root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+                             "partitions":  [
+                                                "DISCOVERY"
+                                            ]
+                         }
+                     ],
+    "prohibited_actions":  [
+                               "modify frozen specification",
+                               "access confirmation or holdout",
+                               "submit broker orders"
+                           ],
+    "required_outputs":  [
+                             "implementation",
+                             "leakage tests",
+                             "result manifest"
+                         ],
+    "dependencies":  [
+                         "phase22a-design-freeze"
+                     ],
+    "allowed_data_window":  [
+                                "2019",
+                                "2020",
+                                "2021"
+                            ],
+    "required_spec_hash":  "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "completion_conditions":  [
+                                  "result manifest"
+                              ],
+    "inputs":  [
+
+               ],
+    "forbidden_paths":  [
+                            "research/phase22a_spec.json"
+                        ],
+    "phase":  "PHASE_22A",
+    "status":  "CREATED",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "unit"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ]
 }

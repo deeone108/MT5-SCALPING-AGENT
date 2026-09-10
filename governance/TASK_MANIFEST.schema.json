@@ -1,104 +1,178 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Agent Task Manifest",
-  "type": "object",
-  "additionalProperties": false,
-  "required": [
-    "schema_version",
-    "task_id",
-    "phase_id",
-    "assigned_role",
-    "base_commit",
-    "branch",
-    "worktree",
-    "objective",
-    "allowed_paths",
-    "allowed_data",
-    "prohibited_actions",
-    "required_outputs"
-  ],
-  "properties": {
-    "schema_version": {
-      "const": 1
-    },
-    "task_id": {
-      "type": "string"
-    },
-    "phase_id": {
-      "type": "string"
-    },
-    "assigned_role": {
-      "enum": [
-        "project_orchestrator",
-        "research_lead",
-        "data_engineer",
-        "research_implementer",
-        "statistical_validator",
-        "backtesting_engineer",
-        "safety_reviewer",
-        "qa_reviewer",
-        "documentation_agent"
-      ]
-    },
-    "base_commit": {
-      "type": "string",
-      "pattern": "^[0-9a-f]{40}$"
-    },
-    "branch": {
-      "type": "string"
-    },
-    "worktree": {
-      "type": "string"
-    },
-    "objective": {
-      "type": "string"
-    },
-    "allowed_paths": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "allowed_data": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": [
-          "root_sha256",
-          "partitions"
-        ],
-        "properties": {
-          "root_sha256": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{64}$"
-          },
-          "partitions": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "prohibited_actions": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "required_outputs": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "dependencies": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    }
-  }
+    "$schema":  "https://json-schema.org/draft/2020-12/schema",
+    "title":  "Agent Task Manifest",
+    "type":  "object",
+    "additionalProperties":  false,
+    "required":  [
+                     "schema_version",
+                     "task_id",
+                     "phase_id",
+                     "assigned_role",
+                     "base_commit",
+                     "branch",
+                     "worktree",
+                     "objective",
+                     "allowed_paths",
+                     "allowed_data",
+                     "prohibited_actions",
+                     "required_outputs",
+                     "allowed_data_window",
+                     "required_spec_hash",
+                     "completion_conditions",
+                     "inputs",
+                     "forbidden_paths",
+                     "phase",
+                     "status",
+                     "required_dataset_hash",
+                     "required_tests",
+                     "required_reviewers"
+                 ],
+    "properties":  {
+                       "schema_version":  {
+                                              "const":  1
+                                          },
+                       "task_id":  {
+                                       "type":  "string"
+                                   },
+                       "phase_id":  {
+                                        "type":  "string"
+                                    },
+                       "assigned_role":  {
+                                             "enum":  [
+                                                          "project_orchestrator",
+                                                          "research_lead",
+                                                          "data_engineer",
+                                                          "research_implementer",
+                                                          "statistical_validator",
+                                                          "backtesting_engineer",
+                                                          "safety_reviewer",
+                                                          "qa_reviewer",
+                                                          "documentation_agent"
+                                                      ]
+                                         },
+                       "base_commit":  {
+                                           "type":  "string",
+                                           "pattern":  "^[0-9a-f]{40}$"
+                                       },
+                       "branch":  {
+                                      "type":  "string"
+                                  },
+                       "worktree":  {
+                                        "type":  "string"
+                                    },
+                       "objective":  {
+                                         "type":  "string"
+                                     },
+                       "allowed_paths":  {
+                                             "type":  "array",
+                                             "items":  {
+                                                           "type":  "string"
+                                                       }
+                                         },
+                       "allowed_data":  {
+                                            "type":  "array",
+                                            "items":  {
+                                                          "type":  "object",
+                                                          "required":  [
+                                                                           "root_sha256",
+                                                                           "partitions"
+                                                                       ],
+                                                          "properties":  {
+                                                                             "root_sha256":  {
+                                                                                                 "type":  "string",
+                                                                                                 "pattern":  "^[0-9a-f]{64}$"
+                                                                                             },
+                                                                             "partitions":  {
+                                                                                                "type":  "array",
+                                                                                                "items":  {
+                                                                                                              "type":  "string"
+                                                                                                          }
+                                                                                            }
+                                                                         },
+                                                          "additionalProperties":  false
+                                                      }
+                                        },
+                       "prohibited_actions":  {
+                                                  "type":  "array",
+                                                  "items":  {
+                                                                "type":  "string"
+                                                            }
+                                              },
+                       "required_outputs":  {
+                                                "type":  "array",
+                                                "items":  {
+                                                              "type":  "string"
+                                                          }
+                                            },
+                       "dependencies":  {
+                                            "type":  "array",
+                                            "items":  {
+                                                          "type":  "string"
+                                                      }
+                                        },
+                       "allowed_data_window":  {
+                                                   "items":  {
+                                                                 "type":  "string"
+                                                             },
+                                                   "type":  "array"
+                                               },
+                       "required_spec_hash":  {
+                                                  "type":  "string",
+                                                  "pattern":  "^[0-9a-f]{64}$"
+                                              },
+                       "completion_conditions":  {
+                                                     "items":  {
+                                                                   "type":  "string"
+                                                               },
+                                                     "type":  "array"
+                                                 },
+                       "inputs":  {
+                                      "items":  {
+                                                    "type":  "object"
+                                                },
+                                      "type":  "array"
+                                  },
+                       "forbidden_paths":  {
+                                               "items":  {
+                                                             "type":  "string"
+                                                         },
+                                               "type":  "array"
+                                           },
+                       "phase":  {
+                                     "type":  "string"
+                                 },
+                       "status":  {
+                                      "enum":  [
+                                                   "CREATED",
+                                                   "READY",
+                                                   "RUNNING",
+                                                   "UNVERIFIED_INTERRUPTED",
+                                                   "BLOCKED",
+                                                   "IMPLEMENTED",
+                                                   "VALIDATING",
+                                                   "REVIEWING",
+                                                   "APPROVED",
+                                                   "REJECTED",
+                                                   "COMPLETED"
+                                               ]
+                                  },
+                       "required_dataset_hash":  {
+                                                     "type":  "string",
+                                                     "pattern":  "^[0-9a-f]{64}$"
+                                                 },
+                       "required_tests":  {
+                                              "minItems":  1,
+                                              "items":  {
+                                                            "type":  "string"
+                                                        },
+                                              "type":  "array"
+                                          },
+                       "required_reviewers":  {
+                                                  "minItems":  1,
+                                                  "items":  {
+                                                                "type":  "string"
+                                                            },
+                                                  "type":  "array"
+                                              }
+                   }
 }
