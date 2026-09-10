@@ -1,0 +1,29 @@
+{
+    "schema_version":  1,
+    "review_id":  "PH22B-REVIEW-004-STATISTICAL",
+    "task_id":  "PH22B-REVIEW-004",
+    "reviewer_role":  "statistical_validator",
+    "verdict":  "STATISTICAL_VALIDATOR_REJECTED",
+    "reviewed_specification_canonical_sha256":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6",
+    "reviewed_specification_raw_sha256":  "def497a871378a113c078d3f36f3c10479d670994a9718c34556dfbcde0f4367",
+    "commit":  "d4ef85b381a2668220a216a3a824cabad202f20c",
+    "timestamp_utc":  "2026-09-10T18:48:40Z",
+    "market_data_accessed":  [
+
+                             ],
+    "resolved_prior_findings":  [
+                                    "estimator/solver/covariance/bootstrap",
+                                    "H_RAW",
+                                    "S_SESSION/interactions",
+                                    "v4 binding",
+                                    "fail-first invalidity"
+                                ],
+    "findings":  [
+                     {
+                         "section":  "hypothesis_inventory.H_NORM / normalization_artifact_tests",
+                         "problem":  "Ratio threshold 4 is not explicitly post-observation, and H_NORM conflates the ratio test with downstream raw/denominator classification gates.",
+                         "required_correction":  "Label ratio 4 post-observation; define H_NORM solely on R; keep other failures only in NORMALIZATION_ARTIFACT classification.",
+                         "severity":  "HIGH"
+                     }
+                 ]
+}
