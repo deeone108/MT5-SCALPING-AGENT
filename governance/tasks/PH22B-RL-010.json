@@ -47,7 +47,7 @@
     "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
     "base_commit":  "3dc3287ef4c1b21a2c93bf7cdf735cab7b7e2098",
     "branch":  "task/ph22b-rl-010",
-    "worktree":  "C:/Users/derek/Desktop/Vcodeee-ph22b-rl-010",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-rl-010",
     "required_tests":  [
                            "canonical hash reproduction",
                            "semantic diff proves no research scope change",
