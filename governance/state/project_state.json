@@ -1,6 +1,6 @@
 {
     "active_tasks":  [
-                         "PH22B-RI-002"
+                         "PH22B-RL-010"
                      ],
     "allowed_data_windows":  [
                                  "2019",
@@ -9,7 +9,8 @@
                              ],
     "base_commit":  "4ae2e3329e23574d66d89278931aeaa6756c7149",
     "blocked_tasks":  [
-                          "PH22B-RI-001"
+                          "PH22B-RI-001",
+                          "PH22B-RI-002"
                       ],
     "candidate_registry_hash":  "cb2995a541ac60bfcb6dde7123f5981af0892e044ef7b12278d153287a5862b3",
     "completed_tasks":  [
@@ -40,9 +41,9 @@
                                "status":  "PASSED"
                            },
                   "freeze":  {
-                                 "evidence_sha256":  "8155ca22c9b404cced9b81745e6873ab673ac186ea58bb932d20b746ec9b52c4",
+                                 "evidence_sha256":  null,
                                  "reviewer_role":  "research_lead",
-                                 "status":  "PASSED"
+                                 "status":  "PENDING"
                              },
                   "implementation":  {
                                          "evidence_sha256":  null,
@@ -50,9 +51,9 @@
                                          "status":  "PENDING"
                                      },
                   "qa":  {
-                             "evidence_sha256":  "0a8fb3d5d6a0e162365f3f0d148122c839bdb4dacec1a03ddd76dcccb6b570ab",
+                             "evidence_sha256":  null,
                              "reviewer_role":  "qa_reviewer",
-                             "status":  "PASSED"
+                             "status":  "PENDING"
                          },
                   "safety":  {
                                  "evidence_sha256":  null,
@@ -60,9 +61,9 @@
                                  "status":  "NOT_REQUIRED"
                              },
                   "statistics":  {
-                                     "evidence_sha256":  "8155ca22c9b404cced9b81745e6873ab673ac186ea58bb932d20b746ec9b52c4",
+                                     "evidence_sha256":  null,
                                      "reviewer_role":  "statistical_validator",
-                                     "status":  "PASSED"
+                                     "status":  "PENDING"
                                  }
               },
     "last_validated_commit":  "4ae2e3329e23574d66d89278931aeaa6756c7149",
@@ -73,7 +74,7 @@
                             ],
     "orchestrator":  "project_orchestrator",
     "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
-    "phase_status":  "IMPLEMENTATION_REVIEW",
+    "phase_status":  "PROPOSED",
     "phase_transition_history":  [
                                      {
                                          "at_utc":  "2026-09-10T00:00:00+00:00",
@@ -93,7 +94,7 @@
                      },
     "schema_version":  1,
     "spec_sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
-    "status":  "IMPLEMENTATION_REVIEW",
+    "status":  "PROPOSED",
     "transitions":  [
                         {
                             "at_utc":  "2026-09-10T00:00:00+00:00",
