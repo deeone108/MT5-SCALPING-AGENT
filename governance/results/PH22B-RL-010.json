@@ -38,11 +38,11 @@
                       }
                   ],
     "commands":  [
-                     "python -c canonical JSON SHA-256 using sort_keys=True,separators=(comma,colon),ensure_ascii=False,trailing LF",
-                     "python -c compare v6 and v7 top-level and protected scientific/authority fields",
-                     "python -c validate RESULT_MANIFEST required and additional-property sets",
+                     "python -c \"import json,hashlib,pathlib; p=pathlib.Path(\u0027research/phase22b_spec_v7.json\u0027); x=json.loads(p.read_text()); print(hashlib.sha256((json.dumps(x,sort_keys=True,separators=(\u0027,\u0027,\u0027:\u0027),ensure_ascii=False)+\u0027\\n\u0027).encode()).hexdigest())\"",
+                     "python -c \"import json,pathlib; a=json.loads(pathlib.Path(\u0027research/phase22b_spec_v6.json\u0027).read_text()); b=json.loads(pathlib.Path(\u0027research/phase22b_spec_v7.json\u0027).read_text()); protected=[\u0027purpose\u0027,\u0027lineage\u0027,\u0027authority\u0027,\u0027scope\u0027,\u0027temporal_partitions\u0027,\u0027causality\u0027,\u0027exposure\u0027,\u0027outcomes\u0027,\u0027controls\u0027,\u0027primary_hypotheses\u0027,\u0027models_and_estimands\u0027,\u0027normalization_artifact_tests\u0027,\u0027interaction_tests\u0027,\u0027inference\u0027,\u0027effect_size_and_stability\u0027,\u0027confounding_rules\u0027,\u0027terminal_classification_algorithm\u0027,\u0027advancement_and_rejection\u0027,\u0027random_seeds\u0027,\u0027leakage_tests\u0027,\u0027required_reporting\u0027,\u0027prohibited\u0027,\u0027access_contract\u0027,\u0027operational_validation\u0027,\u0027ai_evidence_contract\u0027]; assert all(a[k]==b[k] for k in protected)\"",
+                     "python -c \"import json,pathlib; s=json.loads(pathlib.Path(\u0027governance/RESULT_MANIFEST.schema.json\u0027).read_text()); r=json.loads(pathlib.Path(\u0027governance/results/PH22B-RL-010.json\u0027).read_text()); assert not(set(s[\u0027required\u0027])-set(r)); assert not(set(r)-set(s[\u0027properties\u0027]))\"",
                      "git diff --check",
-                     "git diff -- research/phase22b_spec_v6.json research/phase22b_spec_v7.json"
+                     "git diff --exit-code 29f6ad8561b9359884f2212dfd21a811111f7977 HEAD -- research/phase22b_spec_v6.json"
                  ],
     "tests":  [
                   {

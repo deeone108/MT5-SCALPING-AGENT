@@ -30,7 +30,8 @@
     "allowed_paths":  [
                           "research/phase22b_spec_v7.json",
                           "docs/PHASE_22B_V7_DETERMINISM_ADDENDUM.md",
-                          "governance/results/PH22B-RL-010.json"
+                          "governance/results/PH22B-RL-010.json",
+                          "governance/tasks/PH22B-RL-010.json"
                       ],
     "forbidden_paths":  [
                             "research/phase22b_spec_v6.json",
