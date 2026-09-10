@@ -3,7 +3,7 @@
     "task_id":  "PH22B-RL-010",
     "role":  "research_lead",
     "status":  "COMPLETE",
-    "base_commit":  "6d7a9aa93c77426371b85db06c625f41142951c7",
+    "base_commit":  "c98039c4987c2f6a21152f5523a3a6cc51457fcc",
     "result_commit":  null,
     "inputs":  [
                    {
@@ -15,24 +15,34 @@
                        "path":  "reports/phase22a/phase22a_20260909T220000Z/discovery_survivors.json"
                    },
                    {
+                       "sha256":  "973a878492b365fb9c4a66a1bce210794d89ed78dd73d66998e02b295b393239",
+                       "path":  "docs/PHASE_22_MT5_DATASET_COMPLETION.md"
+                   },
+                   {
+                       "sha256":  "22fbe37eda4f76d85497f3523d5529cfe93fde291d2f87d8caee22bd25eeb7a2",
+                       "path":  "governance/results/PH22B-RI-001.json"
+                   },
+                   {
                        "sha256":  "f32b61d98c287b475a3398933af85f890af3652e2247d76ce33d3e603a53b452",
                        "path":  "governance/approvals/PH22B-V7-DETERMINISM-AUTH-001.json"
                    }
                ],
     "artifacts":  [
                       {
-                          "sha256":  "8b7d377b779133d88d7344f0bfb77254485792bc43d97ab48533ca212541ba8b",
+                          "sha256":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
                           "path":  "research/phase22b_spec_v7.json"
                       },
                       {
-                          "sha256":  "2c2cf1df49a144bc61d885292c9b37f61e9f0bf7e0bcba05f26ead123324a838",
+                          "sha256":  "5683b1c5aee51caa7a951ee135385d69eda59ae33ec2b1fb0a5a63cacc31cc0a",
                           "path":  "docs/PHASE_22B_V7_DETERMINISM_ADDENDUM.md"
                       }
                   ],
     "commands":  [
-                     "exact aggregate evidence hash verification",
-                     "canonical JSON hash reproduction",
-                     "semantic top-level diff audit"
+                     "python -c canonical JSON SHA-256 using sort_keys=True,separators=(comma,colon),ensure_ascii=False,trailing LF",
+                     "python -c compare v6 and v7 top-level and protected scientific/authority fields",
+                     "python -c validate RESULT_MANIFEST required and additional-property sets",
+                     "git diff --check",
+                     "git diff -- research/phase22b_spec_v6.json research/phase22b_spec_v7.json"
                  ],
     "tests":  [
                   {
@@ -42,6 +52,10 @@
                   {
                       "result":  "PASS",
                       "name":  "v6_scope_preservation"
+                  },
+                  {
+                      "result":  "PASS",
+                      "name":  "schema_and_deterministic_completeness"
                   }
               ],
     "data_accessed":  [
@@ -64,8 +78,10 @@
 
                               ],
     "tests_executed":  [
-                           "canonical SHA-256 independently reproduced",
-                           "semantic diff limited to task/status/version plus implementation_determinism_v7"
+                           "canonical hash reproduction",
+                           "protected-field semantic equality",
+                           "result manifest required/additional property validation",
+                           "deterministic clarification completeness checklist"
                        ],
     "review_status":  [
                           {
@@ -97,14 +113,14 @@
                          {
                              "scope":  "specification freeze checks",
                              "failed":  0,
-                             "passed":  2
+                             "passed":  4
                          }
                      ],
     "artifact_hashes":  {
                             "addendum":  "2c2cf1df49a144bc61d885292c9b37f61e9f0bf7e0bcba05f26ead123324a838",
-                            "specification":  "8b7d377b779133d88d7344f0bfb77254485792bc43d97ab48533ca212541ba8b"
+                            "specification":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d"
                         },
     "terminal_result":  "PH22B_SPEC_V7_FROZEN_PENDING_INDEPENDENT_REVIEW",
     "start_time":  "2026-09-10T22:23:33.6637674Z",
-    "specification_hash_used":  "8b7d377b779133d88d7344f0bfb77254485792bc43d97ab48533ca212541ba8b"
+    "specification_hash_used":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d"
 }

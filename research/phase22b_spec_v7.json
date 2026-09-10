@@ -1972,7 +1972,7 @@
                                  }
                              ],
     "specification_binding":  {
-                                  "version":  "v6",
+                                  "version":  "v7",
                                   "hash_state":  "EXTERNAL_CANONICAL_HASH_REQUIRED",
                                   "recorded_by":  "RECORDED_BY_MANIFEST",
                                   "rule":  "Every authorization and independent-review manifest must bind the externally reproduced canonical SHA-256 of this exact frozen specification. The artifact does not self-declare its canonical hash."
@@ -2058,8 +2058,8 @@
                                                                     },
                                           "normalization_artifact_predicates":  {
                                                                                     "denominator_independent_requirements":  "In a stage, both M4 Y_RAW_ABS_60S_PIPS and M4 Y_FIXED_DISCOVERY_SCALE must have beta_WIDE\u003c=-0.05 in their own response units after converting fixed scale back to pips, with two-sided 95% CIs wholly below zero; Y_TRAILING_SPREAD_UNITS must be negative with CI wholly below zero.",
-                                                                                    "current_spread_effect_replicates":  "In each separately unlocked 2022 and 2023 stage, M4 beta_WIDE for Y_CURRENT_SPREAD_UNITS is negative, its two-sided 95% bootstrap CI is wholly below zero, and H_NORM rejects after its frozen FDR family correction.",
-                                                                                    "fail_definition":  "Denominator-independent requirements fail only if the predicate is false in both separately unlocked 2022 and 2023 stages. Development alone cannot assign NORMALIZATION_ARTIFACT."
+                                                                                    "current_spread_effect_replicates":  "The stage-level M0 WIDE-minus-TIGHT Y_CURRENT_SPREAD_UNITS point contrast is negative in 2022 and separately negative in 2023. This sign predicate defines effect replication; it adds no CI, H_NORM significance, or FDR requirement.",
+                                                                                    "fail_definition":  "NORMALIZATION_ARTIFACT requires: the current-spread effect-replication sign predicate; amplification ratio R\u003e=4 in 2022 and separately in 2023; and the frozen raw and denominator-independent requirements fail in both stages. H_NORM p-values/FDR remain reported evidence but are not an added terminal-classification requirement."
                                                                                 },
                                           "interaction_strata":  {
                                                                      "stability_failure":  "A stratum fails when fewer than 20 exact-model complete-case anchors exist in either exposure group, or the adjusted contrast is nonnegative, or its CI includes zero, or the raw-pip contrast is greater than -0.05 pips. The same named stratum must fail in both 2022 and 2023 for replicating interaction evidence.",
@@ -2069,7 +2069,7 @@
                                                                  },
                                           "permutation_diagnostic":  {
                                                                          "p_value":  "(1 + count(abs(beta_WIDE_permuted)\u003e=abs(beta_WIDE_observed)))/10001; exact ties count in numerator.",
-                                                                         "procedure":  "Within each pair x UTC-day block, permute only the WIDE/TIGHT exposure labels with NumPy Generator(PCG64(22003)); preserve all outcomes, controls, rows and block sizes; refit M4 for each of exactly 10000 permutations.",
+                                                                         "procedure":  "Within each pair x UTC-day, independently within every Cartesian stratum UTC-hour x volatility-quintile x activity-quintile, permute only the ordered WIDE/TIGHT labels using NumPy Generator(PCG64(22003)); preserve all outcomes, controls, rows and stratum sizes; process pair-days date then pair ASCII, strata hour 00..23 then vol Q1..Q5 then activity Q1..Q5, rows timestamp then source sequence; refit M4 for each of exactly 10000 permutations.",
                                                                          "statistic":  "Absolute value of the observed M4 raw-pip exposure__WIDE coefficient.",
                                                                          "role":  "Diagnostic only; never changes advancement or terminal classification."
                                                                      },

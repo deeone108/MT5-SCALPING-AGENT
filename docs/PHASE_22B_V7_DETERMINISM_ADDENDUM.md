@@ -12,6 +12,10 @@ The v7 `implementation_determinism_v7` object adds only: exact pair boundaries; 
 
 No candidate, hypothesis, pair, horizon, direction, partition, data authority, safety control, strategy authority, risk authority, execution authority, or LIVE authority changed.
 
-Frozen candidate v7 canonical SHA-256: `8b7d377b779133d88d7344f0bfb77254485792bc43d97ab48533ca212541ba8b`.
+Frozen candidate v7 canonical SHA-256: `fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d`.
 
 Implementation remains locked pending independent Statistical Validator and QA review. 2022 and 2023 remain locked; 2024+ remains forbidden.
+
+## Independent review remediation
+
+Review cycle 1 rejected scope drift. Cycle 2 restores the exact v6 hour x volatility-quintile x activity-quintile permutation strata, removes the newly introduced H_NORM/FDR terminal requirement, defines current-spread replication as sign replication while retaining the separate v6 R>=4 rule, and updates only the internal version binding from v6 to v7. Provenance and result-manifest completeness were also corrected.
