@@ -1,0 +1,77 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-GOV-005",
+    "role":  "project_orchestrator",
+    "start_time":  "2026-09-10T18:49:53Z",
+    "end_time":  "2026-09-10T18:49:53Z",
+    "status":  "COMPLETE",
+    "base_commit":  "942b0c359dcf6837b72a356103a0e348ceb59313",
+    "result_commit":  "dfc7ab334e82e482c9db2fc6ce65047f0684e17f",
+    "files_changed":  [
+                          "governance/tasks/PH22B-GOV-005.json",
+                          "governance/results/PH22B-GOV-005.json",
+                          "governance/results/PH22B-REMEDIATION-004.json"
+                      ],
+    "artifacts":  [
+
+                  ],
+    "artifact_hashes":  {
+
+                        },
+    "tests_executed":  [
+                           "autonomous remediation and QA environment"
+                       ],
+    "test_results":  [
+                         {
+                             "status":  "PASSED",
+                             "name":  "no_data_suite",
+                             "count":  45
+                         }
+                     ],
+    "data_windows_accessed":  [
+
+                              ],
+    "specification_hash_used":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6",
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "safety_checks":  [
+                          {
+                              "name":  "v4_unchanged",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "no_data",
+                              "status":  "PASSED"
+                          }
+                      ],
+    "review_status":  [
+                          {
+                              "decision":  "PENDING",
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "terminal_result":  "GOVERNANCE_PROVENANCE_CORRECTED_FOR_NEXT_ATTEMPT",
+    "inputs":  [
+
+               ],
+    "commands":  [
+
+                 ],
+    "tests":  [
+
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no retroactive waiver",
+                                  "no v4 mutation",
+                                  "no data"
+                              ],
+    "handoff":  {
+                    "requested_decision":  "execute PH22B-REMEDIATION-005",
+                    "limitations":  [
+                                        "V4 remains rejected."
+                                    ],
+                    "to_role":  "research_lead"
+                }
+}

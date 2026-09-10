@@ -6,11 +6,31 @@
   "assigned_role": "research_lead",
   "objective": "Design and freeze Phase 22B mechanism-validation research for the strongest Phase 22A phenomena, beginning with P22A_SPR_ABS_15s_60s, to distinguish a genuine spread-state microstructure phenomenon from current-spread normalization, recent volatility, quote activity, session/time-of-day, recent directional impulse, pair-specific behavior, and liquidity-state confounding.",
   "inputs": [
-    {"path": "research/phase22a_spec.json", "sha256": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323", "access": "READ_ONLY"},
-    {"path": "research/phase22a_candidate_registry.json", "sha256": "cb2995a541ac60bfcb6dde7123f5981af0892e044ef7b12278d153287a5862b3", "access": "READ_ONLY"},
-    {"path": "reports/phase22a/phase22a_20260909T220000Z/final_report.json", "sha256": "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a", "access": "READ_ONLY_EXTERNAL_EVIDENCE"},
-    {"path": "reports/phase22a/phase22a_20260909T220000Z/holdout_survivors.json", "sha256": "94036c2e5491b7217e0d42d6b5c18ea5d76ee4024efc7cc6a10c101f6f6d3025", "access": "READ_ONLY_EXTERNAL_EVIDENCE"},
-    {"path": "governance/memory/project_ledger.json", "sha256": "478a37f9621011c9f6ab2f323758067154d652e401d03607e842a29de9043d71", "access": "READ_ONLY"}
+    {
+      "path": "research/phase22a_spec.json",
+      "sha256": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
+      "access": "READ_ONLY"
+    },
+    {
+      "path": "research/phase22a_candidate_registry.json",
+      "sha256": "cb2995a541ac60bfcb6dde7123f5981af0892e044ef7b12278d153287a5862b3",
+      "access": "READ_ONLY"
+    },
+    {
+      "path": "reports/phase22a/phase22a_20260909T220000Z/final_report.json",
+      "sha256": "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a",
+      "access": "READ_ONLY_EXTERNAL_EVIDENCE"
+    },
+    {
+      "path": "reports/phase22a/phase22a_20260909T220000Z/holdout_survivors.json",
+      "sha256": "94036c2e5491b7217e0d42d6b5c18ea5d76ee4024efc7cc6a10c101f6f6d3025",
+      "access": "READ_ONLY_EXTERNAL_EVIDENCE"
+    },
+    {
+      "path": "governance/memory/project_ledger.json",
+      "sha256": "478a37f9621011c9f6ab2f323758067154d652e401d03607e842a29de9043d71",
+      "access": "READ_ONLY"
+    }
   ],
   "allowed_paths": [
     "research/phase22b_spec.json",
@@ -41,7 +61,10 @@
     "phase22b_no_data_access",
     "phase22b_prohibition_audit"
   ],
-  "required_reviewers": ["statistical_validator", "qa_reviewer"],
+  "required_reviewers": [
+    "statistical_validator",
+    "qa_reviewer"
+  ],
   "completion_conditions": [
     "Define falsifiable mechanism hypotheses and explicit nulls for every named confounder without inspecting raw data.",
     "Freeze outcomes, causal covariates, controls, partitions, inference, multiplicity, seeds, diagnostics, falsification and advancement criteria before implementation.",
@@ -49,7 +72,7 @@
     "Produce a Research Lead result manifest; no implementation or data access is authorized.",
     "Obtain independent Statistical Validator and QA approvals before the Orchestrator may create an implementation task."
   ],
-  "status": "READY",
+  "status": "RUNNING",
   "allowed_data": [],
   "prohibited_actions": [
     "access any raw or derived research data window",
@@ -70,5 +93,7 @@
     "research design rationale",
     "Research Lead result manifest requesting independent review"
   ],
-  "dependencies": ["PHASE22A_phase22a_20260909T220000Z"]
+  "dependencies": [
+    "PHASE22A_phase22a_20260909T220000Z"
+  ]
 }

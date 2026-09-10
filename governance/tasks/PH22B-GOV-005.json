@@ -1,0 +1,60 @@
+{
+    "schema_version":  1,
+    "phase":  "PHASE_22B_PENDING_DESIGN",
+    "phase_id":  "PHASE_22B_PENDING_DESIGN",
+    "allowed_data_window":  [
+
+                            ],
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "base_commit":  "942b0c359dcf6837b72a356103a0e348ceb59313",
+    "branch":  "task/ph22b-remediation-001",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee-ph22b-remediation-001",
+    "allowed_data":  [
+
+                     ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "task_id":  "PH22B-GOV-005",
+    "assigned_role":  "project_orchestrator",
+    "objective":  "Correct v4 remediation provenance and explicitly authorize autonomous-loop governance artifacts without changing frozen v4.",
+    "inputs":  [
+                   {
+                       "sha256":  "a114be54ea8c8bfb7ad5b2516733dc197e5ddcc91031630b1bcc65adb8227f74",
+                       "path":  "governance/reviews/PH22B-REVIEW-004-qa.json"
+                   }
+               ],
+    "allowed_paths":  [
+                          "governance/tasks/PH22B-GOV-005.json",
+                          "governance/results/PH22B-GOV-005.json",
+                          "governance/results/PH22B-REMEDIATION-004.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/phase22b_spec_v4.json",
+                            "data/",
+                            "reports/",
+                            "src/mt5_scalping_agent/strategies/",
+                            "src/mt5_scalping_agent/backtesting/",
+                            "src/mt5_scalping_agent/risk/",
+                            "src/mt5_scalping_agent/execution/"
+                        ],
+    "required_spec_hash":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6",
+    "required_tests":  [
+                           "autonomous_remediation",
+                           "qa_environment"
+                       ],
+    "completion_conditions":  [
+                                  "v4 remains immutable",
+                                  "missing remediation result is recorded",
+                                  "future task path authority is complete"
+                              ],
+    "status":  "RUNNING",
+    "prohibited_actions":  [
+                               "modify v4",
+                               "access data",
+                               "change scope/LIVE"
+                           ],
+    "required_outputs":  [
+                             "governance correction result"
+                         ]
+}

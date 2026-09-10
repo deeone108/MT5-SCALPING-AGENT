@@ -1,0 +1,81 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-REVIEW-005",
+    "role":  "statistical_validator",
+    "start_time":  "2026-09-10T18:54:12Z",
+    "end_time":  "2026-09-10T18:54:12Z",
+    "status":  "FAILED",
+    "base_commit":  "626e6844b9c3cd6e24ce9dc1b7af1c22d4464746",
+    "result_commit":  "29ee720a9c3fe24fb0f9e7b476135e42b8e1d68e",
+    "files_changed":  [
+                          "governance/reviews/PH22B-REVIEW-005-statistical.json",
+                          "governance/reviews/PH22B-REVIEW-005-qa.json",
+                          "governance/results/PH22B-REVIEW-005.json"
+                      ],
+    "artifacts":  [
+
+                  ],
+    "artifact_hashes":  {
+
+                        },
+    "tests_executed":  [
+                           "documented no-data suite"
+                       ],
+    "test_results":  [
+                         {
+                             "status":  "PASSED",
+                             "name":  "qa_no_data_suite",
+                             "count":  46
+                         }
+                     ],
+    "data_windows_accessed":  [
+
+                              ],
+    "specification_hash_used":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e",
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "safety_checks":  [
+                          {
+                              "name":  "no_data",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "frozen_v4_unchanged",
+                              "status":  "PASSED"
+                          }
+                      ],
+    "review_status":  [
+                          {
+                              "decision":  "APPROVED",
+                              "role":  "statistical_validator"
+                          },
+                          {
+                              "decision":  "REJECTED",
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "terminal_result":  "PHASE_22B_REVIEW_GATE_REJECTED",
+    "inputs":  [
+
+               ],
+    "commands":  [
+                     "independent read-only reviews"
+                 ],
+    "tests":  [
+
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no data",
+                                  "no implementation",
+                                  "no LIVE"
+                              ],
+    "handoff":  {
+                    "requested_decision":  "automatic agent-resolvable remediation",
+                    "limitations":  [
+                                        "implementation locked"
+                                    ],
+                    "to_role":  "project_orchestrator"
+                }
+}

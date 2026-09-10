@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "phase": "22B",
+  "task_id": "PH22B-RL-001",
+  "primary_candidate": "P22A_SPR_ABS_15s_60s",
+  "candidate_count": 1,
+  "no_new_candidate_search": true,
+  "mechanism_test_ids": [
+    "H_RAW",
+    "H_NORMALIZATION",
+    "H_VOLATILITY_ACTIVITY",
+    "H_SESSION_LIQUIDITY",
+    "H_IMPULSE",
+    "H_PAIR",
+    "I_VOL",
+    "I_ACTIVITY",
+    "I_SESSION",
+    "I_HOUR",
+    "I_IMPULSE_SIGN",
+    "I_PAIR",
+    "I_BASELINE_LIQUIDITY"
+  ],
+  "terminal_states": [
+    "GENUINE_SPREAD_STATE_PHENOMENON",
+    "NORMALIZATION_ARTIFACT",
+    "VOLATILITY_OR_ACTIVITY_CONFOUNDING",
+    "SESSION_OR_LIQUIDITY_PROXY",
+    "PAIR_SPECIFIC_EFFECT",
+    "MIXED_MECHANISM",
+    "PHENOMENON_NOT_CONFIRMED"
+  ]
+}

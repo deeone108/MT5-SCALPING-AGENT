@@ -19,3 +19,6 @@ Inspect the persisted task, process table, Git worktree, and last result. Withou
 ## Evidence-aware tests
 
 A missing ignored/local evidence artifact is `REQUIRED_EXTERNAL_EVIDENCE_MISSING`, distinct from `REGRESSION_FAILURE`. This classification does not turn the test green or weaken its assertion. The registry modules depend on ignored `reports/chronological_validation` evidence that is not materialized in a clean linked worktree.
+## Frozen design review
+
+For research-design tasks, `FROZEN_PENDING_REVIEW` means the author has completed and hash-frozen the design, but the task remains open and implementation locked. A COMPLETE author result does not imply gate approval. The onward path is independent `VALIDATING` then `REVIEWING`; rejection and blocking fail closed.

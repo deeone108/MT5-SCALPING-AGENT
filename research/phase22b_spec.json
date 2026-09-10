@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "phase": "22B",
+  "task_id": "PH22B-RL-001",
+  "status": "FROZEN_PENDING_INDEPENDENT_REVIEW",
+  "methodology_version": "phase22b-mechanism-validation-v1",
+  "purpose": "Mechanism validation for P22A_SPR_ABS_15s_60s; no strategy or executable economics.",
+  "lineage": {
+    "base_commit": "59d4ad232d478003fc4bf8d079afe3433eca6e46",
+    "phase22a_run_id": "phase22a_20260909T220000Z",
+    "phase22a_spec_sha256": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
+    "phase22a_candidate_registry_sha256": "cb2995a541ac60bfcb6dde7123f5981af0892e044ef7b12278d153287a5862b3",
+    "phase22a_final_report_sha256": "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a",
+    "phase22a_holdout_survivors_sha256": "94036c2e5491b7217e0d42d6b5c18ea5d76ee4024efc7cc6a10c101f6f6d3025",
+    "dataset_root_sha256": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "leading_candidate": "P22A_SPR_ABS_15s_60s",
+    "known_phase22a_observation": {
+      "holdout_wide_minus_tight_current_spread_units": -4.0411758182820545,
+      "holdout_wide_minus_tight_raw_pips": 0.02643078283479836,
+      "researcher_degree_of_freedom_warning": "Phase 22B was designed after these aggregate Phase 22A results and diagnostics were visible. Its 2023 stage is internal temporal replication, not a pristine holdout."
+    }
+  },
+  "authority": {
+    "design_task_allowed_data_windows": [],
+    "future_execution_requires_new_orchestrator_task": true,
+    "implementation_locked_pending_reviews": ["statistical_validator", "qa_reviewer"],
+    "live_execution_authorized": false
+  },
+  "scope": {
+    "pairs": ["EURUSD", "GBPUSD", "USDJPY", "USDCAD"],
+    "anchor_interval_seconds": 10,
+    "exposure_lookback_seconds": 15,
+    "outcome_horizon_seconds": 60,
+    "primary_candidate_only": "P22A_SPR_ABS_15s_60s",
+    "no_new_candidate_search": true
+  },
+  "temporal_partitions": {
+    "mechanism_development": "[2019-01-01T00:00:00Z,2022-01-01T00:00:00Z)",
+    "locked_confirmation": "[2022-01-01T00:00:00Z,2023-01-01T00:00:00Z)",
+    "locked_internal_replication": "[2023-01-01T00:00:00Z,2024-01-01T00:00:00Z)",
+    "forbidden": "[2024-01-01T00:00:00Z,+inf)",
+    "sequence": [
+      "Fit every control boundary and model transformation on 2019-2021 only.",
+      "Freeze development estimates, diagnostics, coefficients, classification inputs and exact survivor decision before opening 2022.",
+      "Apply the unchanged model and boundaries to 2022, then freeze its result before opening 2023.",
+      "Apply unchanged to 2023 as internal temporal replication; do not call it pristine or prospective."
+    ]
+  },
+  "causality": {
+    "anchor": "UTC epoch multiples of 10 seconds using the latest quote timestamp <= anchor with maximum age 2 seconds.",
+    "current_mid": "(bid_t + ask_t) / 2 at the eligible anchor quote.",
+    "future_mid": "latest eligible quote timestamp <= anchor+60s, strictly after anchor, age relative to horizon <=2s; never search after the horizon.",
+    "trailing_window": "(anchor-15s, anchor] for recent volatility, activity and impulse.",
+    "baseline_window": "(anchor-75s, anchor-15s] for nonoverlapping 60-second causal baselines.",
+    "spread_baseline": "median spread of the preceding six eligible 10-second anchors, excluding current anchor.",
+    "missingness": "No interpolation, synthesis or forward fill across gaps; an unavailable feature or outcome makes only that estimand row ineligible."
+  },
+  "exposure": {
+    "name": "spread_dislocation_state",
+    "continuous_definition": "current_spread_pips / median_spread_pips_of_preceding_six_eligible_anchors",
+    "contrast": "WIDE=Phase22A frozen pair-specific discovery Q5; TIGHT=Phase22A frozen pair-specific discovery Q1; Q2-Q4 excluded from the primary contrast.",
+    "boundaries": "Reuse exact Phase 22A 2019-2021 pair-specific boundaries; never refit or optimize.",
+    "effect_orientation": "WIDE minus TIGHT. Negative movement effect means lower subsequent absolute movement in WIDE state."
+  },
+  "outcomes": {
+    "primary_raw_pips": {
+      "id": "Y_RAW_ABS_60S_PIPS",
+      "definition": "abs(future_mid_60s-current_mid)/pair_pip_size",
+      "estimand": "mean(WIDE)-mean(TIGHT), first within pair x UTC trading day and then equal-weighted across available pair-days",
+      "genuine_direction": "negative"
+    },
+    "secondary_current_spread_units": {
+      "id": "Y_CURRENT_SPREAD_UNITS",
+      "definition": "Y_RAW_ABS_60S_PIPS/current_spread_pips_at_anchor",
+      "role": "mechanical-normalization diagnostic only; cannot establish a genuine phenomenon by itself"
+    },
+    "secondary_trailing_spread_units": {
+      "id": "Y_TRAILING_SPREAD_UNITS",
+      "definition": "Y_RAW_ABS_60S_PIPS/causal_trailing_median_spread_pips",
+      "role": "denominator diagnostic independent of current spread"
+    },
+    "secondary_fixed_scale": {
+      "id": "Y_FIXED_DISCOVERY_SCALE",
+      "definition": "Y_RAW_ABS_60S_PIPS/pair-specific median current spread estimated once on 2019-2021 and frozen",
+      "role": "constant-within-pair scaling diagnostic"
+    }
+  },
+  "controls": {
+    "fit_rule": "All numeric boundaries use pair-specific empirical quintiles estimated on 2019-2021 only and frozen for 2022/2023; no threshold search.",
+    "recent_micro_volatility": "sum absolute nonzero mid changes over (t-15s,t], in pips; retain continuous log1p value and frozen quintile.",
+    "quote_activity": "quote count over (t-15s,t] divided by one quarter of quote count over nonoverlapping (t-75s,t-15s]; retain continuous log1p ratio and frozen quintile; denominator zero is missing.",
+    "session": {
+      "asian": "00:00:00-07:59:59 UTC",
+      "london_pre_overlap": "08:00:00-12:59:59 UTC",
+      "london_new_york_overlap": "13:00:00-15:59:59 UTC",
+      "new_york_post_overlap": "16:00:00-20:59:59 UTC",
+      "off_session": "21:00:00-23:59:59 UTC"
+    },
+    "time_of_day": "fixed UTC hour categorical 0-23; weekday categorical Monday-Friday; no data-derived session boundaries.",
+    "recent_directional_impulse": "mid_t minus causal as-of mid at t-15s, in raw pips; encode sign {-1,0,+1} and frozen quintile of absolute magnitude.",
+    "pair": "fixed categorical EURUSD, GBPUSD, USDJPY, USDCAD; pooled estimates weight pair-days equally.",
+    "broader_liquidity_state": {
+      "current_spread_pips": "raw current spread in pips",
+      "trailing_median_spread_pips": "causal preceding-six-anchor median",
+      "quote_age_seconds": "anchor minus current quote timestamp",
+      "baseline_quote_rate": "quote count in (t-75s,t-15s]/60",
+      "baseline_micro_volatility": "sum absolute mid changes in (t-75s,t-15s] in pips"
+    }
+  },
+  "primary_hypotheses": [
+    {"id": "H_RAW", "alternative": "The WIDE-minus-TIGHT effect for Y_RAW_ABS_60S_PIPS is negative, practically nontrivial and stable after frozen adjustment.", "null": "The raw-pip contrast is nonnegative, practically trivial, unstable, or removed by pre-registered controls."},
+    {"id": "H_NORMALIZATION", "alternative": "The negative current-spread-unit contrast is materially larger than raw/fixed/trailing-scale contrasts because current spread is both exposure-defining and the denominator.", "null": "The sign and practical magnitude persist in raw pips and denominator-independent scales."},
+    {"id": "H_VOLATILITY_ACTIVITY", "alternative": "Recent micro-volatility and/or quote activity explain the raw effect or materially modify it.", "null": "The adjusted raw effect retains sign, at least 50% magnitude and stability after both controls."},
+    {"id": "H_SESSION_LIQUIDITY", "alternative": "Session/time or broader liquidity state explains or localizes the raw effect.", "null": "The adjusted raw effect remains stable across fixed sessions and liquidity strata."},
+    {"id": "H_IMPULSE", "alternative": "Recent directional impulse explains or modifies the effect.", "null": "Adjustment for impulse sign/magnitude preserves the raw effect."},
+    {"id": "H_PAIR", "alternative": "The effect is pair-specific or materially heterogeneous.", "null": "At least three pairs share the pooled sign and no single pair dominates."}
+  ],
+  "models_and_estimands": {
+    "M0": "Unadjusted pair-day WIDE-minus-TIGHT contrasts for each outcome.",
+    "M1": "Raw-pip contrast adjusted for pair, UTC hour, weekday and fixed session indicators.",
+    "M2": "M1 plus frozen-quintile and continuous terms for recent volatility and activity.",
+    "M3": "M2 plus impulse sign and frozen absolute-impulse quintile.",
+    "M4": "M3 plus trailing median spread, quote age, baseline quote rate and baseline volatility; current spread is excluded because it defines exposure.",
+    "estimation": "Pre-specified ordinary least squares with pair and time fixed effects; Frisch-Waugh-Lovell residualization is algebraically equivalent and allowed. No regularization, feature selection, nonlinear fitting or ML.",
+    "weighting": "Each eligible pair-day receives equal weight in pooled inference; report anchor-weighted estimates only as descriptive sensitivity.",
+    "attenuation": "For models M1-M4, 1-abs(adjusted WIDE coefficient)/abs(M0 WIDE coefficient); if M0 is zero, attenuation is undefined and cannot support a confounding classification."
+  },
+  "normalization_artifact_tests": [
+    "Compare M0 WIDE-minus-TIGHT estimates and daily-block CIs for raw pips, current-spread units, trailing-spread units and fixed-discovery scale.",
+    "Compute denominator amplification ratio abs(delta_current_spread_units)/abs(delta_fixed_scale); undefined when fixed-scale contrast is zero.",
+    "Repeat current-spread-unit contrast after stratifying by frozen current-spread-pip quintile; require both WIDE and TIGHT observations in a pair-day stratum.",
+    "Fit the fixed M4 raw-pip model and separately report current-spread-unit M4 only as a diagnostic.",
+    "No alternative denominator, winsorization level or transform may be added after results are viewed."
+  ],
+  "interaction_tests": [
+    {"id": "I_VOL", "term": "WIDE x recent_micro_volatility_quintile"},
+    {"id": "I_ACTIVITY", "term": "WIDE x quote_activity_quintile"},
+    {"id": "I_SESSION", "term": "WIDE x fixed_session"},
+    {"id": "I_HOUR", "term": "WIDE x UTC_hour"},
+    {"id": "I_IMPULSE_SIGN", "term": "WIDE x impulse_sign"},
+    {"id": "I_PAIR", "term": "WIDE x pair"},
+    {"id": "I_BASELINE_LIQUIDITY", "term": "WIDE x trailing_median_spread_quintile"}
+  ],
+  "inference": {
+    "primary_unit": "UTC trading-day block; pair-day estimates are the observations for pooled inference.",
+    "bootstrap": "Deterministic stratified resampling of UTC days with replacement within calendar year; all pairs for a sampled day travel together to preserve cross-pair dependence.",
+    "bootstrap_resamples": 10000,
+    "bootstrap_seed": 22002,
+    "confidence_interval": [0.025, 0.975],
+    "p_values": "Two-sided bootstrap sign-tail p-values; H_RAW additionally reports the pre-registered one-sided negative-direction p-value.",
+    "multiple_testing": "H_RAW is the single primary test and is not multiplicity-adjusted. Apply Benjamini-Hochberg q=0.05 across the seven interaction families and separately across the six confounder-attribution families H_NORMALIZATION, H_VOLATILITY_ACTIVITY, H_SESSION_LIQUIDITY, H_IMPULSE, H_PAIR and H_MIXED diagnostics.",
+    "permutation_diagnostic": "Within each pair-day, permute WIDE/TIGHT labels within fixed UTC-hour x volatility-quintile x activity-quintile strata, 10000 permutations, seed 22003; diagnostic only.",
+    "missing_cell_rule": "Do not impute. A contrast cell needs at least 20 eligible anchors per exposure group; a pair-day needs both groups; report attrition before inference.",
+    "software_determinism": "Stable timestamp sorting, fixed seeds, canonical JSON and SHA-256 for every stage."
+  },
+  "effect_size_and_stability": {
+    "raw_pip_minimum": "A genuine effect requires pooled adjusted WIDE-minus-TIGHT <= -0.05 pips at 60 seconds and a 95% CI wholly below zero in each advancement stage.",
+    "retention_after_adjustment": "M4 magnitude must be at least 50% of M0 and retain the negative sign.",
+    "pair_stability": "Negative adjusted sign in at least 3 of 4 pairs; no one pair may exceed 50% of summed absolute pair effects.",
+    "development_year_stability": "Negative adjusted sign separately in 2019, 2020 and 2021.",
+    "temporal_replication": "Unchanged negative adjusted sign, <=-0.05 pips and CI below zero in 2022 and separately in 2023.",
+    "session_stability": "Report every fixed session. Genuine classification requires negative sign in at least three of asian, london_pre_overlap, overlap and new_york_post_overlap; off_session is descriptive.",
+    "concentration": "Top five UTC days <50% of total absolute daily effect and largest month <50% of summed absolute month effects."
+  },
+  "confounding_rules": {
+    "material_attenuation": "A control block materially confounds when its addition causes >=50% attenuation versus the immediately preceding model, or reverses sign, and the adjusted CI includes zero or violates the -0.05 pip minimum in both 2022 and 2023.",
+    "partial_attenuation": "25% to <50% attenuation with retained sign is evidence for a mixed mechanism, not full explanation.",
+    "interaction_evidence": "An interaction family matters only if BH-FDR survives and the exposure effect fails the frozen stability requirement in at least one prespecified stratum in both 2022 and 2023.",
+    "pair_specific": "Fewer than 3 pairs retain negative adjusted sign, or one pair contributes >=50% of summed absolute pair effects, consistently in 2022 and 2023."
+  },
+  "terminal_classification_algorithm": [
+    {"state": "GENUINE_SPREAD_STATE_PHENOMENON", "rule": "H_RAW passes every effect-size/stability stage; M4 retains >=50% of M0; denominator-independent raw, trailing and fixed-scale effects have the negative sign; no full-confounder rule passes."},
+    {"state": "NORMALIZATION_ARTIFACT", "rule": "GENUINE fails; current-spread-unit contrast is negative with CI below zero in 2022 and 2023, while raw-pip M0/M4 is nonnegative or >-0.05 or its CI includes zero, both denominator-independent contrasts fail the negative requirement, and denominator amplification ratio is >=4 in both stages."},
+    {"state": "VOLATILITY_OR_ACTIVITY_CONFOUNDING", "rule": "GENUINE and NORMALIZATION_ARTIFACT fail; adding the frozen volatility/activity block meets material_attenuation and its interaction family survives FDR in both 2022 and 2023."},
+    {"state": "SESSION_OR_LIQUIDITY_PROXY", "rule": "Prior states fail; session/time or broader-liquidity block meets material_attenuation or the effect fails session stability, with the corresponding interaction surviving FDR in both 2022 and 2023."},
+    {"state": "PAIR_SPECIFIC_EFFECT", "rule": "Prior states fail and the frozen pair_specific criterion holds in both 2022 and 2023."},
+    {"state": "MIXED_MECHANISM", "rule": "No single prior explanation is sufficient; two or more blocks each show partial_attenuation or replicating FDR-significant interactions, while some negative raw effect remains."},
+    {"state": "PHENOMENON_NOT_CONFIRMED", "rule": "None of the preceding states is supported, required stages/cells are inadequate, signs fail to replicate, or inference is invalid."}
+  ],
+  "advancement_and_rejection": {
+    "advance_to_2022": "2019-2021 implementation passes leakage/QA; H_RAW and all mechanism diagnostics are complete and frozen. Mechanism candidates are not selected or changed; all pre-registered tests advance unchanged.",
+    "advance_to_2023": "2022 artifact is complete, hash-frozen and independently validated; no definitions, models, thresholds, directions or classifications changed.",
+    "phase22b_success": "Only GENUINE_SPREAD_STATE_PHENOMENON may be called a confirmed genuine mechanism candidate. Other classifications are informative closures and do not authorize strategy work.",
+    "reject_genuine_claim": "Any raw-pip minimum, CI, temporal, pair, session, concentration or adjustment-retention criterion fails.",
+    "insufficient_evidence": "Missing required cells, lineage/hash mismatch, leakage, non-reproducible bootstrap, or unauthorized partition access yields PHENOMENON_NOT_CONFIRMED or INVALID_RUN; never threshold repair."
+  },
+  "random_seeds": {
+    "daily_block_bootstrap": 22002,
+    "stratified_label_permutation": 22003,
+    "replay_sample_selection": 22004
+  },
+  "leakage_tests": [
+    "Every feature and control timestamp is <= anchor; future quote is >anchor and <=anchor+60s with frozen freshness.",
+    "Trailing 15-second features exclude future ticks; baseline window is nonoverlapping and ends at anchor-15s.",
+    "Current spread and causal trailing median exclude future quotes and the current anchor is excluded from its own baseline.",
+    "All quintile boundaries and fixed scales are fit using 2019-2021 only; serialized hashes are unchanged in 2022/2023.",
+    "2022 cannot be opened before the development mechanism artifact is frozen; 2023 cannot be opened before 2022 is frozen.",
+    "No file whose timestamps reach 2024-01-01 is enumerated, sampled, counted, hashed or read.",
+    "Perturbing ticks after an anchor cannot change its exposure, controls or current denominators.",
+    "Perturbing 2022/2023 cannot change development boundaries, formulas, model matrix or classification rules.",
+    "Duplicate timestamps are stable-sorted and handled by the existing frozen quote ordering; missing/gap rows are never filled.",
+    "Input dataset root, Phase 22A evidence hashes and candidate ID must match before execution."
+  ],
+  "required_reporting": [
+    "Anchor and pair-day attrition by reason, pair, year and month.",
+    "M0-M4 raw-pip coefficients, CIs, attenuation and daily distributions.",
+    "All four outcome scales side by side; never omit raw pips.",
+    "Pair, year, month, weekday, session/hour and liquidity-stratum stability.",
+    "Every interaction test, raw and FDR-adjusted p-value, including rejections.",
+    "Concentration and missing-cell diagnostics.",
+    "Deterministic terminal classification with every rule truth value."
+  ],
+  "prohibited": [
+    "threshold optimization or post-result threshold introduction",
+    "new horizons, lookbacks, pairs, sessions, outcomes, controls or interactions after freeze",
+    "strategy construction, BUY/SELL rules, entries, exits, stops or targets",
+    "PnL, commissions, slippage, expectancy or position sizing",
+    "machine learning or data-driven feature selection",
+    "2024+ access, order APIs or broker execution"
+  ]
+}

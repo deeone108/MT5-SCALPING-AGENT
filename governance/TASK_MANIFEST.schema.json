@@ -146,6 +146,7 @@
                                                    "CREATED",
                                                    "READY",
                                                    "RUNNING",
+                                                   "FROZEN_PENDING_REVIEW",
                                                    "UNVERIFIED_INTERRUPTED",
                                                    "BLOCKED",
                                                    "IMPLEMENTED",

@@ -1,0 +1,40 @@
+{
+    "schema_version":  1,
+    "review_id":  "PH22B-REVIEW-005-QA",
+    "task_id":  "PH22B-REVIEW-005",
+    "reviewer_role":  "qa_reviewer",
+    "verdict":  "QA_REJECTED",
+    "specification_canonical_sha256":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e",
+    "specification_raw_sha256":  "3130fd3831a4f0789ffbd11fb109af5e9f6127caede9d8d0d244037de9e9d891",
+    "commit":  "29ee720a9c3fe24fb0f9e7b476135e42b8e1d68e",
+    "timestamp_utc":  "2026-09-10T18:54:12Z",
+    "tests":  {
+                  "passed":  46,
+                  "pytest":  "8.4.2",
+                  "failed":  0,
+                  "python":  "3.12.10"
+              },
+    "market_data_accessed":  [
+
+                             ],
+    "findings":  [
+                     {
+                         "section":  "v5 advancement_to_2022",
+                         "problem":  "Two stale v4 mechanism/test references.",
+                         "required_correction":  "New immutable version with current-version wording.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "PH22B-REVIEW-005",
+                         "problem":  "Completion/prohibition wording refers to v4.",
+                         "required_correction":  "New review manifest consistently bound to current version.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "PH22B-REMEDIATION-005 lifecycle/result",
+                         "problem":  "Task RUNNING while result COMPLETE; result commit and artifact hashes do not identify final frozen output.",
+                         "required_correction":  "Close lifecycle and provide content-derived artifact provenance in next remediation.",
+                         "severity":  "HIGH"
+                     }
+                 ]
+}

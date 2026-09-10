@@ -1,0 +1,22 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"Phase 22B Non-Actionable Research Evidence",
+  "type":"object",
+  "additionalProperties":false,
+  "required":["schema_version","candidate_id","specification_hash","code_version","dataset_authorization_id","research_run_id","actionable","strategy_eligible","trade_direction","primary_raw_pip_effect","normalized_diagnostic_effect","confidence_intervals","raw_p_values","adjusted_p_values","fdr_decisions","temporal_replication_results","pair_stability","concentration_diagnostics","session_diagnostics","regime_diagnostics","missingness","limitations","terminal_scientific_classification","reviewer_verdicts","reviewer_artifact_hashes","provenance_hashes"],
+  "properties":{
+    "schema_version":{"const":1},"candidate_id":{"const":"P22A_SPR_ABS_15s_60s"},
+    "specification_hash":{"type":"string","pattern":"^[0-9a-f]{64}$"},"code_version":{"type":"string","pattern":"^[0-9a-f]{40}$"},
+    "dataset_authorization_id":{"type":"string","minLength":1},"research_run_id":{"type":"string","minLength":1},
+    "actionable":{"const":false},"strategy_eligible":{"const":false},"trade_direction":{"type":"null"},
+    "primary_raw_pip_effect":{"type":["object","null"]},"normalized_diagnostic_effect":{"type":["object","null"]},
+    "confidence_intervals":{"type":"object"},"raw_p_values":{"type":"object"},"adjusted_p_values":{"type":"object"},"fdr_decisions":{"type":"object"},
+    "temporal_replication_results":{"type":"object"},"pair_stability":{"type":"object"},"concentration_diagnostics":{"type":"object"},
+    "session_diagnostics":{"type":"object"},"regime_diagnostics":{"type":"object"},"missingness":{"type":"object"},
+    "limitations":{"type":"array","items":{"type":"string"}},
+    "terminal_scientific_classification":{"enum":["GENUINE_SPREAD_STATE_PHENOMENON","NORMALIZATION_ARTIFACT","VOLATILITY_OR_ACTIVITY_CONFOUNDING","SESSION_OR_LIQUIDITY_PROXY","PAIR_SPECIFIC_EFFECT","MIXED_MECHANISM","PHENOMENON_NOT_CONFIRMED",null]},
+    "reviewer_verdicts":{"type":"object","required":["statistical_validator","qa_reviewer"],"properties":{"statistical_validator":{"enum":["PENDING","APPROVED","REJECTED"]},"qa_reviewer":{"enum":["PENDING","APPROVED","REJECTED"]}},"additionalProperties":false},
+    "reviewer_artifact_hashes":{"type":"object","properties":{"statistical_validator":{"type":["string","null"],"pattern":"^[0-9a-f]{64}$"},"qa_reviewer":{"type":["string","null"],"pattern":"^[0-9a-f]{64}$"}},"required":["statistical_validator","qa_reviewer"],"additionalProperties":false},
+    "provenance_hashes":{"type":"object","additionalProperties":{"type":"string","pattern":"^[0-9a-f]{64}$"}}
+  }
+}

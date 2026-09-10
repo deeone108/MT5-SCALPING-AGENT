@@ -1,0 +1,72 @@
+{
+    "schema_version":  1,
+    "review_id":  "PH22B-REVIEW-003-STATISTICAL",
+    "task_id":  "PH22B-REVIEW-003",
+    "reviewer_role":  "statistical_validator",
+    "verdict":  "STATISTICAL_VALIDATOR_REJECTED",
+    "reviewed_specification_path":  "research/phase22b_spec_v3.json",
+    "reviewed_specification_canonical_sha256":  "6dca34026989fc26bf2e282c48e6a058074bc60ad5df2d476824d5ff16e6a28a",
+    "reviewed_artifact_hashes":  {
+                                     "research/phase22b_spec_v3.json":  "5121ecfac73bb7f7d25850796f9df0df91bb48b0ec3e6202558aba0256c340b0",
+                                     "governance/tasks/PH22B-REVIEW-003.json":  "f1f6f70e24dc60c8848f564ff9e80f40c2bdf92ea938569f5d5e967d1ee77403",
+                                     "governance/PHASE22B_EVIDENCE.schema.json":  "9f0be2b894b4bf25b30177d6fc9fdbe2bbf7b66a52c9f16ec197e9957c0309d4"
+                                 },
+    "commit":  "0565e5d9bc172b04a2c2ca90fffe86f4fad82f81",
+    "branch":  "task/ph22b-remediation-001",
+    "timestamp_utc":  "2026-09-10T18:28:11Z",
+    "integrity_checks":  {
+                             "canonical_hash_reproduced":  true,
+                             "commits_verified":  true,
+                             "task_hash_binding":  true,
+                             "no_data_authorized":  true,
+                             "live_unauthorized":  true,
+                             "specification_unmodified":  true
+                         },
+    "market_data_accessed":  [
+
+                             ],
+    "findings":  [
+                     {
+                         "section":  "models_and_estimands / inference",
+                         "problem":  "Coefficient estimator, numerical solver, covariance estimator, bootstrap refit/aggregation, CI construction and exact p-value algorithms are not fully frozen.",
+                         "required_correction":  "Freeze all estimator, solver, covariance, bootstrap aggregation, CI and p-value mechanics.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "effect_size_and_stability / confounding_rules / inference",
+                         "problem":  "Thresholds selected after Phase 22A observation are not labeled post-observation decision thresholds; H_RAW is incorrectly described as pre-registered.",
+                         "required_correction":  "Label all listed thresholds as post-observation Phase 22B decision rules and limit claims accordingly.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "temporal_partitions.sequence / access_contract",
+                         "problem":  "Frozen v3 instructs future tasks to bind this v2 hash.",
+                         "required_correction":  "Create a newly frozen specification consistently binding its exact hash/version.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "advancement_and_rejection.insufficient_evidence",
+                         "problem":  "Integrity failures may yield scientific rejection or INVALID_RUN, conflicting with fail-first operational precedence.",
+                         "required_correction":  "Route every integrity, leakage, authorization, provenance and reproducibility failure exclusively to PHASE_22B_INVALID_RESEARCH_RUN.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "primary_hypotheses / hypothesis_inventory.H_RAW",
+                         "problem":  "H_RAW definitions differ and exact sign-tail p-value and tie/zero handling are not frozen.",
+                         "required_correction":  "Define one authoritative statistical H_RAW separately from advancement gates and freeze its algorithm.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "models_and_estimands.session_policy / S_SESSION",
+                         "problem":  "S_SESSION lacks a complete ordered model object equivalent to M0-M4.",
+                         "required_correction":  "Freeze the full S_SESSION matrix and omnibus construction.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "governance/tasks/PH22B-REVIEW-003.json",
+                         "problem":  "Completion and prohibition wording still refers to v2.",
+                         "required_correction":  "Correct through a separately authorized remediation task.",
+                         "severity":  "MEDIUM"
+                     }
+                 ]
+}

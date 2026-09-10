@@ -1,0 +1,39 @@
+{
+    "schema_version":  1,
+    "review_id":  "PH22B-REVIEW-004-QA",
+    "task_id":  "PH22B-REVIEW-004",
+    "reviewer_role":  "qa_reviewer",
+    "verdict":  "QA_REJECTED",
+    "reviewed_specification_canonical_sha256":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6",
+    "reviewed_specification_raw_sha256":  "def497a871378a113c078d3f36f3c10479d670994a9718c34556dfbcde0f4367",
+    "commit":  "d4ef85b381a2668220a216a3a824cabad202f20c",
+    "timestamp_utc":  "2026-09-10T18:48:40Z",
+    "test_environment":  {
+                             "pytest":  "8.4.2",
+                             "result":  "45 passed",
+                             "python":  "3.12.10"
+                         },
+    "market_data_accessed":  [
+
+                             ],
+    "findings":  [
+                     {
+                         "section":  "phase22b_spec_v4 status/specification_binding",
+                         "problem":  "Frozen review target still declares draft/pending hash metadata.",
+                         "required_correction":  "New artifact must declare frozen pending review and externally recorded canonical hash state.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "PH22B-REMEDIATION-004 allowed_paths",
+                         "problem":  "Autonomy runtime/docs/schema files were outside task path authority.",
+                         "required_correction":  "Create a new governance remediation task explicitly authorizing these paths.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "PH22B-REMEDIATION-004 result",
+                         "problem":  "Required result manifest absent.",
+                         "required_correction":  "Record a result manifest and require it for the next task before review.",
+                         "severity":  "HIGH"
+                     }
+                 ]
+}

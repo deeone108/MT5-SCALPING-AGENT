@@ -1,0 +1,96 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-REMEDIATION-006",
+    "role":  "research_lead",
+    "start_time":  "2026-09-10T18:56:46Z",
+    "end_time":  "2026-09-10T18:56:46Z",
+    "status":  "COMPLETE",
+    "base_commit":  "8e91c2c6f84ad8cb891c81efb5cc358694453c30",
+    "result_commit":  "0fe534b116b90b8efaa45447e7988a2694fdbad0",
+    "files_changed":  [
+                          "research/phase22b_spec_v6.json",
+                          "research/phase22b_spec_v6.sha256",
+                          "tests/orchestration/test_phase22b_v6.py",
+                          "governance/tasks/PH22B-REMEDIATION-006.json",
+                          "governance/state/phase22b_remediation_loop.json",
+                          "governance/results/PH22B-REMEDIATION-006.json"
+                      ],
+    "artifacts":  [
+                      {
+                          "sha256":  "e996ec7848e2d6669e5b1e39350364f4c0bcb9a498ea75d8650037c468dee37b",
+                          "path":  "research/phase22b_spec_v6.json"
+                      },
+                      {
+                          "sha256":  "90f78597576cd4fa972dda03005159fb87088f8ea2aecbc19a22dbef333d3abf",
+                          "path":  "research/phase22b_spec_v6.sha256"
+                      }
+                  ],
+    "artifact_hashes":  {
+                            "research/phase22b_spec_v6.sha256":  "90f78597576cd4fa972dda03005159fb87088f8ea2aecbc19a22dbef333d3abf",
+                            "research/phase22b_spec_v6.json":  "e996ec7848e2d6669e5b1e39350364f4c0bcb9a498ea75d8650037c468dee37b"
+                        },
+    "tests_executed":  [
+                           "expanded no-data suite"
+                       ],
+    "test_results":  [
+                         {
+                             "status":  "PASSED",
+                             "name":  "no_data_suite",
+                             "count":  48
+                         }
+                     ],
+    "data_windows_accessed":  [
+
+                              ],
+    "specification_hash_used":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e",
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "safety_checks":  [
+                          {
+                              "name":  "v5_unchanged",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "no_data",
+                              "status":  "PASSED"
+                          }
+                      ],
+    "review_status":  [
+                          {
+                              "decision":  "PENDING",
+                              "role":  "statistical_validator"
+                          },
+                          {
+                              "decision":  "PENDING",
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "terminal_result":  "PH22B_V6_FROZEN_PENDING_INDEPENDENT_REVIEW",
+    "inputs":  [
+                   {
+                       "sha256":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e",
+                       "path":  "research/phase22b_spec_v5.json"
+                   }
+               ],
+    "commands":  [
+
+                 ],
+    "tests":  [
+
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no retroactive waiver",
+                                  "no v4 mutation",
+                                  "no data"
+                              ],
+    "handoff":  {
+                    "requested_decision":  "review canonical v6 hash then independent QA",
+                    "limitations":  [
+                                        "No implementation authorized.",
+                                        "Canonical output hash recorded in v6 .sha256 and review task."
+                                    ],
+                    "to_role":  "statistical_validator"
+                }
+}

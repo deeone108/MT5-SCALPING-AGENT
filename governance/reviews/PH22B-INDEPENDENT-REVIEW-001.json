@@ -1,0 +1,23 @@
+{
+    "schema_version":  1,
+    "review_id":  "PH22B-INDEPENDENT-REVIEW-001",
+    "subject_task":  "PH22B-RL-001",
+    "subject_specification_sha256":  "1264f0abc283af990f261cf8979a11033de50639cfa00dc5b076ef2bd445fd6c",
+    "verdict":  "READY_WITH_REQUIRED_CHANGES",
+    "accepted_by":  "human_owner",
+    "data_accessed":  [
+
+                      ],
+    "blocking_findings":  [
+                              "retrospective framing",
+                              "deterministic model matrices",
+                              "deterministic hypothesis/FDR inventory",
+                              "invalid-run precedence",
+                              "Phase22B hash binding and content verification",
+                              "guard-before-read resolver",
+                              "non-actionable AI evidence schema",
+                              "frozen-pending-review lifecycle"
+                          ],
+    "superseded_by":  "research/phase22b_spec_v3.json",
+    "superseding_specification_sha256":  "6dca34026989fc26bf2e282c48e6a058074bc60ad5df2d476824d5ff16e6a28a"
+}

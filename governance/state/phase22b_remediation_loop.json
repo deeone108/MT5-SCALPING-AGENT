@@ -1,0 +1,88 @@
+{
+    "schema_version":  1,
+    "loop_id":  "PH22B-AUTONOMOUS-LOOP-001",
+    "phase":  "PHASE_22B_PENDING_DESIGN",
+    "candidate_id":  "P22A_SPR_ABS_15s_60s",
+    "state":  "HUMAN_GATE_REQUIRED",
+    "lineage":  [
+                    {
+                        "task_id":  "PH22B-REMEDIATION-004",
+                        "to_spec_hash":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6",
+                        "from_spec_hash":  "6dca34026989fc26bf2e282c48e6a058074bc60ad5df2d476824d5ff16e6a28a"
+                    },
+                    {
+                        "task_id":  "PH22B-REMEDIATION-005",
+                        "to_spec_hash":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e",
+                        "from_spec_hash":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6"
+                    },
+                    {
+                        "task_id":  "PH22B-REMEDIATION-006",
+                        "to_spec_hash":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+                        "from_spec_hash":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e"
+                    }
+                ],
+    "attempts":  [
+                     {
+                         "finding_fingerprints":  [
+                                                      "9e9d1d18fef11867fbcc286e7414864acb2fe5843d0ea51d8376894b663e802c",
+                                                      "810a68818b6d9cf5c5d0411dc2b2a05e7a8bc07f4c521fb7bbb23828aa1bfd69",
+                                                      "5e9030d1fc51657748a1308711817185565c7729f9d0476d481a4cb93d3da4cd",
+                                                      "5ceede2d82b804126d47938fb00725e338a72e59d1cde9bb7a1e1fbcfd88ad19",
+                                                      "50e5f93e62a4cf0e5ced83fd3500e655886d329a880cae2f93907d91b2f5b153",
+                                                      "175f15fa2c1c5d358bf5e2c0fd026d729dd4eb78e7e534edb0baa50f60d6de2a",
+                                                      "51e8a9fe99fa645784816e63eefacc5bba4ec7dac26c000436355cc007f6a19f"
+                                                  ],
+                         "output_spec_hash":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6",
+                         "task_id":  "PH22B-REMEDIATION-004",
+                         "input_spec_hash":  "6dca34026989fc26bf2e282c48e6a058074bc60ad5df2d476824d5ff16e6a28a",
+                         "material_change":  true
+                     },
+                     {
+                         "finding_fingerprints":  [
+                                                      "57eb9e1de690d0376565a4ab0c5abdc4c415c9e5ddfc20a622d4d8b6abd952af",
+                                                      "f55ec09b52dd85c51faee315b27445e748c0da8386b45a667bbfb0c17d4048f7",
+                                                      "8f0ac8e752d2b2f4dd5cb0cb082599aae46d7a7bbbb922a6b9b1a0965dadbf3c"
+                                                  ],
+                         "output_spec_hash":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e",
+                         "task_id":  "PH22B-REMEDIATION-005",
+                         "input_spec_hash":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6",
+                         "material_change":  true
+                     },
+                     {
+                         "finding_fingerprints":  [
+                                                      "d0915ea633e027cf674d79212a8aabb88aa4280ded639097e90dc416172abedd",
+                                                      "45262aeb98fa8c9f92139d36a5c695548df093d7a574fea96bf556f2eb1cb7eb"
+                                                  ],
+                         "output_spec_hash":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+                         "task_id":  "PH22B-REMEDIATION-006",
+                         "input_spec_hash":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e",
+                         "material_change":  true
+                     }
+                 ],
+    "current_spec_hash":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+    "review_artifacts":  [
+                             {
+                                 "path":  "governance/reviews/PH22B-REVIEW-009-statistical.json",
+                                 "sha256":  "8155ca22c9b404cced9b81745e6873ab673ac186ea58bb932d20b746ec9b52c4",
+                                 "decision":  "APPROVED"
+                             },
+                             {
+                                 "path":  "governance/reviews/PH22B-REVIEW-009-qa.json",
+                                 "sha256":  "0a8fb3d5d6a0e162365f3f0d148122c839bdb4dacec1a03ddd76dcccb6b570ab",
+                                 "decision":  "APPROVED"
+                             }
+                         ],
+    "finding_fingerprints":  [
+                                 "d0915ea633e027cf674d79212a8aabb88aa4280ded639097e90dc416172abedd",
+                                 "45262aeb98fa8c9f92139d36a5c695548df093d7a574fea96bf556f2eb1cb7eb"
+                             ],
+    "next_transition":  "HUMAN_OWNER_AUTHORIZE_2019_2021_DATA_WINDOW_FOR_SEPARATE_RESEARCH_IMPLEMENTER_TASK",
+    "safety":  {
+                   "allowed_data_window":  [
+
+                                           ],
+                   "live_execution_authorized":  false,
+                   "review_bypass_authorized":  false,
+                   "scope_change_authorized":  false
+               }
+}
