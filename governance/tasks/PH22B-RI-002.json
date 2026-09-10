@@ -8,6 +8,16 @@
     "inputs":  [
                    {
                        "hash_mode":  "canonical_json",
+                       "path":  "governance/data_catalogs/phase22b_2019_2021_metadata.json",
+                       "sha256":  "f4c3b07de01117bcd5eec7bba2653a860f604f80b83d483e3e7a0ef04f1e4a32"
+                   },
+                   {
+                       "hash_mode":  "canonical_json",
+                       "path":  "governance/data_catalogs/phase22b_2019_2021_locators.json",
+                       "sha256":  "b95b06002adf8343f037e8cbbd4fdac5476fa1334c09b4fbcc0c585c2daae91d"
+                   },
+                   {
+                       "hash_mode":  "canonical_json",
                        "path":  "research/phase22b_spec_v7.json",
                        "sha256":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d"
                    },
@@ -61,7 +71,7 @@
                             ],
     "required_spec_hash":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
     "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
-    "base_commit":  "d6f3a9341798912d064d11d1c354cff730e6a3f9",
+    "base_commit":  "f1fcadff7699bdda50ce8e0ce9de79a06d6d6fd7",
     "branch":  "task/ph22b-ri-002",
     "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-ri-002",
     "required_tests":  [
