@@ -1,0 +1,71 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-REVIEW-006",
+    "phase":  "PHASE_22B_PENDING_DESIGN",
+    "phase_id":  "PHASE_22B_PENDING_DESIGN",
+    "assigned_role":  "statistical_validator",
+    "objective":  "Independently review exact frozen Phase 22B v6, followed by separately attributable QA review.",
+    "inputs":  [
+                   {
+                       "hash_mode":  "canonical_json",
+                       "path":  "research/phase22b_spec_v6.json",
+                       "sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/QA_TEST_ENVIRONMENT.md",
+                       "sha256":  "6a4019f3716dcf53a1ba835694cb852b5e180603944c1632ab95c568c384caa6"
+                   }
+               ],
+    "allowed_paths":  [
+                          "governance/reviews/PH22B-REVIEW-006-statistical.json",
+                          "governance/reviews/PH22B-REVIEW-006-qa.json",
+                          "governance/results/PH22B-REVIEW-006.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/phase22b_spec_v4.json",
+                            "data/",
+                            "reports/",
+                            "src/mt5_scalping_agent/strategies/",
+                            "src/mt5_scalping_agent/backtesting/",
+                            "src/mt5_scalping_agent/risk/",
+                            "src/mt5_scalping_agent/execution/"
+                        ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "base_commit":  "0fe534b116b90b8efaa45447e7988a2694fdbad0",
+    "branch":  "task/ph22b-review-006",
+    "worktree":  "logical-independent-review-on-frozen-commit",
+    "required_tests":  [
+                           "phase22b_v6_contract",
+                           "autonomous_remediation",
+                           "qa_environment"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "completion_conditions":  [
+                                  "Statistical Validator independently approves exact v6 canonical hash",
+                                  "QA independently approves exact v6 canonical hash",
+                                  "all artifact hashes reproduced according to declared hash_mode"
+                              ],
+    "status":  "READY",
+    "allowed_data":  [
+
+                     ],
+    "prohibited_actions":  [
+                               "modify frozen v6",
+                               "access market data or 2024+",
+                               "execute research",
+                               "bypass either review",
+                               "create implementation task"
+                           ],
+    "required_outputs":  [
+                             "statistical review artifact",
+                             "QA review artifact",
+                             "deterministic overall gate result"
+                         ]
+}

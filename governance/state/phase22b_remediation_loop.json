@@ -3,7 +3,7 @@
     "loop_id":  "PH22B-AUTONOMOUS-LOOP-001",
     "phase":  "PHASE_22B_PENDING_DESIGN",
     "candidate_id":  "P22A_SPR_ABS_15s_60s",
-    "state":  "REMEDIATION_RUNNING",
+    "state":  "PENDING_INDEPENDENT_REVIEW",
     "lineage":  [
                     {
                         "task_id":  "PH22B-REMEDIATION-004",
@@ -76,7 +76,7 @@
                                  "d0915ea633e027cf674d79212a8aabb88aa4280ded639097e90dc416172abedd",
                                  "45262aeb98fa8c9f92139d36a5c695548df093d7a574fea96bf556f2eb1cb7eb"
                              ],
-    "next_transition":  "FREEZE_V6",
+    "next_transition":  "INDEPENDENT_STATISTICAL_AND_QA_REVIEW",
     "safety":  {
                    "allowed_data_window":  [
 
