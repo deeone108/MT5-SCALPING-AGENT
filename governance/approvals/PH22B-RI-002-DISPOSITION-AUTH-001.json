@@ -1,0 +1,30 @@
+{
+    "schema_version":  1,
+    "authorization_id":  "PH22B-RI-002-DISPOSITION-AUTH-001",
+    "authorized_by":  "human_owner",
+    "authorization_source":  "Explicit user response: authorised",
+    "authorized_at_utc":  "2026-09-10T21:53:56.9952654Z",
+    "invalid_task":  "PH22B-RI-001",
+    "decision":  "Archive invalid attempt and create a fresh isolated implementation task",
+    "data_authority_inherited_from":  "PH22B-DEV-2019-2021-AUTH-001",
+    "allowed_years":  [
+                          2019,
+                          2020,
+                          2021
+                      ],
+    "allowed_symbols":  [
+                            "EURUSD",
+                            "GBPUSD",
+                            "USDJPY",
+                            "USDCAD"
+                        ],
+    "locked_years":  [
+                         2022,
+                         2023
+                     ],
+    "forbidden":  "2024+",
+    "strategy_authorized":  false,
+    "pnl_authorized":  false,
+    "execution_authorized":  false,
+    "live_authorized":  false
+}

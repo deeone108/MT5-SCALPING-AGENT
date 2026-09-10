@@ -1,6 +1,6 @@
 {
     "active_tasks":  [
-
+                         "PH22B-RI-002"
                      ],
     "allowed_data_windows":  [
                                  "2019",
@@ -45,9 +45,9 @@
                                  "status":  "PASSED"
                              },
                   "implementation":  {
-                                         "evidence_sha256":  "e6c56489cdfdc90e97675ce9c0a34944e93b32554323f267e37b2d88bf4dff8c",
+                                         "evidence_sha256":  null,
                                          "reviewer_role":  "qa_reviewer",
-                                         "status":  "REJECTED"
+                                         "status":  "PENDING"
                                      },
                   "qa":  {
                              "evidence_sha256":  "0a8fb3d5d6a0e162365f3f0d148122c839bdb4dacec1a03ddd76dcccb6b570ab",
@@ -73,7 +73,7 @@
                             ],
     "orchestrator":  "project_orchestrator",
     "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
-    "phase_status":  "INVALID",
+    "phase_status":  "IMPLEMENTATION_REVIEW",
     "phase_transition_history":  [
                                      {
                                          "at_utc":  "2026-09-10T00:00:00+00:00",
@@ -93,7 +93,7 @@
                      },
     "schema_version":  1,
     "spec_sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
-    "status":  "INVALID",
+    "status":  "IMPLEMENTATION_REVIEW",
     "transitions":  [
                         {
                             "at_utc":  "2026-09-10T00:00:00+00:00",

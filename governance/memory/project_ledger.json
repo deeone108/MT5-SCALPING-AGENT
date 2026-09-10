@@ -78,6 +78,19 @@
                           "locked_metadata_exposed":  "at least 2022 filenames",
                           "next_gate":  "HUMAN_GATE_REQUIRED",
                           "reference":  "governance/incidents/PH22B-RI-001-LOCKED-DATA-ENUMERATION.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_IMPLEMENTATION_ATTEMPT_002",
+                          "status":  "AUTHORIZED_FRESH_ISOLATED_TASK",
+                          "task_id":  "PH22B-RI-002",
+                          "human_approval_sha256":  "d945e57498d6a79f3a550ed2ce61868f2f69aa0653854ca41602ed0ee1a2cc6c",
+                          "data_authority":  "unchanged 2019-2021 four pairs",
+                          "locked":  [
+                                         2022,
+                                         2023
+                                     ],
+                          "forbidden":  "2024+",
+                          "reference":  "governance/tasks/PH22B-RI-002.json"
                       }
                   ],
     "holdout_access_history":  [
