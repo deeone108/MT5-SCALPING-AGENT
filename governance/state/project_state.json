@@ -13,7 +13,8 @@
                       ],
     "candidate_registry_hash":  "cb2995a541ac60bfcb6dde7123f5981af0892e044ef7b12278d153287a5862b3",
     "completed_tasks":  [
-                            "PHASE22A_phase22a_20260909T220000Z"
+                            "PHASE22A_phase22a_20260909T220000Z",
+                            "PH22B-RL-010"
                         ],
     "current_phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
     "data_access":  {
@@ -40,7 +41,7 @@
                                "status":  "PASSED"
                            },
                   "freeze":  {
-                                 "evidence_sha256":  "8155ca22c9b404cced9b81745e6873ab673ac186ea58bb932d20b746ec9b52c4",
+                                 "evidence_sha256":  "0abab008d273952004f99a0f150852166f272fa7ac1620754410230f830f7c27",
                                  "reviewer_role":  "research_lead",
                                  "status":  "PASSED"
                              },
@@ -50,7 +51,7 @@
                                          "status":  "PENDING"
                                      },
                   "qa":  {
-                             "evidence_sha256":  "0a8fb3d5d6a0e162365f3f0d148122c839bdb4dacec1a03ddd76dcccb6b570ab",
+                             "evidence_sha256":  "38f2e1d8cfc299a6506f2dfb2ee9a61b16987889429cbe01b5a9ebcbc66ff15c",
                              "reviewer_role":  "qa_reviewer",
                              "status":  "PASSED"
                          },
@@ -60,7 +61,7 @@
                                  "status":  "NOT_REQUIRED"
                              },
                   "statistics":  {
-                                     "evidence_sha256":  "8155ca22c9b404cced9b81745e6873ab673ac186ea58bb932d20b746ec9b52c4",
+                                     "evidence_sha256":  "0abab008d273952004f99a0f150852166f272fa7ac1620754410230f830f7c27",
                                      "reviewer_role":  "statistical_validator",
                                      "status":  "PASSED"
                                  }
@@ -84,7 +85,7 @@
                                          "to":  "PHASE_22B_PENDING_DESIGN"
                                      }
                                  ],
-    "research_spec_hash":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+    "research_spec_hash":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
     "safety_state":  {
                          "execution_api":  false,
                          "live_activation_requires_human_owner":  true,
@@ -92,7 +93,7 @@
                          "status":  "ENFORCED"
                      },
     "schema_version":  1,
-    "spec_sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+    "spec_sha256":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
     "status":  "IMPLEMENTATION_REVIEW",
     "transitions":  [
                         {

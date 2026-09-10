@@ -1,0 +1,126 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-RL-010",
+    "role":  "research_lead",
+    "status":  "COMPLETE",
+    "base_commit":  "c98039c4987c2f6a21152f5523a3a6cc51457fcc",
+    "result_commit":  "2a16c1840a8e2997f13754c76b39a1b11730d681",
+    "inputs":  [
+                   {
+                       "sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+                       "path":  "research/phase22b_spec_v6.json"
+                   },
+                   {
+                       "sha256":  "22009fe4fe11463a5c4277f07c2195af3d50c1d92f008ecf2436a7176f1cbaa9",
+                       "path":  "reports/phase22a/phase22a_20260909T220000Z/discovery_survivors.json"
+                   },
+                   {
+                       "sha256":  "973a878492b365fb9c4a66a1bce210794d89ed78dd73d66998e02b295b393239",
+                       "path":  "docs/PHASE_22_MT5_DATASET_COMPLETION.md"
+                   },
+                   {
+                       "sha256":  "22fbe37eda4f76d85497f3523d5529cfe93fde291d2f87d8caee22bd25eeb7a2",
+                       "path":  "governance/results/PH22B-RI-001.json"
+                   },
+                   {
+                       "sha256":  "f32b61d98c287b475a3398933af85f890af3652e2247d76ce33d3e603a53b452",
+                       "path":  "governance/approvals/PH22B-V7-DETERMINISM-AUTH-001.json"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "sha256":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
+                          "path":  "research/phase22b_spec_v7.json"
+                      },
+                      {
+                          "sha256":  "5683b1c5aee51caa7a951ee135385d69eda59ae33ec2b1fb0a5a63cacc31cc0a",
+                          "path":  "docs/PHASE_22B_V7_DETERMINISM_ADDENDUM.md"
+                      }
+                  ],
+    "commands":  [
+                     "python -c \"import json,hashlib,pathlib; p=pathlib.Path(\u0027research/phase22b_spec_v7.json\u0027); x=json.loads(p.read_text()); print(hashlib.sha256((json.dumps(x,sort_keys=True,separators=(\u0027,\u0027,\u0027:\u0027),ensure_ascii=False)+\u0027\\n\u0027).encode()).hexdigest())\"",
+                     "python -c \"import json,pathlib; a=json.loads(pathlib.Path(\u0027research/phase22b_spec_v6.json\u0027).read_text()); b=json.loads(pathlib.Path(\u0027research/phase22b_spec_v7.json\u0027).read_text()); protected=[\u0027purpose\u0027,\u0027lineage\u0027,\u0027authority\u0027,\u0027scope\u0027,\u0027temporal_partitions\u0027,\u0027causality\u0027,\u0027exposure\u0027,\u0027outcomes\u0027,\u0027controls\u0027,\u0027primary_hypotheses\u0027,\u0027models_and_estimands\u0027,\u0027normalization_artifact_tests\u0027,\u0027interaction_tests\u0027,\u0027inference\u0027,\u0027effect_size_and_stability\u0027,\u0027confounding_rules\u0027,\u0027terminal_classification_algorithm\u0027,\u0027advancement_and_rejection\u0027,\u0027random_seeds\u0027,\u0027leakage_tests\u0027,\u0027required_reporting\u0027,\u0027prohibited\u0027,\u0027access_contract\u0027,\u0027operational_validation\u0027,\u0027ai_evidence_contract\u0027]; assert all(a[k]==b[k] for k in protected)\"",
+                     "python -c \"import json,pathlib; s=json.loads(pathlib.Path(\u0027governance/RESULT_MANIFEST.schema.json\u0027).read_text()); r=json.loads(pathlib.Path(\u0027governance/results/PH22B-RL-010.json\u0027).read_text()); assert not(set(s[\u0027required\u0027])-set(r)); assert not(set(r)-set(s[\u0027properties\u0027]))\"",
+                     "git diff --check",
+                     "git diff --exit-code 29f6ad8561b9359884f2212dfd21a811111f7977 HEAD -- research/phase22b_spec_v6.json"
+                 ],
+    "tests":  [
+                  {
+                      "result":  "PASS",
+                      "name":  "canonical_hash_reproduction"
+                  },
+                  {
+                      "result":  "PASS",
+                      "name":  "v6_scope_preservation"
+                  },
+                  {
+                      "result":  "PASS",
+                      "name":  "schema_and_deterministic_completeness"
+                  }
+              ],
+    "data_accessed":  [
+                          "authorized aggregate Phase 22A discovery_survivors.json only"
+                      ],
+    "prohibitions_verified":  [
+                                  "no underlying market data",
+                                  "no 2022/2023 outcome data",
+                                  "no 2024+",
+                                  "no strategy/PnL/execution"
+                              ],
+    "handoff":  {
+                    "requested_decision":  "EXPERIMENT_FREEZE_INDEPENDENT_REVIEW",
+                    "limitations":  [
+                                        "v7 is not implementation authority until Statistical Validator and QA approve"
+                                    ],
+                    "to_role":  "statistical_validator"
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "canonical hash reproduction",
+                           "protected-field semantic equality",
+                           "result manifest required/additional property validation",
+                           "deterministic clarification completeness checklist"
+                       ],
+    "review_status":  [
+                          {
+                              "verdict":  "PENDING",
+                              "role":  "statistical_validator"
+                          },
+                          {
+                              "verdict":  "PENDING",
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "end_time":  "2026-09-10T22:23:33.6637674Z",
+    "safety_checks":  [
+                          {
+                              "order_submission":  false,
+                              "live_execution_authorized":  false
+                          },
+                          {
+                              "locked_data_opened":  false
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "research/phase22b_spec_v7.json",
+                          "docs/PHASE_22B_V7_DETERMINISM_ADDENDUM.md",
+                          "governance/results/PH22B-RL-010.json"
+                      ],
+    "test_results":  [
+                         {
+                             "scope":  "specification freeze checks",
+                             "failed":  0,
+                             "passed":  4
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "addendum":  "5683b1c5aee51caa7a951ee135385d69eda59ae33ec2b1fb0a5a63cacc31cc0a",
+                            "specification":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d"
+                        },
+    "terminal_result":  "PH22B_SPEC_V7_FROZEN_PENDING_INDEPENDENT_REVIEW",
+    "start_time":  "2026-09-10T22:23:33.6637674Z",
+    "specification_hash_used":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d"
+}

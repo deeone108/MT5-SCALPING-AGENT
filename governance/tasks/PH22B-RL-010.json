@@ -1,0 +1,90 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-RL-010",
+    "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "assigned_role":  "research_lead",
+    "objective":  "Resolve deterministic implementation omissions in frozen Phase 22B v6 by producing a superseding v7 specification without opening underlying market data or changing the research question, candidate, horizon, partitions, or outcome direction.",
+    "inputs":  [
+                   {
+                       "hash_mode":  "canonical_json",
+                       "path":  "research/phase22b_spec_v6.json",
+                       "sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "reports/phase22a/phase22a_20260909T220000Z/discovery_survivors.json",
+                       "sha256":  "22009fe4fe11463a5c4277f07c2195af3d50c1d92f008ecf2436a7176f1cbaa9"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "docs/PHASE_22_MT5_DATASET_COMPLETION.md",
+                       "sha256":  "973a878492b365fb9c4a66a1bce210794d89ed78dd73d66998e02b295b393239"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/results/PH22B-RI-001.json",
+                       "sha256":  "22fbe37eda4f76d85497f3523d5529cfe93fde291d2f87d8caee22bd25eeb7a2"
+                   }
+               ],
+    "allowed_paths":  [
+                          "research/phase22b_spec_v7.json",
+                          "docs/PHASE_22B_V7_DETERMINISM_ADDENDUM.md",
+                          "governance/results/PH22B-RL-010.json",
+                          "governance/tasks/PH22B-RL-010.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/phase22b_spec_v6.json",
+                            "reports/phase22a/phase22a_20260909T220000Z/anchors/",
+                            "reports/phase22_data_build/",
+                            "src/",
+                            "scripts/",
+                            "tests/"
+                        ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "base_commit":  "29f6ad8561b9359884f2212dfd21a811111f7977",
+    "branch":  "task/ph22b-rl-010",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-rl-010",
+    "required_tests":  [
+                           "canonical hash reproduction",
+                           "semantic diff proves no research scope change",
+                           "schema and deterministic completeness review"
+                       ],
+    "required_reviewers":  [
+                               "statistical_validator",
+                               "qa_reviewer"
+                           ],
+    "completion_conditions":  [
+                                  "all seven RI-002 ambiguities deterministically resolved",
+                                  "v6 preserved",
+                                  "v7 committed and hashed",
+                                  "independent review pending"
+                              ],
+    "status":  "COMPLETED",
+    "allowed_data":  [
+
+                     ],
+    "prohibited_actions":  [
+                               "underlying market data",
+                               "2022",
+                               "2023",
+                               "2024+",
+                               "candidate changes",
+                               "threshold optimization",
+                               "strategy",
+                               "PnL",
+                               "execution",
+                               "LIVE"
+                           ],
+    "required_outputs":  [
+                             "phase22b_spec_v7.json",
+                             "determinism addendum",
+                             "canonical SHA-256",
+                             "result manifest",
+                             "independent review request"
+                         ]
+}
