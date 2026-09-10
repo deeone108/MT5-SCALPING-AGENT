@@ -61,7 +61,7 @@
                                   "v4 unchanged",
                                   "new independent review task"
                               ],
-    "status":  "RUNNING",
+    "status":  "FROZEN_PENDING_REVIEW",
     "prohibited_actions":  [
                                "market data",
                                "scope change",

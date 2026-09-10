@@ -3,7 +3,7 @@
     "loop_id":  "PH22B-AUTONOMOUS-LOOP-001",
     "phase":  "PHASE_22B_PENDING_DESIGN",
     "candidate_id":  "P22A_SPR_ABS_15s_60s",
-    "state":  "PENDING_INDEPENDENT_REVIEW",
+    "state":  "REMEDIATION_RUNNING",
     "lineage":  [
                     {
                         "task_id":  "PH22B-REMEDIATION-004",
@@ -14,6 +14,11 @@
                         "task_id":  "PH22B-REMEDIATION-005",
                         "to_spec_hash":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e",
                         "from_spec_hash":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6"
+                    },
+                    {
+                        "task_id":  "PH22B-REMEDIATION-006",
+                        "to_spec_hash":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+                        "from_spec_hash":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e"
                     }
                 ],
     "attempts":  [
@@ -42,27 +47,36 @@
                          "task_id":  "PH22B-REMEDIATION-005",
                          "input_spec_hash":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6",
                          "material_change":  true
+                     },
+                     {
+                         "finding_fingerprints":  [
+                                                      "d0915ea633e027cf674d79212a8aabb88aa4280ded639097e90dc416172abedd",
+                                                      "45262aeb98fa8c9f92139d36a5c695548df093d7a574fea96bf556f2eb1cb7eb"
+                                                  ],
+                         "output_spec_hash":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+                         "task_id":  "PH22B-REMEDIATION-006",
+                         "input_spec_hash":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e",
+                         "material_change":  true
                      }
                  ],
-    "current_spec_hash":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e",
+    "current_spec_hash":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
     "review_artifacts":  [
                              {
-                                 "path":  "governance/reviews/PH22B-REVIEW-004-statistical.json",
-                                 "sha256":  "e71cf1795567f3649f4d04ad626e0837d1bc85becf94751865453a5848e9bd47",
-                                 "decision":  "REJECTED"
+                                 "path":  "governance/reviews/PH22B-REVIEW-005-statistical.json",
+                                 "sha256":  "06512691c8e70c458a1f4a7366b7bb2918e4b708665f0addc3c84a716262a506",
+                                 "decision":  "APPROVED"
                              },
                              {
-                                 "path":  "governance/reviews/PH22B-REVIEW-004-qa.json",
-                                 "sha256":  "a114be54ea8c8bfb7ad5b2516733dc197e5ddcc91031630b1bcc65adb8227f74",
+                                 "path":  "governance/reviews/PH22B-REVIEW-005-qa.json",
+                                 "sha256":  "a43eec7657fc839be25832abfd3b2561c19f3d03263b8fc5ecc4ab4ca215baf9",
                                  "decision":  "REJECTED"
                              }
                          ],
     "finding_fingerprints":  [
-                                 "57eb9e1de690d0376565a4ab0c5abdc4c415c9e5ddfc20a622d4d8b6abd952af",
-                                 "f55ec09b52dd85c51faee315b27445e748c0da8386b45a667bbfb0c17d4048f7",
-                                 "8f0ac8e752d2b2f4dd5cb0cb082599aae46d7a7bbbb922a6b9b1a0965dadbf3c"
+                                 "d0915ea633e027cf674d79212a8aabb88aa4280ded639097e90dc416172abedd",
+                                 "45262aeb98fa8c9f92139d36a5c695548df093d7a574fea96bf556f2eb1cb7eb"
                              ],
-    "next_transition":  "INDEPENDENT_STATISTICAL_AND_QA_REVIEW",
+    "next_transition":  "FREEZE_V6",
     "safety":  {
                    "allowed_data_window":  [
 
