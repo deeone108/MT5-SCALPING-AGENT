@@ -91,6 +91,19 @@
                                      ],
                           "forbidden":  "2024+",
                           "reference":  "governance/tasks/PH22B-RI-002.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_V7_DETERMINISM_AUTHORIZATION",
+                          "status":  "AUTHORIZED",
+                          "approval_sha256":  "f32b61d98c287b475a3398933af85f890af3652e2247d76ce33d3e603a53b452",
+                          "scope":  "implementation-semantic clarification only",
+                          "standing_autonomy":  true,
+                          "locked":  [
+                                         2022,
+                                         2023
+                                     ],
+                          "forbidden":  "2024+",
+                          "reference":  "governance/approvals/PH22B-V7-DETERMINISM-AUTH-001.json"
                       }
                   ],
     "holdout_access_history":  [
