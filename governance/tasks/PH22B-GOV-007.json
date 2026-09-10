@@ -55,7 +55,7 @@
                                   "task/result base commits match",
                                   "result files_changed excludes its own later manifest"
                               ],
-    "status":  "RUNNING",
+    "status":  "FROZEN_PENDING_REVIEW",
     "prohibited_actions":  [
                                "market data",
                                "scope change",
