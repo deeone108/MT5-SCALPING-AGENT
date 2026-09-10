@@ -35,11 +35,11 @@
     "artifact_hashes":  {
                             "governance/data_catalogs/phase22b_2019_2021_metadata.json":  {
                                                                                               "raw_sha256":  "9660d6f86c536a6fb9c07f66a9cac31380a3fe7c5225aebd6063cfe7c116e17e",
-                                                                                              "canonical_json_sha256":  "f4c3b07d025924713752c7b06a0bf31481bfa3ad3ba182d9844cfa5e02a058cf"
+                                                                                              "canonical_json_sha256":  "f4c3b07de01117bcd5eec7bba2653a860f604f80b83d483e3e7a0ef04f1e4a32"
                                                                                           },
                             "governance/data_catalogs/phase22b_2019_2021_locators.json":  {
                                                                                               "raw_sha256":  "305f3d44f6947d9c50969dd1dd83d4662f014c23ec4d9501fe07f44ef7d09191",
-                                                                                              "canonical_json_sha256":  "b95b06007181fc026d53882e9c5bd26bd9ca8bb2cf1e22e6b02cc4f9563a6dd8"
+                                                                                              "canonical_json_sha256":  "b95b06002adf8343f037e8cbbd4fdac5476fa1334c09b4fbcc0c585c2daae91d"
                                                                                           }
                         },
     "commands":  [
