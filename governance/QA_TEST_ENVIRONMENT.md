@@ -39,3 +39,13 @@ This procedure does not open market data. It does not authorize dependency
 installation, research execution, backtesting, PnL calculation, or access to
 any locked partition. A missing compatible environment is an environment
 failure and must not be reported as a passing QA review.
+
+## Phase 22B autonomous review suite
+
+Run exactly from the remediation worktree with the repository-managed interpreter:
+
+```powershell
+& 'C:\Users\derek\Desktop\Vcodeee\.venv\Scripts\python.exe' -m pytest tests/orchestration/test_phase22b_v6.py tests/orchestration/test_phase22b_v5.py tests/orchestration/test_phase22b_v4.py tests/orchestration/test_autonomous_remediation.py tests/orchestration/test_qa_environment.py tests/orchestration/test_phase22b_remediation.py tests/orchestration/test_runtime.py tests/orchestration/test_integrated_state.py tests/governance/test_agent_orchestration_design.py -q
+```
+
+The result record must quote this exact command and observed count; no inferred or manually incremented count is valid.

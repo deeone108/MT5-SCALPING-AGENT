@@ -1,0 +1,33 @@
+{
+    "schema_version":  1,
+    "verdict":  "QA_REJECTED",
+    "review_id":  "PH22B-REVIEW-007-QA",
+    "timestamp_utc":  "2026-09-10T20:56:32Z",
+    "findings":  [
+                     {
+                         "section":  "PH22B-GOV-007 result",
+                         "problem":  "Stale v4 safety/prohibition labels.",
+                         "required_correction":  "New v6-only governance result.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "test provenance",
+                         "problem":  "Claimed 48 count not tied to exact command; reviewer got 47.",
+                         "required_correction":  "Document and record exact interpreter-qualified suite.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "PH22B-REVIEW-007 forbidden_paths",
+                         "problem":  "Names v4 rather than frozen v6.",
+                         "required_correction":  "New review manifest path-locks v6.",
+                         "severity":  "HIGH"
+                     }
+                 ],
+    "commit":  "bbe62c0c232a6000b267b2467777274798ba8b24",
+    "reviewer_role":  "qa_reviewer",
+    "task_id":  "PH22B-REVIEW-007",
+    "market_data_accessed":  [
+
+                             ],
+    "specification_canonical_sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d"
+}
