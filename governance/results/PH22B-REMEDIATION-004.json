@@ -1,0 +1,80 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-REMEDIATION-004",
+    "role":  "research_lead",
+    "start_time":  "2026-09-10T18:49:53Z",
+    "end_time":  "2026-09-10T18:49:53Z",
+    "status":  "INVALID",
+    "base_commit":  "626e6844b9c3cd6e24ce9dc1b7af1c22d4464746",
+    "result_commit":  "d4ef85b381a2668220a216a3a824cabad202f20c",
+    "files_changed":  [
+                          "research/phase22b_spec_v4.json",
+                          "research/phase22b_spec_v4.sha256",
+                          "governance/QA_TEST_ENVIRONMENT.md",
+                          "governance/state/phase22b_remediation_loop.json",
+                          "governance/tasks/PH22B-REMEDIATION-004.json",
+                          "governance/tasks/PH22B-REVIEW-004.json",
+                          "tests/orchestration/"
+                      ],
+    "artifacts":  [
+
+                  ],
+    "artifact_hashes":  {
+
+                        },
+    "tests_executed":  [
+                           "no-data suite"
+                       ],
+    "test_results":  [
+                         {
+                             "status":  "PASSED",
+                             "name":  "no_data_suite",
+                             "count":  45
+                         }
+                     ],
+    "data_windows_accessed":  [
+
+                              ],
+    "specification_hash_used":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6",
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "safety_checks":  [
+                          {
+                              "name":  "no_data",
+                              "status":  "PASSED"
+                          }
+                      ],
+    "review_status":  [
+                          {
+                              "decision":  "REJECTED",
+                              "role":  "statistical_validator"
+                          },
+                          {
+                              "decision":  "REJECTED",
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "terminal_result":  "INVALID_GOVERNANCE_PROVENANCE_SUPERSEDED_BY_PH22B_GOV_005",
+    "inputs":  [
+
+               ],
+    "commands":  [
+
+                 ],
+    "tests":  [
+
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no data",
+                                  "v3 unchanged"
+                              ],
+    "handoff":  {
+                    "requested_decision":  "correct under PH22B-GOV-005",
+                    "limitations":  [
+                                        "Path-authority defect cannot be retroactively waived."
+                                    ],
+                    "to_role":  "project_orchestrator"
+                }
+}
