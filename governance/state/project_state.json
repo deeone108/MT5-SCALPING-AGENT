@@ -1,6 +1,6 @@
 {
     "active_tasks":  [
-                         "PH22B-RL-010"
+                         "PH22B-RI-002"
                      ],
     "allowed_data_windows":  [
                                  "2019",
@@ -9,12 +9,12 @@
                              ],
     "base_commit":  "4ae2e3329e23574d66d89278931aeaa6756c7149",
     "blocked_tasks":  [
-                          "PH22B-RI-001",
-                          "PH22B-RI-002"
+                          "PH22B-RI-001"
                       ],
     "candidate_registry_hash":  "cb2995a541ac60bfcb6dde7123f5981af0892e044ef7b12278d153287a5862b3",
     "completed_tasks":  [
-                            "PHASE22A_phase22a_20260909T220000Z"
+                            "PHASE22A_phase22a_20260909T220000Z",
+                            "PH22B-RL-010"
                         ],
     "current_phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
     "data_access":  {
@@ -41,9 +41,9 @@
                                "status":  "PASSED"
                            },
                   "freeze":  {
-                                 "evidence_sha256":  null,
+                                 "evidence_sha256":  "0abab008d273952004f99a0f150852166f272fa7ac1620754410230f830f7c27",
                                  "reviewer_role":  "research_lead",
-                                 "status":  "PENDING"
+                                 "status":  "PASSED"
                              },
                   "implementation":  {
                                          "evidence_sha256":  null,
@@ -51,9 +51,9 @@
                                          "status":  "PENDING"
                                      },
                   "qa":  {
-                             "evidence_sha256":  null,
+                             "evidence_sha256":  "38f2e1d8cfc299a6506f2dfb2ee9a61b16987889429cbe01b5a9ebcbc66ff15c",
                              "reviewer_role":  "qa_reviewer",
-                             "status":  "PENDING"
+                             "status":  "PASSED"
                          },
                   "safety":  {
                                  "evidence_sha256":  null,
@@ -61,9 +61,9 @@
                                  "status":  "NOT_REQUIRED"
                              },
                   "statistics":  {
-                                     "evidence_sha256":  null,
+                                     "evidence_sha256":  "0abab008d273952004f99a0f150852166f272fa7ac1620754410230f830f7c27",
                                      "reviewer_role":  "statistical_validator",
-                                     "status":  "PENDING"
+                                     "status":  "PASSED"
                                  }
               },
     "last_validated_commit":  "4ae2e3329e23574d66d89278931aeaa6756c7149",
@@ -74,7 +74,7 @@
                             ],
     "orchestrator":  "project_orchestrator",
     "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
-    "phase_status":  "PROPOSED",
+    "phase_status":  "IMPLEMENTATION_REVIEW",
     "phase_transition_history":  [
                                      {
                                          "at_utc":  "2026-09-10T00:00:00+00:00",
@@ -85,7 +85,7 @@
                                          "to":  "PHASE_22B_PENDING_DESIGN"
                                      }
                                  ],
-    "research_spec_hash":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+    "research_spec_hash":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
     "safety_state":  {
                          "execution_api":  false,
                          "live_activation_requires_human_owner":  true,
@@ -93,8 +93,8 @@
                          "status":  "ENFORCED"
                      },
     "schema_version":  1,
-    "spec_sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
-    "status":  "PROPOSED",
+    "spec_sha256":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
+    "status":  "IMPLEMENTATION_REVIEW",
     "transitions":  [
                         {
                             "at_utc":  "2026-09-10T00:00:00+00:00",

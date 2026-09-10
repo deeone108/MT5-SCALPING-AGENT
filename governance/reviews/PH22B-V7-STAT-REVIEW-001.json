@@ -1,0 +1,15 @@
+{
+    "schema_version":  1,
+    "review_id":  "PH22B-V7-STAT-REVIEW-001",
+    "role":  "statistical_validator",
+    "verdict":  "APPROVED",
+    "reviewed_commit":  "9a0287f76422fc2954f0441b3e59394a4007557b",
+    "scientific_artifact_commit":  "2a16c1840a8e2997f13754c76b39a1b11730d681",
+    "specification_canonical_sha256":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
+    "v6_canonical_sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+    "finding":  "Scientific semantics and prior provenance defect resolved; protected fields unchanged.",
+    "data_accessed":  [
+
+                      ],
+    "reviewed_at_utc":  "2026-09-10T22:33:50.7381118Z"
+}

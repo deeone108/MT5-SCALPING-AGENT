@@ -104,6 +104,17 @@
                                      ],
                           "forbidden":  "2024+",
                           "reference":  "governance/approvals/PH22B-V7-DETERMINISM-AUTH-001.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_V7_FREEZE",
+                          "status":  "APPROVED",
+                          "specification_sha256":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
+                          "commit":  "9a0287f76422fc2954f0441b3e59394a4007557b",
+                          "statistical_review_sha256":  "0abab008d273952004f99a0f150852166f272fa7ac1620754410230f830f7c27",
+                          "qa_review_sha256":  "38f2e1d8cfc299a6506f2dfb2ee9a61b16987889429cbe01b5a9ebcbc66ff15c",
+                          "v6_preserved":  true,
+                          "protected_authority_unchanged":  true,
+                          "next_task":  "PH22B-RI-002"
                       }
                   ],
     "holdout_access_history":  [
