@@ -3,7 +3,7 @@
     "loop_id":  "PH22B-AUTONOMOUS-LOOP-001",
     "phase":  "PHASE_22B_PENDING_DESIGN",
     "candidate_id":  "P22A_SPR_ABS_15s_60s",
-    "state":  "PENDING_INDEPENDENT_REVIEW",
+    "state":  "HUMAN_GATE_REQUIRED",
     "lineage":  [
                     {
                         "task_id":  "PH22B-REMEDIATION-004",
@@ -62,21 +62,21 @@
     "current_spec_hash":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
     "review_artifacts":  [
                              {
-                                 "path":  "governance/reviews/PH22B-REVIEW-005-statistical.json",
-                                 "sha256":  "06512691c8e70c458a1f4a7366b7bb2918e4b708665f0addc3c84a716262a506",
+                                 "path":  "governance/reviews/PH22B-REVIEW-009-statistical.json",
+                                 "sha256":  "8155ca22c9b404cced9b81745e6873ab673ac186ea58bb932d20b746ec9b52c4",
                                  "decision":  "APPROVED"
                              },
                              {
-                                 "path":  "governance/reviews/PH22B-REVIEW-005-qa.json",
-                                 "sha256":  "a43eec7657fc839be25832abfd3b2561c19f3d03263b8fc5ecc4ab4ca215baf9",
-                                 "decision":  "REJECTED"
+                                 "path":  "governance/reviews/PH22B-REVIEW-009-qa.json",
+                                 "sha256":  "0a8fb3d5d6a0e162365f3f0d148122c839bdb4dacec1a03ddd76dcccb6b570ab",
+                                 "decision":  "APPROVED"
                              }
                          ],
     "finding_fingerprints":  [
                                  "d0915ea633e027cf674d79212a8aabb88aa4280ded639097e90dc416172abedd",
                                  "45262aeb98fa8c9f92139d36a5c695548df093d7a574fea96bf556f2eb1cb7eb"
                              ],
-    "next_transition":  "INDEPENDENT_STATISTICAL_AND_QA_REVIEW",
+    "next_transition":  "HUMAN_OWNER_AUTHORIZE_2019_2021_DATA_WINDOW_FOR_SEPARATE_RESEARCH_IMPLEMENTER_TASK",
     "safety":  {
                    "allowed_data_window":  [
 
