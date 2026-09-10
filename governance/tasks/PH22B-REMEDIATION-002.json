@@ -1,0 +1,72 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-REMEDIATION-002",
+    "phase":  "PHASE_22B_PENDING_DESIGN",
+    "phase_id":  "PHASE_22B_PENDING_DESIGN",
+    "assigned_role":  "project_orchestrator",
+    "objective":  "Preserve v1/v2 and freeze final no-data Phase 22B v3 governance contract for independent review.",
+    "inputs":  [
+                   {
+                       "path":  "research/phase22b_spec.json",
+                       "sha256":  "1264f0abc283af990f261cf8979a11033de50639cfa00dc5b076ef2bd445fd6c"
+                   }
+               ],
+    "allowed_paths":  [
+                          "research/phase22b_spec_v3.json",
+                          "research/phase22b_spec_v3.sha256",
+                          "governance/PHASE22B_EVIDENCE.schema.json",
+                          "governance/examples/phase22b_evidence.example.json",
+                          "governance/reviews/",
+                          "governance/tasks/",
+                          "governance/results/",
+                          "governance/TASK_MANIFEST.schema.json",
+                          "governance/RUNTIME_OPERATIONS.md",
+                          "src/mt5_scalping_agent/orchestration/task.py",
+                          "src/mt5_scalping_agent/orchestration/result.py",
+                          "tests/orchestration/test_phase22b_remediation.py"
+                      ],
+    "forbidden_paths":  [
+                            "reports/phase22a/",
+                            "data/",
+                            "src/mt5_scalping_agent/strategies/",
+                            "src/mt5_scalping_agent/backtesting/",
+                            "src/mt5_scalping_agent/risk/",
+                            "src/mt5_scalping_agent/execution/"
+                        ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "d16a7882a5fbe75b026ce52bf92dc5aceeb0638ce8252e970588cd63b5161a95",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "base_commit":  "a3e9735fd42b94f66de42cdd1901ebf85b6bffa6",
+    "branch":  "task/ph22b-remediation-001",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee-ph22b-remediation-001",
+    "required_tests":  [
+                           "phase22b_remediation_no_data"
+                       ],
+    "required_reviewers":  [
+                               "statistical_validator",
+                               "qa_reviewer"
+                           ],
+    "completion_conditions":  [
+                                  "v2 canonical hash reproducible",
+                                  "review task binds v2 hash",
+                                  "both independent reviews remain pending"
+                              ],
+    "status":  "FROZEN_PENDING_REVIEW",
+    "allowed_data":  [
+
+                     ],
+    "prohibited_actions":  [
+                               "access market data",
+                               "execute Phase 22B",
+                               "create strategy",
+                               "calculate PnL",
+                               "modify execution or LIVE authorization"
+                           ],
+    "required_outputs":  [
+                             "superseding specification",
+                             "evidence schema",
+                             "review handoff"
+                         ]
+}
