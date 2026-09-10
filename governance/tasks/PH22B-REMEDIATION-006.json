@@ -1,0 +1,78 @@
+{
+    "schema_version":  1,
+    "phase":  "PHASE_22B_PENDING_DESIGN",
+    "phase_id":  "PHASE_22B_PENDING_DESIGN",
+    "allowed_data_window":  [
+
+                            ],
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "base_commit":  "942b0c359dcf6837b72a356103a0e348ceb59313",
+    "branch":  "task/ph22b-remediation-001",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee-ph22b-remediation-001",
+    "allowed_data":  [
+
+                     ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "task_id":  "PH22B-REMEDIATION-006",
+    "assigned_role":  "research_lead",
+    "objective":  "Create immutable v6 resolving all PH22B-REVIEW-005 QA version/lifecycle/provenance findings without scientific changes.",
+    "inputs":  [
+                   {
+                       "sha256":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e",
+                       "path":  "research/phase22b_spec_v5.json"
+                   },
+                   {
+                       "sha256":  "06512691c8e70c458a1f4a7366b7bb2918e4b708665f0addc3c84a716262a506",
+                       "path":  "governance/reviews/PH22B-REVIEW-005-statistical.json"
+                   },
+                   {
+                       "sha256":  "a43eec7657fc839be25832abfd3b2561c19f3d03263b8fc5ecc4ab4ca215baf9",
+                       "path":  "governance/reviews/PH22B-REVIEW-005-qa.json"
+                   }
+               ],
+    "allowed_paths":  [
+                          "research/phase22b_spec_v6.json",
+                          "research/phase22b_spec_v6.sha256",
+                          "governance/tasks/PH22B-REMEDIATION-006.json",
+                          "governance/tasks/PH22B-REVIEW-006.json",
+                          "governance/results/PH22B-REMEDIATION-006.json",
+                          "governance/state/phase22b_remediation_loop.json",
+                          "tests/orchestration/test_phase22b_v6.py"
+                      ],
+    "forbidden_paths":  [
+                            "research/phase22b_spec_v5.json",
+                            "data/",
+                            "reports/",
+                            "src/mt5_scalping_agent/strategies/",
+                            "src/mt5_scalping_agent/backtesting/",
+                            "src/mt5_scalping_agent/risk/",
+                            "src/mt5_scalping_agent/execution/"
+                        ],
+    "required_spec_hash":  "cee1e5d9e45a5a84f73932daccfa4c3dc5566cfb537733c139b1bc873dfe655e",
+    "required_tests":  [
+                           "phase22b_v6_contract",
+                           "autonomous_remediation",
+                           "qa_environment"
+                       ],
+    "completion_conditions":  [
+                                  "v5 corrects H_NORM and frozen metadata",
+                                  "v4 unchanged",
+                                  "new independent review task"
+                              ],
+    "status":  "RUNNING",
+    "prohibited_actions":  [
+                               "market data",
+                               "scope change",
+                               "implementation",
+                               "strategy/PnL/backtest",
+                               "LIVE"
+                           ],
+    "required_outputs":  [
+                             "v5 specification",
+                             "canonical hash",
+                             "result manifest",
+                             "new review task"
+                         ]
+}
