@@ -1,0 +1,124 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-REVIEW-003",
+    "role":  "statistical_validator",
+    "start_time":  "2026-09-10T00:00:00Z",
+    "end_time":  "2026-09-10T18:28:43Z",
+    "status":  "FAILED",
+    "base_commit":  "a3e9735fd42b94f66de42cdd1901ebf85b6bffa6",
+    "result_commit":  "0565e5d9bc172b04a2c2ca90fffe86f4fad82f81",
+    "files_changed":  [
+                          "governance/reviews/PH22B-REVIEW-003-statistical.json",
+                          "governance/reviews/PH22B-REVIEW-003-qa.json",
+                          "governance/results/PH22B-REVIEW-003.json"
+                      ],
+    "artifacts":  [
+                      {
+                          "sha256":  "a8b15ba17facb14e42d99f4651b81d5f2ee40e4f25f3e3df9d42661970de3949",
+                          "path":  "governance/reviews/PH22B-REVIEW-003-statistical.json"
+                      },
+                      {
+                          "sha256":  "26001b2597b50d65dba9f0ba47af6dc4cb4751c3de42faf54c016b15353f36d2",
+                          "path":  "governance/reviews/PH22B-REVIEW-003-qa.json"
+                      }
+                  ],
+    "artifact_hashes":  {
+                            "governance/reviews/PH22B-REVIEW-003-statistical.json":  "a8b15ba17facb14e42d99f4651b81d5f2ee40e4f25f3e3df9d42661970de3949",
+                            "governance/reviews/PH22B-REVIEW-003-qa.json":  "26001b2597b50d65dba9f0ba47af6dc4cb4751c3de42faf54c016b15353f36d2"
+                        },
+    "tests_executed":  [
+                           "orchestrator no-data suite",
+                           "QA independent environment attempt"
+                       ],
+    "test_results":  [
+                         {
+                             "status":  "PASSED",
+                             "name":  "orchestrator_no_data_suite",
+                             "count":  26
+                         },
+                         {
+                             "status":  "FAILED",
+                             "name":  "qa_independent_test_reproduction",
+                             "reason":  "pytest unavailable in reviewer process environment"
+                         }
+                     ],
+    "data_windows_accessed":  [
+
+                              ],
+    "specification_hash_used":  "6dca34026989fc26bf2e282c48e6a058074bc60ad5df2d476824d5ff16e6a28a",
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "safety_checks":  [
+                          {
+                              "name":  "no_market_data",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "no_2024_plus",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "no_live_or_execution_change",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "frozen_v3_unchanged",
+                              "status":  "PASSED"
+                          }
+                      ],
+    "review_status":  [
+                          {
+                              "decision":  "REJECTED",
+                              "role":  "statistical_validator"
+                          },
+                          {
+                              "decision":  "REJECTED",
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "terminal_result":  "PHASE_22B_REVIEW_GATE_REJECTED",
+    "inputs":  [
+                   {
+                       "sha256":  "5121ecfac73bb7f7d25850796f9df0df91bb48b0ec3e6202558aba0256c340b0",
+                       "path":  "research/phase22b_spec_v3.json"
+                   },
+                   {
+                       "sha256":  "f1f6f70e24dc60c8848f564ff9e80f40c2bdf92ea938569f5d5e967d1ee77403",
+                       "path":  "governance/tasks/PH22B-REVIEW-003.json"
+                   }
+               ],
+    "commands":  [
+                     "canonical hash reproduction",
+                     "pytest focused no-data suite",
+                     "git integrity checks"
+                 ],
+    "tests":  [
+                  {
+                      "status":  "PASSED",
+                      "name":  "focused_no_data_suite",
+                      "count":  26
+                  },
+                  {
+                      "name":  "independent_qa_reproduction",
+                      "status":  "FAILED"
+                  }
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no market data",
+                                  "no Phase 22B implementation",
+                                  "no backtest/PnL/strategy",
+                                  "no execution or LIVE change",
+                                  "no frozen v3 modification"
+                              ],
+    "handoff":  {
+                    "requested_decision":  "keep implementation locked and create separately scoped specification remediation task",
+                    "limitations":  [
+                                        "Statistical Validator rejected.",
+                                        "QA rejected.",
+                                        "No gate approval exists."
+                                    ],
+                    "to_role":  "project_orchestrator"
+                }
+}

@@ -1,0 +1,49 @@
+{
+    "schema_version":  1,
+    "review_id":  "PH22B-REVIEW-003-QA",
+    "task_id":  "PH22B-REVIEW-003",
+    "reviewer_role":  "qa_reviewer",
+    "verdict":  "QA_REJECTED",
+    "reviewed_specification_path":  "research/phase22b_spec_v3.json",
+    "reviewed_specification_canonical_sha256":  "6dca34026989fc26bf2e282c48e6a058074bc60ad5df2d476824d5ff16e6a28a",
+    "reviewed_artifact_hashes":  {
+                                     "research/phase22b_spec_v3.json":  "5121ecfac73bb7f7d25850796f9df0df91bb48b0ec3e6202558aba0256c340b0",
+                                     "governance/tasks/PH22B-REVIEW-003.json":  "f1f6f70e24dc60c8848f564ff9e80f40c2bdf92ea938569f5d5e967d1ee77403",
+                                     "governance/PHASE22B_EVIDENCE.schema.json":  "9f0be2b894b4bf25b30177d6fc9fdbe2bbf7b66a52c9f16ec197e9957c0309d4"
+                                 },
+    "commit":  "0565e5d9bc172b04a2c2ca90fffe86f4fad82f81",
+    "branch":  "task/ph22b-remediation-001",
+    "timestamp_utc":  "2026-09-10T18:28:11Z",
+    "integrity_checks":  {
+                             "canonical_hash_reproduced":  true,
+                             "byte_hash_reproduced":  true,
+                             "commits_verified":  true,
+                             "task_hash_binding":  true,
+                             "no_data_authorized":  true,
+                             "live_unauthorized":  true,
+                             "specification_unmodified":  true
+                         },
+    "market_data_accessed":  [
+
+                             ],
+    "findings":  [
+                     {
+                         "section":  "research/phase22b_spec_v3.json temporal_partitions.sequence and access_contract.allowed_only_when",
+                         "problem":  "V3 still mandates binding to this v2 hash.",
+                         "required_correction":  "Create a newly frozen specification whose authorization language consistently binds the new exact hash/version.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "governance/tasks/PH22B-REVIEW-003.json",
+                         "problem":  "Review completion and prohibition clauses refer to v2 despite v3 required_spec_hash.",
+                         "required_correction":  "Create a corrected review task bound consistently to the new frozen specification.",
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "section":  "test reproducibility",
+                         "problem":  "QA environment could not execute pytest; independent run returned No module named pytest.",
+                         "required_correction":  "Provide/reuse a documented review environment in which QA independently reproduces required no-data tests.",
+                         "severity":  "HIGH"
+                     }
+                 ]
+}
