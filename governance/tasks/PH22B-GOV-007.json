@@ -1,0 +1,70 @@
+{
+    "schema_version":  1,
+    "phase":  "PHASE_22B_PENDING_DESIGN",
+    "phase_id":  "PHASE_22B_PENDING_DESIGN",
+    "allowed_data_window":  [
+
+                            ],
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "base_commit":  "8dbc8e35c0f5ce91762e08872a38dc29bf8a34c9",
+    "branch":  "task/ph22b-remediation-001",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee-ph22b-remediation-001",
+    "allowed_data":  [
+
+                     ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "task_id":  "PH22B-GOV-007",
+    "assigned_role":  "project_orchestrator",
+    "objective":  "Create a provenance-consistent fresh review lifecycle for unchanged frozen v6.",
+    "inputs":  [
+                   {
+                       "sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+                       "path":  "research/phase22b_spec_v6.json"
+                   },
+                   {
+                       "sha256":  "90f9fdce6fe767c980e4ed654ac0dc8daa0d70625081a8ddc972e8449203c58e",
+                       "path":  "governance/reviews/PH22B-REVIEW-006-qa.json"
+                   }
+               ],
+    "allowed_paths":  [
+                          "governance/tasks/PH22B-GOV-007.json",
+                          "governance/tasks/PH22B-REVIEW-007.json",
+                          "governance/results/PH22B-GOV-007.json",
+                          "governance/state/phase22b_remediation_loop.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/phase22b_spec_v6.json",
+                            "data/",
+                            "reports/",
+                            "src/mt5_scalping_agent/strategies/",
+                            "src/mt5_scalping_agent/backtesting/",
+                            "src/mt5_scalping_agent/risk/",
+                            "src/mt5_scalping_agent/execution/"
+                        ],
+    "required_spec_hash":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+    "required_tests":  [
+                           "phase22b_v6_contract",
+                           "autonomous_remediation",
+                           "qa_environment"
+                       ],
+    "completion_conditions":  [
+                                  "unchanged v6 remains frozen",
+                                  "new review task consistently binds v6",
+                                  "task/result base commits match",
+                                  "result files_changed excludes its own later manifest"
+                              ],
+    "status":  "RUNNING",
+    "prohibited_actions":  [
+                               "market data",
+                               "scope change",
+                               "implementation",
+                               "strategy/PnL/backtest",
+                               "LIVE"
+                           ],
+    "required_outputs":  [
+                             "PH22B-REVIEW-007 task manifest",
+                             "PH22B-GOV-007 result manifest"
+                         ]
+}
