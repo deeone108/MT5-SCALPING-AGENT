@@ -1,0 +1,25 @@
+{
+    "schema_version":  1,
+    "tests":  {
+                  "passed":  48,
+                  "failed":  0
+              },
+    "verdict":  "QA_REJECTED",
+    "review_id":  "PH22B-REVIEW-006-QA",
+    "timestamp_utc":  "2026-09-10T18:59:43Z",
+    "findings":  [
+                     {
+                         "section":  "PH22B-REMEDIATION-006 task/result",
+                         "problem":  "Base commits differ; stale completion/output wording; result files_changed self-reference is not present at result_commit.",
+                         "required_correction":  "Governance-only corrected task/result lifecycle and fresh review; preserve v6.",
+                         "severity":  "HIGH"
+                     }
+                 ],
+    "commit":  "52b87d8941e8b2a640caf74c57447442e92fefe7",
+    "reviewer_role":  "qa_reviewer",
+    "task_id":  "PH22B-REVIEW-006",
+    "market_data_accessed":  [
+
+                             ],
+    "specification_canonical_sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d"
+}
