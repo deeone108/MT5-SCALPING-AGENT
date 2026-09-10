@@ -1,0 +1,1478 @@
+{
+  "schema_version": 1,
+  "catalog_id": "phase22b_2019_2021_locators",
+  "phase": "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+  "authorization_id": "PH22B-DEV-2019-2021-AUTH-001",
+  "source_manifest": "reports/phase22_data_build/mt5_historical_manifest.json",
+  "source_provider": "ROBOFOREX_MT5",
+  "acquisition_api": "MetaTrader5.copy_ticks_range/COPY_TICKS_ALL",
+  "dataset_root_sha256": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+  "symbols": [
+    "EURUSD",
+    "GBPUSD",
+    "USDJPY",
+    "USDCAD"
+  ],
+  "years": [
+    2019,
+    2020,
+    2021
+  ],
+  "partition_ids": [
+    "EURUSD-2019",
+    "EURUSD-2020",
+    "EURUSD-2021",
+    "GBPUSD-2019",
+    "GBPUSD-2020",
+    "GBPUSD-2021",
+    "USDJPY-2019",
+    "USDJPY-2020",
+    "USDJPY-2021",
+    "USDCAD-2019",
+    "USDCAD-2020",
+    "USDCAD-2021"
+  ],
+  "unit_count": 144,
+  "units": [
+    {
+      "unit_id": "EURUSD-2019-01",
+      "partition_id": "EURUSD-2019",
+      "pair": "EURUSD",
+      "year": 2019,
+      "month": 1,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190101T000000Z_20190201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190101T000000Z_20190201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190101T000000Z_20190201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2019-02",
+      "partition_id": "EURUSD-2019",
+      "pair": "EURUSD",
+      "year": 2019,
+      "month": 2,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190201T000000Z_20190301T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190201T000000Z_20190301T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190201T000000Z_20190301T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2019-03",
+      "partition_id": "EURUSD-2019",
+      "pair": "EURUSD",
+      "year": 2019,
+      "month": 3,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190301T000000Z_20190401T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190301T000000Z_20190401T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190301T000000Z_20190401T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2019-04",
+      "partition_id": "EURUSD-2019",
+      "pair": "EURUSD",
+      "year": 2019,
+      "month": 4,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190401T000000Z_20190501T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190401T000000Z_20190501T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190401T000000Z_20190501T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2019-05",
+      "partition_id": "EURUSD-2019",
+      "pair": "EURUSD",
+      "year": 2019,
+      "month": 5,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190501T000000Z_20190601T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190501T000000Z_20190601T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190501T000000Z_20190601T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2019-06",
+      "partition_id": "EURUSD-2019",
+      "pair": "EURUSD",
+      "year": 2019,
+      "month": 6,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190601T000000Z_20190701T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190601T000000Z_20190701T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190601T000000Z_20190701T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2019-07",
+      "partition_id": "EURUSD-2019",
+      "pair": "EURUSD",
+      "year": 2019,
+      "month": 7,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190701T000000Z_20190801T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190701T000000Z_20190801T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190701T000000Z_20190801T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2019-08",
+      "partition_id": "EURUSD-2019",
+      "pair": "EURUSD",
+      "year": 2019,
+      "month": 8,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190801T000000Z_20190901T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190801T000000Z_20190901T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190801T000000Z_20190901T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2019-09",
+      "partition_id": "EURUSD-2019",
+      "pair": "EURUSD",
+      "year": 2019,
+      "month": 9,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190901T000000Z_20191001T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190901T000000Z_20191001T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20190901T000000Z_20191001T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2019-10",
+      "partition_id": "EURUSD-2019",
+      "pair": "EURUSD",
+      "year": 2019,
+      "month": 10,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20191001T000000Z_20191101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20191001T000000Z_20191101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20191001T000000Z_20191101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2019-11",
+      "partition_id": "EURUSD-2019",
+      "pair": "EURUSD",
+      "year": 2019,
+      "month": 11,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20191101T000000Z_20191201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20191101T000000Z_20191201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20191101T000000Z_20191201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2019-12",
+      "partition_id": "EURUSD-2019",
+      "pair": "EURUSD",
+      "year": 2019,
+      "month": 12,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20191201T000000Z_20200101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20191201T000000Z_20200101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2019\\EURUSD_20191201T000000Z_20200101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2020-01",
+      "partition_id": "EURUSD-2020",
+      "pair": "EURUSD",
+      "year": 2020,
+      "month": 1,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200101T000000Z_20200201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200101T000000Z_20200201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200101T000000Z_20200201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2020-02",
+      "partition_id": "EURUSD-2020",
+      "pair": "EURUSD",
+      "year": 2020,
+      "month": 2,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200201T000000Z_20200301T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200201T000000Z_20200301T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200201T000000Z_20200301T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2020-03",
+      "partition_id": "EURUSD-2020",
+      "pair": "EURUSD",
+      "year": 2020,
+      "month": 3,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200301T000000Z_20200401T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200301T000000Z_20200401T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200301T000000Z_20200401T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2020-04",
+      "partition_id": "EURUSD-2020",
+      "pair": "EURUSD",
+      "year": 2020,
+      "month": 4,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200401T000000Z_20200501T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200401T000000Z_20200501T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200401T000000Z_20200501T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2020-05",
+      "partition_id": "EURUSD-2020",
+      "pair": "EURUSD",
+      "year": 2020,
+      "month": 5,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200501T000000Z_20200601T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200501T000000Z_20200601T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200501T000000Z_20200601T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2020-06",
+      "partition_id": "EURUSD-2020",
+      "pair": "EURUSD",
+      "year": 2020,
+      "month": 6,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200601T000000Z_20200701T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200601T000000Z_20200701T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200601T000000Z_20200701T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2020-07",
+      "partition_id": "EURUSD-2020",
+      "pair": "EURUSD",
+      "year": 2020,
+      "month": 7,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200701T000000Z_20200801T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200701T000000Z_20200801T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200701T000000Z_20200801T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2020-08",
+      "partition_id": "EURUSD-2020",
+      "pair": "EURUSD",
+      "year": 2020,
+      "month": 8,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200801T000000Z_20200901T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200801T000000Z_20200901T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200801T000000Z_20200901T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2020-09",
+      "partition_id": "EURUSD-2020",
+      "pair": "EURUSD",
+      "year": 2020,
+      "month": 9,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200901T000000Z_20201001T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200901T000000Z_20201001T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20200901T000000Z_20201001T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2020-10",
+      "partition_id": "EURUSD-2020",
+      "pair": "EURUSD",
+      "year": 2020,
+      "month": 10,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20201001T000000Z_20201101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20201001T000000Z_20201101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20201001T000000Z_20201101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2020-11",
+      "partition_id": "EURUSD-2020",
+      "pair": "EURUSD",
+      "year": 2020,
+      "month": 11,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20201101T000000Z_20201201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20201101T000000Z_20201201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20201101T000000Z_20201201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2020-12",
+      "partition_id": "EURUSD-2020",
+      "pair": "EURUSD",
+      "year": 2020,
+      "month": 12,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20201201T000000Z_20210101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20201201T000000Z_20210101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2020\\EURUSD_20201201T000000Z_20210101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2021-01",
+      "partition_id": "EURUSD-2021",
+      "pair": "EURUSD",
+      "year": 2021,
+      "month": 1,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210101T000000Z_20210201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210101T000000Z_20210201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210101T000000Z_20210201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2021-02",
+      "partition_id": "EURUSD-2021",
+      "pair": "EURUSD",
+      "year": 2021,
+      "month": 2,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210201T000000Z_20210301T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210201T000000Z_20210301T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210201T000000Z_20210301T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2021-03",
+      "partition_id": "EURUSD-2021",
+      "pair": "EURUSD",
+      "year": 2021,
+      "month": 3,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210301T000000Z_20210401T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210301T000000Z_20210401T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210301T000000Z_20210401T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2021-04",
+      "partition_id": "EURUSD-2021",
+      "pair": "EURUSD",
+      "year": 2021,
+      "month": 4,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210401T000000Z_20210501T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210401T000000Z_20210501T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210401T000000Z_20210501T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2021-05",
+      "partition_id": "EURUSD-2021",
+      "pair": "EURUSD",
+      "year": 2021,
+      "month": 5,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210501T000000Z_20210601T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210501T000000Z_20210601T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210501T000000Z_20210601T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2021-06",
+      "partition_id": "EURUSD-2021",
+      "pair": "EURUSD",
+      "year": 2021,
+      "month": 6,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210601T000000Z_20210701T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210601T000000Z_20210701T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210601T000000Z_20210701T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2021-07",
+      "partition_id": "EURUSD-2021",
+      "pair": "EURUSD",
+      "year": 2021,
+      "month": 7,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210701T000000Z_20210801T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210701T000000Z_20210801T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210701T000000Z_20210801T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2021-08",
+      "partition_id": "EURUSD-2021",
+      "pair": "EURUSD",
+      "year": 2021,
+      "month": 8,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210801T000000Z_20210901T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210801T000000Z_20210901T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210801T000000Z_20210901T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2021-09",
+      "partition_id": "EURUSD-2021",
+      "pair": "EURUSD",
+      "year": 2021,
+      "month": 9,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210901T000000Z_20211001T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210901T000000Z_20211001T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20210901T000000Z_20211001T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2021-10",
+      "partition_id": "EURUSD-2021",
+      "pair": "EURUSD",
+      "year": 2021,
+      "month": 10,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20211001T000000Z_20211101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20211001T000000Z_20211101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20211001T000000Z_20211101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2021-11",
+      "partition_id": "EURUSD-2021",
+      "pair": "EURUSD",
+      "year": 2021,
+      "month": 11,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20211101T000000Z_20211201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20211101T000000Z_20211201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20211101T000000Z_20211201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "EURUSD-2021-12",
+      "partition_id": "EURUSD-2021",
+      "pair": "EURUSD",
+      "year": 2021,
+      "month": 12,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20211201T000000Z_20220101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20211201T000000Z_20220101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\EURUSD\\2021\\EURUSD_20211201T000000Z_20220101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2019-01",
+      "partition_id": "GBPUSD-2019",
+      "pair": "GBPUSD",
+      "year": 2019,
+      "month": 1,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190101T000000Z_20190201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190101T000000Z_20190201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190101T000000Z_20190201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2019-02",
+      "partition_id": "GBPUSD-2019",
+      "pair": "GBPUSD",
+      "year": 2019,
+      "month": 2,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190201T000000Z_20190301T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190201T000000Z_20190301T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190201T000000Z_20190301T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2019-03",
+      "partition_id": "GBPUSD-2019",
+      "pair": "GBPUSD",
+      "year": 2019,
+      "month": 3,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190301T000000Z_20190401T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190301T000000Z_20190401T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190301T000000Z_20190401T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2019-04",
+      "partition_id": "GBPUSD-2019",
+      "pair": "GBPUSD",
+      "year": 2019,
+      "month": 4,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190401T000000Z_20190501T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190401T000000Z_20190501T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190401T000000Z_20190501T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2019-05",
+      "partition_id": "GBPUSD-2019",
+      "pair": "GBPUSD",
+      "year": 2019,
+      "month": 5,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190501T000000Z_20190601T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190501T000000Z_20190601T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190501T000000Z_20190601T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2019-06",
+      "partition_id": "GBPUSD-2019",
+      "pair": "GBPUSD",
+      "year": 2019,
+      "month": 6,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190601T000000Z_20190701T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190601T000000Z_20190701T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190601T000000Z_20190701T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2019-07",
+      "partition_id": "GBPUSD-2019",
+      "pair": "GBPUSD",
+      "year": 2019,
+      "month": 7,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190701T000000Z_20190801T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190701T000000Z_20190801T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190701T000000Z_20190801T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2019-08",
+      "partition_id": "GBPUSD-2019",
+      "pair": "GBPUSD",
+      "year": 2019,
+      "month": 8,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190801T000000Z_20190901T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190801T000000Z_20190901T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190801T000000Z_20190901T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2019-09",
+      "partition_id": "GBPUSD-2019",
+      "pair": "GBPUSD",
+      "year": 2019,
+      "month": 9,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190901T000000Z_20191001T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190901T000000Z_20191001T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20190901T000000Z_20191001T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2019-10",
+      "partition_id": "GBPUSD-2019",
+      "pair": "GBPUSD",
+      "year": 2019,
+      "month": 10,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20191001T000000Z_20191101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20191001T000000Z_20191101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20191001T000000Z_20191101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2019-11",
+      "partition_id": "GBPUSD-2019",
+      "pair": "GBPUSD",
+      "year": 2019,
+      "month": 11,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20191101T000000Z_20191201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20191101T000000Z_20191201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20191101T000000Z_20191201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2019-12",
+      "partition_id": "GBPUSD-2019",
+      "pair": "GBPUSD",
+      "year": 2019,
+      "month": 12,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20191201T000000Z_20200101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20191201T000000Z_20200101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2019\\GBPUSD_20191201T000000Z_20200101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2020-01",
+      "partition_id": "GBPUSD-2020",
+      "pair": "GBPUSD",
+      "year": 2020,
+      "month": 1,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200101T000000Z_20200201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200101T000000Z_20200201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200101T000000Z_20200201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2020-02",
+      "partition_id": "GBPUSD-2020",
+      "pair": "GBPUSD",
+      "year": 2020,
+      "month": 2,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200201T000000Z_20200301T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200201T000000Z_20200301T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200201T000000Z_20200301T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2020-03",
+      "partition_id": "GBPUSD-2020",
+      "pair": "GBPUSD",
+      "year": 2020,
+      "month": 3,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200301T000000Z_20200401T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200301T000000Z_20200401T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200301T000000Z_20200401T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2020-04",
+      "partition_id": "GBPUSD-2020",
+      "pair": "GBPUSD",
+      "year": 2020,
+      "month": 4,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200401T000000Z_20200501T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200401T000000Z_20200501T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200401T000000Z_20200501T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2020-05",
+      "partition_id": "GBPUSD-2020",
+      "pair": "GBPUSD",
+      "year": 2020,
+      "month": 5,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200501T000000Z_20200601T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200501T000000Z_20200601T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200501T000000Z_20200601T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2020-06",
+      "partition_id": "GBPUSD-2020",
+      "pair": "GBPUSD",
+      "year": 2020,
+      "month": 6,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200601T000000Z_20200701T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200601T000000Z_20200701T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200601T000000Z_20200701T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2020-07",
+      "partition_id": "GBPUSD-2020",
+      "pair": "GBPUSD",
+      "year": 2020,
+      "month": 7,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200701T000000Z_20200801T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200701T000000Z_20200801T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200701T000000Z_20200801T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2020-08",
+      "partition_id": "GBPUSD-2020",
+      "pair": "GBPUSD",
+      "year": 2020,
+      "month": 8,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200801T000000Z_20200901T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200801T000000Z_20200901T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200801T000000Z_20200901T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2020-09",
+      "partition_id": "GBPUSD-2020",
+      "pair": "GBPUSD",
+      "year": 2020,
+      "month": 9,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200901T000000Z_20201001T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200901T000000Z_20201001T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20200901T000000Z_20201001T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2020-10",
+      "partition_id": "GBPUSD-2020",
+      "pair": "GBPUSD",
+      "year": 2020,
+      "month": 10,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20201001T000000Z_20201101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20201001T000000Z_20201101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20201001T000000Z_20201101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2020-11",
+      "partition_id": "GBPUSD-2020",
+      "pair": "GBPUSD",
+      "year": 2020,
+      "month": 11,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20201101T000000Z_20201201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20201101T000000Z_20201201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20201101T000000Z_20201201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2020-12",
+      "partition_id": "GBPUSD-2020",
+      "pair": "GBPUSD",
+      "year": 2020,
+      "month": 12,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20201201T000000Z_20210101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20201201T000000Z_20210101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2020\\GBPUSD_20201201T000000Z_20210101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2021-01",
+      "partition_id": "GBPUSD-2021",
+      "pair": "GBPUSD",
+      "year": 2021,
+      "month": 1,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210101T000000Z_20210201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210101T000000Z_20210201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210101T000000Z_20210201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2021-02",
+      "partition_id": "GBPUSD-2021",
+      "pair": "GBPUSD",
+      "year": 2021,
+      "month": 2,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210201T000000Z_20210301T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210201T000000Z_20210301T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210201T000000Z_20210301T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2021-03",
+      "partition_id": "GBPUSD-2021",
+      "pair": "GBPUSD",
+      "year": 2021,
+      "month": 3,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210301T000000Z_20210401T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210301T000000Z_20210401T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210301T000000Z_20210401T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2021-04",
+      "partition_id": "GBPUSD-2021",
+      "pair": "GBPUSD",
+      "year": 2021,
+      "month": 4,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210401T000000Z_20210501T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210401T000000Z_20210501T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210401T000000Z_20210501T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2021-05",
+      "partition_id": "GBPUSD-2021",
+      "pair": "GBPUSD",
+      "year": 2021,
+      "month": 5,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210501T000000Z_20210601T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210501T000000Z_20210601T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210501T000000Z_20210601T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2021-06",
+      "partition_id": "GBPUSD-2021",
+      "pair": "GBPUSD",
+      "year": 2021,
+      "month": 6,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210601T000000Z_20210701T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210601T000000Z_20210701T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210601T000000Z_20210701T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2021-07",
+      "partition_id": "GBPUSD-2021",
+      "pair": "GBPUSD",
+      "year": 2021,
+      "month": 7,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210701T000000Z_20210801T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210701T000000Z_20210801T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210701T000000Z_20210801T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2021-08",
+      "partition_id": "GBPUSD-2021",
+      "pair": "GBPUSD",
+      "year": 2021,
+      "month": 8,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210801T000000Z_20210901T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210801T000000Z_20210901T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210801T000000Z_20210901T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2021-09",
+      "partition_id": "GBPUSD-2021",
+      "pair": "GBPUSD",
+      "year": 2021,
+      "month": 9,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210901T000000Z_20211001T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210901T000000Z_20211001T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20210901T000000Z_20211001T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2021-10",
+      "partition_id": "GBPUSD-2021",
+      "pair": "GBPUSD",
+      "year": 2021,
+      "month": 10,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20211001T000000Z_20211101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20211001T000000Z_20211101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20211001T000000Z_20211101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2021-11",
+      "partition_id": "GBPUSD-2021",
+      "pair": "GBPUSD",
+      "year": 2021,
+      "month": 11,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20211101T000000Z_20211201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20211101T000000Z_20211201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20211101T000000Z_20211201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "GBPUSD-2021-12",
+      "partition_id": "GBPUSD-2021",
+      "pair": "GBPUSD",
+      "year": 2021,
+      "month": 12,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20211201T000000Z_20220101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20211201T000000Z_20220101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\GBPUSD\\2021\\GBPUSD_20211201T000000Z_20220101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2019-01",
+      "partition_id": "USDCAD-2019",
+      "pair": "USDCAD",
+      "year": 2019,
+      "month": 1,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190101T000000Z_20190201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190101T000000Z_20190201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190101T000000Z_20190201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2019-02",
+      "partition_id": "USDCAD-2019",
+      "pair": "USDCAD",
+      "year": 2019,
+      "month": 2,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190201T000000Z_20190301T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190201T000000Z_20190301T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190201T000000Z_20190301T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2019-03",
+      "partition_id": "USDCAD-2019",
+      "pair": "USDCAD",
+      "year": 2019,
+      "month": 3,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190301T000000Z_20190401T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190301T000000Z_20190401T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190301T000000Z_20190401T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2019-04",
+      "partition_id": "USDCAD-2019",
+      "pair": "USDCAD",
+      "year": 2019,
+      "month": 4,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190401T000000Z_20190501T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190401T000000Z_20190501T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190401T000000Z_20190501T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2019-05",
+      "partition_id": "USDCAD-2019",
+      "pair": "USDCAD",
+      "year": 2019,
+      "month": 5,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190501T000000Z_20190601T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190501T000000Z_20190601T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190501T000000Z_20190601T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2019-06",
+      "partition_id": "USDCAD-2019",
+      "pair": "USDCAD",
+      "year": 2019,
+      "month": 6,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190601T000000Z_20190701T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190601T000000Z_20190701T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190601T000000Z_20190701T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2019-07",
+      "partition_id": "USDCAD-2019",
+      "pair": "USDCAD",
+      "year": 2019,
+      "month": 7,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190701T000000Z_20190801T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190701T000000Z_20190801T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190701T000000Z_20190801T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2019-08",
+      "partition_id": "USDCAD-2019",
+      "pair": "USDCAD",
+      "year": 2019,
+      "month": 8,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190801T000000Z_20190901T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190801T000000Z_20190901T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190801T000000Z_20190901T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2019-09",
+      "partition_id": "USDCAD-2019",
+      "pair": "USDCAD",
+      "year": 2019,
+      "month": 9,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190901T000000Z_20191001T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190901T000000Z_20191001T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20190901T000000Z_20191001T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2019-10",
+      "partition_id": "USDCAD-2019",
+      "pair": "USDCAD",
+      "year": 2019,
+      "month": 10,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20191001T000000Z_20191101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20191001T000000Z_20191101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20191001T000000Z_20191101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2019-11",
+      "partition_id": "USDCAD-2019",
+      "pair": "USDCAD",
+      "year": 2019,
+      "month": 11,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20191101T000000Z_20191201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20191101T000000Z_20191201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20191101T000000Z_20191201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2019-12",
+      "partition_id": "USDCAD-2019",
+      "pair": "USDCAD",
+      "year": 2019,
+      "month": 12,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20191201T000000Z_20200101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20191201T000000Z_20200101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2019\\USDCAD_20191201T000000Z_20200101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2020-01",
+      "partition_id": "USDCAD-2020",
+      "pair": "USDCAD",
+      "year": 2020,
+      "month": 1,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200101T000000Z_20200201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200101T000000Z_20200201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200101T000000Z_20200201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2020-02",
+      "partition_id": "USDCAD-2020",
+      "pair": "USDCAD",
+      "year": 2020,
+      "month": 2,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200201T000000Z_20200301T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200201T000000Z_20200301T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200201T000000Z_20200301T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2020-03",
+      "partition_id": "USDCAD-2020",
+      "pair": "USDCAD",
+      "year": 2020,
+      "month": 3,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200301T000000Z_20200401T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200301T000000Z_20200401T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200301T000000Z_20200401T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2020-04",
+      "partition_id": "USDCAD-2020",
+      "pair": "USDCAD",
+      "year": 2020,
+      "month": 4,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200401T000000Z_20200501T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200401T000000Z_20200501T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200401T000000Z_20200501T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2020-05",
+      "partition_id": "USDCAD-2020",
+      "pair": "USDCAD",
+      "year": 2020,
+      "month": 5,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200501T000000Z_20200601T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200501T000000Z_20200601T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200501T000000Z_20200601T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2020-06",
+      "partition_id": "USDCAD-2020",
+      "pair": "USDCAD",
+      "year": 2020,
+      "month": 6,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200601T000000Z_20200701T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200601T000000Z_20200701T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200601T000000Z_20200701T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2020-07",
+      "partition_id": "USDCAD-2020",
+      "pair": "USDCAD",
+      "year": 2020,
+      "month": 7,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200701T000000Z_20200801T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200701T000000Z_20200801T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200701T000000Z_20200801T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2020-08",
+      "partition_id": "USDCAD-2020",
+      "pair": "USDCAD",
+      "year": 2020,
+      "month": 8,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200801T000000Z_20200901T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200801T000000Z_20200901T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200801T000000Z_20200901T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2020-09",
+      "partition_id": "USDCAD-2020",
+      "pair": "USDCAD",
+      "year": 2020,
+      "month": 9,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200901T000000Z_20201001T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200901T000000Z_20201001T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20200901T000000Z_20201001T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2020-10",
+      "partition_id": "USDCAD-2020",
+      "pair": "USDCAD",
+      "year": 2020,
+      "month": 10,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20201001T000000Z_20201101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20201001T000000Z_20201101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20201001T000000Z_20201101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2020-11",
+      "partition_id": "USDCAD-2020",
+      "pair": "USDCAD",
+      "year": 2020,
+      "month": 11,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20201101T000000Z_20201201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20201101T000000Z_20201201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20201101T000000Z_20201201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2020-12",
+      "partition_id": "USDCAD-2020",
+      "pair": "USDCAD",
+      "year": 2020,
+      "month": 12,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20201201T000000Z_20210101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20201201T000000Z_20210101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2020\\USDCAD_20201201T000000Z_20210101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2021-01",
+      "partition_id": "USDCAD-2021",
+      "pair": "USDCAD",
+      "year": 2021,
+      "month": 1,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210101T000000Z_20210201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210101T000000Z_20210201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210101T000000Z_20210201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2021-02",
+      "partition_id": "USDCAD-2021",
+      "pair": "USDCAD",
+      "year": 2021,
+      "month": 2,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210201T000000Z_20210301T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210201T000000Z_20210301T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210201T000000Z_20210301T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2021-03",
+      "partition_id": "USDCAD-2021",
+      "pair": "USDCAD",
+      "year": 2021,
+      "month": 3,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210301T000000Z_20210401T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210301T000000Z_20210401T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210301T000000Z_20210401T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2021-04",
+      "partition_id": "USDCAD-2021",
+      "pair": "USDCAD",
+      "year": 2021,
+      "month": 4,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210401T000000Z_20210501T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210401T000000Z_20210501T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210401T000000Z_20210501T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2021-05",
+      "partition_id": "USDCAD-2021",
+      "pair": "USDCAD",
+      "year": 2021,
+      "month": 5,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210501T000000Z_20210601T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210501T000000Z_20210601T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210501T000000Z_20210601T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2021-06",
+      "partition_id": "USDCAD-2021",
+      "pair": "USDCAD",
+      "year": 2021,
+      "month": 6,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210601T000000Z_20210701T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210601T000000Z_20210701T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210601T000000Z_20210701T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2021-07",
+      "partition_id": "USDCAD-2021",
+      "pair": "USDCAD",
+      "year": 2021,
+      "month": 7,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210701T000000Z_20210801T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210701T000000Z_20210801T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210701T000000Z_20210801T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2021-08",
+      "partition_id": "USDCAD-2021",
+      "pair": "USDCAD",
+      "year": 2021,
+      "month": 8,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210801T000000Z_20210901T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210801T000000Z_20210901T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210801T000000Z_20210901T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2021-09",
+      "partition_id": "USDCAD-2021",
+      "pair": "USDCAD",
+      "year": 2021,
+      "month": 9,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210901T000000Z_20211001T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210901T000000Z_20211001T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20210901T000000Z_20211001T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2021-10",
+      "partition_id": "USDCAD-2021",
+      "pair": "USDCAD",
+      "year": 2021,
+      "month": 10,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20211001T000000Z_20211101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20211001T000000Z_20211101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20211001T000000Z_20211101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2021-11",
+      "partition_id": "USDCAD-2021",
+      "pair": "USDCAD",
+      "year": 2021,
+      "month": 11,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20211101T000000Z_20211201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20211101T000000Z_20211201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20211101T000000Z_20211201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDCAD-2021-12",
+      "partition_id": "USDCAD-2021",
+      "pair": "USDCAD",
+      "year": 2021,
+      "month": 12,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20211201T000000Z_20220101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20211201T000000Z_20220101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDCAD\\2021\\USDCAD_20211201T000000Z_20220101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2019-01",
+      "partition_id": "USDJPY-2019",
+      "pair": "USDJPY",
+      "year": 2019,
+      "month": 1,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190101T000000Z_20190201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190101T000000Z_20190201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190101T000000Z_20190201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2019-02",
+      "partition_id": "USDJPY-2019",
+      "pair": "USDJPY",
+      "year": 2019,
+      "month": 2,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190201T000000Z_20190301T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190201T000000Z_20190301T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190201T000000Z_20190301T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2019-03",
+      "partition_id": "USDJPY-2019",
+      "pair": "USDJPY",
+      "year": 2019,
+      "month": 3,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190301T000000Z_20190401T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190301T000000Z_20190401T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190301T000000Z_20190401T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2019-04",
+      "partition_id": "USDJPY-2019",
+      "pair": "USDJPY",
+      "year": 2019,
+      "month": 4,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190401T000000Z_20190501T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190401T000000Z_20190501T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190401T000000Z_20190501T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2019-05",
+      "partition_id": "USDJPY-2019",
+      "pair": "USDJPY",
+      "year": 2019,
+      "month": 5,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190501T000000Z_20190601T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190501T000000Z_20190601T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190501T000000Z_20190601T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2019-06",
+      "partition_id": "USDJPY-2019",
+      "pair": "USDJPY",
+      "year": 2019,
+      "month": 6,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190601T000000Z_20190701T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190601T000000Z_20190701T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190601T000000Z_20190701T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2019-07",
+      "partition_id": "USDJPY-2019",
+      "pair": "USDJPY",
+      "year": 2019,
+      "month": 7,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190701T000000Z_20190801T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190701T000000Z_20190801T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190701T000000Z_20190801T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2019-08",
+      "partition_id": "USDJPY-2019",
+      "pair": "USDJPY",
+      "year": 2019,
+      "month": 8,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190801T000000Z_20190901T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190801T000000Z_20190901T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190801T000000Z_20190901T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2019-09",
+      "partition_id": "USDJPY-2019",
+      "pair": "USDJPY",
+      "year": 2019,
+      "month": 9,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190901T000000Z_20191001T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190901T000000Z_20191001T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20190901T000000Z_20191001T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2019-10",
+      "partition_id": "USDJPY-2019",
+      "pair": "USDJPY",
+      "year": 2019,
+      "month": 10,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20191001T000000Z_20191101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20191001T000000Z_20191101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20191001T000000Z_20191101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2019-11",
+      "partition_id": "USDJPY-2019",
+      "pair": "USDJPY",
+      "year": 2019,
+      "month": 11,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20191101T000000Z_20191201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20191101T000000Z_20191201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20191101T000000Z_20191201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2019-12",
+      "partition_id": "USDJPY-2019",
+      "pair": "USDJPY",
+      "year": 2019,
+      "month": 12,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20191201T000000Z_20200101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20191201T000000Z_20200101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2019\\USDJPY_20191201T000000Z_20200101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2020-01",
+      "partition_id": "USDJPY-2020",
+      "pair": "USDJPY",
+      "year": 2020,
+      "month": 1,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200101T000000Z_20200201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200101T000000Z_20200201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200101T000000Z_20200201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2020-02",
+      "partition_id": "USDJPY-2020",
+      "pair": "USDJPY",
+      "year": 2020,
+      "month": 2,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200201T000000Z_20200301T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200201T000000Z_20200301T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200201T000000Z_20200301T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2020-03",
+      "partition_id": "USDJPY-2020",
+      "pair": "USDJPY",
+      "year": 2020,
+      "month": 3,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200301T000000Z_20200401T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200301T000000Z_20200401T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200301T000000Z_20200401T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2020-04",
+      "partition_id": "USDJPY-2020",
+      "pair": "USDJPY",
+      "year": 2020,
+      "month": 4,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200401T000000Z_20200501T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200401T000000Z_20200501T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200401T000000Z_20200501T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2020-05",
+      "partition_id": "USDJPY-2020",
+      "pair": "USDJPY",
+      "year": 2020,
+      "month": 5,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200501T000000Z_20200601T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200501T000000Z_20200601T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200501T000000Z_20200601T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2020-06",
+      "partition_id": "USDJPY-2020",
+      "pair": "USDJPY",
+      "year": 2020,
+      "month": 6,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200601T000000Z_20200701T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200601T000000Z_20200701T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200601T000000Z_20200701T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2020-07",
+      "partition_id": "USDJPY-2020",
+      "pair": "USDJPY",
+      "year": 2020,
+      "month": 7,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200701T000000Z_20200801T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200701T000000Z_20200801T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200701T000000Z_20200801T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2020-08",
+      "partition_id": "USDJPY-2020",
+      "pair": "USDJPY",
+      "year": 2020,
+      "month": 8,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200801T000000Z_20200901T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200801T000000Z_20200901T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200801T000000Z_20200901T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2020-09",
+      "partition_id": "USDJPY-2020",
+      "pair": "USDJPY",
+      "year": 2020,
+      "month": 9,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200901T000000Z_20201001T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200901T000000Z_20201001T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20200901T000000Z_20201001T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2020-10",
+      "partition_id": "USDJPY-2020",
+      "pair": "USDJPY",
+      "year": 2020,
+      "month": 10,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20201001T000000Z_20201101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20201001T000000Z_20201101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20201001T000000Z_20201101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2020-11",
+      "partition_id": "USDJPY-2020",
+      "pair": "USDJPY",
+      "year": 2020,
+      "month": 11,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20201101T000000Z_20201201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20201101T000000Z_20201201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20201101T000000Z_20201201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2020-12",
+      "partition_id": "USDJPY-2020",
+      "pair": "USDJPY",
+      "year": 2020,
+      "month": 12,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20201201T000000Z_20210101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20201201T000000Z_20210101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2020\\USDJPY_20201201T000000Z_20210101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2021-01",
+      "partition_id": "USDJPY-2021",
+      "pair": "USDJPY",
+      "year": 2021,
+      "month": 1,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210101T000000Z_20210201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210101T000000Z_20210201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210101T000000Z_20210201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2021-02",
+      "partition_id": "USDJPY-2021",
+      "pair": "USDJPY",
+      "year": 2021,
+      "month": 2,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210201T000000Z_20210301T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210201T000000Z_20210301T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210201T000000Z_20210301T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2021-03",
+      "partition_id": "USDJPY-2021",
+      "pair": "USDJPY",
+      "year": 2021,
+      "month": 3,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210301T000000Z_20210401T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210301T000000Z_20210401T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210301T000000Z_20210401T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2021-04",
+      "partition_id": "USDJPY-2021",
+      "pair": "USDJPY",
+      "year": 2021,
+      "month": 4,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210401T000000Z_20210501T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210401T000000Z_20210501T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210401T000000Z_20210501T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2021-05",
+      "partition_id": "USDJPY-2021",
+      "pair": "USDJPY",
+      "year": 2021,
+      "month": 5,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210501T000000Z_20210601T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210501T000000Z_20210601T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210501T000000Z_20210601T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2021-06",
+      "partition_id": "USDJPY-2021",
+      "pair": "USDJPY",
+      "year": 2021,
+      "month": 6,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210601T000000Z_20210701T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210601T000000Z_20210701T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210601T000000Z_20210701T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2021-07",
+      "partition_id": "USDJPY-2021",
+      "pair": "USDJPY",
+      "year": 2021,
+      "month": 7,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210701T000000Z_20210801T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210701T000000Z_20210801T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210701T000000Z_20210801T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2021-08",
+      "partition_id": "USDJPY-2021",
+      "pair": "USDJPY",
+      "year": 2021,
+      "month": 8,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210801T000000Z_20210901T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210801T000000Z_20210901T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210801T000000Z_20210901T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2021-09",
+      "partition_id": "USDJPY-2021",
+      "pair": "USDJPY",
+      "year": 2021,
+      "month": 9,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210901T000000Z_20211001T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210901T000000Z_20211001T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20210901T000000Z_20211001T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2021-10",
+      "partition_id": "USDJPY-2021",
+      "pair": "USDJPY",
+      "year": 2021,
+      "month": 10,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20211001T000000Z_20211101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20211001T000000Z_20211101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20211001T000000Z_20211101T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2021-11",
+      "partition_id": "USDJPY-2021",
+      "pair": "USDJPY",
+      "year": 2021,
+      "month": 11,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20211101T000000Z_20211201T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20211101T000000Z_20211201T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20211101T000000Z_20211201T000000Z_MT5_TICKS.metadata.json"
+    },
+    {
+      "unit_id": "USDJPY-2021-12",
+      "partition_id": "USDJPY-2021",
+      "pair": "USDJPY",
+      "year": 2021,
+      "month": 12,
+      "raw_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20211201T000000Z_20220101T000000Z_MT5_TICKS.npz",
+      "normalized_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\normalized\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20211201T000000Z_20220101T000000Z_MT5_TICKS.parquet",
+      "metadata_path": "C:\\Users\\derek\\Desktop\\Vcodeee\\data\\ticks\\raw\\ROBOFOREX_MT5\\USDJPY\\2021\\USDJPY_20211201T000000Z_20220101T000000Z_MT5_TICKS.metadata.json"
+    }
+  ]
+}

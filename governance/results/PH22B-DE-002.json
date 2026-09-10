@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "task_id": "PH22B-DE-002",
+  "role": "data_engineer",
+  "start_time": "2026-09-10T23:50:00Z",
+  "end_time": "2026-09-10T22:51:35Z",
+  "status": "COMPLETE",
+  "base_commit": "59764f74f85d2499bd33c6bd06197e4ccce6839b",
+  "result_commit": null,
+  "files_changed": [
+    "governance/data_catalogs/phase22b_2019_2021_metadata.json",
+    "governance/data_catalogs/phase22b_2019_2021_locators.json",
+    "governance/results/PH22B-DE-002.json"
+  ],
+  "inputs": [
+    {
+      "path": "reports/phase22_data_build/mt5_historical_manifest.json",
+      "sha256": "02305e473c556bd96fde61d0193fda979cb2a1f2390ec71735b6326128efe52c"
+    },
+    {
+      "path": "governance/approvals/PH22B-DEV-2019-2021-AUTH-001.json",
+      "sha256": "24890811e00d6f853d1072df9304c2dd50d14a84a706010de043487f7bda8090"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "governance/data_catalogs/phase22b_2019_2021_metadata.json",
+      "sha256": "9660d6f86c536a6fb9c07f66a9cac31380a3fe7c5225aebd6063cfe7c116e17e"
+    },
+    {
+      "path": "governance/data_catalogs/phase22b_2019_2021_locators.json",
+      "sha256": "305f3d44f6947d9c50969dd1dd83d4662f014c23ec4d9501fe07f44ef7d09191"
+    }
+  ],
+  "artifact_hashes": {
+    "governance/data_catalogs/phase22b_2019_2021_metadata.json": {
+      "raw_sha256": "9660d6f86c536a6fb9c07f66a9cac31380a3fe7c5225aebd6063cfe7c116e17e",
+      "canonical_json_sha256": "a04f68595a019b9fd9b6c832f19e2925da6ce2852fab3a0617e2c8f887562f9a"
+    },
+    "governance/data_catalogs/phase22b_2019_2021_locators.json": {
+      "raw_sha256": "305f3d44f6947d9c50969dd1dd83d4662f014c23ec4d9501fe07f44ef7d09191",
+      "canonical_json_sha256": "305553456fad577885d14d360633a2cc7c867cfdd53920c35d784b0140cb4038"
+    }
+  },
+  "commands": [
+    "Parse authoritative control-plane manifest with exact pair/year allowlist; do not open market files.",
+    "Validate emitted JSON catalogs for unit count, partitions, statuses, years, symbols, root identity, and reproducible hashes.",
+    "Validate result manifest against governance/RESULT_MANIFEST.schema.json."
+  ],
+  "tests_executed": [
+    "authorized_unit_count",
+    "authorized_pair_year_count",
+    "authorized_pairs_only",
+    "authorized_years_only",
+    "all_units_validated",
+    "dataset_root_match",
+    "no_locked_entries",
+    "catalog_canonical_hash_reproduction",
+    "result_manifest_schema"
+  ],
+  "tests": [
+    {
+      "name": "authorized_unit_count",
+      "status": "PASSED",
+      "expected": 144,
+      "actual": 144
+    },
+    {
+      "name": "authorized_pair_year_count",
+      "status": "PASSED",
+      "expected": 12,
+      "actual": 12
+    },
+    {
+      "name": "all_emitted_units_validated",
+      "status": "PASSED",
+      "actual": 144
+    }
+  ],
+  "test_results": [
+    {
+      "name": "catalog_scope_and_integrity",
+      "status": "PASSED",
+      "unit_count": 144,
+      "partition_count": 12
+    },
+    {
+      "name": "protected_boundary_audit",
+      "status": "PASSED",
+      "locked_entries_emitted": 0,
+      "forbidden_entries_emitted": 0
+    },
+    {
+      "name": "market_file_access_audit",
+      "status": "PASSED",
+      "market_files_opened": 0,
+      "market_files_statted": 0,
+      "market_files_hashed": 0
+    }
+  ],
+  "data_accessed": [
+    "reports/phase22_data_build/mt5_historical_manifest.json control-plane records restricted to EURUSD/GBPUSD/USDJPY/USDCAD for 2019-2021",
+    "governance authorization and task metadata"
+  ],
+  "data_windows_accessed": [
+    "2019",
+    "2020",
+    "2021"
+  ],
+  "specification_hash_used": "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
+  "dataset_hash_used": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+  "safety_checks": [
+    {
+      "name": "no_market_file_open_stat_or_hash",
+      "status": "PASSED"
+    },
+    {
+      "name": "2022_2023_not_emitted",
+      "status": "PASSED"
+    },
+    {
+      "name": "2024_plus_forbidden",
+      "status": "PASSED"
+    },
+    {
+      "name": "no_strategy_pnl_execution_live_activity",
+      "status": "PASSED"
+    }
+  ],
+  "review_status": [
+    {
+      "role": "qa_reviewer",
+      "decision": "PENDING"
+    }
+  ],
+  "prohibitions_verified": [
+    "no market file opened, statted, sampled, or hashed",
+    "no 2022 or 2023 entry emitted",
+    "no 2024+ access or emission",
+    "no research inference",
+    "no strategy, PnL, execution, or LIVE activity"
+  ],
+  "terminal_result": "AUTHORIZED_CATALOGS_COMPLETE_PENDING_INDEPENDENT_QA",
+  "handoff": {
+    "to_role": "qa_reviewer",
+    "requested_decision": "Independently verify catalog scope, hashes, provenance, schema validity, and protected-boundary compliance.",
+    "limitations": [
+      "Catalogs derive solely from the authoritative control-plane manifest; market files were not opened, statted, sampled, or hashed.",
+      "Result commit is null in-manifest to avoid self-referential commit identity; the enclosing Git commit is reported out-of-band.",
+      "No data-readiness gate or phase transition is self-authorized."
+    ]
+  }
+}
