@@ -1,0 +1,80 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-REMEDIATION-004",
+    "phase":  "PHASE_22B_PENDING_DESIGN",
+    "phase_id":  "PHASE_22B_PENDING_DESIGN",
+    "assigned_role":  "research_lead",
+    "objective":  "Resolve every agent-resolvable PH22B-REVIEW-003 blocker in a new immutable no-data Phase 22B v4 specification.",
+    "inputs":  [
+                   {
+                       "sha256":  "6dca34026989fc26bf2e282c48e6a058074bc60ad5df2d476824d5ff16e6a28a",
+                       "path":  "research/phase22b_spec_v3.json"
+                   },
+                   {
+                       "sha256":  "a8b15ba17facb14e42d99f4651b81d5f2ee40e4f25f3e3df9d42661970de3949",
+                       "path":  "governance/reviews/PH22B-REVIEW-003-statistical.json"
+                   },
+                   {
+                       "sha256":  "26001b2597b50d65dba9f0ba47af6dc4cb4751c3de42faf54c016b15353f36d2",
+                       "path":  "governance/reviews/PH22B-REVIEW-003-qa.json"
+                   }
+               ],
+    "allowed_paths":  [
+                          "research/phase22b_spec_v4.json",
+                          "research/phase22b_spec_v4.sha256",
+                          "governance/QA_TEST_ENVIRONMENT.md",
+                          "governance/state/phase22b_remediation_loop.json",
+                          "governance/tasks/PH22B-REMEDIATION-004.json",
+                          "governance/tasks/PH22B-REVIEW-004.json",
+                          "governance/results/PH22B-REMEDIATION-004.json",
+                          "tests/orchestration/"
+                      ],
+    "forbidden_paths":  [
+                            "research/phase22b_spec_v3.json",
+                            "data/",
+                            "reports/",
+                            "src/mt5_scalping_agent/strategies/",
+                            "src/mt5_scalping_agent/backtesting/",
+                            "src/mt5_scalping_agent/risk/",
+                            "src/mt5_scalping_agent/execution/"
+                        ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "6dca34026989fc26bf2e282c48e6a058074bc60ad5df2d476824d5ff16e6a28a",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "base_commit":  "626e6844b9c3cd6e24ce9dc1b7af1c22d4464746",
+    "branch":  "task/ph22b-remediation-001",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee-ph22b-remediation-001",
+    "required_tests":  [
+                           "phase22b_v4_contract",
+                           "autonomous_remediation",
+                           "qa_environment"
+                       ],
+    "required_reviewers":  [
+                               "statistical_validator",
+                               "qa_reviewer"
+                           ],
+    "completion_conditions":  [
+                                  "new v4 artifact frozen without modifying v3",
+                                  "canonical hash reproduced",
+                                  "fresh independent review required"
+                              ],
+    "status":  "FROZEN_PENDING_REVIEW",
+    "allowed_data":  [
+
+                     ],
+    "prohibited_actions":  [
+                               "market data access",
+                               "2024+",
+                               "Phase 22B execution",
+                               "strategy/backtest/PnL",
+                               "execution or LIVE changes"
+                           ],
+    "required_outputs":  [
+                             "v4 specification",
+                             "v4 canonical hash",
+                             "review task",
+                             "persisted remediation lineage"
+                         ]
+}

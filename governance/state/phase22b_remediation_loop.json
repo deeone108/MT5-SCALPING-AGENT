@@ -1,0 +1,62 @@
+{
+    "schema_version":  1,
+    "loop_id":  "PH22B-AUTONOMOUS-LOOP-001",
+    "phase":  "PHASE_22B_PENDING_DESIGN",
+    "candidate_id":  "P22A_SPR_ABS_15s_60s",
+    "state":  "PENDING_INDEPENDENT_REVIEW",
+    "lineage":  [
+                    {
+                        "task_id":  "PH22B-REMEDIATION-004",
+                        "to_spec_hash":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6",
+                        "from_spec_hash":  "6dca34026989fc26bf2e282c48e6a058074bc60ad5df2d476824d5ff16e6a28a"
+                    }
+                ],
+    "attempts":  [
+                     {
+                         "finding_fingerprints":  [
+                                                      "9e9d1d18fef11867fbcc286e7414864acb2fe5843d0ea51d8376894b663e802c",
+                                                      "810a68818b6d9cf5c5d0411dc2b2a05e7a8bc07f4c521fb7bbb23828aa1bfd69",
+                                                      "5e9030d1fc51657748a1308711817185565c7729f9d0476d481a4cb93d3da4cd",
+                                                      "5ceede2d82b804126d47938fb00725e338a72e59d1cde9bb7a1e1fbcfd88ad19",
+                                                      "50e5f93e62a4cf0e5ced83fd3500e655886d329a880cae2f93907d91b2f5b153",
+                                                      "175f15fa2c1c5d358bf5e2c0fd026d729dd4eb78e7e534edb0baa50f60d6de2a",
+                                                      "51e8a9fe99fa645784816e63eefacc5bba4ec7dac26c000436355cc007f6a19f"
+                                                  ],
+                         "output_spec_hash":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6",
+                         "task_id":  "PH22B-REMEDIATION-004",
+                         "input_spec_hash":  "6dca34026989fc26bf2e282c48e6a058074bc60ad5df2d476824d5ff16e6a28a",
+                         "material_change":  true
+                     }
+                 ],
+    "current_spec_hash":  "540065f088b22cd36c3c8b3140efe4ccff1a3cd422c2d983019d30b8de3978c6",
+    "review_artifacts":  [
+                             {
+                                 "path":  "governance/reviews/PH22B-REVIEW-003-statistical.json",
+                                 "sha256":  "a8b15ba17facb14e42d99f4651b81d5f2ee40e4f25f3e3df9d42661970de3949",
+                                 "decision":  "REJECTED"
+                             },
+                             {
+                                 "path":  "governance/reviews/PH22B-REVIEW-003-qa.json",
+                                 "sha256":  "26001b2597b50d65dba9f0ba47af6dc4cb4751c3de42faf54c016b15353f36d2",
+                                 "decision":  "REJECTED"
+                             }
+                         ],
+    "finding_fingerprints":  [
+                                 "9e9d1d18fef11867fbcc286e7414864acb2fe5843d0ea51d8376894b663e802c",
+                                 "810a68818b6d9cf5c5d0411dc2b2a05e7a8bc07f4c521fb7bbb23828aa1bfd69",
+                                 "5e9030d1fc51657748a1308711817185565c7729f9d0476d481a4cb93d3da4cd",
+                                 "5ceede2d82b804126d47938fb00725e338a72e59d1cde9bb7a1e1fbcfd88ad19",
+                                 "50e5f93e62a4cf0e5ced83fd3500e655886d329a880cae2f93907d91b2f5b153",
+                                 "175f15fa2c1c5d358bf5e2c0fd026d729dd4eb78e7e534edb0baa50f60d6de2a",
+                                 "51e8a9fe99fa645784816e63eefacc5bba4ec7dac26c000436355cc007f6a19f"
+                             ],
+    "next_transition":  "INDEPENDENT_STATISTICAL_AND_QA_REVIEW",
+    "safety":  {
+                   "allowed_data_window":  [
+
+                                           ],
+                   "live_execution_authorized":  false,
+                   "review_bypass_authorized":  false,
+                   "scope_change_authorized":  false
+               }
+}

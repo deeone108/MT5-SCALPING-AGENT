@@ -81,7 +81,9 @@ def test_lifecycle_requires_independent_review():
     assert set(task["required_reviewers"]) == {"statistical_validator", "qa_reviewer"}
     review = load(ROOT / "governance/tasks/PH22B-REVIEW-003.json")
     assert review["status"] == "READY"
-    assert not list((ROOT / "governance/reviews").glob("PH22B-REVIEW-003-*.json"))
+    reviews = list((ROOT / "governance/reviews").glob("PH22B-REVIEW-003-*.json"))
+    assert len(reviews) == 2
+    assert {load(path)["verdict"] for path in reviews} == {"STATISTICAL_VALIDATOR_REJECTED", "QA_REJECTED"}
 
 
 def test_access_contract_denies_before_reader_and_keeps_candidate_frozen():
