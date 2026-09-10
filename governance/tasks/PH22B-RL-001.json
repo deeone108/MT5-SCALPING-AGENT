@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "task_id": "PH22B-RL-001",
+  "phase": "PHASE_22B_PENDING_DESIGN",
+  "phase_id": "PHASE_22B_PENDING_DESIGN",
+  "assigned_role": "research_lead",
+  "objective": "Design and freeze Phase 22B mechanism-validation research for the strongest Phase 22A phenomena, beginning with P22A_SPR_ABS_15s_60s, to distinguish a genuine spread-state microstructure phenomenon from current-spread normalization, recent volatility, quote activity, session/time-of-day, recent directional impulse, pair-specific behavior, and liquidity-state confounding.",
+  "inputs": [
+    {"path": "research/phase22a_spec.json", "sha256": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323", "access": "READ_ONLY"},
+    {"path": "research/phase22a_candidate_registry.json", "sha256": "cb2995a541ac60bfcb6dde7123f5981af0892e044ef7b12278d153287a5862b3", "access": "READ_ONLY"},
+    {"path": "reports/phase22a/phase22a_20260909T220000Z/final_report.json", "sha256": "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a", "access": "READ_ONLY_EXTERNAL_EVIDENCE"},
+    {"path": "reports/phase22a/phase22a_20260909T220000Z/holdout_survivors.json", "sha256": "94036c2e5491b7217e0d42d6b5c18ea5d76ee4024efc7cc6a10c101f6f6d3025", "access": "READ_ONLY_EXTERNAL_EVIDENCE"},
+    {"path": "governance/memory/project_ledger.json", "sha256": "478a37f9621011c9f6ab2f323758067154d652e401d03607e842a29de9043d71", "access": "READ_ONLY"}
+  ],
+  "allowed_paths": [
+    "research/phase22b_spec.json",
+    "research/phase22b_spec.sha256",
+    "research/phase22b_candidate_registry.json",
+    "docs/PHASE_22B_RESEARCH_DESIGN.md",
+    "governance/results/PH22B-RL-001.json"
+  ],
+  "forbidden_paths": [
+    "research/phase22a_spec.json",
+    "research/phase22a_candidate_registry.json",
+    "reports/phase22a/",
+    "governance/state/project_state.json",
+    "governance/memory/project_ledger.json",
+    "src/mt5_scalping_agent/execution/",
+    "src/mt5_scalping_agent/backtesting/",
+    "config/"
+  ],
+  "allowed_data_window": [],
+  "required_spec_hash": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
+  "required_dataset_hash": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+  "base_commit": "59d4ad232d478003fc4bf8d079afe3433eca6e46",
+  "branch": "task/ph22b-rl-001",
+  "worktree": "C:/Users/derek/Desktop/Vcodeee-ph22b-rl-001",
+  "required_tests": [
+    "phase22b_spec_schema",
+    "phase22b_freeze_hash",
+    "phase22b_no_data_access",
+    "phase22b_prohibition_audit"
+  ],
+  "required_reviewers": ["statistical_validator", "qa_reviewer"],
+  "completion_conditions": [
+    "Define falsifiable mechanism hypotheses and explicit nulls for every named confounder without inspecting raw data.",
+    "Freeze outcomes, causal covariates, controls, partitions, inference, multiplicity, seeds, diagnostics, falsification and advancement criteria before implementation.",
+    "Commit research/phase22b_spec.json and a reproducible SHA-256 tied to the Phase 22A and dataset lineage hashes.",
+    "Produce a Research Lead result manifest; no implementation or data access is authorized.",
+    "Obtain independent Statistical Validator and QA approvals before the Orchestrator may create an implementation task."
+  ],
+  "status": "READY",
+  "allowed_data": [],
+  "prohibited_actions": [
+    "access any raw or derived research data window",
+    "inspect 2019-2023 anchor or tick partitions",
+    "access 2024+ data",
+    "implement or execute Phase 22B analysis",
+    "create a trading strategy or BUY/SELL rule",
+    "define entries, exits, stops, targets, or sizing",
+    "calculate PnL, commission, slippage, or executable economics",
+    "optimize parameters or use machine learning",
+    "modify Phase 22A evidence or frozen specifications",
+    "use order APIs or broker execution"
+  ],
+  "required_outputs": [
+    "frozen Phase 22B specification",
+    "specification SHA-256",
+    "mechanism candidate registry",
+    "research design rationale",
+    "Research Lead result manifest requesting independent review"
+  ],
+  "dependencies": ["PHASE22A_phase22a_20260909T220000Z"]
+}

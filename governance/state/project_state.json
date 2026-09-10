@@ -1,60 +1,103 @@
 {
-  "schema_version": 1,
-  "phase_id": "PHASE_22B_PENDING_DESIGN",
-  "current_phase": "PHASE_22B_PENDING_DESIGN",
-  "status": "PROPOSED",
-  "phase_status": "PROPOSED",
-  "base_commit": "4ae2e3329e23574d66d89278931aeaa6756c7149",
-  "orchestrator": "project_orchestrator",
-  "research_spec_hash": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
-  "spec_sha256": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
-  "dataset_root_hash": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+  "active_tasks": [
+    "PH22B-RL-001"
+  ],
   "allowed_data_windows": [],
-  "locked_data_windows": ["2019", "2020", "2021", "2022", "2023"],
-  "forbidden_data_windows": ["2024+"],
-  "active_tasks": [],
-  "completed_tasks": ["PHASE22A_phase22a_20260909T220000Z"],
+  "base_commit": "4ae2e3329e23574d66d89278931aeaa6756c7149",
   "blocked_tasks": [],
   "candidate_registry_hash": "cb2995a541ac60bfcb6dde7123f5981af0892e044ef7b12278d153287a5862b3",
-  "last_validated_commit": "4ae2e3329e23574d66d89278931aeaa6756c7149",
-  "phase_transition_history": [
-    {
-      "from": "PHASE_22A",
-      "to": "PHASE_22B_PENDING_DESIGN",
-      "authorized_by": "project_orchestrator",
-      "at_utc": "2026-09-10T00:00:00+00:00",
-      "evidence_sha256": "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a",
-      "human_owner_approval_sha256": null
-    }
+  "completed_tasks": [
+    "PHASE22A_phase22a_20260909T220000Z"
   ],
-  "safety_state": {
-    "status": "ENFORCED",
-    "order_submission": false,
-    "execution_api": false,
-    "live_activation_requires_human_owner": true
-  },
-  "live_execution_authorized": false,
-  "gates": {
-    "data": {"status": "PASSED", "reviewer_role": "data_engineer", "evidence_sha256": "c59da3c714e839f847606af664c47c8e72d629148538cb5ece8f73427e54710d"},
-    "freeze": {"status": "PENDING", "reviewer_role": "research_lead", "evidence_sha256": null},
-    "implementation": {"status": "PENDING", "reviewer_role": "qa_reviewer", "evidence_sha256": null},
-    "statistics": {"status": "PENDING", "reviewer_role": "statistical_validator", "evidence_sha256": null},
-    "qa": {"status": "PENDING", "reviewer_role": "qa_reviewer", "evidence_sha256": null},
-    "safety": {"status": "NOT_REQUIRED", "reviewer_role": "safety_reviewer", "evidence_sha256": null}
-  },
+  "current_phase": "PHASE_22B_PENDING_DESIGN",
   "data_access": {
     "allowed_partitions": [],
-    "locked_partitions": ["2019", "2020", "2021", "2022", "2023", "2024+"],
+    "locked_partitions": [
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023",
+      "2024+"
+    ],
     "unlock_manifest_sha256": null
   },
+  "dataset_root_hash": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+  "forbidden_data_windows": [
+    "2024+"
+  ],
+  "gates": {
+    "data": {
+      "evidence_sha256": "c59da3c714e839f847606af664c47c8e72d629148538cb5ece8f73427e54710d",
+      "reviewer_role": "data_engineer",
+      "status": "PASSED"
+    },
+    "freeze": {
+      "evidence_sha256": null,
+      "reviewer_role": "research_lead",
+      "status": "PENDING"
+    },
+    "implementation": {
+      "evidence_sha256": null,
+      "reviewer_role": "qa_reviewer",
+      "status": "PENDING"
+    },
+    "qa": {
+      "evidence_sha256": null,
+      "reviewer_role": "qa_reviewer",
+      "status": "PENDING"
+    },
+    "safety": {
+      "evidence_sha256": null,
+      "reviewer_role": "safety_reviewer",
+      "status": "NOT_REQUIRED"
+    },
+    "statistics": {
+      "evidence_sha256": null,
+      "reviewer_role": "statistical_validator",
+      "status": "PENDING"
+    }
+  },
+  "last_validated_commit": "4ae2e3329e23574d66d89278931aeaa6756c7149",
+  "live_execution_authorized": false,
+  "locked_data_windows": [
+    "2019",
+    "2020",
+    "2021",
+    "2022",
+    "2023"
+  ],
+  "orchestrator": "project_orchestrator",
+  "phase_id": "PHASE_22B_PENDING_DESIGN",
+  "phase_status": "PROPOSED",
+  "phase_transition_history": [
+    {
+      "at_utc": "2026-09-10T00:00:00+00:00",
+      "authorized_by": "project_orchestrator",
+      "evidence_sha256": "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a",
+      "from": "PHASE_22A",
+      "human_owner_approval_sha256": null,
+      "to": "PHASE_22B_PENDING_DESIGN"
+    }
+  ],
+  "research_spec_hash": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
+  "safety_state": {
+    "execution_api": false,
+    "live_activation_requires_human_owner": true,
+    "order_submission": false,
+    "status": "ENFORCED"
+  },
+  "schema_version": 1,
+  "spec_sha256": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
+  "status": "PROPOSED",
   "transitions": [
     {
-      "from": "PHASE_22A",
-      "to": "PHASE_22B_PENDING_DESIGN",
-      "authorized_by": "project_orchestrator",
       "at_utc": "2026-09-10T00:00:00+00:00",
+      "authorized_by": "project_orchestrator",
       "evidence_sha256": "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a",
-      "human_owner_approval_sha256": null
+      "from": "PHASE_22A",
+      "human_owner_approval_sha256": null,
+      "to": "PHASE_22B_PENDING_DESIGN"
     }
   ]
 }
