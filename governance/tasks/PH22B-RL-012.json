@@ -1,0 +1,97 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-RL-012",
+    "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "assigned_role":  "research_lead",
+    "objective":  "Create a new superseding Phase 22B specification that replaces only the infeasible non-gating 10000-refit permutation diagnostic with a completely frozen deterministic cluster-robust score diagnostic, while incorporating only independently accepted implementation-semantic v8 clarifications and preserving all scientific, data, safety, strategy, execution, and LIVE boundaries.",
+    "inputs":  [
+                   {
+                       "hash_mode":  "canonical_json",
+                       "path":  "research/phase22b_spec_v8.json",
+                       "sha256":  "0fc8f52b96a4d14674428a8495b6dc06130b2c51480f9559a613b43cd2df4958"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/approvals/PH22B-SCORE-DIAGNOSTIC-AUTH-001.json",
+                       "sha256":  "f9893bacdbe3dc21f811c864380f0c5421eb46f59e7cf56538ab7da7d69c284c"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/reviews/PH22B-V7-STAT-REVIEW-001.json",
+                       "sha256":  "0abab008d273952004f99a0f150852166f272fa7ac1620754410230f830f7c27"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/reviews/PH22B-V7-QA-REVIEW-001.json",
+                       "sha256":  "38f2e1d8cfc299a6506f2dfb2ee9a61b16987889429cbe01b5a9ebcbc66ff15c"
+                   }
+               ],
+    "allowed_paths":  [
+                          "research/phase22b_spec_v9.json",
+                          "docs/PHASE_22B_V9_SCORE_DIAGNOSTIC_ADDENDUM.md",
+                          "governance/approvals/PH22B-SCORE-DIAGNOSTIC-AUTH-001.json",
+                          "governance/tasks/PH22B-RL-012.json",
+                          "governance/results/PH22B-RL-012.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/phase22b_spec_v6.json",
+                            "research/phase22b_spec_v7.json",
+                            "research/phase22b_spec_v8.json",
+                            "governance/reviews/",
+                            "reports/",
+                            "data/",
+                            "src/",
+                            "scripts/",
+                            "tests/"
+                        ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "0fc8f52b96a4d14674428a8495b6dc06130b2c51480f9559a613b43cd2df4958",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "base_commit":  "0a05b99a75bfea24ed14c3441b73ae1b69c5c47b",
+    "branch":  "task/ph22b-rl-012-v9",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-rl-012-v9",
+    "required_tests":  [
+                           "v6-v8 immutable",
+                           "v9 canonical hash reproduced twice",
+                           "score diagnostic mathematics complete and deterministic",
+                           "diagnostic explicitly non-gating",
+                           "primary hypotheses/gates unchanged",
+                           "data and safety authority unchanged",
+                           "JSON and result schema"
+                       ],
+    "required_reviewers":  [
+                               "statistical_validator",
+                               "qa_reviewer"
+                           ],
+    "completion_conditions":  [
+                                  "v6-v8 preserved",
+                                  "v9 committed and canonical-hashed",
+                                  "same v9 hash submitted to both independent reviewers",
+                                  "no market data accessed"
+                              ],
+    "status":  "READY",
+    "allowed_data":  [
+
+                     ],
+    "prohibited_actions":  [
+                               "underlying market data",
+                               "2022",
+                               "2023",
+                               "2024+",
+                               "change primary hypotheses/models/gates",
+                               "strategy",
+                               "PnL",
+                               "execution",
+                               "LIVE"
+                           ],
+    "required_outputs":  [
+                             "phase22b_spec_v9.json",
+                             "v9 score diagnostic addendum",
+                             "canonical SHA-256",
+                             "result manifest",
+                             "independent review request"
+                         ]
+}

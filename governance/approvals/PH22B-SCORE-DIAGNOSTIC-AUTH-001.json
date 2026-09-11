@@ -1,0 +1,53 @@
+{
+    "schema_version":  1,
+    "authorization_id":  "PH22B-SCORE-DIAGNOSTIC-AUTH-001",
+    "authorized_by":  "human_owner",
+    "authorized_at_utc":  "2026-09-11T00:00:00Z",
+    "authorization_source":  "Explicit user authorization attachment",
+    "source_attachment_sha256":  "4035b678f8f08238288a15d8431dfbc5bb2d3de1b3a0b9f71609c2bb402ac384",
+    "decision":  "Authorize a narrowly scoped Phase 22B methodology amendment solely to replace the computationally infeasible non-gating 10000-refit permutation diagnostic with a deterministic preregistered cluster-robust score diagnostic before market-data execution.",
+    "candidate":  "P22A_SPR_ABS_15s_60s",
+    "must_not_change":  [
+                            "candidate",
+                            "hypotheses",
+                            "primary estimands",
+                            "primary statistical models",
+                            "primary gates",
+                            "effect thresholds",
+                            "FDR families",
+                            "temporal partitions",
+                            "pair universe",
+                            "direction",
+                            "lookback",
+                            "horizon",
+                            "data authority",
+                            "holdout boundaries",
+                            "terminal scientific classifications",
+                            "strategy authority",
+                            "PnL authority",
+                            "execution authority",
+                            "LIVE authority"
+                        ],
+    "allowed_years":  [
+                          2019,
+                          2020,
+                          2021
+                      ],
+    "locked_years":  [
+                         2022,
+                         2023
+                     ],
+    "forbidden":  "2024+",
+    "replacement_requirements":  [
+                                     "fully freeze cluster-robust score diagnostic",
+                                     "same diagnostic question as closely as mathematically appropriate",
+                                     "reuse frozen primary clustering unless mathematically justified",
+                                     "remain non-gating",
+                                     "independent Statistical Validator and QA approval on same hash"
+                                 ],
+    "market_data_accessed":  false,
+    "strategy_authorized":  false,
+    "pnl_authorized":  false,
+    "execution_authorized":  false,
+    "live_authorized":  false
+}
