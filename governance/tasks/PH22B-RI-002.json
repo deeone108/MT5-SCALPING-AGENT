@@ -4,7 +4,7 @@
     "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
     "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
     "assigned_role":  "research_implementer",
-    "objective":  "Fresh isolated implementation and execution of frozen Phase 22B v6 mechanism attribution on authorized 2019-2021 data only after independent implementation readiness review.",
+    "objective":  "Fresh isolated implementation and execution of frozen Phase 22B v7 mechanism attribution on authorized 2019-2021 data only after independent implementation readiness review.",
     "inputs":  [
                    {
                        "hash_mode":  "canonical_json",
@@ -95,7 +95,7 @@
     "completion_conditions":  [
                                   "implementation passes independent readiness review before data",
                                   "2019-2021 outputs complete",
-                                  "frozen v6 exact",
+                                  "frozen v7 exact; v6 preserved as immutable lineage",
                                   "stop before 2022"
                               ],
     "status":  "READY",

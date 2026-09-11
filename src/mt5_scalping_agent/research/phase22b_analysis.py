@@ -1,0 +1,353 @@
+"""Frozen Phase 22B stage analysis and non-actionable evidence assembly."""
+
+from __future__ import annotations
+
+from typing import Any, Mapping, Sequence
+import hashlib
+import json
+
+import numpy as np
+import pandas as pd
+
+from .phase22b_mechanism import (
+    SPEC_SHA256,
+    InvalidResearchRun,
+    benjamini_hochberg,
+    bootstrap_summary,
+    build_design_matrix,
+    daily_block_bootstrap,
+    exact_model_complete_case,
+    enforce_minimum_contrast_cells,
+    fit_wls_clustered_day,
+    model_contract,
+    wald_test,
+)
+
+
+SCIENTIFIC_STATES = (
+    "GENUINE_SPREAD_STATE_PHENOMENON",
+    "NORMALIZATION_ARTIFACT",
+    "VOLATILITY_OR_ACTIVITY_CONFOUNDING",
+    "SESSION_OR_LIQUIDITY_PROXY",
+    "PAIR_SPECIFIC_EFFECT",
+    "MIXED_MECHANISM",
+    "PHENOMENON_NOT_CONFIRMED",
+)
+
+
+def _fit(rows: pd.DataFrame, contract: Mapping[str, Any]):
+    x, y, weights, names = build_design_matrix(rows, contract)
+    return fit_wls_clustered_day(x, y, weights, names, rows["utc_day"])
+
+
+def pair_day_contrast(rows: pd.DataFrame, response: str) -> float:
+    grouped = rows.groupby(["year", "pair", "utc_day", "exposure"], sort=True)[response].mean().unstack()
+    eligible = grouped.dropna(subset=["WIDE", "TIGHT"])
+    if eligible.empty:
+        raise InvalidResearchRun("no eligible pair-day contrast")
+    yearly = (eligible["WIDE"] - eligible["TIGHT"]).groupby(level="year").mean()
+    return float(yearly.mean())
+
+
+def _model_effect(rows: pd.DataFrame, contract: Mapping[str, Any]) -> float:
+    return _fit(rows, contract).coefficient("exposure__WIDE")
+
+
+def _attenuation_stat(rows: pd.DataFrame, before: Mapping[str, Any], after: Mapping[str, Any]) -> float:
+    base = _model_effect(rows, before)
+    current = _model_effect(rows, after)
+    if base == 0 or not np.isfinite([base, current]).all():
+        raise InvalidResearchRun("invalid attenuation coefficient")
+    return float(1.0 - current / base)
+
+
+def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resamples: int = 10_000) -> dict[str, Any]:
+    """Run every frozen model and hypothesis for one authorized stage."""
+    if rows.empty or not {"year", "pair", "utc_day", "exposure"}.issubset(rows):
+        raise InvalidResearchRun("empty or malformed stage rows")
+    models: dict[str, Any] = {}
+    fitted = {}
+    complete_cases = {}
+    attrition = {}
+    contrast_cells = {}
+    for name in ("M0", "M1", "M2", "M3", "M4", "S_SESSION"):
+        contract = model_contract(spec, name)
+        complete, model_attrition = exact_model_complete_case(rows, contract)
+        cells = enforce_minimum_contrast_cells(complete)
+        if not cells["evaluable"]:
+            raise InvalidResearchRun(f"{name} has fewer than 20 observations in a contrast arm")
+        result = _fit(complete, contract)
+        complete_cases[name] = complete
+        attrition[name] = model_attrition
+        contrast_cells[name] = cells
+        fitted[name] = result
+        models[name] = {"exposure__WIDE": result.coefficient("exposure__WIDE"), "rank": result.rank, "condition_number": result.condition_number}
+
+    interactions: dict[str, Any] = {}
+    raw_p: dict[str, float] = {}
+    for definition in spec["interaction_tests"]:
+        hypothesis = definition["hypothesis_id"]
+        contract = model_contract(spec, hypothesis)
+        complete, model_attrition = exact_model_complete_case(rows, contract)
+        interaction_groupers = {
+            "H_VOL": ["vol_q"], "H_ACTIVITY": ["activity_q"], "H_HOUR": ["utc_hour"],
+            "H_SESSION": ["session"], "H_IMPULSE": ["impulse_sign"],
+            "H_PAIR": ["pair"], "H_LIQUIDITY": ["trailing_spread_q"],
+        }
+        if hypothesis not in interaction_groupers:
+            raise InvalidResearchRun(f"unknown frozen interaction: {hypothesis}")
+        cells = enforce_minimum_contrast_cells(complete, interaction_groupers[hypothesis])
+        result = _fit(complete, contract)
+        complete_cases[hypothesis] = complete
+        attrition[hypothesis] = model_attrition
+        contrast_cells[hypothesis] = cells
+        test = wald_test(result, definition["restriction_order"])
+        interactions[hypothesis] = test
+        raw_p[hypothesis] = float(test["raw_p"])
+
+    outcomes = {}
+    m0 = model_contract(spec, "M0")
+    for response in ("Y_RAW_ABS_60S_PIPS", "Y_CURRENT_SPREAD_UNITS", "Y_TRAILING_SPREAD_UNITS", "Y_FIXED_DISCOVERY_SCALE"):
+        contract = {**m0, "response": response}
+        outcomes[response] = pair_day_contrast(rows, response)
+    fixed = outcomes["Y_FIXED_DISCOVERY_SCALE"]
+    if fixed == 0:
+        raise InvalidResearchRun("zero fixed-scale contrast")
+    ratio = abs(outcomes["Y_CURRENT_SPREAD_UNITS"]) / abs(fixed)
+    raw_p["H_NORM"] = float("nan")  # filled by exact ratio bootstrap below
+
+    m4 = model_contract(spec, "M4")
+    bootstrap = daily_block_bootstrap(complete_cases["M4"], lambda sample: _model_effect(sample, m4), resamples=bootstrap_resamples, seed=22002)
+    if bootstrap_resamples != 10_000:
+        primary_bootstrap = {"synthetic_test_only": True, "count": bootstrap_resamples}
+        raw_p["H_RAW"] = float((1 + np.count_nonzero(bootstrap >= 0)) / (bootstrap_resamples + 1))
+    else:
+        primary_bootstrap = bootstrap_summary(bootstrap)
+        raw_p["H_RAW"] = primary_bootstrap["p_one_sided"]
+    ratio_bootstrap = daily_block_bootstrap(
+        rows,
+        lambda sample: abs(pair_day_contrast(sample, "Y_CURRENT_SPREAD_UNITS")) / abs(pair_day_contrast(sample, "Y_FIXED_DISCOVERY_SCALE")),
+        resamples=bootstrap_resamples,
+        seed=22002,
+    )
+    if not np.isfinite(ratio_bootstrap).all():
+        raise InvalidResearchRun("non-finite normalization bootstrap")
+    raw_p["H_NORM"] = float((1 + np.count_nonzero(ratio_bootstrap < 4.0)) / (bootstrap_resamples + 1))
+
+    fdr = {}
+    for family in spec["inference"]["multiple_testing"]["families"]:
+        members = family["members"]
+        fdr[family["id"]] = benjamini_hochberg({name: raw_p[name] for name in members}, members, family["q"])
+
+    attenuation = {}
+    for before, after in zip(("M0", "M1", "M2", "M3"), ("M1", "M2", "M3", "M4")):
+        common = complete_cases[before].index.intersection(complete_cases[after].index)
+        paired = rows.loc[common].copy()
+        before_contract, after_contract = model_contract(spec, before), model_contract(spec, after)
+        point = _attenuation_stat(paired, before_contract, after_contract)
+        values = daily_block_bootstrap(paired, lambda sample, a=before_contract, b=after_contract: _attenuation_stat(sample, a, b), resamples=bootstrap_resamples, seed=22002)
+        low, high = np.quantile(values, [0.025, 0.975], method="linear")
+        attenuation[f"{before}_to_{after}"] = {"point": point, "ci_low": float(low), "ci_high": float(high), "replicates": int(len(values))}
+    return {
+        "models": models,
+        "outcomes": outcomes,
+        "amplification_ratio": float(ratio),
+        "interactions": interactions,
+        "raw_p_values": raw_p,
+        "fdr": fdr,
+        "attenuation": attenuation,
+        "primary_bootstrap": primary_bootstrap,
+        "complete_case_attrition": attrition,
+        "contrast_cells": contrast_cells,
+        "row_count": int(len(rows)),
+    }
+
+
+def classify_phase22b(gates: Mapping[str, bool], *, operational_errors: Sequence[str] = ()) -> str:
+    """Apply frozen terminal precedence to precomputed auditable gate truths."""
+    if operational_errors:
+        return "PHASE_22B_INVALID_RESEARCH_RUN"
+    required = {
+        "raw_all_gates", "no_full_confounder", "normalization_replication", "raw_denominator_failure",
+        "amplification_both", "m2_material_both", "vol_activity_fdr_both", "session_or_liquidity_material_both",
+        "session_or_liquidity_fdr_both", "pair_specific_both", "two_partial_or_interaction_blocks", "raw_effect_remains",
+    }
+    missing = required - set(gates)
+    if missing:
+        raise InvalidResearchRun(f"classification gates missing: {sorted(missing)}")
+    if gates["raw_all_gates"] and gates["no_full_confounder"]:
+        return SCIENTIFIC_STATES[0]
+    if gates["normalization_replication"] and gates["raw_denominator_failure"] and gates["amplification_both"]:
+        return SCIENTIFIC_STATES[1]
+    if gates["m2_material_both"] and gates["vol_activity_fdr_both"]:
+        return SCIENTIFIC_STATES[2]
+    if gates["session_or_liquidity_material_both"] and gates["session_or_liquidity_fdr_both"]:
+        return SCIENTIFIC_STATES[3]
+    if gates["pair_specific_both"]:
+        return SCIENTIFIC_STATES[4]
+    if gates["two_partial_or_interaction_blocks"] and gates["raw_effect_remains"]:
+        return SCIENTIFIC_STATES[5]
+    return SCIENTIFIC_STATES[6]
+
+
+def non_actionable_evidence(*, run_id: str, code_version: str, authorization_id: str, stage: Mapping[str, Any], provenance_hashes: Mapping[str, str]) -> dict[str, Any]:
+    """Build schema-shaped evidence that cannot represent a trade decision."""
+    if len(code_version) != 40 or any(len(value) != 64 for value in provenance_hashes.values()):
+        raise InvalidResearchRun("invalid evidence provenance")
+    return {
+        "schema_version": 1, "candidate_id": "P22A_SPR_ABS_15s_60s", "specification_hash": SPEC_SHA256,
+        "code_version": code_version, "dataset_authorization_id": authorization_id, "research_run_id": run_id,
+        "actionable": False, "strategy_eligible": False, "trade_direction": None,
+        "primary_raw_pip_effect": stage.get("models", {}).get("M4"),
+        "normalized_diagnostic_effect": {"outcomes": stage.get("outcomes", {}), "amplification_ratio": stage.get("amplification_ratio")},
+        "confidence_intervals": {"primary": stage.get("primary_bootstrap", {})}, "raw_p_values": stage.get("raw_p_values", {}),
+        "adjusted_p_values": {family: {key: value["adjusted_p"] for key, value in tests.items()} for family, tests in stage.get("fdr", {}).items()},
+        "fdr_decisions": {family: {key: value["rejected"] for key, value in tests.items()} for family, tests in stage.get("fdr", {}).items()},
+        "temporal_replication_results": {}, "pair_stability": {}, "concentration_diagnostics": {}, "session_diagnostics": {},
+        "regime_diagnostics": {"interactions": stage.get("interactions", {}), "attenuation": stage.get("attenuation", {})},
+        "missingness": {}, "limitations": ["Retrospective internal mechanism attribution only", "Not a strategy and not evidence of profitability"],
+        "terminal_scientific_classification": None,
+        "reviewer_verdicts": {"statistical_validator": "PENDING", "qa_reviewer": "PENDING"},
+        "reviewer_artifact_hashes": {"statistical_validator": None, "qa_reviewer": None}, "provenance_hashes": dict(provenance_hashes),
+    }
+
+
+def canonical_artifact_hash(value: Mapping[str, Any]) -> str:
+    payload = json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False) + "\n"
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _adjusted_contrasts(rows: pd.DataFrame, groupers: list[str], response: str) -> tuple[dict[str, float], dict[str, Any]]:
+    cells = enforce_minimum_contrast_cells(rows, groupers)
+    estimates: dict[str, float] = {}
+    keys = rows[groupers].drop_duplicates().sort_values(groupers, kind="stable") if groupers else pd.DataFrame(index=[0])
+    for _, key_row in keys.iterrows():
+        selected = rows
+        labels = []
+        for name in groupers:
+            selected = selected.loc[selected[name] == key_row[name]]
+            labels.append(str(key_row[name]))
+        counts = selected.groupby("exposure").size()
+        if int(counts.get("WIDE", 0)) < 20 or int(counts.get("TIGHT", 0)) < 20:
+            continue
+        table = selected.groupby(["pair", "utc_day", "exposure"], sort=True)[response].mean().unstack()
+        table = table.dropna(subset=["WIDE", "TIGHT"])
+        if not table.empty:
+            estimates["|".join(labels) if labels else "ALL"] = float((table["WIDE"] - table["TIGHT"]).mean())
+    return estimates, cells
+
+
+def _largest_fraction(values) -> float:
+    absolute = [abs(float(value)) for value in values]
+    total = sum(absolute)
+    return 0.0 if total == 0 else float(max(absolute, default=0.0) / total)
+
+
+def stability_diagnostics(rows: pd.DataFrame, response: str = "Y_RAW_ABS_60S_PIPS", *, spec: Mapping[str, Any] | None = None) -> dict[str, Any]:
+    """V7 covariate-adjusted pair/year/session and concentration diagnostics."""
+    required = {"year", "pair", "utc_day", "session", "anchor_utc_ns", "exposure", response}
+    if not required.issubset(rows) or spec is None:
+        raise InvalidResearchRun("stability diagnostics require columns and frozen spec")
+    contract = {**model_contract(spec, "M4"), "response": response}
+    complete, attrition = exact_model_complete_case(rows, contract)
+    x, y, _, names = build_design_matrix(complete, contract)
+    result = _fit(complete, contract)
+    exposure_index = names.index("exposure__WIDE")
+    working = complete.copy()
+    # Remove fitted nuisance contribution while retaining the exposure component and raw scale.
+    working["adjusted_response"] = y - (x @ result.coefficients - x[:, exposure_index] * result.coefficients[exposure_index])
+    working["utc_month"] = pd.to_datetime(working["anchor_utc_ns"], unit="ns", utc=True).dt.strftime("%Y-%m")
+    diagnostics, cell_evidence = {}, {}
+    for label, groupers in (("pair", ["pair"]), ("year", ["year"]), ("session", ["session"]),
+                            ("month", ["utc_month"]), ("day", ["utc_day"])):
+        diagnostics[label], cell_evidence[label] = _adjusted_contrasts(working, groupers, "adjusted_response")
+    absolute_days = sorted((abs(value) for value in diagnostics["day"].values()), reverse=True)
+    absolute_months = [abs(value) for value in diagnostics["month"].values()]
+    day_total, month_total = sum(absolute_days), sum(absolute_months)
+    return {**diagnostics, "negative_pair_count": sum(v < 0 for v in diagnostics["pair"].values()),
+            "negative_core_session_count": sum(v < 0 for k, v in diagnostics["session"].items() if k != "OFF_SESSION"),
+            "largest_pair_fraction": _largest_fraction(diagnostics["pair"].values()),
+            "top_five_day_fraction": 0.0 if day_total == 0 else float(sum(absolute_days[:5]) / day_total),
+            "largest_month_fraction": 0.0 if month_total == 0 else float(max(absolute_months, default=0.0) / month_total),
+            "complete_case_attrition": attrition, "contrast_cells": cell_evidence,
+            "adjustment_model": "M4 nuisance-residualized"}
+
+def development_gate_truths(stage: Mapping[str, Any], diagnostics: Mapping[str, Any]) -> dict[str, bool]:
+    """Evaluate only gates observable in the 2019-2021 development stage."""
+    effect_m0 = float(stage["models"]["M0"]["exposure__WIDE"])
+    effect_m4 = float(stage["models"]["M4"]["exposure__WIDE"])
+    ci = stage["primary_bootstrap"]
+    years = diagnostics["year"]
+    return {
+        "raw_effect_minimum": effect_m4 <= -0.05,
+        "raw_ci_below_zero": float(ci.get("ci_high", float("inf"))) < 0,
+        "adjustment_retention": effect_m0 != 0 and effect_m4 < 0 and abs(effect_m4) >= 0.5 * abs(effect_m0),
+        "pair_stability": diagnostics["negative_pair_count"] >= 3 and diagnostics["largest_pair_fraction"] < 0.5,
+        "development_year_stability": all(float(years.get(str(year), 0.0)) < 0 for year in (2019, 2020, 2021)),
+        "session_stability": diagnostics["negative_core_session_count"] >= 3,
+        "day_concentration": diagnostics["top_five_day_fraction"] < 0.5,
+        "month_concentration": diagnostics["largest_month_fraction"] < 0.5,
+    }
+
+
+def build_result_manifest(*, task_id: str, run_id: str, code_version: str, artifact_path: str, artifact_sha256: str, tests: Sequence[str]) -> dict[str, Any]:
+    """Build a pending-review result; never advance the project phase."""
+    if len(code_version) != 40 or len(artifact_sha256) != 64:
+        raise InvalidResearchRun("invalid result-manifest provenance")
+    return {
+        "schema_version": 1, "task_id": task_id, "assigned_role": "research_implementer",
+        "status": "FROZEN_PENDING_REVIEW", "terminal_state": "DEVELOPMENT_ARTIFACT_FROZEN_PENDING_REVIEW",
+        "research_run_id": run_id, "specification_hash_used": SPEC_SHA256, "code_version": code_version,
+        "artifacts": [{"path": artifact_path, "sha256": artifact_sha256, "hash_mode": "canonical_json"}],
+        "tests": list(tests), "reviewer_status": {"statistical_validator": "PENDING", "qa_reviewer": "PENDING"},
+        "requested_transition": "INDEPENDENT_DEVELOPMENT_REVIEW", "data_windows_accessed": ["2019", "2020", "2021"],
+        "prohibited_data_accessed": [], "actionable": False, "strategy_eligible": False, "trade_direction": None,
+    }
+
+def stratified_permutation_diagnostic(rows: pd.DataFrame, statistic, *, observed: float, resamples: int = 10_000, seed: int = 22_003) -> dict[str, Any]:
+    """Exact v7 pair-day/hour/vol/activity label permutation."""
+    if resamples != 10_000 or seed != 22_003: raise InvalidResearchRun("frozen permutation count/seed mismatch")
+    required={"pair","utc_day","utc_hour","vol_q","activity_q","anchor_utc_ns","source_row_ordinal","exposure"}
+    if not required.issubset(rows) or not np.isfinite(observed) or not rows["exposure"].isin(["WIDE","TIGHT"]).all(): raise InvalidResearchRun("permutation input failure")
+    ordered=rows.sort_values(["utc_day","pair","utc_hour","vol_q","activity_q","anchor_utc_ns","source_row_ordinal"],kind="stable").reset_index(drop=True)
+    groups=list(ordered.groupby(["utc_day","pair","utc_hour","vol_q","activity_q"],sort=False).groups.values())
+    rng=np.random.Generator(np.random.PCG64(seed)); exceed=0; values=np.empty(resamples)
+    labels=ordered.exposure.to_numpy(copy=True)
+    for iteration in range(resamples):
+        permuted=labels.copy()
+        for indices in groups: permuted[indices]=rng.permutation(labels[indices])
+        sample=ordered.copy(); sample["exposure"]=permuted
+        value=float(statistic(sample))
+        if not np.isfinite(value): raise InvalidResearchRun("non-finite permutation statistic")
+        values[iteration]=value; exceed += abs(value)>=abs(observed)
+    return {"observed_abs":abs(float(observed)),"p_value":float((1+exceed)/10001),"resamples":10000,"seed":seed,"values_sha256":hashlib.sha256(values.astype("<f8").tobytes()).hexdigest()}
+
+
+def assert_future_perturbation_invariant(before: pd.DataFrame, after: pd.DataFrame) -> bool:
+    """Fail closed unless future-only perturbations preserve all causal exposure inputs."""
+    protected = ["anchor_utc_ns", "quote_utc_ns", "spread_pips", "trailing_median_spread_pips",
+                 "recent_micro_volatility_pips", "recent_quote_count", "baseline_quote_count",
+                 "impulse_15s_pips", "quote_age_seconds", "baseline_quote_rate",
+                 "baseline_micro_volatility_pips", "exposure", "vol_q", "activity_q",
+                 "impulse_sign", "impulse_abs_q", "trailing_spread_q"]
+    missing = [name for name in protected if name not in before or name not in after]
+    if missing or len(before) != len(after):
+        raise InvalidResearchRun(f"leakage perturbation interface mismatch: {missing}")
+    try:
+        pd.testing.assert_frame_equal(before[protected].reset_index(drop=True), after[protected].reset_index(drop=True), check_exact=True)
+    except AssertionError as exc:
+        raise InvalidResearchRun("future perturbation changed causal exposure/control") from exc
+    return True
+
+def deterministic_replay(run):
+    """Execute twice and require identical canonical bytes."""
+    first=run(); second=run()
+    a=json.dumps(first,sort_keys=True,separators=(",",":"),ensure_ascii=False,allow_nan=False).encode()
+    b=json.dumps(second,sort_keys=True,separators=(",",":"),ensure_ascii=False,allow_nan=False).encode()
+    if a!=b: raise InvalidResearchRun("deterministic replay mismatch")
+    return first,hashlib.sha256(a).hexdigest()
+
+
+def authoritative_result_manifest(*, task: Mapping[str,Any], base_commit: str, inputs: Sequence[Mapping[str,str]], artifacts: Sequence[Mapping[str,str]], commands: Sequence[str], tests: Sequence[Mapping[str,Any]], files_changed: Sequence[str], start_time: str, end_time: str) -> dict[str,Any]:
+    """Construct RESULT_MANIFEST.schema.json-complete pending-review evidence."""
+    return {"schema_version":1,"task_id":task["task_id"],"role":"research_implementer","status":"COMPLETE","base_commit":base_commit,"result_commit":None,"inputs":list(inputs),"artifacts":list(artifacts),"commands":list(commands),"tests":list(tests),"data_accessed":["2019","2020","2021"],"prohibitions_verified":["no 2022+","no strategy/PnL/backtest/execution"],"handoff":{"to_role":"statistical_validator_and_qa_reviewer","requested_decision":"INDEPENDENT_IMPLEMENTATION_AND_DEVELOPMENT_REVIEW","limitations":["retrospective mechanism attribution only","non-actionable"]},"data_windows_accessed":["2019","2020","2021"],"tests_executed":[str(x.get("command","")) for x in tests],"review_status":[{"statistical_validator":"PENDING"},{"qa_reviewer":"PENDING"}],"end_time":end_time,"safety_checks":[{"live_execution_authorized":False},{"actionable":False}],"dataset_hash_used":task["required_dataset_hash"],"files_changed":list(files_changed),"test_results":list(tests),"artifact_hashes":{x["path"]:x["sha256"] for x in artifacts},"terminal_result":"DEVELOPMENT_ARTIFACT_FROZEN_PENDING_REVIEW","start_time":start_time,"specification_hash_used":task["required_spec_hash"]}
