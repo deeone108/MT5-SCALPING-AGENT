@@ -1,0 +1,76 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-REVIEW-010",
+    "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "assigned_role":  "statistical_validator",
+    "objective":  "Independently review frozen Phase 22B v12 canonical hash 12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f and author the role-owned review evidence without market-data access.",
+    "inputs":  [
+                   {
+                       "hash_mode":  "canonical_json",
+                       "path":  "research/phase22b_spec_v12.json",
+                       "sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/results/PH22B-RL-015.json",
+                       "sha256":  "c654e0358e534d70ce7d9d63883f50e3f381731b051a254fa83c0ce0facea2f6"
+                   }
+               ],
+    "allowed_paths":  [
+                          "governance/tasks/PH22B-REVIEW-010.json",
+                          "governance/reviews/PH22B-V12-STAT-REVIEW-001.json",
+                          "governance/results/PH22B-REVIEW-010.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/",
+                            "reports/",
+                            "data/",
+                            "src/",
+                            "scripts/",
+                            "tests/",
+                            "governance/state/"
+                        ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "base_commit":  "b754cd7a3b8d705fa83c2c55c261a3ca2ce512e6",
+    "branch":  "task/ph22b-review-010-stat",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-review-010-stat",
+    "required_tests":  [
+                           "canonical hash reproduction",
+                           "prior-spec immutability",
+                           "role-specific v12 review",
+                           "schema validation",
+                           "no-data governance tests"
+                       ],
+    "required_reviewers":  [
+
+                           ],
+    "completion_conditions":  [
+                                  "review artifact authored by assigned independent role",
+                                  "result manifest committed",
+                                  "no data access"
+                              ],
+    "status":  "READY",
+    "allowed_data":  [
+
+                     ],
+    "prohibited_actions":  [
+                               "modify specifications",
+                               "market data",
+                               "2022",
+                               "2023",
+                               "2024+",
+                               "strategy",
+                               "PnL",
+                               "execution",
+                               "LIVE"
+                           ],
+    "required_outputs":  [
+                             "governance/reviews/PH22B-V12-STAT-REVIEW-001.json",
+                             "governance/results/PH22B-REVIEW-010.json"
+                         ]
+}
