@@ -23,6 +23,13 @@ from mt5_scalping_agent.research.phase22b_analysis import (
     _cached_daily_block_bootstrap,
     _interaction_strata,
     _linear_contrast,
+    DayBlock,
+    benchmark_compressed_bootstrap,
+    build_day_blocks,
+    certified_attenuation_interval,
+    certified_quantile,
+    compressed_model_bootstrap,
+    matrix_only_preflight,
 )
 from mt5_scalping_agent.research.phase22b_mechanism import (
     InvalidResearchRun,
@@ -38,7 +45,7 @@ from mt5_scalping_agent.research.phase22b_mechanism import (
 
 
 ROOT = Path(__file__).parents[2]
-SPEC = json.loads((ROOT / "research/phase22b_spec_v7.json").read_text(encoding="utf-8"))
+SPEC = json.loads((ROOT / "research/phase22b_spec_v12.json").read_text(encoding="utf-8"))
 
 
 def test_all_frozen_models_and_interactions_resolve_exact_order() -> None:
@@ -217,6 +224,7 @@ def test_analyse_stage_populates_complete_cases_before_primary_bootstrap(monkeyp
         "year": [2019] * 40, "pair": ["EURUSD"] * 40,
         "utc_day": [f"2019-01-{2 + (i // 10):02d}" for i in range(40)],
         "anchor_utc_ns": np.arange(40), "exposure": ["WIDE", "TIGHT"] * 20,
+        "source_row_ordinal": np.arange(40),
         "vol_q": ["Q1"] * 40, "causal_failure": [None] * 40,
         "Y_RAW_ABS_60S_PIPS": [1.0, 2.0] * 20,
         "Y_CURRENT_SPREAD_UNITS": [1.0, 2.0] * 20,
@@ -259,3 +267,70 @@ def test_linear_interaction_contrast_uses_reference_and_named_increment() -> Non
     result = WLSResult(("exposure__WIDE", "WIDE__vol_q__Q2"), np.array([-0.2, 0.15]), np.eye(2), 2, 1.0)
     assert _linear_contrast(result, "H_VOL", "vol_q", "Q1", "Q1") == pytest.approx(-0.2)
     assert _linear_contrast(result, "H_VOL", "vol_q", "Q2", "Q1") == pytest.approx(-0.05)
+
+
+def _bootstrap_fixture(seed: int = 7) -> tuple[pd.DataFrame, dict[str, object]]:
+    rng = np.random.default_rng(seed); records = []
+    for year in (2019, 2020):
+        for day in range(5):
+            for ordinal in range(12):
+                wide = ordinal % 2
+                records.append({"year": year, "utc_day": f"{year}-01-{day+1:02d}", "anchor_utc_ns": year*10_000+day*100+ordinal,
+                                "pair": "EURUSD", "source_row_ordinal": ordinal, "exposure": "WIDE" if wide else "TIGHT",
+                                "Y_RAW_ABS_60S_PIPS": 1.0 + .2*wide + rng.normal(0,.05)})
+    contract={"response":"Y_RAW_ABS_60S_PIPS","predictors":["intercept","exposure__WIDE"],"coefficient_names":["intercept","exposure__WIDE"]}
+    return pd.DataFrame(records),contract
+
+
+def test_v12_day_blocks_are_order_invariant_and_qr_diagonal_is_nonnegative() -> None:
+    rows, contract = _bootstrap_fixture()
+    first, names = build_day_blocks(rows, contract); second, _ = build_day_blocks(rows.sample(frac=1, random_state=9), contract)
+    assert names == ("intercept", "exposure__WIDE")
+    assert [x.input_sha256 for x in first] == [x.input_sha256 for x in second]
+    assert all(np.all(np.diag(block.R) >= 0) for block in first)
+
+
+def test_v12_compressed_bootstrap_matches_expanded_dgelsd_fixture_and_replays() -> None:
+    rows, contract = _bootstrap_fixture(); contrast={"wide": [0., 1.]}
+    first=compressed_model_bootstrap(rows,contract,resamples=50,contrast_vectors=contrast)
+    second=compressed_model_bootstrap(rows.sample(frac=1,random_state=3),contract,resamples=50,contrast_vectors=contrast)
+    assert first["provenance"] == second["provenance"]
+    np.testing.assert_array_equal(first["coefficients"],second["coefficients"])
+    expected=_cached_daily_block_bootstrap(rows,lambda frame:analysis_module._model_effect(frame,contract),resamples=50,seed=22002)
+    np.testing.assert_allclose(first["contrasts"]["wide"],expected,rtol=2e-13,atol=2e-13)
+    assert first["fallback_count"] == 0 and set(first["paths"]) == {"SPD"}
+
+
+def test_v12_fallback_uses_svd_bread_and_multiplicity_not_squared_scores() -> None:
+    rows, contract = _bootstrap_fixture(); blocks,_=build_day_blocks(rows,contract)
+    multiplicity=np.ones(len(blocks),dtype=np.int64)
+    beta_spd,cov_spd,*_ = analysis_module._compressed_fit(blocks,multiplicity,"SPD")
+    beta_svd,cov_svd,*_ = analysis_module._compressed_fit(blocks,multiplicity,"STACKED_QR_SVD")
+    np.testing.assert_allclose(beta_svd,beta_spd,rtol=2e-13,atol=2e-13)
+    np.testing.assert_allclose(cov_svd,cov_spd,rtol=2e-12,atol=2e-12)
+
+
+def test_v12_matrix_preflight_is_response_independent_and_enforces_fallback_cap() -> None:
+    rows, contract = _bootstrap_fixture(); blocks,_=build_day_blocks(rows,contract)
+    schedule=np.ones((2,len(blocks)),dtype=np.int64)
+    before=matrix_only_preflight(blocks,schedule)
+    changed=[DayBlock(x.year,x.utc_day,x.A,x.b*999,x.n,x.R,x.d*999,x.input_sha256) for x in blocks]
+    after=matrix_only_preflight(changed,schedule)
+    assert before == after
+    singular=[DayBlock(x.year,x.utc_day,np.zeros_like(x.A),x.b,x.n,np.zeros_like(x.R),x.d,x.input_sha256) for x in blocks]
+    with pytest.raises(InvalidResearchRun,match="invalid bootstrap matrix"):
+        matrix_only_preflight(singular,schedule,max_fallbacks=0)
+
+
+def test_v12_certified_intervals_propagate_quantiles_and_attenuation() -> None:
+    low,high=certified_quantile(np.array([[1.,1.1],[2.,2.1],[3.,3.1]]),.5)
+    assert low < 2 and high > 2.1
+    interval=certified_attenuation_interval(-2.,.01,-1.,.01)
+    assert interval[0] < .5 < interval[1]
+    with pytest.raises(InvalidResearchRun,match="contains zero"):
+        certified_attenuation_interval(0.,.1,-1.,.01)
+
+
+def test_v12_benchmark_helper_executes_synthetic_primary_and_fallback_paths() -> None:
+    result=benchmark_compressed_bootstrap(resamples=10,days=12,k=3,fallback_count=1)
+    assert result["resamples"]==10 and result["fallback_count"]==1 and result["passes_30_minutes"]

@@ -2,12 +2,16 @@
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+from time import perf_counter
 from typing import Any, Mapping, Sequence
 import hashlib
 import json
 
 import numpy as np
 import pandas as pd
+import scipy
+from scipy import linalg
 from scipy.stats import chi2
 
 from .phase22b_mechanism import (
@@ -26,6 +30,147 @@ from .phase22b_mechanism import (
 
 
 V12_SPEC_SHA256="12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+_EPS = np.finfo(np.float64).eps
+_TINY = np.finfo(np.float64).tiny
+_RCOND = 1e-12
+_CONDITION_CEILING = 1e12
+
+
+def _array_hash(value: np.ndarray, dtype: str = "<f8") -> str:
+    return hashlib.sha256(np.asarray(value, dtype=dtype).tobytes(order="C")).hexdigest()
+
+
+@dataclass(frozen=True)
+class DayBlock:
+    year: int; utc_day: str; A: np.ndarray; b: np.ndarray; n: int
+    R: np.ndarray; d: np.ndarray; input_sha256: str
+
+
+def build_day_blocks(rows: pd.DataFrame, contract: Mapping[str, Any]) -> tuple[list[DayBlock], tuple[str, ...]]:
+    required={"year","utc_day","anchor_utc_ns","pair","source_row_ordinal"}
+    if not required.issubset(rows): raise InvalidResearchRun(f"bootstrap ordering columns missing: {sorted(required-set(rows))}")
+    ordered=rows.sort_values(["year","utc_day","anchor_utc_ns","pair","source_row_ordinal"],kind="stable").reset_index(drop=True)
+    x,y,w,names=build_design_matrix(ordered,contract)
+    if not np.isfinite(x).all() or not np.isfinite(y).all() or not np.isfinite(w).all() or (w<=0).any(): raise InvalidResearchRun("invalid block input")
+    blocks=[]; years=ordered.year.to_numpy(); labels=ordered.utc_day.astype(str).to_numpy()
+    for year in sorted(int(v) for v in np.unique(years)):
+        for day in sorted(set(labels[years==year])):
+            idx=np.flatnonzero((years==year)&(labels==day)); xg,yg,wg=x[idx],y[idx],w[idx]; root=np.sqrt(wg); xw,yw=xg*root[:,None],yg*root
+            a=xw.T@xw; a=(a+a.T)/2; b=xw.T@yw; q,r=linalg.qr(xw,mode="economic",pivoting=False,check_finite=True); d=q.T@yw
+            for j in range(min(r.shape)):
+                if r[j,j]<0: r[j,:]*=-1; d[j]*=-1
+            blocks.append(DayBlock(year,day,a,b,len(idx),r,d,_array_hash(np.column_stack((xg,yg,wg)))))
+    if not blocks: raise InvalidResearchRun("no UTC-day blocks")
+    return blocks,tuple(names)
+
+
+def _schedule_for_blocks(blocks: Sequence[DayBlock],resamples:int,seed:int)->tuple[np.ndarray,str,str]:
+    by_year={}
+    for block in blocks: by_year.setdefault(block.year,[]).append(block.utc_day)
+    schedule,_=bootstrap_draw_schedule(by_year,resamples=resamples,seed=seed)
+    if schedule.shape[1]!=len(blocks): raise InvalidResearchRun("schedule/block mismatch")
+    schedule=schedule.astype(np.int64); rng=np.random.Generator(np.random.PCG64(seed)); draw_hash=hashlib.sha256()
+    for _ in range(resamples):
+        for year in sorted(by_year):
+            count=len(by_year[year]); draw=rng.integers(0,count,size=count,endpoint=False).astype("<i8"); draw_hash.update(draw.tobytes())
+    return schedule,_array_hash(schedule,"<i8"),draw_hash.hexdigest()
+
+
+def _normal_system(blocks:Sequence[DayBlock],m:np.ndarray)->tuple[np.ndarray,np.ndarray,int]:
+    a=np.sum(np.asarray([np.float64(c)*g.A for g,c in zip(blocks,m,strict=True)]),axis=0,dtype=np.float64)
+    b=np.sum(np.asarray([np.float64(c)*g.b for g,c in zip(blocks,m,strict=True)]),axis=0,dtype=np.float64)
+    return (a+a.T)/2,b,int(sum(int(c)*g.n for g,c in zip(blocks,m,strict=True)))
+
+
+def _stack_factor(blocks:Sequence[DayBlock],m:np.ndarray)->tuple[np.ndarray,np.ndarray]:
+    parts=[(np.sqrt(np.float64(c))*g.R,np.sqrt(np.float64(c))*g.d) for g,c in zip(blocks,m,strict=True) if c>0]
+    if not parts: raise InvalidResearchRun("empty fallback factor")
+    return np.vstack([x for x,_ in parts]),np.concatenate([y for _,y in parts])
+
+
+def matrix_only_preflight(blocks:Sequence[DayBlock],schedule:np.ndarray,*,max_fallbacks:int|None=None)->dict[str,Any]:
+    if schedule.ndim!=2 or schedule.shape[1]!=len(blocks) or (schedule<0).any(): raise InvalidResearchRun("invalid preflight schedule")
+    k=blocks[0].A.shape[0]; paths=[]; kappas=[]
+    for m in schedule:
+        a,_,n=_normal_system(blocks,m); values=np.linalg.eigvalsh(a)
+        if not np.isfinite(values).all() or values[-1]<=0 or n<=k: raise InvalidResearchRun("invalid bootstrap matrix")
+        kappa=float(values[-1]/values[0]) if values[0]>0 else float("inf"); rank=int(np.count_nonzero(values>(_RCOND**2)*values[-1]))
+        primary=rank==k and np.sqrt(kappa)<=_CONDITION_CEILING and 256*_EPS*kappa<.5
+        if primary:
+            try: linalg.cholesky(a,lower=False,check_finite=True)
+            except linalg.LinAlgError: primary=False
+        paths.append("SPD" if primary else "STACKED_QR_SVD"); kappas.append(kappa)
+    count=paths.count("STACKED_QR_SVD"); limit=max_fallbacks if max_fallbacks is not None else max(1,len(schedule)//100)
+    if count>limit: raise InvalidResearchRun(f"fallback count {count} exceeds frozen limit {limit}")
+    codes=np.asarray([p!="SPD" for p in paths],dtype="<i1")
+    return {"paths":paths,"kappa_a":kappas,"fallback_count":count,"preflight_sha256":hashlib.sha256(codes.tobytes()+np.asarray(kappas,dtype="<f8").tobytes()).hexdigest()}
+
+
+def _compressed_fit(blocks:Sequence[DayBlock],m:np.ndarray,path:str):
+    a,b,n=_normal_system(blocks,m); k=a.shape[0]; g=int(np.sum(m))
+    if g<=1 or n<=k: raise InvalidResearchRun("insufficient logical counts")
+    if path=="SPD":
+        values=np.linalg.eigvalsh(a); kappa=float(values[-1]/values[0]); beta=linalg.solve(a,b,assume_a="pos",check_finite=True); bread=linalg.solve(a,np.eye(k),assume_a="pos",check_finite=True)
+        eta_beta,eta_cov=256*_EPS*kappa,4096*_EPS*kappa**2
+    elif path=="STACKED_QR_SVD":
+        matrix,target=_stack_factor(blocks,m); _,s,vt=np.linalg.svd(matrix,full_matrices=False); rank=int(np.count_nonzero(s>_RCOND*s[0])) if s.size else 0
+        if rank!=k or s[-1]<=0 or s[0]/s[-1]>_CONDITION_CEILING: raise InvalidResearchRun("fallback rank/condition failure")
+        beta,_,fit_rank,_=np.linalg.lstsq(matrix,target,rcond=_RCOND)
+        if fit_rank!=k: raise InvalidResearchRun("fallback fit rank failure")
+        bread=(vt.T*(1/s**2))@vt; kappa=float(s[0]/s[-1]); eta_beta,eta_cov=256*_EPS*kappa,8192*_EPS*kappa**2
+    else: raise InvalidResearchRun("unknown solver path")
+    # The fallback factor is overdetermined, so its raw residual is not a
+    # backward-error measure.  Check the mathematically identical normal
+    # equations, while path selection remains matrix-only.
+    denominator=np.linalg.norm(a,np.inf)*np.linalg.norm(beta,np.inf)+np.linalg.norm(b,np.inf); rho=0. if denominator==0 else float(np.linalg.norm(a@beta-b,np.inf)/denominator)
+    if rho>256*_EPS*k or eta_beta>=.5 or eta_cov>=.5 or not np.isfinite([rho,eta_beta,eta_cov]).all(): raise InvalidResearchRun("numerical envelope failure")
+    scores=[block.b-block.A@beta for block in blocks]; meat=np.sum(np.asarray([np.float64(c)*np.outer(s,s) for c,s in zip(m,scores,strict=True)]),axis=0,dtype=np.float64)
+    covariance=(g/(g-1))*((n-1)/(n-k))*bread@meat@bread; covariance=(covariance+covariance.T)/2
+    eb=float(eta_beta/(1-eta_beta)*max(np.linalg.norm(beta),_TINY)); ec=float(eta_cov/(1-eta_cov)*max(np.linalg.norm(covariance,"fro"),_TINY))
+    if not np.isfinite(beta).all() or not np.isfinite(covariance).all(): raise InvalidResearchRun("non-finite compressed fit")
+    return beta,covariance,eb,ec,rho,n,g
+
+
+def compressed_model_bootstrap(rows:pd.DataFrame,contract:Mapping[str,Any],*,resamples:int=10_000,seed:int=22002,contrast_vectors:Mapping[str,Sequence[float]]|None=None)->dict[str,Any]:
+    blocks,names=build_day_blocks(rows,contract); schedule,schedule_hash,draw_hash=_schedule_for_blocks(blocks,resamples,seed); preflight=matrix_only_preflight(blocks,schedule)
+    vectors={label:np.asarray(v,dtype=np.float64) for label,v in (contrast_vectors or {}).items()}
+    if any(v.shape!=(len(names),) for v in vectors.values()): raise InvalidResearchRun("invalid contrast vector")
+    coefficients=np.empty((resamples,len(names))); intervals=np.empty((resamples,len(names),2)); ebv=np.empty(resamples); ecv=np.empty(resamples); rhov=np.empty(resamples); covariance_hashes=[]
+    contrasts={label:np.empty(resamples) for label in vectors}; contrast_intervals={label:np.empty((resamples,2)) for label in vectors}
+    for start in range(0,resamples,128):
+        for i in range(start,min(start+128,resamples)):
+            beta,cov,eb,ec,rho,_,_=_compressed_fit(blocks,schedule[i],preflight["paths"][i]); coefficients[i]=beta; intervals[i,:,0]=np.nextafter(beta-eb,-np.inf); intervals[i,:,1]=np.nextafter(beta+eb,np.inf); ebv[i],ecv[i],rhov[i]=eb,ec,rho; covariance_hashes.append(_array_hash(cov))
+            for label,v in vectors.items():
+                center=float(v@beta); radius=float(np.linalg.norm(v)*eb); contrasts[label][i]=center; contrast_intervals[label][i]=[np.nextafter(center-radius,-np.inf),np.nextafter(center+radius,np.inf)]
+    material=b"".join(bytes.fromhex(x.input_sha256)+x.A.astype("<f8").tobytes()+x.b.astype("<f8").tobytes()+np.asarray([x.n],dtype="<i8").tobytes() for x in blocks)
+    provenance={"draw_indices_sha256":draw_hash,"schedule_sha256":schedule_hash,"multiplicity_sha256":_array_hash(schedule,"<i8"),"block_statistics_sha256":hashlib.sha256(material).hexdigest(),"preflight_sha256":preflight["preflight_sha256"],"path_sha256":hashlib.sha256("\n".join(preflight["paths"]).encode()).hexdigest(),"coefficient_sha256":_array_hash(coefficients),"coefficient_interval_sha256":_array_hash(intervals),"covariance_sha256":hashlib.sha256("".join(covariance_hashes).encode()).hexdigest(),"e_beta_sha256":_array_hash(ebv),"e_cov_sha256":_array_hash(ecv),"backward_error_sha256":_array_hash(rhov),"numpy_version":np.__version__,"scipy_version":scipy.__version__}
+    provenance["replay_sha256"]=hashlib.sha256(b"".join(bytes.fromhex(provenance[k]) for k in sorted(provenance) if k.endswith("sha256"))).hexdigest()
+    return {"representation_version":"PH22B_BOOTSTRAP_SUFFICIENT_STATS_V1","coefficient_names":list(names),"coefficients":coefficients,"coefficient_intervals":intervals,"contrasts":contrasts,"contrast_intervals":contrast_intervals,"paths":preflight["paths"],"fallback_count":preflight["fallback_count"],"provenance":provenance}
+
+
+def certified_quantile(intervals:np.ndarray,probability:float)->tuple[float,float]:
+    values=np.asarray(intervals,dtype=np.float64)
+    if values.ndim!=2 or values.shape[1]!=2 or not np.isfinite(values).all() or (values[:,0]>values[:,1]).any(): raise InvalidResearchRun("invalid bootstrap intervals")
+    low=np.quantile(np.sort(values[:,0],kind="stable"),probability,method="linear"); high=np.quantile(np.sort(values[:,1],kind="stable"),probability,method="linear")
+    return float(np.nextafter(low,-np.inf)),float(np.nextafter(high,np.inf))
+
+
+def certified_attenuation_interval(beta_before:float,radius_before:float,beta_after:float,radius_after:float)->tuple[float,float]:
+    before=(np.nextafter(beta_before-radius_before,-np.inf),np.nextafter(beta_before+radius_before,np.inf)); after=(np.nextafter(beta_after-radius_after,-np.inf),np.nextafter(beta_after+radius_after,np.inf))
+    if before[0]<=0<=before[1]: raise InvalidResearchRun("attenuation denominator interval contains zero")
+    ratios=[n/d for n in after for d in before]
+    return float(np.nextafter(1-max(ratios),-np.inf)),float(np.nextafter(1-min(ratios),np.inf))
+
+
+def benchmark_compressed_bootstrap(*,resamples:int=10_000,days:int=1096,k:int=80,fallback_count:int=100,seed:int=22002)->dict[str,Any]:
+    rng=np.random.Generator(np.random.PCG64(seed)); blocks=[]
+    for day in range(days):
+        r=np.eye(k)*(1+day/max(days,1)); a=r.T@r; b=rng.standard_normal(k); blocks.append(DayBlock(2019+day%3,f"D{day:04d}",a,b,k+1,r,b/np.diag(r),hashlib.sha256(str(day).encode()).hexdigest()))
+    schedule,digest,_=_schedule_for_blocks(blocks,resamples,seed); paths=["STACKED_QR_SVD" if i<fallback_count else "SPD" for i in range(resamples)]; started=perf_counter()
+    for m,path in zip(schedule,paths,strict=True): _compressed_fit(blocks,m,path)
+    wall=perf_counter()-started
+    return {"resamples":resamples,"days":days,"K":k,"fallback_count":fallback_count,"wall_seconds":wall,"schedule_sha256":digest,"passes_30_minutes":wall<=1800}
+
 
 SCIENTIFIC_STATES = (
     "GENUINE_SPREAD_STATE_PHENOMENON",
@@ -111,8 +256,18 @@ def _ci(values: np.ndarray) -> dict[str, float]:
 
 def _model_inference(rows: pd.DataFrame, contract: Mapping[str, Any], resamples: int) -> dict[str, Any]:
     point = _model_effect(rows, contract)
-    values = _cached_daily_block_bootstrap(rows, lambda sample: _model_effect(sample, contract), resamples=resamples, seed=22002)
-    return {"point": point, **_ci(values), "p_one_sided": float((1 + np.count_nonzero(values >= 0.0)) / (resamples + 1))}
+    compressed = compressed_model_bootstrap(rows, contract, resamples=resamples, seed=22002)
+    index = compressed["coefficient_names"].index("exposure__WIDE")
+    values = compressed["coefficients"][:, index]
+    intervals = compressed["coefficient_intervals"][:, index, :]
+    ambiguous = (intervals[:, 0] < 0.0) & (intervals[:, 1] > 0.0)
+    if ambiguous.any():
+        raise InvalidResearchRun("bootstrap p-value interval straddles null boundary")
+    ci_low = certified_quantile(intervals, 0.025)[0]
+    ci_high = certified_quantile(intervals, 0.975)[1]
+    return {"point": point, "ci_low": ci_low, "ci_high": ci_high, "replicates": int(values.size),
+            "p_one_sided": float((1 + np.count_nonzero(intervals[:, 0] >= 0.0)) / (resamples + 1)),
+            "compressed_bootstrap_provenance": compressed["provenance"], "fallback_count": compressed["fallback_count"]}
 
 
 def _interaction_levels(hypothesis: str) -> tuple[str, tuple[Any, ...]]:
@@ -144,10 +299,32 @@ def _interaction_strata(rows: pd.DataFrame, contract: Mapping[str, Any], hypothe
         counts = cells["counts"].get(str(level), cells["counts"].get(level, {}))
         if int(counts.get("WIDE", 0)) < 20 or int(counts.get("TIGHT", 0)) < 20:
             output[str(level)] = {"status": "INSUFFICIENT", "counts": counts}
+    if len(output) == len(levels):
+        return output
+    fitted = _fit(rows, contract)
+    names = list(fitted.coefficient_names)
+    vectors = {}
+    for level in levels:
+        if str(level) in output:
             continue
-        point = _linear_contrast(_fit(rows, contract), hypothesis, variable, level, reference)
-        values = _cached_daily_block_bootstrap(rows, lambda sample, lv=level: _linear_contrast(_fit(sample, contract), hypothesis, variable, lv, reference), resamples=resamples, seed=22002)
-        output[str(level)] = {"status": "EVALUABLE", "point": point, **_ci(values), "counts": counts}
+        vector = np.zeros(len(names), dtype=np.float64)
+        vector[names.index("exposure__WIDE")] = 1.0
+        if level != reference:
+            suffix = f"{level:02d}" if variable == "utc_hour" else str(level)
+            vector[names.index(f"WIDE__{variable}__{suffix}")] = 1.0
+        vectors[str(level)] = vector
+    compressed = compressed_model_bootstrap(rows, contract, resamples=resamples, seed=22002, contrast_vectors=vectors)
+    for level in levels:
+        counts = cells["counts"].get(str(level), cells["counts"].get(level, {}))
+        if int(counts.get("WIDE", 0)) < 20 or int(counts.get("TIGHT", 0)) < 20:
+            output[str(level)] = {"status": "INSUFFICIENT", "counts": counts}
+            continue
+        point = _linear_contrast(fitted, hypothesis, variable, level, reference)
+        values = compressed["contrasts"][str(level)]; bounds = compressed["contrast_intervals"][str(level)]
+        output[str(level)] = {"status": "EVALUABLE", "point": point,
+                              "ci_low": certified_quantile(bounds, .025)[0], "ci_high": certified_quantile(bounds, .975)[1],
+                              "replicates": int(len(values)), "counts": counts,
+                              "compressed_bootstrap_provenance": compressed["provenance"]}
     return output
 
 def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resamples: int = 10_000) -> dict[str, Any]:
