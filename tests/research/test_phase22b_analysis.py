@@ -14,6 +14,9 @@ from mt5_scalping_agent.research.phase22b_analysis import (
     classify_phase22b,
     non_actionable_evidence,
     stratified_permutation_diagnostic,
+    cluster_robust_score_diagnostic,
+    certified_predicate,
+    bootstrap_draw_schedule,
     deterministic_replay,
     authoritative_result_manifest,
     assert_future_perturbation_invariant,
@@ -135,14 +138,26 @@ def test_classification_missing_gate_fails_closed() -> None:
         classify_phase22b(gates)
 
 
-def test_exact_10000_permutation_and_replay() -> None:
-    rows=pd.DataFrame({"pair":["EURUSD"]*4,"utc_day":["2019-01-02"]*4,"utc_hour":[1]*4,"vol_q":["Q1"]*4,"activity_q":["Q1"]*4,"anchor_utc_ns":[1,2,3,4],"source_row_ordinal":[0,1,2,3],"exposure":["WIDE","WIDE","TIGHT","TIGHT"],"y":[1.,2.,3.,4.]})
-    stat=lambda x: float(x.loc[x.exposure=="WIDE","y"].mean()-x.loc[x.exposure=="TIGHT","y"].mean())
-    result=stratified_permutation_diagnostic(rows,stat,observed=stat(rows))
-    assert result["resamples"]==10000 and result["seed"]==22003 and 0<=result["p_value"]<=1
-    first,digest=deterministic_replay(lambda:{"x":1,"p":result["p_value"]})
-    assert first["x"]==1 and len(digest)==64
+def test_v9_score_replaces_permutation_and_is_non_gating() -> None:
+    rows=pd.DataFrame({"pair":["EURUSD"]*6,"utc_day":["a","a","b","b","c","c"],"anchor_utc_ns":range(6),"source_row_ordinal":range(6),"exposure":["TIGHT","WIDE"]*3,"Y_RAW_ABS_60S_PIPS":[1.,3.,2.,5.,4.,8.]})
+    contract={"response":"Y_RAW_ABS_60S_PIPS","predictors":["intercept","exposure__WIDE"],"coefficient_names":["intercept","exposure__WIDE"]}
+    result=cluster_robust_score_diagnostic(rows,contract)
+    assert result["role"].endswith("NON_GATING") and result["df"]==1 and 0<=result["p_value"]<=1
+    with pytest.raises(InvalidResearchRun,match="superseded"):
+        stratified_permutation_diagnostic(rows,None,observed=0)
 
+
+@pytest.mark.parametrize(("interval","boundary","operator","expected"),[((-1.,0.),0.,"<=",True),((0.,1.),0.,">=",True),((0.,0.),0.,"<",False),((0.,0.),0.,">",False)])
+def test_v12_inclusive_endpoint_predicates(interval,boundary,operator,expected):
+    assert certified_predicate(interval,boundary,operator) is expected
+
+
+def test_v12_straddling_interval_fails_closed_and_schedule_replays():
+    with pytest.raises(InvalidResearchRun,match="straddles"):
+        certified_predicate((-1.,1.),0.,"<=")
+    first,h1=bootstrap_draw_schedule({2019:["a","b"],2020:["c"]},resamples=20)
+    second,h2=bootstrap_draw_schedule({2020:["c"],2019:["a","b"]},resamples=20)
+    np.testing.assert_array_equal(first,second);assert h1==h2 and first.sum(axis=1).tolist()==[3]*20
 
 def test_authoritative_result_manifest_has_schema_fields() -> None:
     task={"task_id":"PH22B-RI-002","required_dataset_hash":"b"*64,"required_spec_hash":"c"*64}

@@ -8,6 +8,7 @@ import json
 
 import numpy as np
 import pandas as pd
+from scipy.stats import chi2
 
 from .phase22b_mechanism import (
     SPEC_SHA256,
@@ -23,6 +24,8 @@ from .phase22b_mechanism import (
     wald_test,
 )
 
+
+V12_SPEC_SHA256="12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
 
 SCIENTIFIC_STATES = (
     "GENUINE_SPREAD_STATE_PHENOMENON",
@@ -304,7 +307,7 @@ def non_actionable_evidence(*, run_id: str, code_version: str, authorization_id:
     if len(code_version) != 40 or any(len(value) != 64 for value in provenance_hashes.values()):
         raise InvalidResearchRun("invalid evidence provenance")
     return {
-        "schema_version": 1, "candidate_id": "P22A_SPR_ABS_15s_60s", "specification_hash": SPEC_SHA256,
+        "schema_version": 1, "candidate_id": "P22A_SPR_ABS_15s_60s", "specification_hash": V12_SPEC_SHA256,
         "code_version": code_version, "dataset_authorization_id": authorization_id, "research_run_id": run_id,
         "actionable": False, "strategy_eligible": False, "trade_direction": None,
         "primary_raw_pip_effect": stage.get("models", {}).get("M4"),
@@ -406,31 +409,54 @@ def build_result_manifest(*, task_id: str, run_id: str, code_version: str, artif
     return {
         "schema_version": 1, "task_id": task_id, "assigned_role": "research_implementer",
         "status": "FROZEN_PENDING_REVIEW", "terminal_state": "DEVELOPMENT_ARTIFACT_FROZEN_PENDING_REVIEW",
-        "research_run_id": run_id, "specification_hash_used": SPEC_SHA256, "code_version": code_version,
+        "research_run_id": run_id, "specification_hash_used": V12_SPEC_SHA256, "code_version": code_version,
         "artifacts": [{"path": artifact_path, "sha256": artifact_sha256, "hash_mode": "canonical_json"}],
         "tests": list(tests), "reviewer_status": {"statistical_validator": "PENDING", "qa_reviewer": "PENDING"},
         "requested_transition": "INDEPENDENT_DEVELOPMENT_REVIEW", "data_windows_accessed": ["2019", "2020", "2021"],
         "prohibited_data_accessed": [], "actionable": False, "strategy_eligible": False, "trade_direction": None,
     }
 
-def stratified_permutation_diagnostic(rows: pd.DataFrame, statistic, *, observed: float, resamples: int = 10_000, seed: int = 22_003) -> dict[str, Any]:
-    """Exact v7 pair-day/hour/vol/activity label permutation."""
-    if resamples != 10_000 or seed != 22_003: raise InvalidResearchRun("frozen permutation count/seed mismatch")
-    required={"pair","utc_day","utc_hour","vol_q","activity_q","anchor_utc_ns","source_row_ordinal","exposure"}
-    if not required.issubset(rows) or not np.isfinite(observed) or not rows["exposure"].isin(["WIDE","TIGHT"]).all(): raise InvalidResearchRun("permutation input failure")
-    ordered=rows.sort_values(["utc_day","pair","utc_hour","vol_q","activity_q","anchor_utc_ns","source_row_ordinal"],kind="stable").reset_index(drop=True)
-    groups=list(ordered.groupby(["utc_day","pair","utc_hour","vol_q","activity_q"],sort=False).groups.values())
-    rng=np.random.Generator(np.random.PCG64(seed)); exceed=0; values=np.empty(resamples)
-    labels=ordered.exposure.to_numpy(copy=True)
-    for iteration in range(resamples):
-        permuted=labels.copy()
-        for indices in groups: permuted[indices]=rng.permutation(labels[indices])
-        sample=ordered.copy(); sample["exposure"]=permuted
-        value=float(statistic(sample))
-        if not np.isfinite(value): raise InvalidResearchRun("non-finite permutation statistic")
-        values[iteration]=value; exceed += abs(value)>=abs(observed)
-    return {"observed_abs":abs(float(observed)),"p_value":float((1+exceed)/10001),"resamples":10000,"seed":seed,"values_sha256":hashlib.sha256(values.astype("<f8").tobytes()).hexdigest()}
+def cluster_robust_score_diagnostic(rows: pd.DataFrame, contract: Mapping[str, Any]) -> dict[str, Any]:
+    """Frozen v9 two-sided efficient-score diagnostic; supporting and non-gating."""
+    required={"utc_day","anchor_utc_ns","pair","source_row_ordinal"}
+    if not required.issubset(rows): raise InvalidResearchRun("score ordering columns missing")
+    ordered=rows.sort_values(["utc_day","anchor_utc_ns","pair","source_row_ordinal"],kind="stable").reset_index(drop=True)
+    x,y,w,names=build_design_matrix(ordered,contract);j=names.index("exposure__WIDE");z=x[:,j];c=np.delete(x,j,axis=1);rw=np.sqrt(w)
+    def fit(target):
+        beta,_,rank,sv=np.linalg.lstsq(c*rw[:,None],target*rw,rcond=1e-12)
+        condition=float(sv[0]/sv[-1]) if len(sv) else float("inf")
+        if rank!=c.shape[1] or len(sv)!=c.shape[1] or not np.isfinite(condition) or condition>1e12: raise InvalidResearchRun("score restricted fit failure")
+        return beta,int(rank),condition
+    gamma,rr,rc=fit(y);aux,ar,ac=fit(z);e=y-c@gamma;r=z-c@aux;terms=w*r*e
+    u=float(np.sum(terms,dtype=np.float64));info=float(np.sum(w*r*r,dtype=np.float64));labels=ordered.utc_day.astype(str).to_numpy();days=sorted(set(labels));n,k,g=len(y),x.shape[1],len(days)
+    scores=np.asarray([np.sum(terms[labels==day],dtype=np.float64) for day in days]);variance=float((g/(g-1))*((n-1)/(n-k))*np.sum(scores*scores)) if g>1 and n>k else float("nan")
+    if not np.isfinite([u,info,variance]).all() or info<=0 or variance<=0: raise InvalidResearchRun("score information/variance failure")
+    q=0.0 if u==0 else float(u*u/variance);p=float(chi2.sf(q,1));result={"diagnostic_id":"M4_EXPOSURE_CLUSTER_ROBUST_SCORE","role":"SUPPORTING_ROBUSTNESS_DIAGNOSTIC_ONLY_NON_GATING","U":0.0 if u==0 else u,"information":info,"variance_cr1":variance,"statistic":q,"df":1,"p_value":p,"N":n,"G":g,"K":k,"restricted_rank":rr,"restricted_condition":rc,"auxiliary_rank":ar,"auxiliary_condition":ac}
+    result["canonical_sha256"]=canonical_artifact_hash(result);return result
 
+
+def certified_predicate(interval: Sequence[float], boundary: float, operator: str) -> bool:
+    low,high=map(float,interval)
+    if not np.isfinite([low,high,boundary]).all() or low>high: raise InvalidResearchRun("invalid certified interval")
+    decided={"<":(high<boundary,low>=boundary),"<=":(high<=boundary,low>boundary),">":(low>boundary,high<=boundary),">=":(low>=boundary,high<boundary)}
+    if operator not in decided: raise InvalidResearchRun("unknown certified predicate")
+    yes,no=decided[operator]
+    if yes:return True
+    if no:return False
+    raise InvalidResearchRun("certified interval straddles decision boundary")
+
+
+def bootstrap_draw_schedule(year_days: Mapping[int, Sequence[str]],resamples:int=10_000,seed:int=22002):
+    years=sorted(year_days);rng=np.random.Generator(np.random.PCG64(seed));width=sum(len(year_days[y]) for y in years);out=np.zeros((resamples,width),dtype=np.int32)
+    for b in range(resamples):
+        offset=0
+        for year in years:
+            count=len(year_days[year]);out[b,offset:offset+count]=np.bincount(rng.integers(0,count,size=count,endpoint=False),minlength=count);offset+=count
+    return out,hashlib.sha256(out.astype("<i4").tobytes()).hexdigest()
+
+
+def stratified_permutation_diagnostic(*args,**kwargs):
+    raise InvalidResearchRun("v7 permutation superseded by frozen v9 score diagnostic")
 
 def assert_future_perturbation_invariant(before: pd.DataFrame, after: pd.DataFrame) -> bool:
     """Fail closed unless future-only perturbations preserve all causal exposure inputs."""
