@@ -1,0 +1,93 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-RL-013",
+    "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "assigned_role":  "research_lead",
+    "objective":  "Supersede frozen Phase 22B v9 solely to define a production-feasible, mathematically equivalent sufficient-statistic implementation of the already-frozen daily-block bootstrap while preserving its population, draws, 10000 replicates, estimands, covariance, thresholds, and decisions.",
+    "inputs":  [
+                   {
+                       "hash_mode":  "canonical_json",
+                       "path":  "research/phase22b_spec_v9.json",
+                       "sha256":  "78076da1a489309a6b2cdf95c9fb9c68ce94dd675a00c712d746c7f73b681967"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/approvals/PH22B-V7-DETERMINISM-AUTH-001.json",
+                       "sha256":  "f32b61d98c287b475a3398933af85f890af3652e2247d76ce33d3e603a53b452"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/approvals/PH22B-SCORE-DIAGNOSTIC-AUTH-001.json",
+                       "sha256":  "f9893bacdbe3dc21f811c864380f0c5421eb46f59e7cf56538ab7da7d69c284c"
+                   }
+               ],
+    "allowed_paths":  [
+                          "research/phase22b_spec_v10.json",
+                          "docs/PHASE_22B_V10_BOOTSTRAP_IMPLEMENTATION_ADDENDUM.md",
+                          "governance/tasks/PH22B-RL-013.json",
+                          "governance/results/PH22B-RL-013.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/phase22b_spec_v6.json",
+                            "research/phase22b_spec_v7.json",
+                            "research/phase22b_spec_v8.json",
+                            "research/phase22b_spec_v9.json",
+                            "governance/reviews/",
+                            "reports/",
+                            "data/",
+                            "src/",
+                            "scripts/",
+                            "tests/"
+                        ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "78076da1a489309a6b2cdf95c9fb9c68ce94dd675a00c712d746c7f73b681967",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "base_commit":  "5b7c4663cd2f7511270299d404204de17bed86d9",
+    "branch":  "task/ph22b-rl-013-v10",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-rl-013-v10",
+    "required_tests":  [
+                           "v6-v9 immutable",
+                           "v10 canonical hash reproduced twice",
+                           "bootstrap draw schedule identical",
+                           "expanded-versus-sufficient-statistic equivalence",
+                           "CR1 logical N-G-K exact",
+                           "all decisions identical",
+                           "production performance acceptance",
+                           "data and safety authority unchanged"
+                       ],
+    "required_reviewers":  [
+                               "statistical_validator",
+                               "qa_reviewer"
+                           ],
+    "completion_conditions":  [
+                                  "v10 committed and hashed",
+                                  "independent review pending",
+                                  "no market data accessed"
+                              ],
+    "status":  "READY",
+    "allowed_data":  [
+
+                     ],
+    "prohibited_actions":  [
+                               "underlying market data",
+                               "2022",
+                               "2023",
+                               "2024+",
+                               "change bootstrap statistical method",
+                               "change hypotheses/models/gates/FDR",
+                               "strategy",
+                               "PnL",
+                               "execution",
+                               "LIVE"
+                           ],
+    "required_outputs":  [
+                             "phase22b_spec_v10.json",
+                             "bootstrap implementation addendum",
+                             "canonical SHA-256",
+                             "result manifest",
+                             "independent review request"
+                         ]
+}
