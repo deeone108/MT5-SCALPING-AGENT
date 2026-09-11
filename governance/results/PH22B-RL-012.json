@@ -1,0 +1,132 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-RL-012",
+    "role":  "research_lead",
+    "status":  "COMPLETE",
+    "base_commit":  "0a05b99a75bfea24ed14c3441b73ae1b69c5c47b",
+    "result_commit":  "69788317f8753c0417e34a102bdcf72d3b21f13a",
+    "inputs":  [
+                   {
+                       "path":  "research/phase22b_spec_v8.json",
+                       "sha256":  "0fc8f52b96a4d14674428a8495b6dc06130b2c51480f9559a613b43cd2df4958"
+                   },
+                   {
+                       "path":  "governance/approvals/PH22B-SCORE-DIAGNOSTIC-AUTH-001.json",
+                       "sha256":  "f9893bacdbe3dc21f811c864380f0c5421eb46f59e7cf56538ab7da7d69c284c"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "path":  "research/phase22b_spec_v9.json",
+                          "sha256":  "78076da1a489309a6b2cdf95c9fb9c68ce94dd675a00c712d746c7f73b681967"
+                      },
+                      {
+                          "path":  "docs/PHASE_22B_V9_SCORE_DIAGNOSTIC_ADDENDUM.md",
+                          "sha256":  "9fc29b1a1382969b325a3bbf453b54cbdc4eefa9c855cbdf12d2f15584d5f2d8"
+                      },
+                      {
+                          "path":  "governance/tasks/PH22B-RL-012.json",
+                          "sha256":  "7f2689a4f0b813f841ae0ae47e0ec12623f7ef09f8f9f423be962111f3141c86"
+                      }
+                  ],
+    "commands":  [
+                     "canonical JSON SHA-256 reproduction x2",
+                     "v8/v9 protected-field structural equality assertion",
+                     "v6-v8 git immutability check",
+                     "task and result schema validation",
+                     "git diff --check"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "canonical_hash_reproduction_twice",
+                      "result":  "PASS"
+                  },
+                  {
+                      "name":  "protected_scientific_contract_unchanged",
+                      "result":  "PASS"
+                  },
+                  {
+                      "name":  "diagnostic_non_gating",
+                      "result":  "PASS"
+                  },
+                  {
+                      "name":  "data_and_safety_authority_unchanged",
+                      "result":  "PASS"
+                  },
+                  {
+                      "name":  "prior_specifications_immutable",
+                      "result":  "PASS"
+                  }
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no underlying market data",
+                                  "no 2022/2023",
+                                  "no 2024+",
+                                  "no strategy/PnL/execution/LIVE",
+                                  "no primary hypothesis/model/gate/FDR change"
+                              ],
+    "handoff":  {
+                    "to_role":  "statistical_validator_and_qa_reviewer",
+                    "requested_decision":  "INDEPENDENT_V9_METHODOLOGY_REVIEW",
+                    "limitations":  [
+                                        "v9 has no implementation or data-access authority until both reviewers approve the identical hash"
+                                    ]
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "canonical hash reproduced twice",
+                           "protected v8 fields structurally equal except authorized metadata and new amendment",
+                           "non-gating guarantees asserted",
+                           "task manifest validated",
+                           "v6-v8 unchanged"
+                       ],
+    "review_status":  [
+                          {
+                              "role":  "statistical_validator",
+                              "verdict":  "PENDING"
+                          },
+                          {
+                              "role":  "qa_reviewer",
+                              "verdict":  "PENDING"
+                          }
+                      ],
+    "end_time":  "2026-09-11T15:06:05.0272895Z",
+    "safety_checks":  [
+                          {
+                              "locked_data_opened":  false
+                          },
+                          {
+                              "live_execution_authorized":  false,
+                              "order_submission":  false
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "governance/approvals/PH22B-SCORE-DIAGNOSTIC-AUTH-001.json",
+                          "governance/tasks/PH22B-RL-012.json",
+                          "research/phase22b_spec_v9.json",
+                          "docs/PHASE_22B_V9_SCORE_DIAGNOSTIC_ADDENDUM.md",
+                          "governance/results/PH22B-RL-012.json"
+                      ],
+    "test_results":  [
+                         {
+                             "scope":  "v9 no-data methodology freeze",
+                             "passed":  5,
+                             "failed":  0
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "specification":  "78076da1a489309a6b2cdf95c9fb9c68ce94dd675a00c712d746c7f73b681967",
+                            "addendum":  "9fc29b1a1382969b325a3bbf453b54cbdc4eefa9c855cbdf12d2f15584d5f2d8",
+                            "task_manifest":  "7f2689a4f0b813f841ae0ae47e0ec12623f7ef09f8f9f423be962111f3141c86",
+                            "authorization":  "f9893bacdbe3dc21f811c864380f0c5421eb46f59e7cf56538ab7da7d69c284c"
+                        },
+    "terminal_result":  "PH22B_SPEC_V9_FROZEN_PENDING_INDEPENDENT_REVIEW",
+    "start_time":  "2026-09-11T15:06:05.0272895Z",
+    "specification_hash_used":  "78076da1a489309a6b2cdf95c9fb9c68ce94dd675a00c712d746c7f73b681967"
+}
