@@ -1,0 +1,93 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-RL-014",
+    "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "assigned_role":  "research_lead",
+    "objective":  "Supersede Phase 22B v10 solely to replace an infeasible fixed-ULP expanded/compressed equivalence requirement with condition-aware numerical error bounds and a deterministic factorized fallback, without changing any bootstrap or scientific semantics.",
+    "inputs":  [
+                   {
+                       "hash_mode":  "canonical_json",
+                       "path":  "research/phase22b_spec_v10.json",
+                       "sha256":  "08f67a9cecc4cd593dc8d4fea4772819e8351bfa57cd341b7a82038dc4e87bb1"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/approvals/PH22B-V7-DETERMINISM-AUTH-001.json",
+                       "sha256":  "f32b61d98c287b475a3398933af85f890af3652e2247d76ce33d3e603a53b452"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/approvals/PH22B-SCORE-DIAGNOSTIC-AUTH-001.json",
+                       "sha256":  "f9893bacdbe3dc21f811c864380f0c5421eb46f59e7cf56538ab7da7d69c284c"
+                   }
+               ],
+    "allowed_paths":  [
+                          "research/phase22b_spec_v11.json",
+                          "docs/PHASE_22B_V11_NUMERICAL_EQUIVALENCE_ADDENDUM.md",
+                          "governance/tasks/PH22B-RL-014.json",
+                          "governance/results/PH22B-RL-014.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/phase22b_spec_v6.json",
+                            "research/phase22b_spec_v7.json",
+                            "research/phase22b_spec_v8.json",
+                            "research/phase22b_spec_v9.json",
+                            "research/phase22b_spec_v10.json",
+                            "governance/reviews/",
+                            "reports/",
+                            "data/",
+                            "src/",
+                            "scripts/",
+                            "tests/"
+                        ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "08f67a9cecc4cd593dc8d4fea4772819e8351bfa57cd341b7a82038dc4e87bb1",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "base_commit":  "583f8db127f3584236a7636e6dfc7348d916ec14",
+    "branch":  "task/ph22b-rl-014-v11",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-rl-014-v11",
+    "required_tests":  [
+                           "v6-v10 immutable",
+                           "condition-aware equivalence contract",
+                           "normal-system backward error",
+                           "DGELSD expanded comparison",
+                           "deterministic factorized fallback",
+                           "identical decisions and boundary fail-close",
+                           "all task inputs in result",
+                           "data/safety unchanged"
+                       ],
+    "required_reviewers":  [
+                               "statistical_validator",
+                               "qa_reviewer"
+                           ],
+    "completion_conditions":  [
+                                  "v11 committed and hashed",
+                                  "independent review pending",
+                                  "no market data accessed"
+                              ],
+    "status":  "READY",
+    "allowed_data":  [
+
+                     ],
+    "prohibited_actions":  [
+                               "market data",
+                               "2022",
+                               "2023",
+                               "2024+",
+                               "change bootstrap semantics",
+                               "change science/gates/FDR",
+                               "strategy",
+                               "PnL",
+                               "execution",
+                               "LIVE"
+                           ],
+    "required_outputs":  [
+                             "phase22b_spec_v11.json",
+                             "numerical equivalence addendum",
+                             "canonical hash",
+                             "complete result handoff"
+                         ]
+}
