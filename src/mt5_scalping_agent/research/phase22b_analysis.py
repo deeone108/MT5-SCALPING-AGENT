@@ -449,11 +449,9 @@ def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resa
         complete_cases[key] = complete
         outcomes[response] = {"pair_day_point": pair_day_contrast(complete, response),
                               "M0": _model_inference(complete, contract, bootstrap_resamples)}
-    common_index=complete_cases["M0:"+outcome_responses[0]].index
-    for response in outcome_responses[1:]: common_index=common_index.intersection(complete_cases["M0:"+response].index)
-    direct_bootstrap=compressed_pair_day_bootstrap(rows.loc[common_index],outcome_responses,resamples=bootstrap_resamples,seed=22002)
+    direct_by_response={response:compressed_pair_day_bootstrap(complete_cases["M0:"+response],[response],resamples=bootstrap_resamples,seed=22002) for response in outcome_responses}
     for response in outcome_responses:
-        outcomes[response]["pair_day_bootstrap"]={"ci_low":certified_quantile(direct_bootstrap["intervals"][response],.025)[0],"ci_high":certified_quantile(direct_bootstrap["intervals"][response],.975)[1],"replicates":bootstrap_resamples}
+        direct=direct_by_response[response]; outcomes[response]["pair_day_bootstrap"]={"ci_low":certified_quantile(direct["intervals"][response],.025)[0],"ci_high":certified_quantile(direct["intervals"][response],.975)[1],"replicates":bootstrap_resamples,"provenance":direct["provenance"]}
     fixed = outcomes["Y_FIXED_DISCOVERY_SCALE"]["pair_day_point"]
     if fixed == 0:
         raise InvalidResearchRun("zero fixed-scale contrast")
@@ -481,7 +479,8 @@ def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resa
             m4_diagnostics[response]["converted_to_pips"] = _model_inference(converted, converted_contract, bootstrap_resamples)
     primary_bootstrap = {k: v for k, v in m4_diagnostics["Y_RAW_ABS_60S_PIPS"].items() if k != "point"}
     raw_p["H_RAW"] = primary_bootstrap["p_one_sided"]
-    ratio_bootstrap,ratio_intervals=certified_ratio_distribution(direct_bootstrap["centers"]["Y_CURRENT_SPREAD_UNITS"],direct_bootstrap["intervals"]["Y_CURRENT_SPREAD_UNITS"],direct_bootstrap["centers"]["Y_FIXED_DISCOVERY_SCALE"],direct_bootstrap["intervals"]["Y_FIXED_DISCOVERY_SCALE"])
+    ratio_index=complete_cases["M0:Y_CURRENT_SPREAD_UNITS"].index.intersection(complete_cases["M0:Y_FIXED_DISCOVERY_SCALE"].index); ratio_direct=compressed_pair_day_bootstrap(rows.loc[ratio_index],["Y_CURRENT_SPREAD_UNITS","Y_FIXED_DISCOVERY_SCALE"],resamples=bootstrap_resamples,seed=22002)
+    ratio_bootstrap,ratio_intervals=certified_ratio_distribution(ratio_direct["centers"]["Y_CURRENT_SPREAD_UNITS"],ratio_direct["intervals"]["Y_CURRENT_SPREAD_UNITS"],ratio_direct["centers"]["Y_FIXED_DISCOVERY_SCALE"],ratio_direct["intervals"]["Y_FIXED_DISCOVERY_SCALE"])
     if np.any((ratio_intervals[:,0]<4.0)&(ratio_intervals[:,1]>4.0)): raise InvalidResearchRun("normalization ratio interval straddles boundary")
     raw_p["H_NORM"] = float((1 + np.count_nonzero(ratio_intervals[:,1] < 4.0)) / (bootstrap_resamples + 1))
     denominator_independent = {
@@ -515,7 +514,7 @@ def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resa
         "m4_outcomes": m4_diagnostics,
         "denominator_independent_predicates": denominator_independent,
         "amplification_ratio": float(ratio),
-        "amplification_ratio_bootstrap":{"ci_low":certified_quantile(ratio_intervals,.025)[0],"ci_high":certified_quantile(ratio_intervals,.975)[1],"replicates":bootstrap_resamples,"provenance":direct_bootstrap["provenance"]},
+        "amplification_ratio_bootstrap":{"ci_low":certified_quantile(ratio_intervals,.025)[0],"ci_high":certified_quantile(ratio_intervals,.975)[1],"replicates":bootstrap_resamples,"provenance":ratio_direct["provenance"]},
         "interactions": interactions,
         "raw_p_values": raw_p,
         "fdr": fdr,
