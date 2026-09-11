@@ -1,4 +1,4 @@
-"""Execute frozen Phase 22B v7 development on explicitly authorized 2019-2021 units."""
+"""Execute frozen Phase 22B v12 development on explicitly authorized 2019-2021 units."""
 from __future__ import annotations
 import os
 for _name in ("OMP_NUM_THREADS","OPENBLAS_NUM_THREADS","MKL_NUM_THREADS","NUMEXPR_NUM_THREADS"):
@@ -12,13 +12,13 @@ import scipy
 from jsonschema import Draft202012Validator, FormatChecker
 from mt5_scalping_agent.orchestration.data_resolver import canonical_catalog_hash, guarded_load_monthly_pair_year
 from mt5_scalping_agent.research.phase22b_analysis import (analyse_stage, authoritative_result_manifest, canonical_artifact_hash, development_gate_truths, deterministic_replay, non_actionable_evidence, stability_diagnostics, stratified_permutation_diagnostic)
-from mt5_scalping_agent.research.phase22b_mechanism import (DATASET_ROOT_SHA256, PAIRS, SPEC_SHA256, InvalidResearchRun, build_causal_anchor_inputs, build_design_matrix, fit_wls_clustered_day, freeze_quintiles, load_frozen_spec, model_contract, prepare_model_rows)
+from mt5_scalping_agent.research.phase22b_mechanism import (DATASET_ROOT_SHA256, PAIRS, SPEC_SHA256, InvalidResearchRun, build_causal_anchor_inputs_streaming, build_design_matrix, fit_wls_clustered_day, freeze_quintiles, load_frozen_spec, model_contract, prepare_model_rows)
 YEARS=(2019,2020,2021)
 META="governance/data_catalogs/phase22b_2019_2021_metadata.json"
 LOC="governance/data_catalogs/phase22b_2019_2021_locators.json"
 TASK="governance/tasks/PH22B-RI-002.json"
 STATE="governance/state/project_state.json"
-SPEC="research/phase22b_spec_v7.json"
+SPEC="research/phase22b_spec_v12.json"
 
 def _read_json(path:Path)->dict: return json.loads(path.read_text(encoding="utf-8"))
 def _expected(task:dict,path:str)->str:
@@ -63,12 +63,12 @@ def _build_rows(root:Path,state:dict,task:dict,byte_reader)->tuple[pd.DataFrame,
     prepared=[];provenance=[];frozen={}
     exposure=load_frozen_spec(root/SPEC)["implementation_determinism_v7"]["authorized_phase22a_boundary_artifact"]["spread_dislocation_quintiles"]
     for pair in PAIRS:
-        anchors=[]
+        tick_chunks=[]
         for year in YEARS:
             ticks,units=guarded_load_monthly_pair_year(state=state,task=task,year=year,pair=pair,metadata_catalog_loader=meta_loader,locator_catalog_loader=loc_loader,metadata_catalog_sha256=expected_meta,locator_catalog_sha256=expected_loc,byte_reader=byte_reader,parser=_parse)
-            causal=build_causal_anchor_inputs(ticks[["timestamp_utc_ns","bid","ask","source_row_ordinal"]],pair=pair,output_start=pd.Timestamp(f"{year}-01-01T00:00:00Z"),output_end=pd.Timestamp(f"{year+1}-01-01T00:00:00Z"))
-            causal["year"]=year;anchors.append(causal);provenance.extend(units)
-        all_anchors=pd.concat(anchors,ignore_index=True)
+            tick_chunks.append(ticks[["timestamp_utc_ns","bid","ask","source_row_ordinal"]]);provenance.extend(units)
+        all_anchors=build_causal_anchor_inputs_streaming(tick_chunks,pair=pair,output_start=pd.Timestamp("2019-01-01T00:00:00Z"),output_end=pd.Timestamp("2022-01-01T00:00:00Z"))
+        all_anchors["year"]=pd.to_datetime(all_anchors.anchor_utc_ns,unit="ns",utc=True).dt.year
         causal_attrition={name:int((all_anchors.causal_failure==name).sum()) for name in ("current_quote_freshness","future_quote_freshness","spread_baseline")}
         eligible=all_anchors.loc[all_anchors.causal_failure.isna()].copy()
         finite_mask=(eligible.baseline_quote_count>0)&np.isfinite(eligible[["mid","future_mid_60s","spread_pips","trailing_median_spread_pips","recent_micro_volatility_pips","impulse_15s_pips","baseline_micro_volatility_pips"]]).all(axis=1)
