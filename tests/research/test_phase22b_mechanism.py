@@ -20,6 +20,7 @@ from mt5_scalping_agent.research.phase22b_mechanism import (
     load_frozen_spec,
     prepare_model_rows,
     build_causal_anchor_inputs,
+    build_causal_anchor_inputs_streaming,
     exact_model_complete_case,
     enforce_minimum_contrast_cells,
 )
@@ -29,9 +30,9 @@ ROOT = Path(__file__).parents[2]
 
 
 def test_frozen_spec_canonical_hash_reproduces() -> None:
-    path = ROOT / "research" / "phase22b_spec_v7.json"
+    path = ROOT / "research" / "phase22b_spec_v12.json"
     assert canonical_sha256(json.loads(path.read_text(encoding="utf-8"))) == SPEC_SHA256
-    assert load_frozen_spec(path)["specification_binding"]["version"] == "v7"
+    assert load_frozen_spec(path)["specification_binding"]["version"] == "v12"
 
 
 
@@ -39,8 +40,9 @@ def test_frozen_quintiles_are_deterministic_and_fail_closed() -> None:
     boundaries = freeze_quintiles(np.arange(1.0, 101.0))
     assert boundaries == freeze_quintiles(np.arange(1.0, 101.0))
     assert apply_quintiles([0.0, 50.0, 101.0], boundaries).tolist() == [1, 3, 5]
-    with pytest.raises(InvalidResearchRun):
-        freeze_quintiles([1.0, 1.0, 1.0])
+    tied = freeze_quintiles([1.0, 1.0, 1.0])
+    assert tied == (1.0, 1.0, 1.0, 1.0)
+    assert apply_quintiles([1.0], tied).tolist() == [5]
 
 
 def synthetic_anchors() -> pd.DataFrame:
@@ -117,7 +119,7 @@ def test_bh_is_deterministic_and_rejects_incomplete_family() -> None:
         benjamini_hochberg(values, ["H_VOL"])
 
 
-def test_v7_causal_ticks_missingness_and_cell_rule() -> None:
+def test_v12_causal_ticks_missingness_and_cell_rule() -> None:
     base=pd.Timestamp("2019-01-02T00:00:00Z").value
     times=base+np.arange(2000,dtype="int64")*100_000_000
     mid=1.1+np.sin(np.arange(2000)/20)*.00001
@@ -179,3 +181,25 @@ def test_indexed_anchor_builder_practical_performance() -> None:
     ticks=pd.DataFrame({"timestamp_utc_ns":times,"bid":mid-.00005,"ask":mid+.00005,"source_row_ordinal":np.arange(count)})
     started=time.perf_counter(); out=build_causal_anchor_inputs(ticks,pair="EURUSD",output_start=pd.Timestamp(base+80_000_000_000,unit="ns",tz="UTC"),output_end=pd.Timestamp(base+9_000_000_000_000,unit="ns",tz="UTC")); elapsed=time.perf_counter()-started
     assert len(out)>800 and elapsed<2.0
+
+def test_v12_zero_spread_is_response_specific() -> None:
+    anchors=synthetic_anchors(); anchors.loc[0,"spread_pips"]=0.0
+    controls={name:(2.,4.,6.,8.) for name in ("vol_q","activity_q","impulse_abs_q","trailing_spread_q")}
+    rows=prepare_model_rows(anchors,pair="EURUSD",exposure_boundaries=(.7,.9,1.2,1.6),control_boundaries=controls,fixed_discovery_spread_pips=1.)
+    zero=rows[rows.spread_pips==0]
+    if not zero.empty:
+        assert zero.Y_RAW_ABS_60S_PIPS.notna().all() and zero.Y_CURRENT_SPREAD_UNITS.isna().all()
+
+
+def test_v12_streaming_matches_full_concat_across_duplicate_boundary() -> None:
+    base=pd.Timestamp("2020-12-31T23:57:00Z").value
+    times=base+np.arange(2400,dtype=np.int64)*100_000_000; mid=1.2+np.sin(np.arange(len(times))/13)*.00001
+    full=pd.DataFrame({"timestamp_utc_ns":times,"bid":mid-.00005,"ask":mid+.00005,"source_row_ordinal":np.arange(len(times))})
+    split=1200; left=full.iloc[:split].copy(); right=full.iloc[split:].copy(); right.loc[right.index[0],"timestamp_utc_ns"]=left.iloc[-1].timestamp_utc_ns
+    left.source_row_ordinal=np.arange(len(left)); right.source_row_ordinal=np.arange(len(right))
+    combined=pd.concat([left.assign(_u=0,_o=left.source_row_ordinal),right.assign(_u=1,_o=right.source_row_ordinal)],ignore_index=True).sort_values(["timestamp_utc_ns","_u","_o"],kind="stable").reset_index(drop=True)
+    combined.source_row_ordinal=np.arange(len(combined)); combined=combined[["timestamp_utc_ns","bid","ask","source_row_ordinal"]]
+    start=pd.Timestamp("2020-12-31T23:58:20Z"); end=pd.Timestamp("2021-01-01T00:00:00Z")
+    expected=build_causal_anchor_inputs(combined,pair="EURUSD",output_start=start,output_end=end)
+    actual=build_causal_anchor_inputs_streaming([left,right],pair="EURUSD",output_start=start,output_end=end)
+    pd.testing.assert_frame_equal(actual,expected,check_exact=True)

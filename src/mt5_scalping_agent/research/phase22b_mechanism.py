@@ -17,7 +17,7 @@ import numpy as np
 import pandas as pd
 
 
-SPEC_SHA256 = "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d"
+SPEC_SHA256 = "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
 DATASET_ROOT_SHA256 = "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91"
 PAIRS = ("EURUSD", "GBPUSD", "USDJPY", "USDCAD")
 DEVELOPMENT_YEARS = (2019, 2020, 2021)
@@ -49,7 +49,7 @@ def freeze_quintiles(values: Sequence[float]) -> tuple[float, float, float, floa
     if array.size == 0 or not np.isfinite(array).all():
         raise InvalidResearchRun("quintile input must be nonempty and finite")
     result = np.quantile(array, (0.2, 0.4, 0.6, 0.8), method="linear")
-    if np.any(np.diff(result) <= 0):
+    if np.any(np.diff(result) < 0):
         raise InvalidResearchRun("quintile boundaries must be strictly increasing")
     return tuple(float(item) for item in result)
 
@@ -57,8 +57,8 @@ def freeze_quintiles(values: Sequence[float]) -> tuple[float, float, float, floa
 def apply_quintiles(values: Sequence[float], boundaries: Sequence[float]) -> np.ndarray:
     values_array = np.asarray(values, dtype=np.float64)
     boundary_array = np.asarray(boundaries, dtype=np.float64)
-    if boundary_array.shape != (4,) or not np.isfinite(boundary_array).all() or np.any(np.diff(boundary_array) <= 0):
-        raise InvalidResearchRun("four finite increasing frozen boundaries required")
+    if boundary_array.shape != (4,) or not np.isfinite(boundary_array).all() or np.any(np.diff(boundary_array) < 0):
+        raise InvalidResearchRun("four finite nondecreasing frozen boundaries required")
     if not np.isfinite(values_array).all():
         raise InvalidResearchRun("cannot bin non-finite values")
     return np.searchsorted(boundary_array, values_array, side="right") + 1
@@ -102,8 +102,8 @@ def prepare_model_rows(
         raise InvalidResearchRun("current quote violates causal freshness")
     if np.any(future <= anchor) or np.any(future > horizon) or np.any(horizon - future > 2_000_000_000):
         raise InvalidResearchRun("future quote violates frozen as-of horizon")
-    if np.any(out["spread_pips"] <= 0) or np.any(out["trailing_median_spread_pips"] <= 0):
-        raise InvalidResearchRun("spread denominators must be positive")
+    if np.any(out["spread_pips"] < 0) or np.any(out["trailing_median_spread_pips"] <= 0):
+        raise InvalidResearchRun("spread values violate frozen domains")
     if fixed_discovery_spread_pips <= 0 or not np.isfinite(fixed_discovery_spread_pips):
         raise InvalidResearchRun("fixed discovery spread must be positive and finite")
     if np.any(out["baseline_quote_count"] <= 0):
@@ -124,7 +124,7 @@ def prepare_model_rows(
     out["exposure"] = np.where(exposure_q == 1, "TIGHT", np.where(exposure_q == 5, "WIDE", "EXCLUDED"))
     raw = np.abs(out["future_mid_60s"] - out["mid"]) / (0.01 if pair.endswith("JPY") else 0.0001)
     out["Y_RAW_ABS_60S_PIPS"] = raw
-    out["Y_CURRENT_SPREAD_UNITS"] = raw / out["spread_pips"]
+    out["Y_CURRENT_SPREAD_UNITS"] = np.divide(raw, out["spread_pips"], out=np.full(len(out), np.nan), where=out["spread_pips"] > 0)
     out["Y_TRAILING_SPREAD_UNITS"] = raw / out["trailing_median_spread_pips"]
     out["Y_FIXED_DISCOVERY_SCALE"] = raw / fixed_discovery_spread_pips
     out["quote_activity_ratio"] = out["recent_quote_count"] / (out["baseline_quote_count"] / 4.0)
@@ -414,3 +414,21 @@ def enforce_minimum_contrast_cells(rows: pd.DataFrame, group_columns: Sequence[s
         if label not in grouped: grouped[label]=0
     eligible=(grouped.WIDE>=20)&(grouped.TIGHT>=20)
     return {"evaluable":bool(eligible.any()),"eligible_cells":int(eligible.sum()),"insufficient_cells":int((~eligible).sum()),"counts":grouped.to_dict(orient="index")}
+
+def build_causal_anchor_inputs_streaming(chunks: Sequence[pd.DataFrame], *, pair: str, output_start: pd.Timestamp, output_end: pd.Timestamp) -> pd.DataFrame:
+    """Canonical v12 chunk interface with authorized unit-order duplicate ties.
+
+    Chunks must already be verified and supplied in adjacent authorized unit order.
+    Consolidation here is the reference-equivalent bounded interface; callers may
+    release source chunks after concatenation but may not reset causal context.
+    """
+    if not chunks: raise InvalidResearchRun("streaming input requires authorized chunks")
+    ordered=[]; ordinal=0
+    for unit_order, chunk in enumerate(chunks):
+        if list(chunk.columns)!=["timestamp_utc_ns","bid","ask","source_row_ordinal"]: raise InvalidResearchRun("invalid streaming chunk schema")
+        part=chunk.sort_values(["timestamp_utc_ns","source_row_ordinal"],kind="stable").copy()
+        part["_unit_order"]=unit_order; part["_local_ordinal"]=part["source_row_ordinal"]
+        ordered.append(part)
+    combined=pd.concat(ordered,ignore_index=True).sort_values(["timestamp_utc_ns","_unit_order","_local_ordinal"],kind="stable").reset_index(drop=True)
+    combined["source_row_ordinal"]=np.arange(len(combined),dtype=np.int64)
+    return build_causal_anchor_inputs(combined[["timestamp_utc_ns","bid","ask","source_row_ordinal"]],pair=pair,output_start=output_start,output_end=output_end)
