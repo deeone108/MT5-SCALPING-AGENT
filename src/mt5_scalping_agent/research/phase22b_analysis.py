@@ -61,6 +61,92 @@ def _attenuation_stat(rows: pd.DataFrame, before: Mapping[str, Any], after: Mapp
     return float(1.0 - current / base)
 
 
+def _cached_daily_block_bootstrap(rows: pd.DataFrame, statistic, *, resamples: int, seed: int = 22002) -> np.ndarray:
+    """Exact PCG64 day bootstrap with immutable ordered day blocks cached once."""
+    required = {"year", "utc_day", "anchor_utc_ns", "pair"}
+    if resamples <= 0 or not required.issubset(rows):
+        raise InvalidResearchRun("bootstrap ordering input failure")
+    ordered = rows.sort_values(["year", "utc_day", "anchor_utc_ns", "pair"], kind="stable")
+    years = sorted(int(value) for value in ordered["year"].unique())
+    days = {year: sorted(ordered.loc[ordered["year"] == year, "utc_day"].astype(str).unique()) for year in years}
+    blocks = {(year, day): ordered.loc[(ordered["year"] == year) & (ordered["utc_day"].astype(str) == day)].copy() for year in years for day in days[year]}
+    rng = np.random.Generator(np.random.PCG64(seed)); output = np.empty(resamples, dtype=np.float64)
+    for iteration in range(resamples):
+        copies = []
+        for year in years:
+            draw = rng.integers(0, len(days[year]), size=len(days[year]), endpoint=False)
+            for position, index in enumerate(draw):
+                day = days[year][int(index)]; copied = blocks[(year, day)].copy()
+                copied["bootstrap_day_id"] = f"{year}:{position:06d}:{day}"; copied["utc_day"] = copied["bootstrap_day_id"]
+                copies.append(copied)
+        sample = pd.concat(copies, ignore_index=True).sort_values(["year", "bootstrap_day_id", "anchor_utc_ns", "pair"], kind="stable")
+        output[iteration] = float(statistic(sample))
+        if not np.isfinite(output[iteration]): raise InvalidResearchRun("non-finite bootstrap statistic")
+    return output
+
+def _attrition_dimensions(rows: pd.DataFrame, contract: Mapping[str, Any]) -> dict[str, Any]:
+    work = rows.copy()
+    if "anchor_utc_ns" in work:
+        work["utc_month"] = pd.to_datetime(work["anchor_utc_ns"], unit="ns", utc=True).dt.strftime("%Y-%m")
+    dimensions = {}
+    for dimension in ("pair", "year", "utc_month"):
+        if dimension not in work:
+            continue
+        values = {}
+        for level, subset in work.groupby(dimension, sort=True, dropna=False):
+            _, counts = exact_model_complete_case(subset, contract)
+            values[str(level)] = counts
+        dimensions["month" if dimension == "utc_month" else dimension] = values
+    return dimensions
+
+def _ci(values: np.ndarray) -> dict[str, float]:
+    if values.size == 0 or not np.isfinite(values).all():
+        raise InvalidResearchRun("non-finite bootstrap distribution")
+    low, high = np.quantile(values, [0.025, 0.975], method="linear")
+    return {"ci_low": float(low), "ci_high": float(high), "replicates": int(values.size)}
+
+
+def _model_inference(rows: pd.DataFrame, contract: Mapping[str, Any], resamples: int) -> dict[str, Any]:
+    point = _model_effect(rows, contract)
+    values = _cached_daily_block_bootstrap(rows, lambda sample: _model_effect(sample, contract), resamples=resamples, seed=22002)
+    return {"point": point, **_ci(values), "p_one_sided": float((1 + np.count_nonzero(values >= 0.0)) / (resamples + 1))}
+
+
+def _interaction_levels(hypothesis: str) -> tuple[str, tuple[Any, ...]]:
+    return {
+        "H_VOL": ("vol_q", ("Q1", "Q2", "Q3", "Q4", "Q5")),
+        "H_ACTIVITY": ("activity_q", ("Q1", "Q2", "Q3", "Q4", "Q5")),
+        "H_HOUR": ("utc_hour", tuple(range(24))),
+        "H_SESSION": ("session", ("ASIAN", "LONDON_PRE_OVERLAP", "LONDON_NEW_YORK_OVERLAP", "NEW_YORK_POST_OVERLAP", "OFF_SESSION")),
+        "H_IMPULSE": ("impulse_sign", ("NEG", "ZERO", "POS")),
+        "H_PAIR": ("pair", ("EURUSD", "GBPUSD", "USDJPY", "USDCAD")),
+        "H_LIQUIDITY": ("trailing_spread_q", ("Q1", "Q2", "Q3", "Q4", "Q5")),
+    }[hypothesis]
+
+
+def _linear_contrast(result: Any, hypothesis: str, variable: str, level: Any, reference: Any) -> float:
+    value = result.coefficient("exposure__WIDE")
+    if level != reference:
+        suffix = f"{level:02d}" if variable == "utc_hour" else str(level)
+        value += result.coefficient(f"WIDE__{variable}__{suffix}")
+    return float(value)
+
+
+def _interaction_strata(rows: pd.DataFrame, contract: Mapping[str, Any], hypothesis: str, resamples: int) -> dict[str, Any]:
+    variable, levels = _interaction_levels(hypothesis)
+    reference = levels[0]
+    cells = enforce_minimum_contrast_cells(rows, [variable])
+    output = {}
+    for level in levels:
+        counts = cells["counts"].get(str(level), cells["counts"].get(level, {}))
+        if int(counts.get("WIDE", 0)) < 20 or int(counts.get("TIGHT", 0)) < 20:
+            output[str(level)] = {"status": "INSUFFICIENT", "counts": counts}
+            continue
+        point = _linear_contrast(_fit(rows, contract), hypothesis, variable, level, reference)
+        values = _cached_daily_block_bootstrap(rows, lambda sample, lv=level: _linear_contrast(_fit(sample, contract), hypothesis, variable, lv, reference), resamples=resamples, seed=22002)
+        output[str(level)] = {"status": "EVALUABLE", "point": point, **_ci(values), "counts": counts}
+    return output
+
 def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resamples: int = 10_000) -> dict[str, Any]:
     """Run every frozen model and hypothesis for one authorized stage."""
     if rows.empty or not {"year", "pair", "utc_day", "exposure"}.issubset(rows):
@@ -78,7 +164,7 @@ def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resa
             raise InvalidResearchRun(f"{name} has fewer than 20 observations in a contrast arm")
         result = _fit(complete, contract)
         complete_cases[name] = complete
-        attrition[name] = model_attrition
+        attrition[name] = {"total": model_attrition, **_attrition_dimensions(rows, contract)}
         contrast_cells[name] = cells
         fitted[name] = result
         models[name] = {"exposure__WIDE": result.coefficient("exposure__WIDE"), "rank": result.rank, "condition_number": result.condition_number}
@@ -99,41 +185,62 @@ def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resa
         cells = enforce_minimum_contrast_cells(complete, interaction_groupers[hypothesis])
         result = _fit(complete, contract)
         complete_cases[hypothesis] = complete
-        attrition[hypothesis] = model_attrition
+        attrition[hypothesis] = {"total": model_attrition, **_attrition_dimensions(rows, contract)}
         contrast_cells[hypothesis] = cells
         test = wald_test(result, definition["restriction_order"])
-        interactions[hypothesis] = test
+        interactions[hypothesis] = {**test, "strata": _interaction_strata(complete, contract, hypothesis, bootstrap_resamples)}
         raw_p[hypothesis] = float(test["raw_p"])
 
     outcomes = {}
     m0 = model_contract(spec, "M0")
     for response in ("Y_RAW_ABS_60S_PIPS", "Y_CURRENT_SPREAD_UNITS", "Y_TRAILING_SPREAD_UNITS", "Y_FIXED_DISCOVERY_SCALE"):
         contract = {**m0, "response": response}
-        outcomes[response] = pair_day_contrast(rows, response)
-    fixed = outcomes["Y_FIXED_DISCOVERY_SCALE"]
+        key = f"M0:{response}"
+        complete, model_attrition = exact_model_complete_case(rows, contract)
+        cells = enforce_minimum_contrast_cells(complete)
+        attrition[key], contrast_cells[key] = {"total": model_attrition, **_attrition_dimensions(rows, contract)}, cells
+        if not cells["evaluable"]:
+            raise InvalidResearchRun(f"required primary stage outcome has no evaluable contrast: {response}")
+        complete_cases[key] = complete
+        outcomes[response] = {"pair_day_point": pair_day_contrast(complete, response),
+                              "M0": _model_inference(complete, contract, bootstrap_resamples)}
+    fixed = outcomes["Y_FIXED_DISCOVERY_SCALE"]["pair_day_point"]
     if fixed == 0:
         raise InvalidResearchRun("zero fixed-scale contrast")
-    ratio = abs(outcomes["Y_CURRENT_SPREAD_UNITS"]) / abs(fixed)
-    raw_p["H_NORM"] = float("nan")  # filled by exact ratio bootstrap below
-
-    m4 = model_contract(spec, "M4")
-    bootstrap = daily_block_bootstrap(complete_cases["M4"], lambda sample: _model_effect(sample, m4), resamples=bootstrap_resamples, seed=22002)
-    if bootstrap_resamples != 10_000:
-        primary_bootstrap = {"synthetic_test_only": True, "count": bootstrap_resamples}
-        raw_p["H_RAW"] = float((1 + np.count_nonzero(bootstrap >= 0)) / (bootstrap_resamples + 1))
-    else:
-        primary_bootstrap = bootstrap_summary(bootstrap)
-        raw_p["H_RAW"] = primary_bootstrap["p_one_sided"]
-    ratio_bootstrap = daily_block_bootstrap(
-        rows,
-        lambda sample: abs(pair_day_contrast(sample, "Y_CURRENT_SPREAD_UNITS")) / abs(pair_day_contrast(sample, "Y_FIXED_DISCOVERY_SCALE")),
-        resamples=bootstrap_resamples,
-        seed=22002,
-    )
-    if not np.isfinite(ratio_bootstrap).all():
-        raise InvalidResearchRun("non-finite normalization bootstrap")
+    ratio = abs(outcomes["Y_CURRENT_SPREAD_UNITS"]["pair_day_point"]) / abs(fixed)
+    m4_diagnostics = {}
+    for response in ("Y_RAW_ABS_60S_PIPS", "Y_CURRENT_SPREAD_UNITS", "Y_TRAILING_SPREAD_UNITS", "Y_FIXED_DISCOVERY_SCALE"):
+        contract = {**model_contract(spec, "M4"), "response": response}
+        key = f"M4:{response}"
+        complete, model_attrition = exact_model_complete_case(rows, contract)
+        cells = enforce_minimum_contrast_cells(complete)
+        attrition[key], contrast_cells[key] = {"total": model_attrition, **_attrition_dimensions(rows, contract)}, cells
+        if not cells["evaluable"]:
+            raise InvalidResearchRun(f"required M4 outcome has no evaluable contrast: {response}")
+        complete_cases[key] = complete
+        m4_diagnostics[response] = _model_inference(complete, contract, bootstrap_resamples)
+        if response == "Y_FIXED_DISCOVERY_SCALE":
+            converted = complete.copy()
+            positive = converted["Y_FIXED_DISCOVERY_SCALE"] > 0
+            pair_scales = (converted.loc[positive, "Y_RAW_ABS_60S_PIPS"] / converted.loc[positive, "Y_FIXED_DISCOVERY_SCALE"]).groupby(converted.loc[positive, "pair"]).median()
+            scale = converted["pair"].map(pair_scales)
+            if not np.isfinite(scale).all() or (scale <= 0).any():
+                raise InvalidResearchRun("fixed discovery scale cannot be converted to pips")
+            converted["Y_FIXED_DISCOVERY_SCALE_PIPS"] = converted["Y_FIXED_DISCOVERY_SCALE"] * scale.to_numpy(dtype=np.float64)
+            converted_contract = {**contract, "response": "Y_FIXED_DISCOVERY_SCALE_PIPS"}
+            m4_diagnostics[response]["converted_to_pips"] = _model_inference(converted, converted_contract, bootstrap_resamples)
+    primary_bootstrap = {k: v for k, v in m4_diagnostics["Y_RAW_ABS_60S_PIPS"].items() if k != "point"}
+    raw_p["H_RAW"] = primary_bootstrap["p_one_sided"]
+    ratio_index = complete_cases["M0:Y_CURRENT_SPREAD_UNITS"].index.intersection(complete_cases["M0:Y_FIXED_DISCOVERY_SCALE"].index)
+    ratio_bootstrap = _cached_daily_block_bootstrap(rows.loc[ratio_index], lambda sample: abs(pair_day_contrast(sample, "Y_CURRENT_SPREAD_UNITS")) / abs(pair_day_contrast(sample, "Y_FIXED_DISCOVERY_SCALE")), resamples=bootstrap_resamples, seed=22002)
     raw_p["H_NORM"] = float((1 + np.count_nonzero(ratio_bootstrap < 4.0)) / (bootstrap_resamples + 1))
-
+    denominator_independent = {
+        "raw_m4": m4_diagnostics["Y_RAW_ABS_60S_PIPS"]["point"] <= -0.05 and m4_diagnostics["Y_RAW_ABS_60S_PIPS"]["ci_high"] < 0,
+        "fixed_m4": m4_diagnostics["Y_FIXED_DISCOVERY_SCALE"]["converted_to_pips"]["point"] <= -0.05 and m4_diagnostics["Y_FIXED_DISCOVERY_SCALE"]["converted_to_pips"]["ci_high"] < 0,
+        "trailing_m4": m4_diagnostics["Y_TRAILING_SPREAD_UNITS"]["point"] < 0 and m4_diagnostics["Y_TRAILING_SPREAD_UNITS"]["ci_high"] < 0,
+        "current_spread_m0_negative": outcomes["Y_CURRENT_SPREAD_UNITS"]["M0"]["point"] < 0,
+        "amplification_at_least_four": ratio >= 4.0,
+    }
     fdr = {}
     for family in spec["inference"]["multiple_testing"]["families"]:
         members = family["members"]
@@ -145,12 +252,14 @@ def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resa
         paired = rows.loc[common].copy()
         before_contract, after_contract = model_contract(spec, before), model_contract(spec, after)
         point = _attenuation_stat(paired, before_contract, after_contract)
-        values = daily_block_bootstrap(paired, lambda sample, a=before_contract, b=after_contract: _attenuation_stat(sample, a, b), resamples=bootstrap_resamples, seed=22002)
+        values = _cached_daily_block_bootstrap(paired, lambda sample, a=before_contract, b=after_contract: _attenuation_stat(sample, a, b), resamples=bootstrap_resamples, seed=22002)
         low, high = np.quantile(values, [0.025, 0.975], method="linear")
         attenuation[f"{before}_to_{after}"] = {"point": point, "ci_low": float(low), "ci_high": float(high), "replicates": int(len(values))}
     return {
         "models": models,
         "outcomes": outcomes,
+        "m4_outcomes": m4_diagnostics,
+        "denominator_independent_predicates": denominator_independent,
         "amplification_ratio": float(ratio),
         "interactions": interactions,
         "raw_p_values": raw_p,

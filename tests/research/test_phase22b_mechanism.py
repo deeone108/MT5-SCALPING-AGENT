@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import time
 
 import numpy as np
 import pandas as pd
@@ -131,3 +132,50 @@ def test_v7_causal_ticks_missingness_and_cell_rule() -> None:
     assert len(kept)==40 and sum(attrition.values())==0
     assert enforce_minimum_contrast_cells(kept)["evaluable"] is True
     assert enforce_minimum_contrast_cells(kept.iloc[:-1])["evaluable"] is False
+
+def test_wald_rejects_indefinite_restriction_covariance() -> None:
+    from mt5_scalping_agent.research.phase22b_mechanism import WLSResult, wald_test
+    result=WLSResult(("a","b"),np.array([1.,1.]),np.array([[1.,2.],[2.,1.]]),2,1.)
+    with pytest.raises(InvalidResearchRun,match="Wald restriction covariance"):
+        wald_test(result,["a","b"])
+
+
+def test_unknown_categorical_level_fails_closed() -> None:
+    model={"response":"y","predictors":["intercept","weekday__TUE"],"coefficient_names":["intercept","weekday__TUE"],"categorical_variables":{"weekday":["MON","TUE","WED","THU","FRI"]}}
+    rows=pd.DataFrame({"y":[1.],"weekday":["SAT"],"pair":["EURUSD"],"utc_day":["2019-01-05"]})
+    with pytest.raises(InvalidResearchRun,match="categorical"):
+        build_design_matrix(rows,model)
+
+def _brute_causal(ticks, pair, start, end):
+    ts=ticks.timestamp_utc_ns.to_numpy(np.int64); mid=(ticks.bid.to_numpy(float)+ticks.ask.to_numpy(float))/2; pip=.01 if pair.endswith("JPY") else .0001
+    anchors=np.arange(start.value,end.value,10_000_000_000,dtype=np.int64); rows=[]
+    for anchor in anchors:
+        current=np.flatnonzero(ts<=anchor); target=anchor+60_000_000_000; future=np.flatnonzero(ts<=target)
+        if not len(current) or anchor-ts[current[-1]]>2_000_000_000: rows.append((anchor,"current_quote_freshness",np.nan,np.nan)); continue
+        fp=future[-1] if len(future) else -1
+        if fp<0 or ts[fp]<=anchor or target-ts[fp]>2_000_000_000: rows.append((anchor,"future_quote_freshness",np.nan,np.nan)); continue
+        recent=np.flatnonzero((ts>anchor-15_000_000_000)&(ts<=anchor)); baseline=np.flatnonzero((ts>anchor-75_000_000_000)&(ts<=anchor-15_000_000_000))
+        rv=np.abs(np.diff(mid[recent])).sum()/pip; bv=np.abs(np.diff(mid[baseline])).sum()/pip
+        rows.append((anchor,None,rv,bv))
+    return pd.DataFrame(rows,columns=["anchor_utc_ns","causal_failure","recent_micro_volatility_pips","baseline_micro_volatility_pips"])
+
+
+def test_indexed_anchor_builder_matches_brute_force_windows_and_failures() -> None:
+    base=pd.Timestamp("2019-01-02T00:00:00Z"); times=base.value+np.arange(2400,dtype=np.int64)*100_000_000
+    mid=1.1+np.sin(np.arange(len(times))/17)*.00002
+    ticks=pd.DataFrame({"timestamp_utc_ns":times,"bid":mid-.00005,"ask":mid+.00005,"source_row_ordinal":np.arange(len(times))})
+    start=pd.Timestamp("2019-01-02T00:01:20Z"); end=pd.Timestamp("2019-01-02T00:03:00Z")
+    fast=build_causal_anchor_inputs(ticks,pair="EURUSD",output_start=start,output_end=end); brute=_brute_causal(ticks,"EURUSD",start,end)
+    assert fast.anchor_utc_ns.tolist()==brute.anchor_utc_ns.tolist()
+    # Spread-baseline is a later eligibility layer; compare quote-window failures before it.
+    assert fast.causal_failure.fillna("OK").replace("spread_baseline","OK").tolist()==brute.causal_failure.fillna("OK").tolist()
+    valid=brute.causal_failure.isna()
+    np.testing.assert_allclose(fast.loc[valid,"recent_micro_volatility_pips"],brute.loc[valid,"recent_micro_volatility_pips"],rtol=0,atol=1e-12)
+    np.testing.assert_allclose(fast.loc[valid,"baseline_micro_volatility_pips"],brute.loc[valid,"baseline_micro_volatility_pips"],rtol=0,atol=1e-12)
+
+
+def test_indexed_anchor_builder_practical_performance() -> None:
+    base=pd.Timestamp("2019-01-02T00:00:00Z").value; count=100_000; times=base+np.arange(count,dtype=np.int64)*100_000_000; mid=1.1+np.sin(np.arange(count)/19)*.00001
+    ticks=pd.DataFrame({"timestamp_utc_ns":times,"bid":mid-.00005,"ask":mid+.00005,"source_row_ordinal":np.arange(count)})
+    started=time.perf_counter(); out=build_causal_anchor_inputs(ticks,pair="EURUSD",output_start=pd.Timestamp(base+80_000_000_000,unit="ns",tz="UTC"),output_end=pd.Timestamp(base+9_000_000_000_000,unit="ns",tz="UTC")); elapsed=time.perf_counter()-started
+    assert len(out)>800 and elapsed<2.0

@@ -17,6 +17,9 @@ from mt5_scalping_agent.research.phase22b_analysis import (
     deterministic_replay,
     authoritative_result_manifest,
     assert_future_perturbation_invariant,
+    _cached_daily_block_bootstrap,
+    _interaction_strata,
+    _linear_contrast,
 )
 from mt5_scalping_agent.research.phase22b_mechanism import (
     InvalidResearchRun,
@@ -208,11 +211,36 @@ def test_analyse_stage_populates_complete_cases_before_primary_bootstrap(monkeyp
     simple = {"response": "Y_RAW_ABS_60S_PIPS", "predictors": ["intercept", "exposure__WIDE"],
               "coefficient_names": ["intercept", "exposure__WIDE"]}
     monkeypatch.setattr(analysis_module, "model_contract", lambda spec, name: dict(simple))
-    monkeypatch.setattr(analysis_module, "daily_block_bootstrap",
+    monkeypatch.setattr(analysis_module, "_cached_daily_block_bootstrap",
                         lambda frame, statistic, resamples, seed: np.full(resamples, statistic(frame)))
     spec = {"interaction_tests": [{"hypothesis_id": "H_VOL", "restriction_order": ["exposure__WIDE"]}],
             "inference": {"multiple_testing": {"families": [{"id": "controls", "members": ["H_VOL"], "q": 0.05}]}}}
     result = analysis_module.analyse_stage(rows, spec, bootstrap_resamples=20)
-    assert result["complete_case_attrition"]["M4"]["response"] == 0
+    assert result["complete_case_attrition"]["M4"]["total"]["response"] == 0
     assert result["contrast_cells"]["M4"]["counts"]["ALL"] == {"TIGHT": 20, "WIDE": 20}
-    assert result["primary_bootstrap"] == {"synthetic_test_only": True, "count": 20}
+    assert result["primary_bootstrap"]["replicates"] == 20
+    assert set(result["m4_outcomes"]) == {"Y_RAW_ABS_60S_PIPS", "Y_CURRENT_SPREAD_UNITS", "Y_TRAILING_SPREAD_UNITS", "Y_FIXED_DISCOVERY_SCALE"}
+    assert set(result["denominator_independent_predicates"]) == {"raw_m4", "fixed_m4", "trailing_m4", "current_spread_m0_negative", "amplification_at_least_four"}
+
+def test_cached_bootstrap_preserves_exact_reference_draw_sequence() -> None:
+    rows = pd.DataFrame({"year": [2019, 2019, 2020, 2020], "utc_day": ["a", "b", "c", "d"],
+                         "anchor_utc_ns": [1, 2, 3, 4], "pair": ["EURUSD"] * 4,
+                         "value": [1., 2., 3., 4.]})
+    statistic = lambda frame: float(frame["value"].mean())
+    expected = daily_block_bootstrap(rows, statistic, resamples=25, seed=22002)
+    actual = _cached_daily_block_bootstrap(rows, statistic, resamples=25, seed=22002)
+    np.testing.assert_array_equal(actual, expected)
+
+
+def test_interaction_strata_reports_scientific_insufficiency_without_fitting() -> None:
+    rows = pd.DataFrame({"exposure": ["WIDE"] * 19 + ["TIGHT"] * 20,
+                         "vol_q": ["Q1"] * 39})
+    result = _interaction_strata(rows, {}, "H_VOL", 3)
+    assert result["Q1"]["status"] == "INSUFFICIENT"
+    assert all(result[level]["status"] == "INSUFFICIENT" for level in ("Q2", "Q3", "Q4", "Q5"))
+
+
+def test_linear_interaction_contrast_uses_reference_and_named_increment() -> None:
+    result = WLSResult(("exposure__WIDE", "WIDE__vol_q__Q2"), np.array([-0.2, 0.15]), np.eye(2), 2, 1.0)
+    assert _linear_contrast(result, "H_VOL", "vol_q", "Q1", "Q1") == pytest.approx(-0.2)
+    assert _linear_contrast(result, "H_VOL", "vol_q", "Q2", "Q1") == pytest.approx(-0.05)

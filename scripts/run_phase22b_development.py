@@ -9,6 +9,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 import scipy
+from jsonschema import Draft202012Validator, FormatChecker
 from mt5_scalping_agent.orchestration.data_resolver import canonical_catalog_hash, guarded_load_monthly_pair_year
 from mt5_scalping_agent.research.phase22b_analysis import (analyse_stage, authoritative_result_manifest, canonical_artifact_hash, development_gate_truths, deterministic_replay, non_actionable_evidence, stability_diagnostics, stratified_permutation_diagnostic)
 from mt5_scalping_agent.research.phase22b_mechanism import (DATASET_ROOT_SHA256, PAIRS, SPEC_SHA256, InvalidResearchRun, build_causal_anchor_inputs, build_design_matrix, fit_wls_clustered_day, freeze_quintiles, load_frozen_spec, model_contract, prepare_model_rows)
@@ -32,19 +33,26 @@ def _validate_identity(value:str,n:int,name:str)->str:
     return value
 def _environment()->dict:
     return {"python":platform.python_version(),"numpy":np.__version__,"pandas":pd.__version__,"scipy":scipy.__version__,"blas_lapack":np.__config__.CONFIG,"threads":{k:os.environ[k] for k in ("OMP_NUM_THREADS","OPENBLAS_NUM_THREADS","MKL_NUM_THREADS","NUMEXPR_NUM_THREADS")},"pythonhashseed":os.environ.get("PYTHONHASHSEED")}
-def _schema_shape(root:Path,result:dict)->None:
-    schema=_read_json(root/"governance/RESULT_MANIFEST.schema.json")
-    missing=set(schema["required"])-set(result); extra=set(result)-set(schema["properties"])
-    if missing or extra: raise InvalidResearchRun(f"result schema shape failure missing={sorted(missing)} extra={sorted(extra)}")
+def _schema_shape(root:Path,result:dict,schema_name:str="RESULT_MANIFEST.schema.json")->None:
+    schema=_read_json(root/"governance"/schema_name)
+    errors=sorted(Draft202012Validator(schema,format_checker=FormatChecker()).iter_errors(result),key=lambda item:list(item.absolute_path))
+    if errors: raise InvalidResearchRun("result schema failure: "+"; ".join(error.message for error in errors))
 def _atomic_pair(first_path:Path,first:dict,second_path:Path,second:dict)->None:
     first_path.parent.mkdir(parents=True,exist_ok=True);second_path.parent.mkdir(parents=True,exist_ok=True)
-    staged=[]
+    if first_path.exists() or second_path.exists(): raise InvalidResearchRun("immutable publication target already exists")
+    staged=[];published=[]
     try:
         for path,value in ((first_path,first),(second_path,second)):
             tmp=path.with_suffix(path.suffix+".tmp")
+            if tmp.exists(): raise InvalidResearchRun("stale publication staging file exists")
             tmp.write_text(json.dumps(value,indent=2,sort_keys=True,allow_nan=False)+"\n",encoding="utf-8")
             staged.append((tmp,path))
-        for tmp,path in staged: os.replace(tmp,path)
+        for tmp,path in staged:
+            os.replace(tmp,path);published.append(path)
+    except Exception:
+        for path in published:
+            if path.exists(): path.unlink()
+        raise
     finally:
         for tmp,_ in staged:
             if tmp.exists(): tmp.unlink()
@@ -101,8 +109,8 @@ def execute(args:argparse.Namespace,*,byte_reader=None)->dict:
     artifact_hash=canonical_artifact_hash(artifact)
     artifact["canonical_sha256"]=artifact_hash
     out=root/"reports/phase22b"/run_id/"development_artifact.json";result_path=root/"governance/results/PH22B-RI-002.json"
-    now=datetime.now(timezone.utc).isoformat();result=authoritative_result_manifest(task=task,base_commit=task["base_commit"],inputs=[{"path":x["path"],"sha256":x["sha256"]} for x in task["inputs"]],artifacts=[{"path":str(out.relative_to(root)).replace('\\','/'),"sha256":artifact_hash}],commands=["python scripts/run_phase22b_development.py --run-id <UTC_ID> --code-version <HEAD_SHA>"],tests=[{"command":"pytest focused Phase22B suite","passed":True}],files_changed=[str(out.relative_to(root)).replace('\\','/'),"governance/results/PH22B-RI-002.json"],start_time=now,end_time=now)
-    _schema_shape(root,result);_atomic_pair(out,artifact,result_path,result)
+    now=datetime.now(timezone.utc).isoformat();result=authoritative_result_manifest(task=task,base_commit=task["base_commit"],inputs=[{"path":x["path"],"sha256":x["sha256"]} for x in task["inputs"]],artifacts=[{"path":str(out.relative_to(root)).replace('\\','/'),"sha256":artifact_hash}],commands=["python scripts/run_phase22b_development.py --run-id <UTC_ID> --code-version <HEAD_SHA>"],tests=[{"command":"deterministic replay completed byte-identically","passed":True},{"command":"PHASE22B_EVIDENCE and RESULT_MANIFEST schema validation","passed":True}],files_changed=[str(out.relative_to(root)).replace('\\','/'),"governance/results/PH22B-RI-002.json"],start_time=now,end_time=now)
+    _schema_shape(root,evidence,"PHASE22B_EVIDENCE.schema.json");_schema_shape(root,result);_atomic_pair(out,artifact,result_path,result)
     return {"status":"DEVELOPMENT_ARTIFACT_FROZEN_PENDING_REVIEW","artifact":str(out),"sha256":artifact_hash,"replay_sha256":replay_hash}
 def parser()->argparse.ArgumentParser:
     p=argparse.ArgumentParser();p.add_argument("--repository",type=Path,default=Path.cwd());p.add_argument("--control-plane-only",action="store_true");p.add_argument("--run-id",default="");p.add_argument("--code-version",default="");return p

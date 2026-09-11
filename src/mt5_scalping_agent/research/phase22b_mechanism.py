@@ -148,6 +148,9 @@ def build_design_matrix(rows: pd.DataFrame, model: Mapping[str, Any]) -> tuple[n
     names = list(model["coefficient_names"])
     if names != list(model["predictors"]):
         raise InvalidResearchRun("predictor/coefficient order mismatch")
+    for variable, levels in model.get("categorical_variables", {}).items():
+        if variable not in rows or not set(rows[variable].dropna().unique()).issubset(set(levels)):
+            raise InvalidResearchRun(f"unknown categorical level for {variable}")
     encoded: dict[str, np.ndarray] = {"intercept": np.ones(len(rows)), "exposure__WIDE": (rows["exposure"] == "WIDE").astype(float).to_numpy()}
     categorical = {"pair", "utc_hour", "weekday", "vol_q", "activity_q", "impulse_sign", "impulse_abs_q", "session", "trailing_spread_q"}
     for name in names:
@@ -295,6 +298,10 @@ def wald_test(result: WLSResult, restriction_order: Sequence[str]) -> dict[str, 
         raise InvalidResearchRun("Wald coefficient missing") from exc
     vector = result.coefficients[indices]
     covariance = result.covariance[np.ix_(indices, indices)]
+    covariance = (covariance + covariance.T) / 2.0
+    eigenvalues = np.linalg.eigvalsh(covariance)
+    if eigenvalues.size != len(indices) or eigenvalues[0] <= 0:
+        raise InvalidResearchRun("non-positive-definite Wald restriction covariance")
     singular = np.linalg.svd(covariance, compute_uv=False)
     if singular.size != len(indices) or singular[-1] <= RCOND * singular[0]:
         raise InvalidResearchRun("singular Wald restriction covariance")
@@ -353,31 +360,32 @@ def bootstrap_summary(values: Sequence[float], *, alternative: str = "negative")
     return {"ci_low": float(low), "ci_high": float(high), "p_one_sided": float(p_value)}
 
 def build_causal_anchor_inputs(ticks: pd.DataFrame, *, pair: str, output_start: pd.Timestamp, output_end: pd.Timestamp) -> pd.DataFrame:
-    """Pure v7 tick-to-anchor mapping; performs no I/O or gap filling."""
+    """Indexed v7 tick-to-anchor mapping; O(ticks + anchors log ticks)."""
     required=["timestamp_utc_ns","bid","ask","source_row_ordinal"]
     if list(ticks.columns)!=required or pair not in PAIRS: raise InvalidResearchRun("invalid v7 tick interface")
     frame=ticks.sort_values(["timestamp_utc_ns","source_row_ordinal"],kind="stable").reset_index(drop=True)
     ts=frame.timestamp_utc_ns.to_numpy(np.int64); bid=frame.bid.to_numpy(float); ask=frame.ask.to_numpy(float)
     if len(ts)==0 or not np.isfinite(bid).all() or not np.isfinite(ask).all(): raise InvalidResearchRun("invalid ticks")
     start,end=int(output_start.value),int(output_end.value); step=10_000_000_000
-    anchors=np.arange(((start+step-1)//step)*step,end,step,dtype=np.int64); mid=(bid+ask)/2; spread=(ask-bid)/(0.01 if pair.endswith("JPY") else .0001)
-    current=np.searchsorted(ts,anchors,side="right")-1; safe=np.maximum(current,0); current_ok=(current>=0)&(anchors-ts[safe]>=0)&(anchors-ts[safe]<=2_000_000_000)
-    target=anchors+60_000_000_000; future=np.searchsorted(ts,target,side="right")-1; fsafe=np.maximum(future,0); future_ok=(future>=0)&(ts[fsafe]>anchors)&(target-ts[fsafe]>=0)&(target-ts[fsafe]<=2_000_000_000)
-    rows=[]
-    for i,a in enumerate(anchors):
-        reason=None
-        if not current_ok[i]: reason="current_quote_freshness"
-        elif not future_ok[i]: reason="future_quote_freshness"
-        if reason: rows.append({"anchor_utc_ns":a,"causal_failure":reason}); continue
-        recent=(ts>a-15_000_000_000)&(ts<=a); baseline=(ts>a-75_000_000_000)&(ts<=a-15_000_000_000)
-        past=np.searchsorted(ts,a-15_000_000_000,side="right")-1
-        recent_delta=np.diff(mid[recent]); baseline_delta=np.diff(mid[baseline])
-        rows.append({"anchor_utc_ns":a,"quote_utc_ns":ts[current[i]],"future_quote_60s_utc_ns":ts[future[i]],"mid":mid[current[i]],"future_mid_60s":mid[future[i]],"spread_pips":spread[current[i]],"recent_micro_volatility_pips":np.abs(recent_delta[recent_delta!=0]).sum()/(0.01 if pair.endswith("JPY") else .0001),"recent_quote_count":int(recent.sum()),"baseline_quote_count":int(baseline.sum()),"impulse_15s_pips":np.nan if past<0 or a-15_000_000_000-ts[past]>2_000_000_000 else (mid[current[i]]-mid[past])/(0.01 if pair.endswith("JPY") else .0001),"quote_age_seconds":(a-ts[current[i]])/1e9,"baseline_quote_rate":baseline.sum()/60,"baseline_micro_volatility_pips":np.abs(baseline_delta[baseline_delta!=0]).sum()/(0.01 if pair.endswith("JPY") else .0001),"causal_failure":None})
-    out=pd.DataFrame(rows); eligible=out.causal_failure.isna(); spreads=out.loc[eligible,"spread_pips"]
-    out.loc[eligible,"trailing_median_spread_pips"]=spreads.shift(1).rolling(6,min_periods=6).median()
+    anchors=np.arange(((start+step-1)//step)*step,end,step,dtype=np.int64); n=len(anchors)
+    mid=(bid+ask)/2; pip=.01 if pair.endswith("JPY") else .0001; spread=(ask-bid)/pip
+    current=np.searchsorted(ts,anchors,side="right")-1; safe=np.maximum(current,0)
+    target=anchors+60_000_000_000; future=np.searchsorted(ts,target,side="right")-1; fsafe=np.maximum(future,0)
+    current_ok=(current>=0)&(anchors-ts[safe]>=0)&(anchors-ts[safe]<=2_000_000_000)
+    future_ok=(future>=0)&(ts[fsafe]>anchors)&(target-ts[fsafe]>=0)&(target-ts[fsafe]<=2_000_000_000)
+    out=pd.DataFrame({"anchor_utc_ns":anchors,"causal_failure":np.where(~current_ok,"current_quote_freshness",np.where(~future_ok,"future_quote_freshness",None))})
+    valid=current_ok&future_ok
+    for name in ("quote_utc_ns","future_quote_60s_utc_ns","mid","future_mid_60s","spread_pips","recent_micro_volatility_pips","recent_quote_count","baseline_quote_count","impulse_15s_pips","quote_age_seconds","baseline_quote_rate","baseline_micro_volatility_pips","trailing_median_spread_pips"): out[name]=np.nan
+    out.loc[valid,"quote_utc_ns"]=ts[current[valid]]; out.loc[valid,"future_quote_60s_utc_ns"]=ts[future[valid]]; out.loc[valid,"mid"]=mid[current[valid]]; out.loc[valid,"future_mid_60s"]=mid[future[valid]]; out.loc[valid,"spread_pips"]=spread[current[valid]]; out.loc[valid,"quote_age_seconds"]=(anchors[valid]-ts[current[valid]])/1e9
+    left15=np.searchsorted(ts,anchors-15_000_000_000,side="right"); right=np.searchsorted(ts,anchors,side="right"); left75=np.searchsorted(ts,anchors-75_000_000_000,side="right"); base_right=np.searchsorted(ts,anchors-15_000_000_000,side="right")
+    delta=np.abs(np.diff(mid,prepend=mid[0])); prefix=np.concatenate(([0.],np.cumsum(delta)))
+    recent_abs=prefix[right]-prefix[np.minimum(left15+1,right)]; base_abs=prefix[base_right]-prefix[np.minimum(left75+1,base_right)]
+    out.loc[valid,"recent_micro_volatility_pips"]=recent_abs[valid]/pip; out.loc[valid,"baseline_micro_volatility_pips"]=base_abs[valid]/pip; out.loc[valid,"recent_quote_count"]=(right-left15)[valid]; out.loc[valid,"baseline_quote_count"]=(base_right-left75)[valid]; out.loc[valid,"baseline_quote_rate"]=(base_right-left75)[valid]/60
+    past=np.searchsorted(ts,anchors-15_000_000_000,side="right")-1; psafe=np.maximum(past,0); pok=(past>=0)&(anchors-15_000_000_000-ts[psafe]>=0)&(anchors-15_000_000_000-ts[psafe]<=2_000_000_000)&valid
+    out.loc[pok,"impulse_15s_pips"]=(mid[current[pok]]-mid[past[pok]])/pip
+    eligible=out.causal_failure.isna(); baseline=out.loc[eligible,"spread_pips"].shift(1).rolling(6,min_periods=6).median(); out.loc[eligible,"trailing_median_spread_pips"]=baseline
     out.loc[eligible & out.trailing_median_spread_pips.isna(),"causal_failure"]="spread_baseline"
     return out
-
 
 ATTRITION_REASON_ORDER=("current_quote_freshness","future_quote_freshness","spread_baseline","response","exposure","model_predictor")
 

@@ -135,7 +135,8 @@ def guarded_load_monthly_pair_year(
     locator_catalog_loader: Callable[[], Mapping[str, Any]],
     metadata_catalog_sha256: str, locator_catalog_sha256: str,
     byte_reader: Callable[[object], bytes], parser: Callable[[bytes], pd.DataFrame],
-) -> tuple[pd.DataFrame, list[dict[str, str]]]:
+    frame_visitor: Callable[[pd.DataFrame, Mapping[str, Any]], None] | None = None,
+) -> tuple[pd.DataFrame, list[dict[str, Any]]]:
     """Authorize first; validate both reviewed catalogs before any unit read."""
     validated = validate_task(task)
     window, normalized = str(year), str(pair).upper()
@@ -204,6 +205,9 @@ def guarded_load_monthly_pair_year(
             raise OrchestrationError(MANIFEST_INVALID, "invalid monthly quotes")
         frame = frame.copy()
         frame["source_unit_id"], frame["source_row_ordinal"] = meta["unit_id"], np.arange(len(frame), dtype=np.int64)
-        frames.append(frame); provenance.append({"unit_id": str(meta["unit_id"]), "sha256": expected})
-    combined = pd.concat(frames, ignore_index=True).sort_values(["timestamp_utc_ns", "source_unit_id", "source_row_ordinal"], kind="stable").reset_index(drop=True)
+        record = {"unit_id": str(meta["unit_id"]), "sha256": expected, "locator_authorized": True, "bytes_read": len(payload), "hash_verified_before_parse": True, "parsed_rows": int(len(frame)), "start_utc": str(meta["start_utc"]), "end_utc": str(meta["end_utc"])}
+        provenance.append(record)
+        if frame_visitor is None: frames.append(frame)
+        else: frame_visitor(frame, record)
+    combined = (pd.concat(frames, ignore_index=True).sort_values(["timestamp_utc_ns", "source_unit_id", "source_row_ordinal"], kind="stable").reset_index(drop=True) if frames else pd.DataFrame(columns=["timestamp_utc_ns", "bid", "ask", "source_unit_id", "source_row_ordinal"]))
     return combined, provenance
