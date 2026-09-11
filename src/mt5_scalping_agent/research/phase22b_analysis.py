@@ -4,6 +4,9 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from time import perf_counter
+import ctypes
+import os
+import threading
 from typing import Any, Mapping, Sequence
 import hashlib
 import json
@@ -76,10 +79,14 @@ def _schedule_for_blocks(blocks: Sequence[DayBlock],resamples:int,seed:int)->tup
     return schedule,_array_hash(schedule,"<i8"),draw_hash.hexdigest()
 
 
-def _normal_system(blocks:Sequence[DayBlock],m:np.ndarray)->tuple[np.ndarray,np.ndarray,int]:
-    a=np.sum(np.asarray([np.float64(c)*g.A for g,c in zip(blocks,m,strict=True)]),axis=0,dtype=np.float64)
-    b=np.sum(np.asarray([np.float64(c)*g.b for g,c in zip(blocks,m,strict=True)]),axis=0,dtype=np.float64)
-    return (a+a.T)/2,b,int(sum(int(c)*g.n for g,c in zip(blocks,m,strict=True)))
+def _block_arrays(blocks:Sequence[DayBlock])->tuple[np.ndarray,np.ndarray,np.ndarray]:
+    return np.stack([g.A for g in blocks]),np.stack([g.b for g in blocks]),np.asarray([g.n for g in blocks],dtype=np.int64)
+
+
+def _normal_system(blocks:Sequence[DayBlock],m:np.ndarray,arrays:tuple[np.ndarray,np.ndarray,np.ndarray]|None=None)->tuple[np.ndarray,np.ndarray,int]:
+    aa,bb,nn=_block_arrays(blocks) if arrays is None else arrays; weights=np.asarray(m,dtype=np.float64)
+    a=np.sum(weights[:,None,None]*aa,axis=0,dtype=np.float64); b=np.sum(weights[:,None]*bb,axis=0,dtype=np.float64)
+    return (a+a.T)/2,b,int(np.dot(np.asarray(m,dtype=np.int64),nn))
 
 
 def _stack_factor(blocks:Sequence[DayBlock],m:np.ndarray)->tuple[np.ndarray,np.ndarray]:
@@ -90,12 +97,12 @@ def _stack_factor(blocks:Sequence[DayBlock],m:np.ndarray)->tuple[np.ndarray,np.n
 
 def matrix_only_preflight(blocks:Sequence[DayBlock],schedule:np.ndarray,*,max_fallbacks:int|None=None)->dict[str,Any]:
     if schedule.ndim!=2 or schedule.shape[1]!=len(blocks) or (schedule<0).any(): raise InvalidResearchRun("invalid preflight schedule")
-    k=blocks[0].A.shape[0]; paths=[]; kappas=[]
+    k=blocks[0].A.shape[0]; paths=[]; kappas=[]; arrays=_block_arrays(blocks)
     for m in schedule:
-        a,_,n=_normal_system(blocks,m); values=np.linalg.eigvalsh(a)
+        a,_,n=_normal_system(blocks,m,arrays); values=np.linalg.eigvalsh(a)
         if not np.isfinite(values).all() or values[-1]<=0 or n<=k: raise InvalidResearchRun("invalid bootstrap matrix")
         kappa=float(values[-1]/values[0]) if values[0]>0 else float("inf"); rank=int(np.count_nonzero(values>(_RCOND**2)*values[-1]))
-        primary=rank==k and np.sqrt(kappa)<=_CONDITION_CEILING and 256*_EPS*kappa<.5
+        primary=rank==k and np.sqrt(kappa)<=_CONDITION_CEILING and 256*_EPS*kappa<.5 and 4096*_EPS*kappa**2<.5
         if primary:
             try: linalg.cholesky(a,lower=False,check_finite=True)
             except linalg.LinAlgError: primary=False
@@ -106,8 +113,8 @@ def matrix_only_preflight(blocks:Sequence[DayBlock],schedule:np.ndarray,*,max_fa
     return {"paths":paths,"kappa_a":kappas,"fallback_count":count,"preflight_sha256":hashlib.sha256(codes.tobytes()+np.asarray(kappas,dtype="<f8").tobytes()).hexdigest()}
 
 
-def _compressed_fit(blocks:Sequence[DayBlock],m:np.ndarray,path:str):
-    a,b,n=_normal_system(blocks,m); k=a.shape[0]; g=int(np.sum(m))
+def _compressed_fit(blocks:Sequence[DayBlock],m:np.ndarray,path:str,arrays:tuple[np.ndarray,np.ndarray,np.ndarray]|None=None):
+    arrays=_block_arrays(blocks) if arrays is None else arrays; a,b,n=_normal_system(blocks,m,arrays); k=a.shape[0]; g=int(np.sum(m))
     if g<=1 or n<=k: raise InvalidResearchRun("insufficient logical counts")
     if path=="SPD":
         values=np.linalg.eigvalsh(a); kappa=float(values[-1]/values[0]); beta=linalg.solve(a,b,assume_a="pos",check_finite=True); bread=linalg.solve(a,np.eye(k),assume_a="pos",check_finite=True)
@@ -124,7 +131,7 @@ def _compressed_fit(blocks:Sequence[DayBlock],m:np.ndarray,path:str):
     # equations, while path selection remains matrix-only.
     denominator=np.linalg.norm(a,np.inf)*np.linalg.norm(beta,np.inf)+np.linalg.norm(b,np.inf); rho=0. if denominator==0 else float(np.linalg.norm(a@beta-b,np.inf)/denominator)
     if rho>256*_EPS*k or eta_beta>=.5 or eta_cov>=.5 or not np.isfinite([rho,eta_beta,eta_cov]).all(): raise InvalidResearchRun("numerical envelope failure")
-    scores=[block.b-block.A@beta for block in blocks]; meat=np.sum(np.asarray([np.float64(c)*np.outer(s,s) for c,s in zip(m,scores,strict=True)]),axis=0,dtype=np.float64)
+    aa,bb,_=arrays; scores=bb-np.matmul(aa,beta); meat=np.sum(np.asarray(m,dtype=np.float64)[:,None,None]*(scores[:,:,None]*scores[:,None,:]),axis=0,dtype=np.float64)
     covariance=(g/(g-1))*((n-1)/(n-k))*bread@meat@bread; covariance=(covariance+covariance.T)/2
     eb=float(eta_beta/(1-eta_beta)*max(np.linalg.norm(beta),_TINY)); ec=float(eta_cov/(1-eta_cov)*max(np.linalg.norm(covariance,"fro"),_TINY))
     if not np.isfinite(beta).all() or not np.isfinite(covariance).all(): raise InvalidResearchRun("non-finite compressed fit")
@@ -132,14 +139,14 @@ def _compressed_fit(blocks:Sequence[DayBlock],m:np.ndarray,path:str):
 
 
 def compressed_model_bootstrap(rows:pd.DataFrame,contract:Mapping[str,Any],*,resamples:int=10_000,seed:int=22002,contrast_vectors:Mapping[str,Sequence[float]]|None=None)->dict[str,Any]:
-    blocks,names=build_day_blocks(rows,contract); schedule,schedule_hash,draw_hash=_schedule_for_blocks(blocks,resamples,seed); preflight=matrix_only_preflight(blocks,schedule)
+    blocks,names=build_day_blocks(rows,contract); arrays=_block_arrays(blocks); schedule,schedule_hash,draw_hash=_schedule_for_blocks(blocks,resamples,seed); preflight=matrix_only_preflight(blocks,schedule)
     vectors={label:np.asarray(v,dtype=np.float64) for label,v in (contrast_vectors or {}).items()}
     if any(v.shape!=(len(names),) for v in vectors.values()): raise InvalidResearchRun("invalid contrast vector")
     coefficients=np.empty((resamples,len(names))); intervals=np.empty((resamples,len(names),2)); ebv=np.empty(resamples); ecv=np.empty(resamples); rhov=np.empty(resamples); covariance_hashes=[]
     contrasts={label:np.empty(resamples) for label in vectors}; contrast_intervals={label:np.empty((resamples,2)) for label in vectors}
     for start in range(0,resamples,128):
         for i in range(start,min(start+128,resamples)):
-            beta,cov,eb,ec,rho,_,_=_compressed_fit(blocks,schedule[i],preflight["paths"][i]); coefficients[i]=beta; intervals[i,:,0]=np.nextafter(beta-eb,-np.inf); intervals[i,:,1]=np.nextafter(beta+eb,np.inf); ebv[i],ecv[i],rhov[i]=eb,ec,rho; covariance_hashes.append(_array_hash(cov))
+            beta,cov,eb,ec,rho,_,_=_compressed_fit(blocks,schedule[i],preflight["paths"][i],arrays); coefficients[i]=beta; intervals[i,:,0]=np.nextafter(beta-eb,-np.inf); intervals[i,:,1]=np.nextafter(beta+eb,np.inf); ebv[i],ecv[i],rhov[i]=eb,ec,rho; covariance_hashes.append(_array_hash(cov))
             for label,v in vectors.items():
                 center=float(v@beta); radius=float(np.linalg.norm(v)*eb); contrasts[label][i]=center; contrast_intervals[label][i]=[np.nextafter(center-radius,-np.inf),np.nextafter(center+radius,np.inf)]
     material=b"".join(bytes.fromhex(x.input_sha256)+x.A.astype("<f8").tobytes()+x.b.astype("<f8").tobytes()+np.asarray([x.n],dtype="<i8").tobytes() for x in blocks)
@@ -162,14 +169,71 @@ def certified_attenuation_interval(beta_before:float,radius_before:float,beta_af
     return float(np.nextafter(1-max(ratios),-np.inf)),float(np.nextafter(1-min(ratios),np.inf))
 
 
-def benchmark_compressed_bootstrap(*,resamples:int=10_000,days:int=1096,k:int=80,fallback_count:int=100,seed:int=22002)->dict[str,Any]:
+def compressed_pair_day_bootstrap(rows: pd.DataFrame, responses: Sequence[str], *, resamples: int=10_000, seed: int=22002) -> dict[str, Any]:
+    """Frozen non-regression bootstrap on per-day/pair/exposure sums and counts."""
+    required={"year","utc_day","pair","exposure",*responses}
+    if not required.issubset(rows): raise InvalidResearchRun(f"pair-day columns missing: {sorted(required-set(rows))}")
+    ordered=rows.sort_values(["year","utc_day","pair","exposure"],kind="stable")
+    days=[]; by_year={}
+    for (year,day),frame in ordered.groupby(["year","utc_day"],sort=True):
+        contrasts={}
+        for response in responses:
+            grouped=frame.groupby(["pair","exposure"],sort=True)[response].agg(["sum","count"]).unstack("exposure")
+            eligible=grouped.dropna(subset=[("sum","WIDE"),("sum","TIGHT")])
+            if eligible.empty: raise InvalidResearchRun("no eligible pair-day contrast")
+            contrasts[response]=float(np.mean(eligible[("sum","WIDE")]/eligible[("count","WIDE")]-eligible[("sum","TIGHT")]/eligible[("count","TIGHT")]))
+        by_year.setdefault(int(year),[]).append(str(day)); days.append((int(year),str(day),contrasts))
+    schedule,_=bootstrap_draw_schedule(by_year,resamples=resamples,seed=seed); schedule=schedule.astype(np.int64)
+    centers={response:np.empty(resamples) for response in responses}; bounds={response:np.empty((resamples,2)) for response in responses}
+    years=sorted(by_year); offsets={}; offset=0
+    for year in years: offsets[year]=(offset,offset+len(by_year[year])); offset+=len(by_year[year])
+    for b,multiplicity in enumerate(schedule):
+        for response in responses:
+            yearly=[]; yearly_radius=[]
+            for year in years:
+                lo,hi=offsets[year]; terms=np.asarray([multiplicity[i]*days[i][2][response] for i in range(lo,hi)],dtype=np.float64); denominator=float(np.sum(multiplicity[lo:hi]))
+                if denominator<=0: raise InvalidResearchRun("empty logical bootstrap year")
+                total=float(np.sum(terms,dtype=np.float64)); q=2*int(np.count_nonzero(terms)); gamma=(q*_EPS)/(1-q*_EPS) if q*_EPS<.5 else float("inf")
+                yearly.append(total/denominator); yearly_radius.append(gamma*float(np.sum(np.abs(terms),dtype=np.float64))/denominator)
+            center=float(np.mean(yearly)); radius=float(np.sum(yearly_radius)/len(yearly)); centers[response][b]=center
+            bounds[response][b]=[np.nextafter(center-radius,-np.inf),np.nextafter(center+radius,np.inf)]
+    return {"centers":centers,"intervals":bounds,"provenance":{"multiplicity_sha256":_array_hash(schedule,"<i8"),"center_hashes":{k:_array_hash(v) for k,v in centers.items()},"interval_hashes":{k:_array_hash(v) for k,v in bounds.items()}}}
+
+
+def certified_ratio_distribution(numerator:np.ndarray,numerator_intervals:np.ndarray,denominator:np.ndarray,denominator_intervals:np.ndarray)->tuple[np.ndarray,np.ndarray]:
+    values=np.abs(np.asarray(numerator))/np.abs(np.asarray(denominator)); intervals=np.empty((len(values),2))
+    for i,(n_bounds,d_bounds) in enumerate(zip(numerator_intervals,denominator_intervals,strict=True)):
+        if d_bounds[0]<=0<=d_bounds[1]: raise InvalidResearchRun("ratio denominator interval contains zero")
+        n_abs=(0.,max(abs(n_bounds[0]),abs(n_bounds[1]))) if n_bounds[0]<=0<=n_bounds[1] else (min(abs(n_bounds[0]),abs(n_bounds[1])),max(abs(n_bounds[0]),abs(n_bounds[1])))
+        d_abs=(min(abs(d_bounds[0]),abs(d_bounds[1])),max(abs(d_bounds[0]),abs(d_bounds[1])))
+        intervals[i]=[np.nextafter(n_abs[0]/d_abs[1],-np.inf),np.nextafter(n_abs[1]/d_abs[0],np.inf)]
+    return values,intervals
+
+
+def _resident_bytes() -> int:
+    class Counters(ctypes.Structure):
+        _fields_=[("cb",ctypes.c_ulong),("PageFaultCount",ctypes.c_ulong),("PeakWorkingSetSize",ctypes.c_size_t),("WorkingSetSize",ctypes.c_size_t),("QuotaPeakPagedPoolUsage",ctypes.c_size_t),("QuotaPagedPoolUsage",ctypes.c_size_t),("QuotaPeakNonPagedPoolUsage",ctypes.c_size_t),("QuotaNonPagedPoolUsage",ctypes.c_size_t),("PagefileUsage",ctypes.c_size_t),("PeakPagefileUsage",ctypes.c_size_t)]
+    counters=Counters(); counters.cb=ctypes.sizeof(counters)
+    if os.name!="nt": raise InvalidResearchRun("RSS measurement unavailable")
+    get_process=ctypes.windll.kernel32.GetCurrentProcess; get_process.restype=ctypes.c_void_p
+    get_memory=ctypes.windll.psapi.GetProcessMemoryInfo; get_memory.argtypes=[ctypes.c_void_p,ctypes.POINTER(Counters),ctypes.c_ulong]; get_memory.restype=ctypes.c_int
+    if not get_memory(get_process(),ctypes.byref(counters),counters.cb):
+        raise InvalidResearchRun("RSS measurement unavailable")
+    return int(counters.WorkingSetSize)
+
+
+def benchmark_compressed_bootstrap(*,resamples:int=10_000,days:int=1096,k:int=80,fallback_count:int=100,seed:int=22002,population_count:int=23)->dict[str,Any]:
     rng=np.random.Generator(np.random.PCG64(seed)); blocks=[]
     for day in range(days):
         r=np.eye(k)*(1+day/max(days,1)); a=r.T@r; b=rng.standard_normal(k); blocks.append(DayBlock(2019+day%3,f"D{day:04d}",a,b,k+1,r,b/np.diag(r),hashlib.sha256(str(day).encode()).hexdigest()))
-    schedule,digest,_=_schedule_for_blocks(blocks,resamples,seed); paths=["STACKED_QR_SVD" if i<fallback_count else "SPD" for i in range(resamples)]; started=perf_counter()
-    for m,path in zip(schedule,paths,strict=True): _compressed_fit(blocks,m,path)
-    wall=perf_counter()-started
-    return {"resamples":resamples,"days":days,"K":k,"fallback_count":fallback_count,"wall_seconds":wall,"schedule_sha256":digest,"passes_30_minutes":wall<=1800}
+    schedule,digest,_=_schedule_for_blocks(blocks,resamples,seed); paths=["STACKED_QR_SVD" if i<fallback_count else "SPD" for i in range(resamples)]; baseline=_resident_bytes(); peak=[baseline]; stop=threading.Event()
+    def sample_rss():
+        while not stop.wait(.02): peak[0]=max(peak[0],_resident_bytes())
+    sampler=threading.Thread(target=sample_rss,daemon=True); sampler.start(); started=perf_counter()
+    arrays=_block_arrays(blocks)
+    for m,path in zip(schedule,paths,strict=True): _compressed_fit(blocks,m,path,arrays)
+    wall=perf_counter()-started; stop.set(); sampler.join(); peak[0]=max(peak[0],_resident_bytes()); additional=max(0,peak[0]-baseline); projected=wall*population_count
+    return {"resamples":resamples,"days":days,"K":k,"fallback_count":fallback_count,"wall_seconds":wall,"peak_additional_rss_bytes":additional,"population_count":population_count,"full_workload_estimated_seconds":projected,"schedule_sha256":digest,"passes_30_minutes":wall<=1800,"passes_4_gib":additional<4*1024**3,"passes_12_hours":projected<12*3600}
 
 
 SCIENTIFIC_STATES = (
@@ -373,7 +437,8 @@ def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resa
 
     outcomes = {}
     m0 = model_contract(spec, "M0")
-    for response in ("Y_RAW_ABS_60S_PIPS", "Y_CURRENT_SPREAD_UNITS", "Y_TRAILING_SPREAD_UNITS", "Y_FIXED_DISCOVERY_SCALE"):
+    outcome_responses=("Y_RAW_ABS_60S_PIPS", "Y_CURRENT_SPREAD_UNITS", "Y_TRAILING_SPREAD_UNITS", "Y_FIXED_DISCOVERY_SCALE")
+    for response in outcome_responses:
         contract = {**m0, "response": response}
         key = f"M0:{response}"
         complete, model_attrition = exact_model_complete_case(rows, contract)
@@ -384,6 +449,11 @@ def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resa
         complete_cases[key] = complete
         outcomes[response] = {"pair_day_point": pair_day_contrast(complete, response),
                               "M0": _model_inference(complete, contract, bootstrap_resamples)}
+    common_index=complete_cases["M0:"+outcome_responses[0]].index
+    for response in outcome_responses[1:]: common_index=common_index.intersection(complete_cases["M0:"+response].index)
+    direct_bootstrap=compressed_pair_day_bootstrap(rows.loc[common_index],outcome_responses,resamples=bootstrap_resamples,seed=22002)
+    for response in outcome_responses:
+        outcomes[response]["pair_day_bootstrap"]={"ci_low":certified_quantile(direct_bootstrap["intervals"][response],.025)[0],"ci_high":certified_quantile(direct_bootstrap["intervals"][response],.975)[1],"replicates":bootstrap_resamples}
     fixed = outcomes["Y_FIXED_DISCOVERY_SCALE"]["pair_day_point"]
     if fixed == 0:
         raise InvalidResearchRun("zero fixed-scale contrast")
@@ -411,9 +481,9 @@ def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resa
             m4_diagnostics[response]["converted_to_pips"] = _model_inference(converted, converted_contract, bootstrap_resamples)
     primary_bootstrap = {k: v for k, v in m4_diagnostics["Y_RAW_ABS_60S_PIPS"].items() if k != "point"}
     raw_p["H_RAW"] = primary_bootstrap["p_one_sided"]
-    ratio_index = complete_cases["M0:Y_CURRENT_SPREAD_UNITS"].index.intersection(complete_cases["M0:Y_FIXED_DISCOVERY_SCALE"].index)
-    ratio_bootstrap = _cached_daily_block_bootstrap(rows.loc[ratio_index], lambda sample: abs(pair_day_contrast(sample, "Y_CURRENT_SPREAD_UNITS")) / abs(pair_day_contrast(sample, "Y_FIXED_DISCOVERY_SCALE")), resamples=bootstrap_resamples, seed=22002)
-    raw_p["H_NORM"] = float((1 + np.count_nonzero(ratio_bootstrap < 4.0)) / (bootstrap_resamples + 1))
+    ratio_bootstrap,ratio_intervals=certified_ratio_distribution(direct_bootstrap["centers"]["Y_CURRENT_SPREAD_UNITS"],direct_bootstrap["intervals"]["Y_CURRENT_SPREAD_UNITS"],direct_bootstrap["centers"]["Y_FIXED_DISCOVERY_SCALE"],direct_bootstrap["intervals"]["Y_FIXED_DISCOVERY_SCALE"])
+    if np.any((ratio_intervals[:,0]<4.0)&(ratio_intervals[:,1]>4.0)): raise InvalidResearchRun("normalization ratio interval straddles boundary")
+    raw_p["H_NORM"] = float((1 + np.count_nonzero(ratio_intervals[:,1] < 4.0)) / (bootstrap_resamples + 1))
     denominator_independent = {
         "raw_m4": m4_diagnostics["Y_RAW_ABS_60S_PIPS"]["point"] <= -0.05 and m4_diagnostics["Y_RAW_ABS_60S_PIPS"]["ci_high"] < 0,
         "fixed_m4": m4_diagnostics["Y_FIXED_DISCOVERY_SCALE"]["converted_to_pips"]["point"] <= -0.05 and m4_diagnostics["Y_FIXED_DISCOVERY_SCALE"]["converted_to_pips"]["ci_high"] < 0,
@@ -432,15 +502,20 @@ def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resa
         paired = rows.loc[common].copy()
         before_contract, after_contract = model_contract(spec, before), model_contract(spec, after)
         point = _attenuation_stat(paired, before_contract, after_contract)
-        values = _cached_daily_block_bootstrap(paired, lambda sample, a=before_contract, b=after_contract: _attenuation_stat(sample, a, b), resamples=bootstrap_resamples, seed=22002)
-        low, high = np.quantile(values, [0.025, 0.975], method="linear")
-        attenuation[f"{before}_to_{after}"] = {"point": point, "ci_low": float(low), "ci_high": float(high), "replicates": int(len(values))}
+        before_boot=compressed_model_bootstrap(paired,before_contract,resamples=bootstrap_resamples,seed=22002); after_boot=compressed_model_bootstrap(paired,after_contract,resamples=bootstrap_resamples,seed=22002)
+        jb=before_boot["coefficient_names"].index("exposure__WIDE"); ja=after_boot["coefficient_names"].index("exposure__WIDE"); values=np.empty(bootstrap_resamples); bounds=np.empty((bootstrap_resamples,2))
+        for i in range(bootstrap_resamples):
+            base=before_boot["coefficients"][i,jb]; current=after_boot["coefficients"][i,ja]; values[i]=1-current/base
+            base_radius=max(base-before_boot["coefficient_intervals"][i,jb,0],before_boot["coefficient_intervals"][i,jb,1]-base); current_radius=max(current-after_boot["coefficient_intervals"][i,ja,0],after_boot["coefficient_intervals"][i,ja,1]-current)
+            bounds[i]=certified_attenuation_interval(base,base_radius,current,current_radius)
+        attenuation[f"{before}_to_{after}"] = {"point": point, "ci_low": certified_quantile(bounds,.025)[0], "ci_high": certified_quantile(bounds,.975)[1], "replicates": int(len(values)),"before_provenance":before_boot["provenance"],"after_provenance":after_boot["provenance"]}
     return {
         "models": models,
         "outcomes": outcomes,
         "m4_outcomes": m4_diagnostics,
         "denominator_independent_predicates": denominator_independent,
         "amplification_ratio": float(ratio),
+        "amplification_ratio_bootstrap":{"ci_low":certified_quantile(ratio_intervals,.025)[0],"ci_high":certified_quantile(ratio_intervals,.975)[1],"replicates":bootstrap_resamples,"provenance":direct_bootstrap["provenance"]},
         "interactions": interactions,
         "raw_p_values": raw_p,
         "fdr": fdr,

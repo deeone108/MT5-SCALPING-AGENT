@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from pathlib import Path
 
 import numpy as np
@@ -29,7 +30,10 @@ from mt5_scalping_agent.research.phase22b_analysis import (
     certified_attenuation_interval,
     certified_quantile,
     compressed_model_bootstrap,
+    compressed_pair_day_bootstrap,
+    certified_ratio_distribution,
     matrix_only_preflight,
+    pair_day_contrast,
 )
 from mt5_scalping_agent.research.phase22b_mechanism import (
     InvalidResearchRun,
@@ -334,3 +338,28 @@ def test_v12_certified_intervals_propagate_quantiles_and_attenuation() -> None:
 def test_v12_benchmark_helper_executes_synthetic_primary_and_fallback_paths() -> None:
     result=benchmark_compressed_bootstrap(resamples=10,days=12,k=3,fallback_count=1)
     assert result["resamples"]==10 and result["fallback_count"]==1 and result["passes_30_minutes"]
+    assert result["passes_4_gib"] and result["passes_12_hours"] and result["peak_additional_rss_bytes"]>=0
+
+
+def test_v12_pair_day_sufficient_statistics_match_expanded_reference() -> None:
+    rows,_=_bootstrap_fixture(); rows["Y_FIXED_DISCOVERY_SCALE"]=rows["Y_RAW_ABS_60S_PIPS"]*2
+    result=compressed_pair_day_bootstrap(rows,["Y_RAW_ABS_60S_PIPS","Y_FIXED_DISCOVERY_SCALE"],resamples=30)
+    expanded=_cached_daily_block_bootstrap(rows,lambda f:pair_day_contrast(f,"Y_RAW_ABS_60S_PIPS"),resamples=30,seed=22002)
+    np.testing.assert_allclose(result["centers"]["Y_RAW_ABS_60S_PIPS"],expanded,rtol=0,atol=2e-16)
+    ratio,bounds=certified_ratio_distribution(result["centers"]["Y_FIXED_DISCOVERY_SCALE"],result["intervals"]["Y_FIXED_DISCOVERY_SCALE"],result["centers"]["Y_RAW_ABS_60S_PIPS"],result["intervals"]["Y_RAW_ABS_60S_PIPS"])
+    np.testing.assert_allclose(ratio,2.0,rtol=0,atol=2e-15); assert np.all(bounds[:,0]<=ratio) and np.all(ratio<=bounds[:,1])
+
+
+@pytest.mark.parametrize(("n","k","scale"),[(5000,20,1.0),(20000,80,1.0),(5000,20,1e-4)])
+def test_v12_expanded_compressed_fixture_matrix(n:int,k:int,scale:float) -> None:
+    rng=np.random.default_rng(1200+k); x=rng.standard_normal((n,k)); x[:,0]=1.; x[:,-1]*=scale; beta_true=rng.standard_normal(k); y=x@beta_true+rng.standard_normal(n)*.1; weights=np.ones(n); labels=np.asarray([f"d{i%20:02d}" for i in range(n)])
+    reference=fit_wls_clustered_day(x,y,weights,tuple(f"x{i}" for i in range(k)),labels)
+    blocks=[]
+    for day in sorted(set(labels)):
+        idx=np.flatnonzero(labels==day); xg=x[idx]; yg=y[idx]; q,r=np.linalg.qr(xg,mode="reduced"); d=q.T@yg
+        for j in range(k):
+            if r[j,j]<0:r[j]*=-1;d[j]*=-1
+        blocks.append(DayBlock(2019,day,xg.T@xg,xg.T@yg,len(idx),r,d,hashlib.sha256(day.encode()).hexdigest()))
+    multiplicity=np.ones(len(blocks),dtype=np.int64); path=matrix_only_preflight(blocks,multiplicity[None,:],max_fallbacks=1)["paths"][0]
+    actual,cov,*_=analysis_module._compressed_fit(blocks,multiplicity,path)
+    np.testing.assert_allclose(actual,reference.coefficients,rtol=2e-8,atol=2e-8); np.testing.assert_allclose(cov,reference.covariance,rtol=2e-7,atol=2e-7)
