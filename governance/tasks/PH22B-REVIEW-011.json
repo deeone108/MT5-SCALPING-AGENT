@@ -72,6 +72,5 @@
     "required_outputs":  [
                              "governance/reviews/PH22B-V12-QA-REVIEW-001.json",
                              "governance/results/PH22B-REVIEW-011.json"
-                         ],
-    "supersedes_invalid_assignment_commit":  "cbf2bab9300e25d5e5480942326f2ae2d45a2c97"
+                         ]
 }
