@@ -47,7 +47,7 @@
                            "no-data governance tests"
                        ],
     "required_reviewers":  [
-
+                               "qa_reviewer"
                            ],
     "completion_conditions":  [
                                   "review artifact authored by assigned independent role",
@@ -72,5 +72,6 @@
     "required_outputs":  [
                              "governance/reviews/PH22B-V12-STAT-REVIEW-001.json",
                              "governance/results/PH22B-REVIEW-010.json"
-                         ]
+                         ],
+    "supersedes_invalid_assignment_commit":  "343510d0ccde9657609aad0624b879deaac6638c"
 }
