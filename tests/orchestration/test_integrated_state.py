@@ -14,7 +14,8 @@ def test_integrated_project_state_is_valid_and_fail_closed():
     assert state["status"] == "DISCOVERY_RUNNING"
     assert state["phase_status"] == "DISCOVERY_RUNNING"
     assert state["gates"]["implementation"]["status"] == "PASSED"
-    assert state["gates"]["implementation"]["evidence_sha256"] == "441bfda1e0889baf5990176b3421240496cfd7ed926230893cfbee0f385fcd6e"
+    assert state["gates"]["implementation"]["evidence_sha256"] == "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262"
+    assert state["last_validated_commit"] == "613aed3fd69594e062c4ecfee7e52826d6f3a0a4"
     assert state["research_spec_hash"] == V12_SHA256
     assert state["spec_sha256"] == V12_SHA256
 def test_integrated_ledger_records_accepted_phase22a():
@@ -56,3 +57,24 @@ def test_phase22b_v12_implementation_readiness_does_not_unlock_later_data():
     assert readiness["execution_authorized"] is False
     assert readiness["live_authorized"] is False
     assert not (ROOT / "governance/results/PH22B-RI-002.json").exists()
+
+
+def test_phase22b_corrected_implementation_readiness_and_failed_run_provenance():
+    ledger = validate_ledger(load_json(ROOT / "governance/memory/project_ledger.json"))
+    failed = next(x for x in ledger["decisions"] if x["id"] == "PHASE_22B_FAILED_RUN_20260912T124222Z")
+    assert failed["status"] == "FAIL_CLOSED_NO_ARTIFACTS"
+    assert failed["research_evidence_accepted"] is False
+    assert failed["development_artifact_published"] is False
+    assert failed["result_manifest_published"] is False
+    current = next(x for x in ledger["decisions"] if x["id"] == "PHASE_22B_V12_IMPLEMENTATION_READINESS_613AED3")
+    assert current["reviewed_implementation_commit"] == "613aed3fd69594e062c4ecfee7e52826d6f3a0a4"
+    assert current["statistical_review_sha256"] == "df47de4ea92e4ecfb87ee19b6397c23ca11625745a798f83d57156eabf445604"
+    assert current["qa_review_sha256"] == "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262"
+    assert current["allowed_years"] == [2019, 2020, 2021]
+    assert current["locked_years"] == [2022, 2023]
+    assert current["confirmation_unlocked"] is False
+    assert current["phase_advanced"] is False
+    assert current["strategy_authorized"] is False
+    assert current["pnl_authorized"] is False
+    assert current["execution_authorized"] is False
+    assert current["live_authorized"] is False

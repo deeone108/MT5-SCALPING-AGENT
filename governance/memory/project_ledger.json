@@ -172,6 +172,48 @@
                           "execution_authorized":  false,
                           "live_authorized":  false,
                           "reference":  "governance/results/PH22B-REVIEW-019.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_FAILED_RUN_20260912T124222Z",
+                          "status":  "FAIL_CLOSED_NO_ARTIFACTS",
+                          "run_id":  "phase22b_20260912T124222Z",
+                          "research_evidence_accepted":  false,
+                          "development_artifact_published":  false,
+                          "result_manifest_published":  false,
+                          "failure_disposition":  "IMPLEMENTATION_CORRECTED_AND_INDEPENDENTLY_REVIEWED",
+                          "superseded_implementation_commit":  "54b2d1cabc58fe417d6ebcf288a3ff2082f8aa90",
+                          "corrected_implementation_commit":  "613aed3fd69594e062c4ecfee7e52826d6f3a0a4",
+                          "protected_boundaries_changed":  false,
+                          "reference":  "governance/reviews/PH22B-V12-POST-FAILURE-STAT-REVIEW-002.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_V12_IMPLEMENTATION_READINESS_613AED3",
+                          "status":  "AUTHORIZED_2019_2021_DEVELOPMENT_EXECUTION",
+                          "reviewed_implementation_commit":  "613aed3fd69594e062c4ecfee7e52826d6f3a0a4",
+                          "specification_path":  "research/phase22b_spec_v12.json",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "statistical_review_sha256":  "df47de4ea92e4ecfb87ee19b6397c23ca11625745a798f83d57156eabf445604",
+                          "statistical_result_sha256":  "1ee26947adb46c29508c1e268d42f9eaf6ffe127950c71b36782f5a883326e85",
+                          "qa_review_sha256":  "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262",
+                          "qa_result_sha256":  "0e8c4b0f6d57179d5dd80588d12ef32e87e147456b6994626cecec64e1679a85",
+                          "active_task":  "PH22B-RI-002",
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "confirmation_unlocked":  false,
+                          "phase_advanced":  false,
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "reference":  "governance/results/PH22B-REVIEW-023.json"
                       }
                   ],
     "holdout_access_history":  [

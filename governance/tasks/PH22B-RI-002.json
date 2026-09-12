@@ -75,6 +75,26 @@
                        "hash_mode":  "canonical_text",
                        "path":  "governance/results/PH22B-REVIEW-019.json",
                        "sha256":  "01d79f0dd43b8461ae04243d34c4112e2305dd9d2889b0c616324989c0a8822a"
+                   },
+                   {
+                       "hash_mode":  "canonical_json",
+                       "path":  "governance/reviews/PH22B-V12-POST-FAILURE-STAT-REVIEW-002.json",
+                       "sha256":  "df47de4ea92e4ecfb87ee19b6397c23ca11625745a798f83d57156eabf445604"
+                   },
+                   {
+                       "hash_mode":  "canonical_text",
+                       "path":  "governance/results/PH22B-REVIEW-022.json",
+                       "sha256":  "1ee26947adb46c29508c1e268d42f9eaf6ffe127950c71b36782f5a883326e85"
+                   },
+                   {
+                       "hash_mode":  "canonical_text",
+                       "path":  "governance/reviews/PH22B-REVIEW-023-QA.json",
+                       "sha256":  "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262"
+                   },
+                   {
+                       "hash_mode":  "canonical_text",
+                       "path":  "governance/results/PH22B-REVIEW-023.json",
+                       "sha256":  "0e8c4b0f6d57179d5dd80588d12ef32e87e147456b6994626cecec64e1679a85"
                    }
                ],
     "allowed_paths":  [

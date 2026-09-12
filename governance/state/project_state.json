@@ -46,12 +46,12 @@
                                  "status":  "PASSED"
                              },
                   "implementation":  {
-                                         "evidence_sha256":  "441bfda1e0889baf5990176b3421240496cfd7ed926230893cfbee0f385fcd6e",
+                                         "evidence_sha256":  "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262",
                                          "reviewer_role":  "qa_reviewer",
                                          "status":  "PASSED"
                                      },
                   "qa":  {
-                             "evidence_sha256":  "441bfda1e0889baf5990176b3421240496cfd7ed926230893cfbee0f385fcd6e",
+                             "evidence_sha256":  "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262",
                              "reviewer_role":  "qa_reviewer",
                              "status":  "PASSED"
                          },
@@ -61,12 +61,12 @@
                                  "status":  "NOT_REQUIRED"
                              },
                   "statistics":  {
-                                     "evidence_sha256":  "014098ccd3b158e6e3047914c8e8828cfba9eaafaaba380792e088d4ae37004b",
+                                     "evidence_sha256":  "df47de4ea92e4ecfb87ee19b6397c23ca11625745a798f83d57156eabf445604",
                                      "reviewer_role":  "statistical_validator",
                                      "status":  "PASSED"
                                  }
               },
-    "last_validated_commit":  "e548dd244812a689b49666e98e56e2b27facddd7",
+    "last_validated_commit":  "613aed3fd69594e062c4ecfee7e52826d6f3a0a4",
     "live_execution_authorized":  false,
     "locked_data_windows":  [
                                 "2022",
