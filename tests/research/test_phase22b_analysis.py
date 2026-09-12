@@ -35,6 +35,7 @@ from mt5_scalping_agent.research.phase22b_analysis import (
     certified_ratio_distribution,
     matrix_only_preflight,
     pair_day_contrast,
+    frozen_workload_inventory,
 )
 from mt5_scalping_agent.research.phase22b_mechanism import (
     InvalidResearchRun,
@@ -165,11 +166,12 @@ def test_v12_inclusive_endpoint_predicates(interval,boundary,operator,expected):
 
 
 def test_v12_straddling_interval_fails_closed_and_schedule_replays():
-    with pytest.raises(InvalidResearchRun,match="touches or straddles"):
+    with pytest.raises(InvalidResearchRun,match="straddles"):
         certified_predicate((-1.,1.),0.,"<=")
-    for interval in ((-1.,0.),(0.,1.),(0.,0.)):
-        with pytest.raises(InvalidResearchRun,match="touches or straddles"):
-            certified_predicate(interval,0.,">=")
+    assert certified_predicate((0.,0.),0.,">=") is True
+    assert certified_predicate((0.,0.),0.,"<") is False
+    assert certified_predicate((-1.,0.),0.,"<=") is True
+    assert certified_predicate((0.,1.),0.,">=") is True
     first,h1=bootstrap_draw_schedule({2019:["a","b"],2020:["c"]},resamples=20)
     second,h2=bootstrap_draw_schedule({2020:["c"],2019:["a","b"]},resamples=20)
     np.testing.assert_array_equal(first,second);assert h1==h2 and first.sum(axis=1).tolist()==[3]*20
@@ -343,6 +345,9 @@ def test_v12_benchmark_helper_executes_synthetic_primary_and_fallback_paths() ->
     result=benchmark_compressed_bootstrap(resamples=10,days=12,k=3,fallback_count=1)
     assert result["resamples"]==10 and result["fallback_count"]==1 and result["passes_30_minutes"]
     assert result["passes_4_gib"] and result["passes_12_hours"] and result["peak_additional_rss_bytes"]>=0
+    inventory=frozen_workload_inventory(); assert result["population_count"]==len(inventory["compressed_regression"])==24
+    assert result["non_regression_population_count"]==len(inventory["non_regression"])==5
+    assert result["full_workload_estimated_seconds"]==pytest.approx(result["wall_seconds"]*29)
 
 
 def test_v12_pair_day_sufficient_statistics_match_expanded_reference() -> None:
@@ -376,11 +381,10 @@ def test_v12_ratio_and_attenuation_denominator_touch_zero_fail_closed() -> None:
         certified_attenuation_interval(.1,.1,-1.,.01)
 
 
-def test_v12_development_gate_boundary_contact_fails_closed() -> None:
+def test_v12_development_gate_inclusive_exact_equality_passes() -> None:
     stage={"models":{"M0":{"exposure__WIDE":-.1},"M4":{"exposure__WIDE":-.05}},"primary_bootstrap":{"ci_high":-.01}}
     diagnostics={"year":{"2019":-.1,"2020":-.1,"2021":-.1},"negative_pair_count":4,"largest_pair_fraction":.4,"negative_core_session_count":4,"top_five_day_fraction":.4,"largest_month_fraction":.4}
-    with pytest.raises(InvalidResearchRun,match="touches or straddles"):
-        development_gate_truths(stage,diagnostics)
+    assert development_gate_truths(stage,diagnostics)["raw_effect_minimum"] is True
 
 
 @pytest.mark.parametrize(("n","k","scale"),[(5000,20,1.0),(20000,80,1.0),(5000,20,1e-4)])
@@ -396,6 +400,18 @@ def test_v12_expanded_compressed_fixture_matrix(n:int,k:int,scale:float) -> None
     multiplicity=np.ones(len(blocks),dtype=np.int64); path=matrix_only_preflight(blocks,multiplicity[None,:],max_fallbacks=1)["paths"][0]
     actual,cov,*_=analysis_module._compressed_fit(blocks,multiplicity,path)
     np.testing.assert_allclose(actual,reference.coefficients,rtol=2e-8,atol=2e-8); np.testing.assert_allclose(cov,reference.covariance,rtol=2e-7,atol=2e-7)
+
+
+def test_v12_fixed_10000_draw_distribution_matches_expanded_reference() -> None:
+    rows,contract=_bootstrap_fixture(); blocks,_=build_day_blocks(rows,contract); schedule,_,_=analysis_module._schedule_for_blocks(blocks,10_000,22002); arrays=analysis_module._block_arrays(blocks)
+    compressed=np.empty(10_000); expanded=np.empty(10_000)
+    x,y,w,names=build_design_matrix(rows.sort_values(["year","utc_day","anchor_utc_ns","pair","source_row_ordinal"],kind="stable"),contract); labels=rows.sort_values(["year","utc_day","anchor_utc_ns","pair","source_row_ordinal"],kind="stable").utc_day.astype(str).to_numpy(); ordered_days=[block.utc_day for block in blocks]
+    for i,multiplicity in enumerate(schedule):
+        beta,*_=analysis_module._compressed_fit(blocks,multiplicity,"SPD",arrays); compressed[i]=beta[names.index("exposure__WIDE")]
+        indices=np.concatenate([np.tile(np.flatnonzero(labels==day),int(count)) for day,count in zip(ordered_days,multiplicity,strict=True) if count>0]); root=np.sqrt(w[indices]); reference=np.linalg.lstsq(x[indices]*root[:,None],y[indices]*root,rcond=1e-12)[0]; expanded[i]=reference[names.index("exposure__WIDE")]
+    np.testing.assert_allclose(compressed,expanded,rtol=3e-13,atol=3e-13)
+    assert int(np.count_nonzero(compressed>=0.))==int(np.count_nonzero(expanded>=0.))
+    np.testing.assert_allclose(np.quantile(compressed,[.025,.975],method="linear"),np.quantile(expanded,[.025,.975],method="linear"),rtol=3e-13,atol=3e-13)
 
 
 def _frozen_cross_product_rows(n:int=2400)->pd.DataFrame:

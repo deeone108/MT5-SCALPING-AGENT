@@ -232,7 +232,14 @@ def _resident_bytes() -> int:
     return int(counters.WorkingSetSize)
 
 
-def benchmark_compressed_bootstrap(*,resamples:int=10_000,days:int=1096,k:int=80,fallback_count:int=100,seed:int=22002,population_count:int=23)->dict[str,Any]:
+def frozen_workload_inventory()->dict[str,tuple[str,...]]:
+    model_populations=tuple([f"M0:{response}" for response in ("RAW","CURRENT","TRAILING","FIXED")]+[f"M4:{response}" for response in ("RAW","CURRENT","TRAILING","FIXED","FIXED_PIPS")]+[f"INTERACTION:{name}" for name in ("VOL","ACTIVITY","HOUR","SESSION","IMPULSE","PAIR","LIQUIDITY")]+[f"ATTENUATION:{step}:{side}" for step in ("M0_M1","M1_M2","M2_M3","M3_M4") for side in ("BEFORE","AFTER")])
+    non_regression=tuple([f"PAIR_DAY:{response}" for response in ("RAW","CURRENT","TRAILING","FIXED")]+["PAIR_DAY:NORMALIZATION_RATIO"])
+    if len(model_populations)!=24 or len(non_regression)!=5: raise InvalidResearchRun("frozen workload inventory mismatch")
+    return {"compressed_regression":model_populations,"non_regression":non_regression}
+
+
+def benchmark_compressed_bootstrap(*,resamples:int=10_000,days:int=1096,k:int=80,fallback_count:int=100,seed:int=22002)->dict[str,Any]:
     rng=np.random.Generator(np.random.PCG64(seed)); blocks=[]
     for day in range(days):
         r=np.eye(k)*(1+day/max(days,1)); a=r.T@r; b=rng.standard_normal(k); blocks.append(DayBlock(2019+day%3,f"D{day:04d}",a,b,k+1,r,b/np.diag(r),hashlib.sha256(str(day).encode()).hexdigest()))
@@ -242,8 +249,12 @@ def benchmark_compressed_bootstrap(*,resamples:int=10_000,days:int=1096,k:int=80
     sampler=threading.Thread(target=sample_rss,daemon=True); sampler.start(); started=perf_counter()
     arrays=_block_arrays(blocks)
     for m,path in zip(schedule,paths,strict=True): _compressed_fit(blocks,m,path,arrays)
-    wall=perf_counter()-started; stop.set(); sampler.join(); peak[0]=max(peak[0],_resident_bytes()); additional=max(0,peak[0]-baseline); projected=wall*population_count
-    return {"resamples":resamples,"days":days,"K":k,"fallback_count":fallback_count,"wall_seconds":wall,"peak_additional_rss_bytes":additional,"population_count":population_count,"full_workload_estimated_seconds":projected,"schedule_sha256":digest,"passes_30_minutes":wall<=1800,"passes_4_gib":additional<4*1024**3,"passes_12_hours":projected<12*3600}
+    wall=perf_counter()-started; stop.set(); sampler.join(); peak[0]=max(peak[0],_resident_bytes()); additional=max(0,peak[0]-baseline); inventory=frozen_workload_inventory(); regression_count=len(inventory["compressed_regression"]); non_regression_count=len(inventory["non_regression"])
+    # A non-regression pair-day population is O(B*D), strictly cheaper than
+    # this K=80 regression benchmark. Charge each one a full measured
+    # regression-population wall time as a deterministic conservative bound.
+    regression_projected=wall*regression_count; non_regression_bound=wall*non_regression_count; projected=regression_projected+non_regression_bound
+    return {"resamples":resamples,"days":days,"K":k,"fallback_count":fallback_count,"wall_seconds":wall,"peak_additional_rss_bytes":additional,"population_count":regression_count,"population_inventory":inventory,"non_regression_population_count":non_regression_count,"regression_estimated_seconds":regression_projected,"non_regression_conservative_bound_seconds":non_regression_bound,"full_workload_estimated_seconds":projected,"schedule_sha256":digest,"passes_30_minutes":wall<=1800,"passes_4_gib":additional<4*1024**3,"passes_12_hours":projected<12*3600}
 
 
 SCIENTIFIC_STATES = (
@@ -697,14 +708,14 @@ def cluster_robust_score_diagnostic(rows: pd.DataFrame, contract: Mapping[str, A
 def certified_predicate(interval: Sequence[float], boundary: float, operator: str) -> bool:
     low,high=map(float,interval)
     if not np.isfinite([low,high,boundary]).all() or low>high: raise InvalidResearchRun("invalid certified interval")
-    if low <= boundary <= high:
-        raise InvalidResearchRun("certified interval touches or straddles decision boundary")
-    decided={"<":(high<boundary,low>boundary),"<=":(high<boundary,low>boundary),">":(low>boundary,high<boundary),">=":(low>boundary,high<boundary)}
+    if low < boundary < high:
+        raise InvalidResearchRun("certified interval straddles decision boundary")
+    decided={"<":(high<boundary,low>=boundary),"<=":(high<=boundary,low>boundary),">":(low>boundary,high<=boundary),">=":(low>=boundary,high<boundary)}
     if operator not in decided: raise InvalidResearchRun("unknown certified predicate")
     yes,no=decided[operator]
     if yes:return True
     if no:return False
-    raise InvalidResearchRun("certified interval touches or straddles decision boundary")
+    raise InvalidResearchRun("certified interval straddles decision boundary")
 
 
 def bootstrap_draw_schedule(year_days: Mapping[int, Sequence[str]],resamples:int=10_000,seed:int=22002):
