@@ -20,7 +20,7 @@ TASK="governance/tasks/PH22B-RI-002.json"
 STATE="governance/state/project_state.json"
 SPEC="research/phase22b_spec_v12.json"
 BENCHMARK="governance/evidence/PH22B_V12_EXACT_BENCHMARK.json"
-BENCHMARK_SHA256="b8c94cdf036613415c84894ed2451fdedb455872072577bc3b5827dabce9aa4c"
+BENCHMARK_SHA256="7bf5c078912545645132d88ab73bf17068d8633f07acc242f56121fc3ca504c5"
 
 def _read_json(path:Path)->dict: return json.loads(path.read_text(encoding="utf-8"))
 def _expected(task:dict,path:str)->str:
@@ -32,9 +32,9 @@ def _verified_benchmark(root:Path)->dict:
     if not path.is_file(): raise InvalidResearchRun("required exact benchmark evidence absent")
     value=_read_json(path)
     if canonical_catalog_hash(value)!=BENCHMARK_SHA256: raise InvalidResearchRun("exact benchmark evidence hash mismatch")
-    expected={"resamples":10000,"utc_day_blocks":1096,"coefficient_count":80,"fallback_count":100,"seed":22002,"compressed_regression_population_count":24,"non_regression_population_count":5,"population_count_derivation":{"M0_response_fits":4,"M4_response_fits_including_fixed_pips":5,"interaction_fits":7,"attenuation_before_after_fits":8,"pair_day_response_populations":4,"pair_day_normalization_ratio_populations":1}}
+    expected={"resamples":10000,"utc_day_blocks":1096,"coefficient_count":80,"fallback_count":100,"seed":22002,"compressed_regression_population_count":24,"non_regression_population_count":5,"deterministic_replay_analysis_passes":2,"population_count_derivation":{"M0_response_fits":4,"M4_response_fits_including_fixed_pips":5,"interaction_fits":7,"attenuation_before_after_fits":8,"pair_day_response_populations":4,"pair_day_normalization_ratio_populations":1}}
     measurements=value.get("measurements",{}); passes=value.get("passes",{})
-    if (value.get("specification_sha256")!=SPEC_SHA256 or value.get("originating_implementation_commit")!="b6a8729c7ea8292163851f37906eb59e04a8cbfe" or value.get("projection_derivation_commit")!="53a56368591f173f93b868f5136bb28b4e7567d6" or value.get("configuration")!=expected or measurements.get("wall_seconds")!=1471.4557584 or measurements.get("peak_additional_rss_bytes")!=549580800 or measurements.get("regression_projection_seconds")!=35314.9382016 or measurements.get("non_regression_conservative_bound_seconds")!=7357.278792 or measurements.get("full_workload_projection_seconds")!=42672.2169936 or measurements.get("schedule_sha256")!="3338bf2d0ebea5e6c6d95053216b6e6449b1d4d1839d3989501605d768e1910d" or value.get("data_accessed")!=[] or value.get("no_market_data_accessed") is not True or passes!={"wall_time":True,"peak_memory":True,"full_workload_projection":True,"all":True}):
+    if (value.get("specification_sha256")!=SPEC_SHA256 or value.get("originating_implementation_commit")!="34510a47a01041a27484b8e28f54e513ad50f737" or value.get("projection_derivation_commit")!="34510a47a01041a27484b8e28f54e513ad50f737" or value.get("configuration")!=expected or measurements.get("wall_seconds")!=1082.371652300004 or measurements.get("peak_additional_rss_bytes")!=450580480 or measurements.get("equivalent_k80_regression_populations")!=7.137933540603742 or measurements.get("non_regression_equivalent_k80_populations")!=0.0029177295918367346 or measurements.get("per_pass_regression_projection_seconds")!=7725.896920350889 or measurements.get("per_pass_non_regression_conservative_bound_seconds")!=3.1580677992809423 or measurements.get("full_workload_projection_seconds")!=15458.109976300339 or measurements.get("schedule_sha256")!="3338bf2d0ebea5e6c6d95053216b6e6449b1d4d1839d3989501605d768e1910d" or value.get("data_accessed")!=[] or value.get("no_market_data_accessed") is not True or passes!={"wall_time":True,"peak_memory":True,"full_workload_projection":True,"all":True}):
         raise InvalidResearchRun("exact benchmark evidence content mismatch")
     return {"path":BENCHMARK,"canonical_sha256":BENCHMARK_SHA256,"configuration":expected,"measurements":measurements,"passes":passes,"no_market_data_accessed":True}
 def _parse(payload:bytes)->pd.DataFrame:

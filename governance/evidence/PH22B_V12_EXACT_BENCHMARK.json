@@ -2,8 +2,8 @@
   "artifact_id": "PH22B_V12_EXACT_BENCHMARK",
   "schema_version": 1,
   "specification_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-  "originating_implementation_commit": "b6a8729c7ea8292163851f37906eb59e04a8cbfe",
-  "projection_derivation_commit": "53a56368591f173f93b868f5136bb28b4e7567d6",
+  "originating_implementation_commit": "34510a47a01041a27484b8e28f54e513ad50f737",
+  "projection_derivation_commit": "34510a47a01041a27484b8e28f54e513ad50f737",
   "command": "benchmark_compressed_bootstrap(resamples=10000, days=1096, k=80, fallback_count=100)",
   "configuration": {
     "resamples": 10000,
@@ -13,6 +13,7 @@
     "seed": 22002,
     "compressed_regression_population_count": 24,
     "non_regression_population_count": 5,
+    "deterministic_replay_analysis_passes": 2,
     "population_count_derivation": {
       "M0_response_fits": 4,
       "M4_response_fits_including_fixed_pips": 5,
@@ -31,11 +32,13 @@
     "blas_threads": 1
   },
   "measurements": {
-    "wall_seconds": 1471.4557584,
-    "peak_additional_rss_bytes": 549580800,
-    "regression_projection_seconds": 35314.9382016,
-    "non_regression_conservative_bound_seconds": 7357.278792,
-    "full_workload_projection_seconds": 42672.2169936,
+    "wall_seconds": 1082.371652300004,
+    "peak_additional_rss_bytes": 450580480,
+    "equivalent_k80_regression_populations": 7.137933540603742,
+    "non_regression_equivalent_k80_populations": 0.0029177295918367346,
+    "per_pass_regression_projection_seconds": 7725.896920350889,
+    "per_pass_non_regression_conservative_bound_seconds": 3.1580677992809423,
+    "full_workload_projection_seconds": 15458.109976300339,
     "schedule_sha256": "3338bf2d0ebea5e6c6d95053216b6e6449b1d4d1839d3989501605d768e1910d"
   },
   "limits": {
