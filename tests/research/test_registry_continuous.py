@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import shutil
 from pathlib import Path
 
 import pytest
@@ -13,6 +12,7 @@ from mt5_scalping_agent.research.registry import (
     load_research_registry,
     record_completed_continuous_experiment,
 )
+from tests.research.registry_test_support import materialize_registry_evidence
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -80,15 +80,7 @@ def _workspace(tmp_path: Path) -> tuple[Path, Path]:
     registry_path = tmp_path / DEFAULT_REGISTRY_PATH
     registry_path.parent.mkdir(parents=True)
     registry_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-    evidence_paths = {
-        item["report_path"]
-        for strategy in payload["strategies"]
-        for item in strategy["experiments_performed"]
-    }
-    for relative in evidence_paths:
-        destination = tmp_path / relative
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(PROJECT_ROOT / relative, destination)
+    materialize_registry_evidence(tmp_path, payload)
     report_path = tmp_path / "reports/continuous_evaluation/completed.json"
     report_path.parent.mkdir(parents=True, exist_ok=True)
     report_path.write_text(json.dumps(_continuous_report(), indent=2), encoding="utf-8")

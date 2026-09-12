@@ -16,6 +16,7 @@ from mt5_scalping_agent.research.registry import (
     preregistration_fingerprint,
     reject_strategy_after_completed_evidence,
 )
+from tests.research.registry_test_support import materialize_registry_evidence
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -41,8 +42,16 @@ def _write_payload(tmp_path: Path, payload: dict[str, object]) -> Path:
     return path
 
 
-def test_default_registry_preserves_all_current_implemented_strategies() -> None:
-    registry = load_research_registry(REGISTRY_PATH, project_root=PROJECT_ROOT)
+def _synthetic_workspace(tmp_path: Path) -> tuple[Path, Path]:
+    payload = _payload()
+    path = _write_payload(tmp_path, payload)
+    materialize_registry_evidence(tmp_path, payload)
+    return path, tmp_path
+
+
+def test_default_registry_preserves_all_current_implemented_strategies(tmp_path: Path) -> None:
+    path, root = _synthetic_workspace(tmp_path)
+    registry = load_research_registry(path, project_root=root)
     by_name = registry.by_strategy_name()
     implemented = {record.strategy_name for record in registry.strategies if record.implementation}
 
@@ -70,8 +79,9 @@ def test_default_registry_preserves_all_current_implemented_strategies() -> None
         "ScheduledMacroShockContinuationStrategy"
     )
     assert len(strategy_16.experiments_performed) == 2
-def test_registry_preserves_frozen_research_inputs_and_future_gates() -> None:
-    registry = load_research_registry(REGISTRY_PATH, project_root=PROJECT_ROOT)
+def test_registry_preserves_frozen_research_inputs_and_future_gates(tmp_path: Path) -> None:
+    path, root = _synthetic_workspace(tmp_path)
+    registry = load_research_registry(path, project_root=root)
     dataset = registry.development_datasets[0]
     gate = registry.promotion_gates[0]
     by_name = registry.by_strategy_name()
@@ -115,13 +125,14 @@ def test_evidence_backed_rejection_transition_is_atomic(tmp_path: Path) -> None:
     strategy["decision"] = "UNDECIDED"
     strategy["decision_reason"] = "Evaluation pending."
     path = _write_payload(tmp_path, payload)
+    materialize_registry_evidence(tmp_path, payload)
 
     reason = "Frozen development gates failed; no robustness evaluation was eligible."
     updated = reject_strategy_after_completed_evidence(
         STRATEGY_15_NAME,
         reason,
         registry_path=path,
-        project_root=PROJECT_ROOT,
+        project_root=tmp_path,
     )
 
     record = updated.by_strategy_name()[STRATEGY_15_NAME]
@@ -131,7 +142,7 @@ def test_evidence_backed_rejection_transition_is_atomic(tmp_path: Path) -> None:
     assert len(record.experiments_performed) == 2
 
 def test_strategy_16_preregistration_fingerprint_is_frozen() -> None:
-    registry = load_research_registry(REGISTRY_PATH, project_root=PROJECT_ROOT)
+    registry = load_research_registry(REGISTRY_PATH, validate_evidence=False)
     record = registry.by_strategy_name()[STRATEGY_16_NAME]
 
     assert len(registry.strategies) == 17
@@ -171,10 +182,12 @@ def test_registry_detects_evidence_metric_drift(tmp_path: Path) -> None:
     payload = _payload()
     payload["strategies"][0]["experiments_performed"][0]["aggregates"][0]["net_profit"] = 999.0  # type: ignore[index]
 
+    path = _write_payload(tmp_path, payload)
+    materialize_registry_evidence(tmp_path, _payload())
     with pytest.raises(RegistryError, match="evidence mismatch.*net_profit"):
         load_research_registry(
-            _write_payload(tmp_path, payload),
-            project_root=PROJECT_ROOT,
+            path,
+            project_root=tmp_path,
             validate_evidence=True,
         )
 
