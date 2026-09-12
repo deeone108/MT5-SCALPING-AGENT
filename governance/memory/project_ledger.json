@@ -143,6 +143,35 @@
                           "phase_advanced":  false,
                           "data_authority_changed":  false,
                           "reference":  "governance/tasks/PH22B-RI-002.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_V12_IMPLEMENTATION_READINESS",
+                          "status":  "AUTHORIZED_2019_2021_DEVELOPMENT_EXECUTION",
+                          "reviewed_implementation_commit":  "e548dd244812a689b49666e98e56e2b27facddd7",
+                          "specification_path":  "research/phase22b_spec_v12.json",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "statistical_review_sha256":  "014098ccd3b158e6e3047914c8e8828cfba9eaafaaba380792e088d4ae37004b",
+                          "statistical_result_sha256":  "8b9e9ab1e69011d5c87558a08779ef34adf7624a84bb9cddf6b208862ba4b416",
+                          "qa_review_sha256":  "441bfda1e0889baf5990176b3421240496cfd7ed926230893cfbee0f385fcd6e",
+                          "qa_result_sha256":  "01d79f0dd43b8461ae04243d34c4112e2305dd9d2889b0c616324989c0a8822a",
+                          "active_task":  "PH22B-RI-002",
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "confirmation_unlocked":  false,
+                          "phase_advanced":  false,
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "reference":  "governance/results/PH22B-REVIEW-019.json"
                       }
                   ],
     "holdout_access_history":  [

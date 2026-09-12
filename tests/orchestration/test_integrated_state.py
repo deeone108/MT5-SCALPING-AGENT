@@ -11,7 +11,10 @@ def test_integrated_project_state_is_valid_and_fail_closed():
     assert state["locked_data_windows"] == ["2022", "2023"]
     assert state["forbidden_data_windows"] == ["2024+"]
     assert state["active_tasks"] == ["PH22B-RI-002"]
-    assert state["status"] == "IMPLEMENTATION_REVIEW"
+    assert state["status"] == "DISCOVERY_RUNNING"
+    assert state["phase_status"] == "DISCOVERY_RUNNING"
+    assert state["gates"]["implementation"]["status"] == "PASSED"
+    assert state["gates"]["implementation"]["evidence_sha256"] == "441bfda1e0889baf5990176b3421240496cfd7ed926230893cfbee0f385fcd6e"
     assert state["research_spec_hash"] == V12_SHA256
     assert state["spec_sha256"] == V12_SHA256
 def test_integrated_ledger_records_accepted_phase22a():
@@ -36,3 +39,20 @@ def test_phase22b_v12_ledger_binding_preserves_authority():
     assert binding["pnl_authorized"] is False
     assert binding["execution_authorized"] is False
     assert binding["live_authorized"] is False
+
+
+def test_phase22b_v12_implementation_readiness_does_not_unlock_later_data():
+    ledger = validate_ledger(load_json(ROOT / "governance/memory/project_ledger.json"))
+    readiness = next(x for x in ledger["decisions"] if x["id"] == "PHASE_22B_V12_IMPLEMENTATION_READINESS")
+    assert readiness["reviewed_implementation_commit"] == "e548dd244812a689b49666e98e56e2b27facddd7"
+    assert readiness["statistical_review_sha256"] == "014098ccd3b158e6e3047914c8e8828cfba9eaafaaba380792e088d4ae37004b"
+    assert readiness["qa_result_sha256"] == "01d79f0dd43b8461ae04243d34c4112e2305dd9d2889b0c616324989c0a8822a"
+    assert readiness["allowed_years"] == [2019, 2020, 2021]
+    assert readiness["locked_years"] == [2022, 2023]
+    assert readiness["confirmation_unlocked"] is False
+    assert readiness["phase_advanced"] is False
+    assert readiness["strategy_authorized"] is False
+    assert readiness["pnl_authorized"] is False
+    assert readiness["execution_authorized"] is False
+    assert readiness["live_authorized"] is False
+    assert not (ROOT / "governance/results/PH22B-RI-002.json").exists()

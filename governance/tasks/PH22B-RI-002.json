@@ -55,6 +55,26 @@
                        "hash_mode":  "raw_bytes",
                        "path":  "governance/reviews/PH22B-V12-QA-REVIEW-001.json",
                        "sha256":  "a828b735e564fa0afbefec67e208fefe5858db08e5c22c1cb0259c6d1386a0a1"
+                   },
+                   {
+                       "hash_mode":  "canonical_json",
+                       "path":  "governance/reviews/PH22B-V12-STAT-CODE-REVIEW-004.json",
+                       "sha256":  "014098ccd3b158e6e3047914c8e8828cfba9eaafaaba380792e088d4ae37004b"
+                   },
+                   {
+                       "hash_mode":  "canonical_text",
+                       "path":  "governance/results/PH22B-REVIEW-018.json",
+                       "sha256":  "8b9e9ab1e69011d5c87558a08779ef34adf7624a84bb9cddf6b208862ba4b416"
+                   },
+                   {
+                       "hash_mode":  "canonical_text",
+                       "path":  "governance/reviews/PH22B-REVIEW-019-QA.json",
+                       "sha256":  "441bfda1e0889baf5990176b3421240496cfd7ed926230893cfbee0f385fcd6e"
+                   },
+                   {
+                       "hash_mode":  "canonical_text",
+                       "path":  "governance/results/PH22B-REVIEW-019.json",
+                       "sha256":  "01d79f0dd43b8461ae04243d34c4112e2305dd9d2889b0c616324989c0a8822a"
                    }
                ],
     "allowed_paths":  [
@@ -123,7 +143,7 @@
                                   "frozen v12 exact; v6-v11 preserved as immutable lineage",
                                   "stop before 2022"
                               ],
-    "status":  "READY",
+    "status":  "RUNNING",
     "allowed_data":  [
                          {
                              "partitions":  [
