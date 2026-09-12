@@ -34,6 +34,7 @@
         "src/mt5_scalping_agent/orchestration/runtime_supervisor.py",
         "src/mt5_scalping_agent/orchestration/__init__.py",
         "scripts/run_phase22b_supervised.py",
+        "scripts/run_phase22b_development.py",
         "tests/orchestration/test_runtime_supervisor.py",
         "tests/orchestration/test_phase22b_runner.py",
         "governance/tasks/PH22B-RUNTIME-001.json",
@@ -73,6 +74,7 @@
         "restart-no-authority-broadening",
         "failed-artifacts-never-promoted",
         "monitor-interruption-preserves-worker-provenance",
+        "output-root-private-staging-only",
         "checkpoint-resume-equivalence-if-implemented"
     ],
     "required_reviewers": [
@@ -92,13 +94,17 @@
         "modify frozen v12 or scientific computation",
         "unlock 2022/2023 or access 2024+",
         "create strategy or PnL logic",
-        "change execution or LIVE authority"
+        "change execution or LIVE authority",
+        "modify scripts/run_phase22b_development.py except narrow --output-root CLI and publication-root plumbing to supervisor-private staging",
+        "change scientific computation, result schemas, methodology, specification, seeds, or market-data path resolution",
+        "copy or stage arbitrary repository content into the supervisor-private output root"
     ],
     "required_outputs": [
         "durable runtime supervisor",
         "no-market-data regression evidence",
         "schema-valid PH22B-RUNTIME-001 result manifest",
         "independent QA handoff",
-        "explicit checkpoint policy"
+        "explicit checkpoint policy",
+        "narrow reviewed --output-root plumbing with no scientific or data-path change"
     ]
 }
