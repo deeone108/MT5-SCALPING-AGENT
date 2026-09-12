@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "review_id": "PH22B-V12-STAT-CODE-REVIEW-004",
+  "task_id": "PH22B-REVIEW-018",
+  "role": "statistical_validator",
+  "verdict": "APPROVED",
+  "reviewed_commit": "e548dd244812a689b49666e98e56e2b27facddd7",
+  "specification_canonical_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+  "dataset_root_sha256": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+  "summary": "APPROVED for pre-data statistical implementation readiness. Every blocker from PH22B-REVIEW-016 is resolved without changing frozen scientific semantics or protected authority. The score diagnostic, compressed bootstrap, pair-day estimands, numerical preflight/fallback, certified decisions, exact equivalence fixture, complete two-pass performance projection, replay, hashes, and state binding are fit for independently QA-reviewed 2019-2021 development execution.",
+  "prior_blocker_disposition": [
+    {
+      "prior_id": "STAT-BLOCK-005",
+      "status": "RESOLVED",
+      "evidence": "Certified boundary contact now distinguishes true straddles from one-sided touch and applies the frozen inclusive/exclusive rule. Tests cover [-1,0] for H_RAW >=0, [3,4] for H_NORM <4, [4,5] for H_NORM <4, degenerate equality, and inclusive point thresholds."
+    },
+    {
+      "prior_id": "STAT-BLOCK-006",
+      "status": "RESOLVED",
+      "evidence": "The exact workload inventory records two deterministic replay passes, 24 named regression populations with verified K dimensions, and five non-regression populations. The measured projection is 15458.109976300339 seconds versus the frozen 43200-second limit."
+    }
+  ],
+  "statistical_verification": {
+    "score_diagnostic": "PASS: restricted M4 and auxiliary exposure residualization use frozen pair-day WLS weights, UTC-day CR1 scores, chi-square(1), two-sided p-value, and supporting-only non-gating provenance.",
+    "compressed_bootstrap": "PASS: exact year-stratified PCG64(22002) schedules, 10000 replicates, day multiplicities, logical N/G, source-day CR1 meat, stable ordering, and response-specific complete-case populations are retained.",
+    "fallback": "PASS: path choice and fallback invalidity are matrix-only preflight decisions; SPD and stacked QR/SVD paths use frozen rank/condition/envelope rules, SVD bread, source-day CR1 meat, and the bounded 100/10000 fallback cap.",
+    "derived_statistics": "PASS: coefficient/contrast, attenuation, direct pair-day, normalization ratio, quantile, p-value, and scientific-boundary decisions use certified intervals and fail closed only for unresolved straddles or denominator-zero conditions.",
+    "pair_day_estimand": "PASS: each eligible pair/day contributes equally within each year and each year contributes equally, matching the expanded reference under unequal pair availability.",
+    "multiplicity_and_fdr": "PASS: frozen raw p-value numerator conventions and Benjamini-Hochberg families remain unchanged; the replacement score test is excluded.",
+    "equivalence": "PASS: fixed 10000-draw expanded/compressed synthetic distribution fixture matches replicate values within the frozen numerical acceptance and reproduces p-value counts and percentile endpoints.",
+    "performance": "PASS: exact K-specific inventory and two production replay passes project to 15458.109976300339 seconds; benchmark wall time 1082.371652300004 seconds and peak additional RSS 450580480 bytes satisfy frozen limits.",
+    "reproducibility": "PASS: canonical specification, benchmark, and little-endian int64 schedule hashes reproduce; production replay contract remains byte-identical.",
+    "authority": "PASS: no-data control plane binds v12 and only 2019-2021; 2022/2023 remain locked and 2024+ forbidden."
+  },
+  "tests": [
+    {"name": "focused_synthetic_suite", "result": "PASS", "passed": 127, "failed": 0},
+    {"name": "fixed_10000_draw_expanded_compressed_equivalence", "result": "PASS"},
+    {"name": "canonical_specification_hash", "result": "PASS", "sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"},
+    {"name": "canonical_benchmark_hash", "result": "PASS", "sha256": "7bf5c078912545645132d88ab73bf17068d8633f07acc242f56121fc3ca504c5"},
+    {"name": "benchmark_schedule_hash", "result": "PASS", "sha256": "3338bf2d0ebea5e6c6d95053216b6e6449b1d4d1839d3989501605d768e1910d"},
+    {"name": "two_pass_full_workload_gate", "result": "PASS", "projected_seconds": 15458.109976300339, "limit_seconds": 43200.0},
+    {"name": "checked_in_no_data_control_plane", "result": "PASS"},
+    {"name": "git_diff_check", "result": "PASS"}
+  ],
+  "provenance": {
+    "benchmark_canonical_sha256": "7bf5c078912545645132d88ab73bf17068d8633f07acc242f56121fc3ca504c5",
+    "project_state_canonical_sha256": "c6f803484da63611923666501cd68a1f7601fd73ed42c54dd88a5697c60158c5",
+    "project_ledger_canonical_sha256": "0a119a4e0b07c262dd22550854d5059bf7aa711adb70b5e66420a09bbd698434",
+    "benchmark_schedule_sha256": "3338bf2d0ebea5e6c6d95053216b6e6449b1d4d1839d3989501605d768e1910d"
+  },
+  "findings": [],
+  "limitations": [
+    "This approval is implementation-readiness evidence only and does not itself authorize data access, advance the phase, or approve any scientific result.",
+    "Independent QA approval and Project Orchestrator gate recording remain required before 2019-2021 execution.",
+    "2022 and 2023 remain locked; 2024+ remains forbidden."
+  ],
+  "data_accessed": [],
+  "data_windows_accessed": [],
+  "locator_targets_accessed": false,
+  "protected_contract": {
+    "specification_modified": false,
+    "implementation_modified": false,
+    "allowed_years": [2019, 2020, 2021],
+    "locked_years": [2022, 2023],
+    "forbidden": "2024+",
+    "strategy_authorized": false,
+    "pnl_authorized": false,
+    "execution_authorized": false,
+    "live_authorized": false
+  },
+  "requested_next_gate": "INDEPENDENT_QA_IMPLEMENTATION_REVIEW",
+  "reviewed_at_utc": "2026-09-12T12:34:23.8962203Z"
+}
