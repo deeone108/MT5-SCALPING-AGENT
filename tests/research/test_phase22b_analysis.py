@@ -172,6 +172,9 @@ def test_v12_straddling_interval_fails_closed_and_schedule_replays():
     assert certified_predicate((0.,0.),0.,"<") is False
     assert certified_predicate((-1.,0.),0.,"<=") is True
     assert certified_predicate((0.,1.),0.,">=") is True
+    assert certified_predicate((-1.,0.),0.,">=") is False
+    assert certified_predicate((3.,4.),4.,"<") is True
+    assert certified_predicate((4.,5.),4.,"<") is False
     first,h1=bootstrap_draw_schedule({2019:["a","b"],2020:["c"]},resamples=20)
     second,h2=bootstrap_draw_schedule({2020:["c"],2019:["a","b"]},resamples=20)
     np.testing.assert_array_equal(first,second);assert h1==h2 and first.sum(axis=1).tolist()==[3]*20
@@ -347,7 +350,9 @@ def test_v12_benchmark_helper_executes_synthetic_primary_and_fallback_paths() ->
     assert result["passes_4_gib"] and result["passes_12_hours"] and result["peak_additional_rss_bytes"]>=0
     inventory=frozen_workload_inventory(); assert result["population_count"]==len(inventory["compressed_regression"])==24
     assert result["non_regression_population_count"]==len(inventory["non_regression"])==5
-    assert result["full_workload_estimated_seconds"]==pytest.approx(result["wall_seconds"]*29)
+    assert result["deterministic_replay_analysis_passes"]==2
+    assert result["full_workload_estimated_seconds"]==pytest.approx(2*(result["per_pass_regression_estimated_seconds"]+result["per_pass_non_regression_bound_seconds"]))
+    assert {item["K"] for item in inventory["compressed_regression"]}=={2,32,37,42,46,48,50,52,55,60,75}
 
 
 def test_v12_pair_day_sufficient_statistics_match_expanded_reference() -> None:
