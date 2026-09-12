@@ -43,6 +43,19 @@ def _parse(payload:bytes)->pd.DataFrame:
 def _validate_identity(value:str,n:int,name:str)->str:
     if len(value)!=n or not re.fullmatch("[0-9a-f]+",value): raise InvalidResearchRun(f"invalid {name}")
     return value
+
+def _fixed_discovery_spread_pips(eligible: pd.DataFrame) -> float:
+    """Freeze the v12 fixed-spread denominator from positive eligible quotes only."""
+    if "spread_pips" not in eligible.columns:
+        raise InvalidResearchRun("eligible spread population missing")
+    spread = pd.to_numeric(eligible["spread_pips"], errors="coerce").to_numpy(np.float64)
+    positive = spread[np.isfinite(spread) & (spread > 0.0)]
+    if positive.size == 0:
+        raise InvalidResearchRun("fixed discovery spread requires eligible finite strictly-positive observations")
+    fixed = float(np.median(positive))
+    if not np.isfinite(fixed) or fixed <= 0.0:
+        raise InvalidResearchRun("fixed discovery spread is nonpositive")
+    return fixed
 def _environment()->dict:
     return {"python":platform.python_version(),"numpy":np.__version__,"pandas":pd.__version__,"scipy":scipy.__version__,"blas_lapack":np.__config__.CONFIG,"threads":{k:os.environ[k] for k in ("OMP_NUM_THREADS","OPENBLAS_NUM_THREADS","MKL_NUM_THREADS","NUMEXPR_NUM_THREADS")},"pythonhashseed":os.environ.get("PYTHONHASHSEED")}
 def _schema_shape(root:Path,result:dict,schema_name:str="RESULT_MANIFEST.schema.json")->None:
@@ -90,7 +103,7 @@ def _build_rows(root:Path,state:dict,task:dict,byte_reader)->tuple[pd.DataFrame,
         eligible["quote_activity_ratio"]=eligible.recent_quote_count/(eligible.baseline_quote_count/4.0)
         eligible["impulse_abs_pips"]=eligible.impulse_15s_pips.abs()
         boundaries={"vol_q":freeze_quintiles(eligible.recent_micro_volatility_pips),"activity_q":freeze_quintiles(eligible.quote_activity_ratio),"impulse_abs_q":freeze_quintiles(eligible.impulse_abs_pips),"trailing_spread_q":freeze_quintiles(eligible.trailing_median_spread_pips)}
-        fixed=float(np.median(eligible.spread_pips.to_numpy(np.float64)))
+        fixed=_fixed_discovery_spread_pips(eligible)
         rows=prepare_model_rows(eligible,pair=pair,exposure_boundaries=exposure[pair],control_boundaries=boundaries,fixed_discovery_spread_pips=fixed)
         rows["year"]=pd.to_datetime(rows.anchor_utc_ns,unit="ns",utc=True).dt.year
         rows["source_row_ordinal"]=np.arange(len(rows),dtype=np.int64)

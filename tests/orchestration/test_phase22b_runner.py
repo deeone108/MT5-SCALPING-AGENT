@@ -65,6 +65,22 @@ def test_checked_in_state_control_plane_binds_v12_without_loading_data(monkeypat
     assert result["specification_hash"] == runner.SPEC_SHA256 == "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
     assert result["years"] == [2019, 2020, 2021]
 
+
+def test_fixed_discovery_spread_excludes_zero_without_changing_eligible_population() -> None:
+    eligible = pd.DataFrame({"spread_pips": [0.0, 1.0, 3.0], "anchor_utc_ns": [10, 20, 30]})
+    before = eligible.copy(deep=True)
+
+    fixed = runner._fixed_discovery_spread_pips(eligible)
+
+    assert fixed == pytest.approx(2.0)
+    pd.testing.assert_frame_equal(eligible, before)
+    assert len(eligible) == 3  # zero remains eligible for raw-pip estimands
+
+
+@pytest.mark.parametrize("values", [[], [0.0], [0.0, np.nan], [np.nan, np.inf]])
+def test_fixed_discovery_spread_fails_closed_without_positive_finite_population(values: list[float]) -> None:
+    with pytest.raises(runner.InvalidResearchRun, match="strictly-positive"):
+        runner._fixed_discovery_spread_pips(pd.DataFrame({"spread_pips": values}))
 def test_synthetic_runner_e2e_binds_authority_scores_validates_and_publishes(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     root = _synthetic_repository(tmp_path)
     rows = pd.DataFrame({
