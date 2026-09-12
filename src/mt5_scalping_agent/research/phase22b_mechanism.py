@@ -384,7 +384,8 @@ def build_causal_anchor_inputs(ticks: pd.DataFrame, *, pair: str, output_start: 
     past=np.searchsorted(ts,anchors-15_000_000_000,side="right")-1; psafe=np.maximum(past,0); pok=(past>=0)&(anchors-15_000_000_000-ts[psafe]>=0)&(anchors-15_000_000_000-ts[psafe]<=2_000_000_000)&valid
     out.loc[pok,"impulse_15s_pips"]=(mid[current[pok]]-mid[past[pok]])/pip
     eligible=out.causal_failure.isna(); baseline=out.loc[eligible,"spread_pips"].shift(1).rolling(6,min_periods=6).median(); out.loc[eligible,"trailing_median_spread_pips"]=baseline
-    out.loc[eligible & out.trailing_median_spread_pips.isna(),"causal_failure"]="spread_baseline"
+    invalid_baseline = ~np.isfinite(out.trailing_median_spread_pips) | (out.trailing_median_spread_pips <= 0)
+    out.loc[eligible & invalid_baseline,"causal_failure"]="spread_baseline"
     return out
 
 ATTRITION_REASON_ORDER=("current_quote_freshness","future_quote_freshness","spread_baseline","response","exposure","model_predictor")

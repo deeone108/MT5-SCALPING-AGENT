@@ -191,6 +191,45 @@ def test_v12_zero_spread_is_response_specific() -> None:
         assert zero.Y_RAW_ABS_60S_PIPS.notna().all() and zero.Y_CURRENT_SPREAD_UNITS.isna().all()
 
 
+def _constant_mid_ticks_with_anchor_spreads(anchor_spreads: list[float]) -> tuple[pd.DataFrame, pd.Timestamp, pd.Timestamp]:
+    base = pd.Timestamp("2019-01-02T00:00:00Z")
+    times = base.value + np.arange(3_601, dtype=np.int64) * 100_000_000
+    spread_pips = np.full(len(times), 1.0)
+    for offset, value in enumerate(anchor_spreads, start=8):
+        anchor = base.value + offset * 10_000_000_000
+        spread_pips[(times > anchor - 10_000_000_000) & (times <= anchor)] = value
+    mid = np.full(len(times), 1.1)
+    half_spread = spread_pips * 0.0001 / 2
+    ticks = pd.DataFrame({
+        "timestamp_utc_ns": times,
+        "bid": mid - half_spread,
+        "ask": mid + half_spread,
+        "source_row_ordinal": np.arange(len(times)),
+    })
+    start = pd.Timestamp(base.value + 80_000_000_000, unit="ns", tz="UTC")
+    end = pd.Timestamp(start.value + 10_000_000_000 * len(anchor_spreads), unit="ns", tz="UTC")
+    return ticks, start, end
+
+
+def test_v12_nonpositive_trailing_spread_baseline_causes_attrition_then_recovers() -> None:
+    ticks, start, end = _constant_mid_ticks_with_anchor_spreads([0.0] * 7 + [1.0] * 8)
+    out = build_causal_anchor_inputs(ticks, pair="EURUSD", output_start=start, output_end=end)
+
+    assert out.iloc[:10].causal_failure.tolist() == ["spread_baseline"] * 10
+    assert out.iloc[10:].causal_failure.isna().all()
+    assert (out.iloc[:10].trailing_median_spread_pips.fillna(0.0) <= 0).all()
+    assert (out.iloc[10:].trailing_median_spread_pips > 0).all()
+
+
+def test_v12_zero_current_spread_with_positive_baseline_remains_causally_eligible() -> None:
+    ticks, start, end = _constant_mid_ticks_with_anchor_spreads([1.0] * 7 + [0.0, 1.0])
+    out = build_causal_anchor_inputs(ticks, pair="EURUSD", output_start=start, output_end=end)
+    zero = out.iloc[7]
+
+    assert zero.spread_pips == pytest.approx(0.0, abs=1e-12)
+    assert zero.trailing_median_spread_pips == pytest.approx(1.0)
+    assert pd.isna(zero.causal_failure)
+
 def test_v12_streaming_matches_full_concat_across_duplicate_boundary() -> None:
     base=pd.Timestamp("2020-12-31T23:57:00Z").value
     times=base+np.arange(2400,dtype=np.int64)*100_000_000; mid=1.2+np.sin(np.arange(len(times))/13)*.00001
