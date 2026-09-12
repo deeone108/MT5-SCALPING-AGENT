@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "review_id": "PH22B-V12-POST-FAILURE-STAT-REVIEW-002",
+  "task_id": "PH22B-REVIEW-022",
+  "role": "statistical_validator",
+  "verdict": "APPROVED",
+  "reviewed_commit": "613aed3fd69594e062c4ecfee7e52826d6f3a0a4",
+  "specification_canonical_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+  "dataset_root_sha256": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+  "summary": "APPROVED. The REVIEW-020 fixed-discovery-scale blocker is resolved exactly and no frozen statistical semantics or protected authority changed.",
+  "verification": {
+    "fixed_scale": "Uses only eligible finite spread_pips strictly greater than zero; zero observations remain in the eligible anchor population for all response-specific handling; empty/nonfinite/nonpositive positive-population results fail closed.",
+    "baseline": "Nonfinite/nonpositive trailing medians retain spread_baseline after freshness failures and deterministic recovery remains intact.",
+    "missingness": "Zero current spread retains raw, trailing, and fixed-scale outcomes and yields NaN only for Y_CURRENT_SPREAD_UNITS, attributed at response first-failure.",
+    "scope": "Candidate, hypotheses, estimands, pairs, horizon, controls, partitions, tests, thresholds, strategy, execution, and LIVE authority are unchanged.",
+    "control_plane": "PASS: v12, benchmark, catalogs, four pairs, and 2019-2021 bind without data loading."
+  },
+  "tests": [{"name": "focused_synthetic_suite", "result": "PASS", "passed": 135, "failed": 0}, {"name": "finite_positive_fixed_scale", "result": "PASS"}, {"name": "empty_positive_population_fail_closed", "result": "PASS"}, {"name": "no_data_control_plane", "result": "PASS"}, {"name": "git_diff_check", "result": "PASS"}],
+  "findings": [],
+  "limitations": ["Approval is statistical implementation evidence only; QA and Orchestrator gates remain required."],
+  "data_accessed": [],
+  "data_windows_accessed": [],
+  "locator_targets_accessed": false,
+  "protected_contract": {"specification_modified": false, "implementation_modified_by_reviewer": false, "allowed_years": [2019, 2020, 2021], "locked_years": [2022, 2023], "forbidden": "2024+", "strategy_authorized": false, "pnl_authorized": false, "execution_authorized": false, "live_authorized": false},
+  "requested_next_gate": "INDEPENDENT_QA_POST_FAILURE_REVIEW",
+  "reviewed_at_utc": "2026-09-12T13:05:00Z"
+}
