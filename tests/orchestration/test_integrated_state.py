@@ -10,7 +10,7 @@ def test_integrated_project_state_is_valid_and_fail_closed():
     assert state["allowed_data_windows"] == ["2019", "2020", "2021"]
     assert state["locked_data_windows"] == ["2022", "2023"]
     assert state["forbidden_data_windows"] == ["2024+"]
-    assert state["active_tasks"] == ["PH22B-RI-002"]
+    assert state["active_tasks"] == ["PH22B-RI-002", "PH22B-RUNTIME-001"]
     assert state["status"] == "DISCOVERY_RUNNING"
     assert state["phase_status"] == "DISCOVERY_RUNNING"
     assert state["gates"]["implementation"]["status"] == "PASSED"
@@ -78,3 +78,19 @@ def test_phase22b_corrected_implementation_readiness_and_failed_run_provenance()
     assert current["pnl_authorized"] is False
     assert current["execution_authorized"] is False
     assert current["live_authorized"] is False
+
+
+def test_phase22b_runtime_termination_is_permanently_non_scientific():
+    incident = load_json(ROOT / "governance/incidents/PH22B-RUNTIME-TERMINATION-001.json")
+    assert incident["run_id"] == "phase22b_20260912T130732Z"
+    assert incident["classification"] == "INVALID_FAILED_NON_SCIENTIFIC"
+    assert incident["reason"] == "UNKNOWN_UNRECOVERABLE_RUNTIME_TERMINATION"
+    assert incident["scientific_evidence_accepted"] is False
+    assert incident["result_manifest_published"] is False
+    assert incident["run_id_reusable"] is False
+    ledger = validate_ledger(load_json(ROOT / "governance/memory/project_ledger.json"))
+    record = next(x for x in ledger["decisions"] if x["id"] == "PHASE_22B_RUNTIME_TERMINATION_001")
+    assert record["scientific_evidence_accepted"] is False
+    assert record["run_id_reusable"] is False
+    assert record["locked_windows"] == [2022, 2023]
+    assert record["forbidden"] == "2024+"
