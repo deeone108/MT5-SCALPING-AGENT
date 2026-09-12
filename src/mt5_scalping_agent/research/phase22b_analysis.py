@@ -106,6 +106,14 @@ def matrix_only_preflight(blocks:Sequence[DayBlock],schedule:np.ndarray,*,max_fa
         if primary:
             try: linalg.cholesky(a,lower=False,check_finite=True)
             except linalg.LinAlgError: primary=False
+        if not primary:
+            factor=np.vstack([np.sqrt(np.float64(c))*block.R for block,c in zip(blocks,m,strict=True) if c>0])
+            singular=np.linalg.svd(factor,compute_uv=False,full_matrices=False)
+            fallback_rank=int(np.count_nonzero(singular>_RCOND*singular[0])) if singular.size else 0
+            fallback_kappa=float(singular[0]/singular[-1]) if singular.size and singular[-1]>0 else float("inf")
+            fallback_eta_beta=256*_EPS*fallback_kappa; fallback_eta_cov=8192*_EPS*fallback_kappa**2
+            if fallback_rank!=k or fallback_kappa>_CONDITION_CEILING or fallback_eta_beta>=.5 or fallback_eta_cov>=.5:
+                raise InvalidResearchRun("fallback preflight rank/condition/envelope failure")
         paths.append("SPD" if primary else "STACKED_QR_SVD"); kappas.append(kappa)
     count=paths.count("STACKED_QR_SVD"); limit=max_fallbacks if max_fallbacks is not None else max(1,len(schedule)//100)
     if count>limit: raise InvalidResearchRun(f"fallback count {count} exceeds frozen limit {limit}")
@@ -126,10 +134,12 @@ def _compressed_fit(blocks:Sequence[DayBlock],m:np.ndarray,path:str,arrays:tuple
         if fit_rank!=k: raise InvalidResearchRun("fallback fit rank failure")
         bread=(vt.T*(1/s**2))@vt; kappa=float(s[0]/s[-1]); eta_beta,eta_cov=256*_EPS*kappa,8192*_EPS*kappa**2
     else: raise InvalidResearchRun("unknown solver path")
-    # The fallback factor is overdetermined, so its raw residual is not a
-    # backward-error measure.  Check the mathematically identical normal
-    # equations, while path selection remains matrix-only.
-    denominator=np.linalg.norm(a,np.inf)*np.linalg.norm(beta,np.inf)+np.linalg.norm(b,np.inf); rho=0. if denominator==0 else float(np.linalg.norm(a@beta-b,np.inf)/denominator)
+    if path=="STACKED_QR_SVD":
+        residual=matrix@beta-target; gradient=matrix.T@residual
+        denominator=np.linalg.norm(matrix,np.inf)**2*np.linalg.norm(beta,np.inf)+np.linalg.norm(matrix.T@target,np.inf)
+        rho=0. if denominator==0 else float(np.linalg.norm(gradient,np.inf)/denominator)
+    else:
+        denominator=np.linalg.norm(a,np.inf)*np.linalg.norm(beta,np.inf)+np.linalg.norm(b,np.inf); rho=0. if denominator==0 else float(np.linalg.norm(a@beta-b,np.inf)/denominator)
     if rho>256*_EPS*k or eta_beta>=.5 or eta_cov>=.5 or not np.isfinite([rho,eta_beta,eta_cov]).all(): raise InvalidResearchRun("numerical envelope failure")
     aa,bb,_=arrays; scores=bb-np.matmul(aa,beta); meat=np.sum(np.asarray(m,dtype=np.float64)[:,None,None]*(scores[:,:,None]*scores[:,None,:]),axis=0,dtype=np.float64)
     covariance=(g/(g-1))*((n-1)/(n-k))*bread@meat@bread; covariance=(covariance+covariance.T)/2
@@ -181,7 +191,7 @@ def compressed_pair_day_bootstrap(rows: pd.DataFrame, responses: Sequence[str], 
             grouped=frame.groupby(["pair","exposure"],sort=True)[response].agg(["sum","count"]).unstack("exposure")
             eligible=grouped.dropna(subset=[("sum","WIDE"),("sum","TIGHT")])
             if eligible.empty: raise InvalidResearchRun("no eligible pair-day contrast")
-            contrasts[response]=float(np.mean(eligible[("sum","WIDE")]/eligible[("count","WIDE")]-eligible[("sum","TIGHT")]/eligible[("count","TIGHT")]))
+            contrasts[response]=(eligible[("sum","WIDE")]/eligible[("count","WIDE")]-eligible[("sum","TIGHT")]/eligible[("count","TIGHT")]).to_numpy(dtype=np.float64)
         by_year.setdefault(int(year),[]).append(str(day)); days.append((int(year),str(day),contrasts))
     schedule,_=bootstrap_draw_schedule(by_year,resamples=resamples,seed=seed); schedule=schedule.astype(np.int64)
     centers={response:np.empty(resamples) for response in responses}; bounds={response:np.empty((resamples,2)) for response in responses}
@@ -191,7 +201,7 @@ def compressed_pair_day_bootstrap(rows: pd.DataFrame, responses: Sequence[str], 
         for response in responses:
             yearly=[]; yearly_radius=[]
             for year in years:
-                lo,hi=offsets[year]; terms=np.asarray([multiplicity[i]*days[i][2][response] for i in range(lo,hi)],dtype=np.float64); denominator=float(np.sum(multiplicity[lo:hi]))
+                lo,hi=offsets[year]; terms=np.concatenate([np.float64(multiplicity[i])*days[i][2][response] for i in range(lo,hi) if multiplicity[i]>0]); denominator=float(sum(int(multiplicity[i])*len(days[i][2][response]) for i in range(lo,hi)))
                 if denominator<=0: raise InvalidResearchRun("empty logical bootstrap year")
                 total=float(np.sum(terms,dtype=np.float64)); q=2*int(np.count_nonzero(terms)); gamma=(q*_EPS)/(1-q*_EPS) if q*_EPS<.5 else float("inf")
                 yearly.append(total/denominator); yearly_radius.append(gamma*float(np.sum(np.abs(terms),dtype=np.float64))/denominator)
@@ -324,13 +334,11 @@ def _model_inference(rows: pd.DataFrame, contract: Mapping[str, Any], resamples:
     index = compressed["coefficient_names"].index("exposure__WIDE")
     values = compressed["coefficients"][:, index]
     intervals = compressed["coefficient_intervals"][:, index, :]
-    ambiguous = (intervals[:, 0] < 0.0) & (intervals[:, 1] > 0.0)
-    if ambiguous.any():
-        raise InvalidResearchRun("bootstrap p-value interval straddles null boundary")
+    signs=[certified_predicate(bounds,0.0,">=") for bounds in intervals]
     ci_low = certified_quantile(intervals, 0.025)[0]
     ci_high = certified_quantile(intervals, 0.975)[1]
     return {"point": point, "ci_low": ci_low, "ci_high": ci_high, "replicates": int(values.size),
-            "p_one_sided": float((1 + np.count_nonzero(intervals[:, 0] >= 0.0)) / (resamples + 1)),
+            "p_one_sided": float((1 + np.count_nonzero(signs)) / (resamples + 1)),
             "compressed_bootstrap_provenance": compressed["provenance"], "fallback_count": compressed["fallback_count"]}
 
 
@@ -481,14 +489,14 @@ def analyse_stage(rows: pd.DataFrame, spec: Mapping[str, Any], *, bootstrap_resa
     raw_p["H_RAW"] = primary_bootstrap["p_one_sided"]
     ratio_index=complete_cases["M0:Y_CURRENT_SPREAD_UNITS"].index.intersection(complete_cases["M0:Y_FIXED_DISCOVERY_SCALE"].index); ratio_direct=compressed_pair_day_bootstrap(rows.loc[ratio_index],["Y_CURRENT_SPREAD_UNITS","Y_FIXED_DISCOVERY_SCALE"],resamples=bootstrap_resamples,seed=22002)
     ratio_bootstrap,ratio_intervals=certified_ratio_distribution(ratio_direct["centers"]["Y_CURRENT_SPREAD_UNITS"],ratio_direct["intervals"]["Y_CURRENT_SPREAD_UNITS"],ratio_direct["centers"]["Y_FIXED_DISCOVERY_SCALE"],ratio_direct["intervals"]["Y_FIXED_DISCOVERY_SCALE"])
-    if np.any((ratio_intervals[:,0]<4.0)&(ratio_intervals[:,1]>4.0)): raise InvalidResearchRun("normalization ratio interval straddles boundary")
-    raw_p["H_NORM"] = float((1 + np.count_nonzero(ratio_intervals[:,1] < 4.0)) / (bootstrap_resamples + 1))
+    ratio_below=[certified_predicate(bounds,4.0,"<") for bounds in ratio_intervals]
+    raw_p["H_NORM"] = float((1 + np.count_nonzero(ratio_below)) / (bootstrap_resamples + 1))
     denominator_independent = {
-        "raw_m4": m4_diagnostics["Y_RAW_ABS_60S_PIPS"]["point"] <= -0.05 and m4_diagnostics["Y_RAW_ABS_60S_PIPS"]["ci_high"] < 0,
-        "fixed_m4": m4_diagnostics["Y_FIXED_DISCOVERY_SCALE"]["converted_to_pips"]["point"] <= -0.05 and m4_diagnostics["Y_FIXED_DISCOVERY_SCALE"]["converted_to_pips"]["ci_high"] < 0,
-        "trailing_m4": m4_diagnostics["Y_TRAILING_SPREAD_UNITS"]["point"] < 0 and m4_diagnostics["Y_TRAILING_SPREAD_UNITS"]["ci_high"] < 0,
-        "current_spread_m0_negative": outcomes["Y_CURRENT_SPREAD_UNITS"]["M0"]["point"] < 0,
-        "amplification_at_least_four": ratio >= 4.0,
+        "raw_m4": certified_predicate((m4_diagnostics["Y_RAW_ABS_60S_PIPS"]["point"],)*2,-0.05,"<=") and certified_predicate((m4_diagnostics["Y_RAW_ABS_60S_PIPS"]["ci_high"],)*2,0.,"<"),
+        "fixed_m4": certified_predicate((m4_diagnostics["Y_FIXED_DISCOVERY_SCALE"]["converted_to_pips"]["point"],)*2,-0.05,"<=") and certified_predicate((m4_diagnostics["Y_FIXED_DISCOVERY_SCALE"]["converted_to_pips"]["ci_high"],)*2,0.,"<"),
+        "trailing_m4": certified_predicate((m4_diagnostics["Y_TRAILING_SPREAD_UNITS"]["point"],)*2,0.,"<") and certified_predicate((m4_diagnostics["Y_TRAILING_SPREAD_UNITS"]["ci_high"],)*2,0.,"<"),
+        "current_spread_m0_negative": certified_predicate((outcomes["Y_CURRENT_SPREAD_UNITS"]["M0"]["point"],)*2,0.,"<"),
+        "amplification_at_least_four": certified_predicate((ratio,ratio),4.0,">="),
     }
     fdr = {}
     for family in spec["inference"]["multiple_testing"]["families"]:
@@ -642,14 +650,14 @@ def development_gate_truths(stage: Mapping[str, Any], diagnostics: Mapping[str, 
     ci = stage["primary_bootstrap"]
     years = diagnostics["year"]
     return {
-        "raw_effect_minimum": effect_m4 <= -0.05,
-        "raw_ci_below_zero": float(ci.get("ci_high", float("inf"))) < 0,
-        "adjustment_retention": effect_m0 != 0 and effect_m4 < 0 and abs(effect_m4) >= 0.5 * abs(effect_m0),
-        "pair_stability": diagnostics["negative_pair_count"] >= 3 and diagnostics["largest_pair_fraction"] < 0.5,
-        "development_year_stability": all(float(years.get(str(year), 0.0)) < 0 for year in (2019, 2020, 2021)),
-        "session_stability": diagnostics["negative_core_session_count"] >= 3,
-        "day_concentration": diagnostics["top_five_day_fraction"] < 0.5,
-        "month_concentration": diagnostics["largest_month_fraction"] < 0.5,
+        "raw_effect_minimum": certified_predicate((effect_m4,effect_m4),-0.05,"<="),
+        "raw_ci_below_zero": certified_predicate((float(ci.get("ci_high",float("inf"))),)*2,0.,"<"),
+        "adjustment_retention": certified_predicate((abs(effect_m0),)*2,0.,">") and certified_predicate((effect_m4,effect_m4),0.,"<") and certified_predicate((abs(effect_m4)-.5*abs(effect_m0),)*2,0.,">="),
+        "pair_stability": certified_predicate((float(diagnostics["negative_pair_count"]),)*2,3.,">=") and certified_predicate((diagnostics["largest_pair_fraction"],)*2,.5,"<"),
+        "development_year_stability": all(certified_predicate((float(years.get(str(year),0.0)),)*2,0.,"<") for year in (2019,2020,2021)),
+        "session_stability": certified_predicate((float(diagnostics["negative_core_session_count"]),)*2,3.,">="),
+        "day_concentration": certified_predicate((diagnostics["top_five_day_fraction"],)*2,.5,"<"),
+        "month_concentration": certified_predicate((diagnostics["largest_month_fraction"],)*2,.5,"<"),
     }
 
 
@@ -689,12 +697,14 @@ def cluster_robust_score_diagnostic(rows: pd.DataFrame, contract: Mapping[str, A
 def certified_predicate(interval: Sequence[float], boundary: float, operator: str) -> bool:
     low,high=map(float,interval)
     if not np.isfinite([low,high,boundary]).all() or low>high: raise InvalidResearchRun("invalid certified interval")
-    decided={"<":(high<boundary,low>=boundary),"<=":(high<=boundary,low>boundary),">":(low>boundary,high<=boundary),">=":(low>=boundary,high<boundary)}
+    if low <= boundary <= high:
+        raise InvalidResearchRun("certified interval touches or straddles decision boundary")
+    decided={"<":(high<boundary,low>boundary),"<=":(high<boundary,low>boundary),">":(low>boundary,high<boundary),">=":(low>boundary,high<boundary)}
     if operator not in decided: raise InvalidResearchRun("unknown certified predicate")
     yes,no=decided[operator]
     if yes:return True
     if no:return False
-    raise InvalidResearchRun("certified interval straddles decision boundary")
+    raise InvalidResearchRun("certified interval touches or straddles decision boundary")
 
 
 def bootstrap_draw_schedule(year_days: Mapping[int, Sequence[str]],resamples:int=10_000,seed:int=22002):

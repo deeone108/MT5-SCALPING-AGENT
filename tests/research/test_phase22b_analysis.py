@@ -20,6 +20,7 @@ from mt5_scalping_agent.research.phase22b_analysis import (
     bootstrap_draw_schedule,
     deterministic_replay,
     authoritative_result_manifest,
+    development_gate_truths,
     assert_future_perturbation_invariant,
     _cached_daily_block_bootstrap,
     _interaction_strata,
@@ -158,14 +159,17 @@ def test_v9_score_replaces_permutation_and_is_non_gating() -> None:
         stratified_permutation_diagnostic(rows,None,observed=0)
 
 
-@pytest.mark.parametrize(("interval","boundary","operator","expected"),[((-1.,0.),0.,"<=",True),((0.,1.),0.,">=",True),((0.,0.),0.,"<",False),((0.,0.),0.,">",False)])
+@pytest.mark.parametrize(("interval","boundary","operator","expected"),[((-1.,-.1),0.,"<=",True),((.1,1.),0.,">=",True),((.1,1.),0.,"<",False),((-1.,-.1),0.,">",False)])
 def test_v12_inclusive_endpoint_predicates(interval,boundary,operator,expected):
     assert certified_predicate(interval,boundary,operator) is expected
 
 
 def test_v12_straddling_interval_fails_closed_and_schedule_replays():
-    with pytest.raises(InvalidResearchRun,match="straddles"):
+    with pytest.raises(InvalidResearchRun,match="touches or straddles"):
         certified_predicate((-1.,1.),0.,"<=")
+    for interval in ((-1.,0.),(0.,1.),(0.,0.)):
+        with pytest.raises(InvalidResearchRun,match="touches or straddles"):
+            certified_predicate(interval,0.,">=")
     first,h1=bootstrap_draw_schedule({2019:["a","b"],2020:["c"]},resamples=20)
     second,h2=bootstrap_draw_schedule({2020:["c"],2019:["a","b"]},resamples=20)
     np.testing.assert_array_equal(first,second);assert h1==h2 and first.sum(axis=1).tolist()==[3]*20
@@ -350,6 +354,35 @@ def test_v12_pair_day_sufficient_statistics_match_expanded_reference() -> None:
     np.testing.assert_allclose(ratio,2.0,rtol=0,atol=2e-15); assert np.all(bounds[:,0]<=ratio) and np.all(ratio<=bounds[:,1])
 
 
+def test_v12_pair_day_weights_each_eligible_pair_day_equally() -> None:
+    rows=pd.DataFrame([
+        {"year":2019,"utc_day":"a","pair":"EURUSD","exposure":"WIDE","y":10.},
+        {"year":2019,"utc_day":"a","pair":"EURUSD","exposure":"TIGHT","y":0.},
+        {"year":2019,"utc_day":"a","pair":"GBPUSD","exposure":"WIDE","y":20.},
+        {"year":2019,"utc_day":"a","pair":"GBPUSD","exposure":"TIGHT","y":0.},
+        {"year":2019,"utc_day":"b","pair":"EURUSD","exposure":"WIDE","y":0.},
+        {"year":2019,"utc_day":"b","pair":"EURUSD","exposure":"TIGHT","y":0.},
+    ])
+    result=compressed_pair_day_bootstrap(rows,["y"],resamples=30)
+    expanded=_cached_daily_block_bootstrap(rows.assign(anchor_utc_ns=np.arange(len(rows)),source_row_ordinal=np.arange(len(rows))),lambda frame:pair_day_contrast(frame,"y"),resamples=30,seed=22002)
+    np.testing.assert_allclose(result["centers"]["y"],expanded,rtol=0,atol=2e-15)
+    assert 10. in result["centers"]["y"]
+
+
+def test_v12_ratio_and_attenuation_denominator_touch_zero_fail_closed() -> None:
+    with pytest.raises(InvalidResearchRun,match="denominator interval contains zero"):
+        certified_ratio_distribution(np.array([1.]),np.array([[.9,1.1]]),np.array([.1]),np.array([[0.,.2]]))
+    with pytest.raises(InvalidResearchRun,match="denominator interval contains zero"):
+        certified_attenuation_interval(.1,.1,-1.,.01)
+
+
+def test_v12_development_gate_boundary_contact_fails_closed() -> None:
+    stage={"models":{"M0":{"exposure__WIDE":-.1},"M4":{"exposure__WIDE":-.05}},"primary_bootstrap":{"ci_high":-.01}}
+    diagnostics={"year":{"2019":-.1,"2020":-.1,"2021":-.1},"negative_pair_count":4,"largest_pair_fraction":.4,"negative_core_session_count":4,"top_five_day_fraction":.4,"largest_month_fraction":.4}
+    with pytest.raises(InvalidResearchRun,match="touches or straddles"):
+        development_gate_truths(stage,diagnostics)
+
+
 @pytest.mark.parametrize(("n","k","scale"),[(5000,20,1.0),(20000,80,1.0),(5000,20,1e-4)])
 def test_v12_expanded_compressed_fixture_matrix(n:int,k:int,scale:float) -> None:
     rng=np.random.default_rng(1200+k); x=rng.standard_normal((n,k)); x[:,0]=1.; x[:,-1]*=scale; beta_true=rng.standard_normal(k); y=x@beta_true+rng.standard_normal(n)*.1; weights=np.ones(n); labels=np.asarray([f"d{i%20:02d}" for i in range(n)])
@@ -363,3 +396,28 @@ def test_v12_expanded_compressed_fixture_matrix(n:int,k:int,scale:float) -> None
     multiplicity=np.ones(len(blocks),dtype=np.int64); path=matrix_only_preflight(blocks,multiplicity[None,:],max_fallbacks=1)["paths"][0]
     actual,cov,*_=analysis_module._compressed_fit(blocks,multiplicity,path)
     np.testing.assert_allclose(actual,reference.coefficients,rtol=2e-8,atol=2e-8); np.testing.assert_allclose(cov,reference.covariance,rtol=2e-7,atol=2e-7)
+
+
+def _frozen_cross_product_rows(n:int=2400)->pd.DataFrame:
+    rng=np.random.default_rng(2212); pairs=np.array(["EURUSD","GBPUSD","USDJPY","USDCAD"]); quintiles=np.array(["Q1","Q2","Q3","Q4","Q5"]); signs=np.array(["NEG","ZERO","POS"]); sessions=np.array(["ASIAN","LONDON_PRE_OVERLAP","LONDON_NEW_YORK_OVERLAP","NEW_YORK_POST_OVERLAP","OFF_SESSION"]); weekdays=np.array(["MON","TUE","WED","THU","FRI"])
+    frame=pd.DataFrame({"year":2019+np.arange(n)%3,"utc_day":[f"d{i%30:02d}" for i in range(n)],"anchor_utc_ns":np.arange(n,dtype=np.int64),"source_row_ordinal":np.arange(n,dtype=np.int64),"pair":rng.choice(pairs,n),"exposure":rng.choice(["TIGHT","WIDE"],n),"utc_hour":rng.integers(0,24,n),"weekday":rng.choice(weekdays,n),"session":rng.choice(sessions,n),"vol_q":rng.choice(quintiles,n),"activity_q":rng.choice(quintiles,n),"impulse_sign":rng.choice(signs,n),"impulse_abs_q":rng.choice(quintiles,n),"trailing_spread_q":rng.choice(quintiles,n),"recent_micro_volatility_pips":rng.uniform(.01,3,n),"quote_activity_ratio":rng.uniform(.1,4,n),"trailing_median_spread_pips":rng.uniform(.1,3,n),"quote_age_seconds":rng.uniform(0,1,n),"baseline_quote_rate":rng.uniform(.1,10,n),"baseline_micro_volatility_pips":rng.uniform(.01,3,n),"causal_failure":[None]*n})
+    signal=rng.normal(size=n)-.1*(frame.exposure=="WIDE").to_numpy()
+    for j,response in enumerate(("Y_RAW_ABS_60S_PIPS","Y_CURRENT_SPREAD_UNITS","Y_TRAILING_SPREAD_UNITS","Y_FIXED_DISCOVERY_SCALE")): frame[response]=signal+j+rng.normal(0,.01,n)
+    return frame
+
+
+@pytest.mark.parametrize("model_id",["M1","M2","M3","M4","S_SESSION","H_VOL","H_ACTIVITY","H_HOUR","H_SESSION","H_IMPULSE","H_PAIR","H_LIQUIDITY"])
+@pytest.mark.parametrize("response",["Y_RAW_ABS_60S_PIPS","Y_CURRENT_SPREAD_UNITS","Y_TRAILING_SPREAD_UNITS","Y_FIXED_DISCOVERY_SCALE"])
+def test_v12_explicit_frozen_model_response_cross_product(model_id:str,response:str)->None:
+    rows=_frozen_cross_product_rows(); contract={**model_contract(SPEC,model_id),"response":response}; complete,attrition=exact_model_complete_case(rows,contract)
+    assert attrition["response"]==0; x,_,_,names=build_design_matrix(complete,contract); assert names==contract["coefficient_names"] and x.shape[1]==len(names)
+    compressed=compressed_model_bootstrap(complete,contract,resamples=1); expected=_cached_daily_block_bootstrap(complete,lambda sample:analysis_module._model_effect(sample,contract),resamples=1,seed=22002)
+    index=compressed["coefficient_names"].index("exposure__WIDE"); np.testing.assert_allclose(compressed["coefficients"][:,index],expected,rtol=3e-8,atol=3e-8)
+    assert certified_predicate(compressed["coefficient_intervals"][0,index],0.,"<") == bool(expected[0]<0)
+
+
+def test_v12_statistic_specific_missingness_and_attenuation_pair_population()->None:
+    rows=_frozen_cross_product_rows(800); rows.loc[0,"Y_RAW_ABS_60S_PIPS"]=np.nan; rows.loc[1,"Y_CURRENT_SPREAD_UNITS"]=np.nan
+    raw,_=exact_model_complete_case(rows,{**model_contract(SPEC,"M1"),"response":"Y_RAW_ABS_60S_PIPS"}); normalized,_=exact_model_complete_case(rows,{**model_contract(SPEC,"M1"),"response":"Y_CURRENT_SPREAD_UNITS"})
+    assert 0 not in raw.index and 1 in raw.index and 1 not in normalized.index and 0 in normalized.index
+    common=raw.index.intersection(exact_model_complete_case(rows,{**model_contract(SPEC,"M2"),"response":"Y_RAW_ABS_60S_PIPS"})[0].index); assert len(common)==len(raw)
