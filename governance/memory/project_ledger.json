@@ -67,7 +67,8 @@
                                           "GBPUSD",
                                           "USDJPY",
                                           "USDCAD"
-                                      ]
+                                      ],
+                          "reference":  "governance/approvals/PH22B-DEV-2019-2021-AUTH-001.json"
                       },
                       {
                           "id":  "PHASE_22B_IMPLEMENTATION_ATTEMPT_001",
@@ -114,7 +115,34 @@
                           "qa_review_sha256":  "38f2e1d8cfc299a6506f2dfb2ee9a61b16987889429cbe01b5a9ebcbc66ff15c",
                           "v6_preserved":  true,
                           "protected_authority_unchanged":  true,
-                          "next_task":  "PH22B-RI-002"
+                          "next_task":  "PH22B-RI-002",
+                          "reference":  "governance/results/PH22B-RL-010.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_V12_FREEZE_BINDING",
+                          "status":  "APPROVED_FOR_IMPLEMENTATION_REVIEW",
+                          "specification_path":  "research/phase22b_spec_v12.json",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "statistical_review_sha256":  "e50224aff5acefefa4752d5023970c464536b8e620023b483eabc2b0e73d005f",
+                          "qa_review_sha256":  "a828b735e564fa0afbefec67e208fefe5858db08e5c22c1cb0259c6d1386a0a1",
+                          "active_task":  "PH22B-RI-002",
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "phase_advanced":  false,
+                          "data_authority_changed":  false,
+                          "reference":  "governance/tasks/PH22B-RI-002.json"
                       }
                   ],
     "holdout_access_history":  [

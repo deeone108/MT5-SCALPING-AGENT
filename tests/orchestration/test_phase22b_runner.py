@@ -54,6 +54,17 @@ def test_benchmark_evidence_absent_or_mismatched_fails_closed(tmp_path: Path) ->
         runner._verified_benchmark(root)
 
 
+def test_checked_in_state_control_plane_binds_v12_without_loading_data(monkeypatch: pytest.MonkeyPatch) -> None:
+    def forbidden_data_load(*args, **kwargs):
+        raise AssertionError("control-plane validation must not invoke data loading")
+
+    monkeypatch.setattr(runner, "_build_rows", forbidden_data_load)
+    args = argparse.Namespace(repository=ROOT, control_plane_only=True, run_id="", code_version="")
+    result = runner.execute(args, byte_reader=forbidden_data_load)
+    assert result["status"] == "CONTROL_PLANE_VALIDATED_NO_DATA_READ"
+    assert result["specification_hash"] == runner.SPEC_SHA256 == "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+    assert result["years"] == [2019, 2020, 2021]
+
 def test_synthetic_runner_e2e_binds_authority_scores_validates_and_publishes(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     root = _synthetic_repository(tmp_path)
     rows = pd.DataFrame({

@@ -41,7 +41,7 @@
                                "status":  "PASSED"
                            },
                   "freeze":  {
-                                 "evidence_sha256":  "0abab008d273952004f99a0f150852166f272fa7ac1620754410230f830f7c27",
+                                 "evidence_sha256":  "c654e0358e534d70ce7d9d63883f50e3f381731b051a254fa83c0ce0facea2f6",
                                  "reviewer_role":  "research_lead",
                                  "status":  "PASSED"
                              },
@@ -51,7 +51,7 @@
                                          "status":  "PENDING"
                                      },
                   "qa":  {
-                             "evidence_sha256":  "38f2e1d8cfc299a6506f2dfb2ee9a61b16987889429cbe01b5a9ebcbc66ff15c",
+                             "evidence_sha256":  "a828b735e564fa0afbefec67e208fefe5858db08e5c22c1cb0259c6d1386a0a1",
                              "reviewer_role":  "qa_reviewer",
                              "status":  "PASSED"
                          },
@@ -61,7 +61,7 @@
                                  "status":  "NOT_REQUIRED"
                              },
                   "statistics":  {
-                                     "evidence_sha256":  "0abab008d273952004f99a0f150852166f272fa7ac1620754410230f830f7c27",
+                                     "evidence_sha256":  "e50224aff5acefefa4752d5023970c464536b8e620023b483eabc2b0e73d005f",
                                      "reviewer_role":  "statistical_validator",
                                      "status":  "PASSED"
                                  }
@@ -85,7 +85,7 @@
                                          "to":  "PHASE_22B_PENDING_DESIGN"
                                      }
                                  ],
-    "research_spec_hash":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
+    "research_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
     "safety_state":  {
                          "execution_api":  false,
                          "live_activation_requires_human_owner":  true,
@@ -93,7 +93,7 @@
                          "status":  "ENFORCED"
                      },
     "schema_version":  1,
-    "spec_sha256":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
+    "spec_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
     "status":  "IMPLEMENTATION_REVIEW",
     "transitions":  [
                         {
