@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "task_id": "PH22B-REVIEW-018",
+  "phase": "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+  "phase_id": "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+  "assigned_role": "statistical_validator",
+  "objective": "Final independent synthetic-only pre-data statistical review of frozen Phase 22B v12 at remediated head e548dd244812a689b49666e98e56e2b27facddd7.",
+  "inputs": [
+    {"path": "research/phase22b_spec_v12.json", "sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f", "hash_mode": "canonical_json"},
+    {"path": "governance/evidence/PH22B_V12_EXACT_BENCHMARK.json", "sha256": "7bf5c078912545645132d88ab73bf17068d8633f07acc242f56121fc3ca504c5", "hash_mode": "canonical_json"}
+  ],
+  "allowed_paths": ["governance/tasks/PH22B-REVIEW-018.json", "governance/reviews/PH22B-V12-STAT-CODE-REVIEW-004.json", "governance/results/PH22B-REVIEW-018.json"],
+  "forbidden_paths": ["research/", "reports/", "data/", "src/", "scripts/", "tests/", "governance/state/"],
+  "allowed_data_window": [],
+  "allowed_data": [],
+  "required_spec_hash": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+  "required_dataset_hash": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+  "base_commit": "e548dd244812a689b49666e98e56e2b27facddd7",
+  "branch": "task/ph22b-review-018-stat-code",
+  "worktree": "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-review-018-stat-code",
+  "required_tests": ["all REVIEW-016 blockers", "full frozen v12 statistical semantics", "fixed 10000-draw equivalence", "exact two-pass benchmark projection", "state binding", "synthetic focused suite", "manifest schemas"],
+  "required_reviewers": ["qa_reviewer"],
+  "completion_conditions": ["role-owned review and result committed", "APPROVED only with no unresolved blocker", "no locator or market data access"],
+  "status": "REVIEWING",
+  "prohibited_actions": ["modify implementation or frozen specification", "locator targets", "market data", "2022", "2023", "2024+", "strategy", "PnL", "execution", "LIVE"],
+  "required_outputs": ["governance/reviews/PH22B-V12-STAT-CODE-REVIEW-004.json", "governance/results/PH22B-REVIEW-018.json"]
+}
