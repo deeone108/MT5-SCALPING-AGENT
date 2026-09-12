@@ -204,10 +204,19 @@ def guarded_load_monthly_pair_year(
         if not np.isfinite(bid).all() or not np.isfinite(ask).all() or (bid <= 0).any() or (ask <= 0).any() or (ask < bid).any():
             raise OrchestrationError(MANIFEST_INVALID, "invalid monthly quotes")
         frame = frame.copy()
-        frame["source_unit_id"], frame["source_row_ordinal"] = meta["unit_id"], np.arange(len(frame), dtype=np.int64)
+        frame["source_unit_id"] = meta["unit_id"]
+        frame["source_file_row_ordinal"] = np.arange(len(frame), dtype=np.int64)
         record = {"unit_id": str(meta["unit_id"]), "sha256": expected, "locator_authorized": True, "bytes_read": len(payload), "hash_verified_before_parse": True, "parsed_rows": int(len(frame)), "start_utc": str(meta["start_utc"]), "end_utc": str(meta["end_utc"])}
         provenance.append(record)
         if frame_visitor is None: frames.append(frame)
         else: frame_visitor(frame, record)
-    combined = (pd.concat(frames, ignore_index=True).sort_values(["timestamp_utc_ns", "source_unit_id", "source_row_ordinal"], kind="stable").reset_index(drop=True) if frames else pd.DataFrame(columns=["timestamp_utc_ns", "bid", "ask", "source_unit_id", "source_row_ordinal"]))
+    if frames:
+        combined = pd.concat(frames, ignore_index=True).sort_values(
+            ["timestamp_utc_ns", "source_unit_id", "source_file_row_ordinal"], kind="stable"
+        ).reset_index(drop=True)
+        # Stable pair-year ordinal plus immutable source identity preserve the
+        # total order of duplicate timestamps across monthly boundaries.
+        combined["source_row_ordinal"] = np.arange(len(combined), dtype=np.int64)
+    else:
+        combined = pd.DataFrame(columns=["timestamp_utc_ns", "bid", "ask", "source_unit_id", "source_file_row_ordinal", "source_row_ordinal"])
     return combined, provenance

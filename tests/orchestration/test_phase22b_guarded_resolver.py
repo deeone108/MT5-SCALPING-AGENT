@@ -201,3 +201,16 @@ def test_monthly_locator_identity_is_checked_before_reader():
     with pytest.raises(OrchestrationError, match="locator escapes"):
         guarded_load_monthly_pair_year(state=state(), task=tv, year=2019, pair="EURUSD", metadata_catalog_loader=lambda:meta, locator_catalog_loader=lambda:loc, metadata_catalog_sha256=canonical_catalog_hash(meta), locator_catalog_sha256=canonical_catalog_hash(loc), byte_reader=reader, parser=Mock())
     assert reader.call_count == 0
+
+def test_monthly_duplicate_order_retains_unit_identity_and_global_ordinal():
+    import pandas as pd
+    from mt5_scalping_agent.orchestration.data_resolver import guarded_load_monthly_pair_year, canonical_catalog_hash
+    tv, meta, loc, payloads = _monthly_contract()
+    def parser(payload):
+        uid=payload.decode(); month=int(uid[-2:]); start=pd.Timestamp(year=2019,month=month,day=1,tz="UTC").value
+        # Duplicate timestamps within every verified unit exercise physical-row tie order.
+        return pd.DataFrame({"timestamp_utc_ns":pd.Series([start,start],dtype="int64"),"bid":pd.Series([1.0,1.01],dtype="float64"),"ask":pd.Series([1.1,1.11],dtype="float64")})
+    frame,_=guarded_load_monthly_pair_year(state=state(),task=tv,year=2019,pair="EURUSD",metadata_catalog_loader=lambda:meta,locator_catalog_loader=lambda:loc,metadata_catalog_sha256=canonical_catalog_hash(meta),locator_catalog_sha256=canonical_catalog_hash(loc),byte_reader=lambda key:payloads[key],parser=parser)
+    assert frame.source_row_ordinal.tolist()==list(range(24))
+    assert frame.source_file_row_ordinal.tolist()==[0,1]*12
+    assert frame.source_unit_id.tolist()==[f"EURUSD-2019-{month:02d}" for month in range(1,13) for _ in range(2)]

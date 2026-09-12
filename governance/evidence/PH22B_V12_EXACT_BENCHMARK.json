@@ -1,0 +1,41 @@
+{
+  "artifact_id": "PH22B_V12_EXACT_BENCHMARK",
+  "schema_version": 1,
+  "specification_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+  "originating_implementation_commit": "b6a8729c7ea8292163851f37906eb59e04a8cbfe",
+  "command": "benchmark_compressed_bootstrap(resamples=10000, days=1096, k=80, fallback_count=100)",
+  "configuration": {
+    "resamples": 10000,
+    "utc_day_blocks": 1096,
+    "coefficient_count": 80,
+    "fallback_count": 100,
+    "seed": 22002
+  },
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.10",
+    "numpy": "2.5.2",
+    "pandas": "2.3.3",
+    "scipy": "1.18.1",
+    "blas_threads": 1
+  },
+  "measurements": {
+    "wall_seconds": 1471.4557584,
+    "peak_additional_rss_bytes": 549580800,
+    "full_workload_projection_seconds": 33843.4824432,
+    "schedule_sha256": "3338bf2d0ebea5e6c6d95053216b6e6449b1d4d1839d3989501605d768e1910d"
+  },
+  "limits": {
+    "wall_seconds": 1800.0,
+    "peak_additional_rss_bytes": 4294967296,
+    "full_workload_projection_seconds": 43200.0
+  },
+  "passes": {
+    "wall_time": true,
+    "peak_memory": true,
+    "full_workload_projection": true,
+    "all": true
+  },
+  "data_accessed": [],
+  "no_market_data_accessed": true
+}
