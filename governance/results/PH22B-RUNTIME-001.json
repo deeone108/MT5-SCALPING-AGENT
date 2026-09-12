@@ -1,0 +1,274 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-RUNTIME-001",
+    "role":  "research_implementer",
+    "status":  "COMPLETE",
+    "base_commit":  "1bdeb0c7d287e753d4e0d64aefffd5060f9624d9",
+    "result_commit":  "ebbc92e709563bcacd2e75201ffda6c4efe7d15c",
+    "inputs":  [
+                   {
+                       "sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                       "path":  "research/phase22b_spec_v12.json"
+                   },
+                   {
+                       "sha256":  "e1b52cc0191a9b4be7edc45f50b1b03a219ef010b800b227bdb40bbefee25bed",
+                       "path":  "governance/incidents/PH22B-RUNTIME-TERMINATION-001.json"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "sha256":  "fa884331e8e1b317c036f96b8b8eafd18114a4ab8078506f0b714d01946890f3",
+                          "path":  "src/mt5_scalping_agent/orchestration/runtime_supervisor.py"
+                      },
+                      {
+                          "sha256":  "10700e13aec6eccd94dd16c808a90533f97f5e0fd6a12608bdb7d6c62d6309b4",
+                          "path":  "scripts/run_phase22b_supervised.py"
+                      },
+                      {
+                          "sha256":  "bb407c5f9cefeccf95fd3183e9d215ad1491a12067606c5067a252d90840f182",
+                          "path":  "tests/orchestration/test_runtime_supervisor.py"
+                      }
+                  ],
+    "commands":  [
+                     "python -m pytest tests/orchestration/test_runtime_supervisor.py -q",
+                     "python -m pytest tests/orchestration/test_runtime_supervisor.py tests/orchestration/test_runtime.py tests/orchestration/test_phase22b_runner.py tests/orchestration/test_phase22b_remediation.py -q",
+                     "python -m pytest tests/orchestration tests/research/test_phase22b_analysis.py tests/research/test_phase22b_mechanism.py --tb=short -q"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "durable-stdout-after-caller-interruption",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_stdout_survives_caller_interruption"
+                  },
+                  {
+                      "name":  "durable-stderr-after-caller-interruption",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_stderr_survives_caller_interruption"
+                  },
+                  {
+                      "name":  "persisted-exit-code",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_exit_code_persisted"
+                  },
+                  {
+                      "name":  "abnormal-death-failed-invalid",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_abnormal_death_failed"
+                  },
+                  {
+                      "name":  "missing-result-never-success",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_missing_result_never_success"
+                  },
+                  {
+                      "name":  "partial-publication-not-evidence",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_partial_result_quarantined_not_evidence"
+                  },
+                  {
+                      "name":  "atomic-publication",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_atomic_publication"
+                  },
+                  {
+                      "name":  "run-id-non-reuse",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_run_id_nonreuse"
+                  },
+                  {
+                      "name":  "spec-hash-recorded-validated",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_spec_hash_recorded_and_validated"
+                  },
+                  {
+                      "name":  "code-commit-recorded",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_code_commit_recorded"
+                  },
+                  {
+                      "name":  "authorized-window-recorded",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_authorized_window_recorded"
+                  },
+                  {
+                      "name":  "2022-2023-locked",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_locked_forbidden_windows_rejected[years0,years1]"
+                  },
+                  {
+                      "name":  "2024-plus-forbidden",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_locked_forbidden_windows_rejected[years2,years3]"
+                  },
+                  {
+                      "name":  "restart-no-authority-broadening",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_restart_cannot_broaden_authority"
+                  },
+                  {
+                      "name":  "failed-artifacts-never-promoted",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_failed_artifacts_never_promoted"
+                  },
+                  {
+                      "name":  "monitor-interruption-preserves-worker-provenance",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_monitor_interruption_does_not_own_worker_lifetime"
+                  },
+                  {
+                      "name":  "checkpoint-resume-equivalence-if-implemented",
+                      "passed":  true,
+                      "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_checkpoint_resume_explicitly_disabled"
+                  }
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no market-data or locator access",
+                                  "frozen v12 unchanged",
+                                  "2019-2021 authority recorded; 2022/2023 locked; 2024+ forbidden",
+                                  "no strategy/PnL/execution/LIVE changes",
+                                  "failed run ID not reused"
+                              ],
+    "handoff":  {
+                    "requested_decision":  "independent runtime remediation review",
+                    "limitations":  [
+                                        "no real research rerun before QA approval",
+                                        "checkpoint/resume disabled; clean rerun only"
+                                    ],
+                    "to_role":  "qa_reviewer"
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "21 runtime tests",
+                           "47 targeted tests",
+                           "198 relevant regression tests"
+                       ],
+    "review_status":  [
+                          {
+                              "decision":  "PENDING",
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "end_time":  "2026-09-12T22:19:13.6289733Z",
+    "safety_checks":  [
+                          {
+                              "name":  "no_market_data",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "authority_preserved",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "atomic_publication",
+                              "status":  "PASSED"
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "src/mt5_scalping_agent/orchestration/runtime_supervisor.py",
+                          "src/mt5_scalping_agent/orchestration/__init__.py",
+                          "scripts/run_phase22b_supervised.py",
+                          "tests/orchestration/test_runtime_supervisor.py",
+                          "governance/results/PH22B-RUNTIME-001.json"
+                      ],
+    "test_results":  [
+                         {
+                             "name":  "durable-stdout-after-caller-interruption",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_stdout_survives_caller_interruption"
+                         },
+                         {
+                             "name":  "durable-stderr-after-caller-interruption",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_stderr_survives_caller_interruption"
+                         },
+                         {
+                             "name":  "persisted-exit-code",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_exit_code_persisted"
+                         },
+                         {
+                             "name":  "abnormal-death-failed-invalid",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_abnormal_death_failed"
+                         },
+                         {
+                             "name":  "missing-result-never-success",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_missing_result_never_success"
+                         },
+                         {
+                             "name":  "partial-publication-not-evidence",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_partial_result_quarantined_not_evidence"
+                         },
+                         {
+                             "name":  "atomic-publication",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_atomic_publication"
+                         },
+                         {
+                             "name":  "run-id-non-reuse",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_run_id_nonreuse"
+                         },
+                         {
+                             "name":  "spec-hash-recorded-validated",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_spec_hash_recorded_and_validated"
+                         },
+                         {
+                             "name":  "code-commit-recorded",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_code_commit_recorded"
+                         },
+                         {
+                             "name":  "authorized-window-recorded",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_authorized_window_recorded"
+                         },
+                         {
+                             "name":  "2022-2023-locked",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_locked_forbidden_windows_rejected[years0,years1]"
+                         },
+                         {
+                             "name":  "2024-plus-forbidden",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_locked_forbidden_windows_rejected[years2,years3]"
+                         },
+                         {
+                             "name":  "restart-no-authority-broadening",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_restart_cannot_broaden_authority"
+                         },
+                         {
+                             "name":  "failed-artifacts-never-promoted",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_failed_artifacts_never_promoted"
+                         },
+                         {
+                             "name":  "monitor-interruption-preserves-worker-provenance",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_monitor_interruption_does_not_own_worker_lifetime"
+                         },
+                         {
+                             "name":  "checkpoint-resume-equivalence-if-implemented",
+                             "status":  "PASSED",
+                             "evidence":  "tests/orchestration/test_runtime_supervisor.py::test_checkpoint_resume_explicitly_disabled"
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "src/mt5_scalping_agent/orchestration/runtime_supervisor.py":  "fa884331e8e1b317c036f96b8b8eafd18114a4ab8078506f0b714d01946890f3",
+                            "tests/orchestration/test_runtime_supervisor.py":  "bb407c5f9cefeccf95fd3183e9d215ad1491a12067606c5067a252d90840f182",
+                            "scripts/run_phase22b_supervised.py":  "10700e13aec6eccd94dd16c808a90533f97f5e0fd6a12608bdb7d6c62d6309b4"
+                        },
+    "terminal_result":  "RUNTIME_REMEDIATION_COMPLETE_PENDING_INDEPENDENT_QA",
+    "start_time":  "2026-09-12T00:00:00Z",
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}
