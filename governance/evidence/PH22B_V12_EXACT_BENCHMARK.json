@@ -3,13 +3,24 @@
   "schema_version": 1,
   "specification_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
   "originating_implementation_commit": "b6a8729c7ea8292163851f37906eb59e04a8cbfe",
+  "projection_derivation_commit": "53a56368591f173f93b868f5136bb28b4e7567d6",
   "command": "benchmark_compressed_bootstrap(resamples=10000, days=1096, k=80, fallback_count=100)",
   "configuration": {
     "resamples": 10000,
     "utc_day_blocks": 1096,
     "coefficient_count": 80,
     "fallback_count": 100,
-    "seed": 22002
+    "seed": 22002,
+    "compressed_regression_population_count": 24,
+    "non_regression_population_count": 5,
+    "population_count_derivation": {
+      "M0_response_fits": 4,
+      "M4_response_fits_including_fixed_pips": 5,
+      "interaction_fits": 7,
+      "attenuation_before_after_fits": 8,
+      "pair_day_response_populations": 4,
+      "pair_day_normalization_ratio_populations": 1
+    }
   },
   "environment": {
     "platform": "Windows-11-10.0.26200-SP0",
@@ -22,7 +33,9 @@
   "measurements": {
     "wall_seconds": 1471.4557584,
     "peak_additional_rss_bytes": 549580800,
-    "full_workload_projection_seconds": 33843.4824432,
+    "regression_projection_seconds": 35314.9382016,
+    "non_regression_conservative_bound_seconds": 7357.278792,
+    "full_workload_projection_seconds": 42672.2169936,
     "schedule_sha256": "3338bf2d0ebea5e6c6d95053216b6e6449b1d4d1839d3989501605d768e1910d"
   },
   "limits": {
