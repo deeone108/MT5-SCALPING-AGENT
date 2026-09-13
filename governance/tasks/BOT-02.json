@@ -1,24 +1,65 @@
 {
-  "schema_version": 1,
-  "task_id": "BOT-02",
-  "phase_id": "MT5_AI_SCALPING_BOT",
-  "phase": "MT5_AI_SCALPING_BOT",
-  "assigned_role": "qa_reviewer",
-  "base_commit": "30f2670a2b977ba4f0fbb3aa3b2344f8d6374566",
-  "branch": "task/bot-02-strategy-inventory",
-  "worktree": "TO_BE_CREATED_BY_PROJECT_ORCHESTRATOR",
-  "objective": "Complete a factual compatibility inventory of every existing registered strategy without changing, optimizing, evaluating, or inventing strategy logic.",
-  "inputs": [{"path":"docs/PROJECT_COMPONENT_AUDIT.md","sha256":"fc5bea3f7eb70c72c74378621589915e90efe22142831e110a1b13d9f60b97c9"}],
-  "allowed_paths": ["docs/EXISTING_STRATEGY_INVENTORY.md", "governance/results/BOT-02.json"],
-  "forbidden_paths": ["research/", "reports/", "data/", "src/", "scripts/", "config/"],
-  "allowed_data": [],
-  "allowed_data_window": [],
-  "required_spec_hash": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-  "required_dataset_hash": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
-  "required_tests": ["strategy registry completeness", "strategy import and contract tests", "no market-data access", "no strategy mutation"],
-  "required_reviewers": ["qa_reviewer"],
-  "required_outputs": ["docs/EXISTING_STRATEGY_INVENTORY.md", "governance/results/BOT-02.json"],
-  "completion_conditions": ["all registered strategies inventoried", "inputs, timeframes, warmups, state, exits, configuration and instrument assumptions recorded", "no rules or thresholds changed"],
-  "prohibited_actions": ["access market data", "run profitability evaluation", "optimize or invent strategies", "modify strategy source", "start Phase 22B", "submit orders", "enable DEMO or LIVE"],
-  "status": "READY"
+    "schema_version":  1,
+    "task_id":  "BOT-02",
+    "phase_id":  "MT5_AI_SCALPING_BOT",
+    "phase":  "MT5_AI_SCALPING_BOT",
+    "assigned_role":  "qa_reviewer",
+    "base_commit":  "30f2670a2b977ba4f0fbb3aa3b2344f8d6374566",
+    "branch":  "task/bot-02-strategy-inventory",
+    "worktree":  "TO_BE_CREATED_BY_PROJECT_ORCHESTRATOR",
+    "objective":  "Complete a factual compatibility inventory of every existing registered strategy without changing, optimizing, evaluating, or inventing strategy logic.",
+    "inputs":  [
+                   {
+                       "path":  "docs/PROJECT_COMPONENT_AUDIT.md",
+                       "sha256":  "fc5bea3f7eb70c72c74378621589915e90efe22142831e110a1b13d9f60b97c9"
+                   }
+               ],
+    "allowed_paths":  [
+                          "docs/EXISTING_STRATEGY_INVENTORY.md",
+                          "governance/results/BOT-02.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/",
+                            "reports/",
+                            "data/",
+                            "src/",
+                            "scripts/",
+                            "config/"
+                        ],
+    "allowed_data":  [
+
+                     ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "strategy registry completeness",
+                           "strategy import and contract tests",
+                           "no market-data access",
+                           "no strategy mutation"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "required_outputs":  [
+                             "docs/EXISTING_STRATEGY_INVENTORY.md",
+                             "governance/results/BOT-02.json"
+                         ],
+    "completion_conditions":  [
+                                  "all registered strategies inventoried",
+                                  "inputs, timeframes, warmups, state, exits, configuration and instrument assumptions recorded",
+                                  "no rules or thresholds changed"
+                              ],
+    "prohibited_actions":  [
+                               "access market data",
+                               "run profitability evaluation",
+                               "optimize or invent strategies",
+                               "modify strategy source",
+                               "start Phase 22B",
+                               "submit orders",
+                               "enable DEMO or LIVE"
+                           ],
+    "status":  "COMPLETED"
 }

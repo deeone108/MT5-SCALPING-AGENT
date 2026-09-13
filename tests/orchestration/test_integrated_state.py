@@ -10,7 +10,7 @@ def test_integrated_project_state_is_valid_and_fail_closed():
     assert state["allowed_data_windows"] == ["2019", "2020", "2021"]
     assert state["locked_data_windows"] == ["2022", "2023"]
     assert state["forbidden_data_windows"] == ["2024+"]
-    assert state["active_tasks"] == ["BOT-02"]
+    assert state["active_tasks"] == ["BOT-03"]
     assert state["status"] == "PROPOSED"
     assert state["phase_status"] == "PROPOSED"
     assert state["gates"]["implementation"]["status"] == "PASSED"
@@ -21,8 +21,8 @@ def test_integrated_project_state_is_valid_and_fail_closed():
     assert state["research_spec_hash"] == V12_SHA256
     assert state["spec_sha256"] == V12_SHA256
     assert state["current_program"] == "MT5_AI_SCALPING_BOT"
-    assert state["current_milestone"] == "BOT-02"
-    assert state["next_authorized_action"] == "BOT-02_COMPLETE_EXISTING_STRATEGY_INVENTORY"
+    assert state["current_milestone"] == "BOT-03"
+    assert state["next_authorized_action"] == "BOT-03_VERIFY_INTEGRATE_XAU60_STRATEGIES"
     assert state["human_gate_required"] is False
     assert state["preserved_research"]["phase_22b"] == "SUSPENDED_PRESERVED_RESEARCH"
 def test_integrated_ledger_records_accepted_phase22a():

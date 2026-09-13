@@ -1,0 +1,69 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-03",
+    "phase_id":  "MT5_AI_SCALPING_BOT",
+    "phase":  "MT5_AI_SCALPING_BOT",
+    "assigned_role":  "research_implementer",
+    "base_commit":  "01a809805cc134ab37e4d558daade76d711cd1ef",
+    "branch":  "task/bot-03-xau60-verification",
+    "worktree":  "TO_BE_CREATED_BY_PROJECT_ORCHESTRATOR",
+    "objective":  "Verify the supplied XAU-60 source and faithfully integrate concrete existing XAUUSD strategies into project-compatible adapters without inventing or optimizing strategy logic.",
+    "inputs":  [
+                   {
+                       "sha256":  "ff3d60a4d2cde67613ad51bae4a74854f07ed2abc8cb70f23708ee09d1ae120e",
+                       "path":  "docs/EXISTING_STRATEGY_INVENTORY.md"
+                   }
+               ],
+    "allowed_paths":  [
+                          "docs/XAU60_STRATEGY_VERIFICATION.md",
+                          "reports/bot_xau60_inventory.json",
+                          "src/mt5_scalping_agent/strategies/",
+                          "src/mt5_scalping_agent/backtesting/",
+                          "tests/",
+                          "governance/results/BOT-03.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/phase22b_spec_v12.json",
+                            "governance/data_catalogs/",
+                            "data/",
+                            "src/mt5_scalping_agent/execution/",
+                            "src/mt5_scalping_agent/risk/"
+                        ],
+    "allowed_data":  [
+
+                     ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "source provenance and exact-rule verification",
+                           "deterministic adapter unit tests",
+                           "no market-data access",
+                           "no optimization or invented rules"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "required_outputs":  [
+                             "XAU-60 source verification",
+                             "faithful adapters for concrete strategies found",
+                             "BOT-04 handoff"
+                         ],
+    "completion_conditions":  [
+                                  "source inspected rather than README trusted",
+                                  "each hinted strategy marked FOUND or NOT_FOUND_IN_SOURCE",
+                                  "all adaptations documented before evaluation",
+                                  "independent QA required"
+                              ],
+    "prohibited_actions":  [
+                               "invent or optimize strategies",
+                               "run profitability search or tournament",
+                               "access market data",
+                               "reopen Phase 22B",
+                               "submit broker orders",
+                               "enable DEMO or LIVE"
+                           ],
+    "status":  "READY"
+}
