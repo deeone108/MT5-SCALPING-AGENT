@@ -56,6 +56,18 @@ def _fixed_discovery_spread_pips(eligible: pd.DataFrame) -> float:
     if not np.isfinite(fixed) or fixed <= 0.0:
         raise InvalidResearchRun("fixed discovery spread is nonpositive")
     return fixed
+def _private_output_root(args:argparse.Namespace,root:Path,run_id:str,code:str)->Path:
+    candidate=getattr(args,"output_root",None)
+    if candidate is None: raise InvalidResearchRun("supervisor-private output root required")
+    output=candidate.resolve()
+    if output.name!="staging": raise InvalidResearchRun("output root is not supervisor-private staging")
+    identity_path=output.parent/"identity.json"
+    if not identity_path.is_file(): raise InvalidResearchRun("supervisor identity absent")
+    identity=_read_json(identity_path)
+    expected={"run_id":run_id,"task_id":"PH22B-RI-002","specification_hash":SPEC_SHA256,"code_commit":code,"authorized_data_windows":list(YEARS),"authorized_symbols":list(PAIRS)}
+    if any(identity.get(key)!=value for key,value in expected.items()): raise InvalidResearchRun("supervisor identity mismatch")
+    if Path(identity.get("authoritative_binding",{}).get("repository","")).resolve()!=root: raise InvalidResearchRun("supervisor repository binding mismatch")
+    return output
 def _environment()->dict:
     return {"python":platform.python_version(),"numpy":np.__version__,"pandas":pd.__version__,"scipy":scipy.__version__,"blas_lapack":np.__config__.CONFIG,"threads":{k:os.environ[k] for k in ("OMP_NUM_THREADS","OPENBLAS_NUM_THREADS","MKL_NUM_THREADS","NUMEXPR_NUM_THREADS")},"pythonhashseed":os.environ.get("PYTHONHASHSEED")}
 def _schema_shape(root:Path,result:dict,schema_name:str="RESULT_MANIFEST.schema.json")->None:
@@ -123,6 +135,7 @@ def execute(args:argparse.Namespace,*,byte_reader=None)->dict:
     run_id=args.run_id
     if not re.fullmatch(r"phase22b_[0-9]{8}T[0-9]{6}Z",run_id): raise InvalidResearchRun("invalid run id")
     code=_validate_identity(args.code_version,40,"code version")
+    publication_root=_private_output_root(args,root,run_id,code)
     reader=byte_reader or (lambda locator:Path(locator).read_bytes())
     rows,provenance=_build_rows(root,state,task,reader)
     analysis,replay_hash=deterministic_replay(lambda:_analyse(rows,spec))
@@ -131,12 +144,14 @@ def execute(args:argparse.Namespace,*,byte_reader=None)->dict:
     artifact={"schema_version":1,"stage":"2019-2021_RETROSPECTIVE_DEVELOPMENT","specification_sha256":SPEC_SHA256,"dataset_root_sha256":DATASET_ROOT_SHA256,"environment":_environment(),"provenance":{**provenance,"implementation_benchmark":benchmark},"analysis":analysis,"evidence":evidence,"deterministic_replay_sha256":replay_hash}
     artifact_hash=canonical_artifact_hash(artifact)
     artifact["canonical_sha256"]=artifact_hash
-    out=root/"reports/phase22b"/run_id/"development_artifact.json";result_path=root/"governance/results/PH22B-RI-002.json"
-    now=datetime.now(timezone.utc).isoformat();result=authoritative_result_manifest(task=task,base_commit=task["base_commit"],inputs=[{"path":x["path"],"sha256":x["sha256"]} for x in task["inputs"]],artifacts=[{"path":str(out.relative_to(root)).replace('\\','/'),"sha256":artifact_hash}],commands=["python scripts/run_phase22b_development.py --run-id <UTC_ID> --code-version <HEAD_SHA>"],tests=[{"command":"deterministic replay completed byte-identically","passed":True},{"command":"PHASE22B_EVIDENCE and RESULT_MANIFEST schema validation","passed":True}],files_changed=[str(out.relative_to(root)).replace('\\','/'),"governance/results/PH22B-RI-002.json"],start_time=now,end_time=now)
+    artifact_relative=f"reports/phase22b/{run_id}/development_artifact.json"
+    result_relative="governance/results/PH22B-RI-002.json"
+    out=publication_root/artifact_relative;result_path=publication_root/result_relative
+    now=datetime.now(timezone.utc).isoformat();result=authoritative_result_manifest(task=task,base_commit=task["base_commit"],inputs=[{"path":x["path"],"sha256":x["sha256"]} for x in task["inputs"]],artifacts=[{"path":artifact_relative,"sha256":artifact_hash}],commands=["python scripts/run_phase22b_development.py --run-id <UTC_ID> --code-version <HEAD_SHA>"],tests=[{"command":"deterministic replay completed byte-identically","passed":True},{"command":"PHASE22B_EVIDENCE and RESULT_MANIFEST schema validation","passed":True}],files_changed=[artifact_relative,result_relative],start_time=now,end_time=now)
     _schema_shape(root,evidence,"PHASE22B_EVIDENCE.schema.json");_schema_shape(root,result);_atomic_pair(out,artifact,result_path,result)
     return {"status":"DEVELOPMENT_ARTIFACT_FROZEN_PENDING_REVIEW","artifact":str(out),"sha256":artifact_hash,"replay_sha256":replay_hash}
 def parser()->argparse.ArgumentParser:
-    p=argparse.ArgumentParser();p.add_argument("--repository",type=Path,default=Path.cwd());p.add_argument("--control-plane-only",action="store_true");p.add_argument("--run-id",default="");p.add_argument("--code-version",default="");return p
+    p=argparse.ArgumentParser();p.add_argument("--repository",type=Path,default=Path.cwd());p.add_argument("--control-plane-only",action="store_true");p.add_argument("--run-id",default="");p.add_argument("--code-version",default="");p.add_argument("--output-root",type=Path,default=None);return p
 def main()->int:
     try: print(json.dumps(execute(parser().parse_args()),indent=2,sort_keys=True));return 0
     except Exception as exc: print(json.dumps({"status":"PHASE_22B_INVALID_RESEARCH_RUN","error":str(exc)}),file=sys.stderr);return 2

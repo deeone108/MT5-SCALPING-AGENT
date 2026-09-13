@@ -102,7 +102,11 @@ def test_synthetic_runner_e2e_binds_authority_scores_validates_and_publishes(tmp
     monkeypatch.setattr(runner, "stability_diagnostics", lambda *args, **kwargs: diagnostics)
     monkeypatch.setattr(runner, "development_gate_truths", lambda *args, **kwargs: {"synthetic": True})
     monkeypatch.setattr(runner, "model_contract", lambda *args, **kwargs: {"response": "Y_RAW_ABS_60S_PIPS", "predictors": ["intercept", "exposure__WIDE"], "coefficient_names": ["intercept", "exposure__WIDE"]})
-    args = argparse.Namespace(repository=root, control_plane_only=False, run_id="phase22b_20260912T120000Z", code_version="d" * 40)
+    run_id="phase22b_20260912T120000Z"; code="d" * 40
+    runtime=root/"runtime"/run_id; private=runtime/"staging"; private.mkdir(parents=True)
+    identity={"run_id":run_id,"task_id":"PH22B-RI-002","specification_hash":runner.SPEC_SHA256,"code_commit":code,"authorized_data_windows":list(runner.YEARS),"authorized_symbols":list(runner.PAIRS),"authoritative_binding":{"repository":str(root.resolve())}}
+    (runtime/"identity.json").write_text(json.dumps(identity),encoding="utf-8")
+    args = argparse.Namespace(repository=root, control_plane_only=False, run_id=run_id, code_version=code, output_root=private)
     result = runner.execute(args, byte_reader=lambda locator: (_ for _ in ()).throw(AssertionError("synthetic E2E must not read market data")))
     assert result["status"] == "DEVELOPMENT_ARTIFACT_FROZEN_PENDING_REVIEW"
     artifact = json.loads(Path(result["artifact"]).read_text(encoding="utf-8"))
@@ -110,6 +114,7 @@ def test_synthetic_runner_e2e_binds_authority_scores_validates_and_publishes(tmp
     assert score["role"].endswith("NON_GATING") and artifact["analysis"]["diagnostic_provenance"]["included_in_advancement_or_fdr"] is False
     assert artifact["provenance"]["implementation_benchmark"]["canonical_sha256"] == runner.BENCHMARK_SHA256
     assert artifact["evidence"]["provenance_hashes"]["implementation_benchmark"] == runner.BENCHMARK_SHA256
-    assert (root / "governance/results/PH22B-RI-002.json").is_file()
+    assert (private / "governance/results/PH22B-RI-002.json").is_file()
+    assert not (root / "governance/results/PH22B-RI-002.json").exists()
     with pytest.raises(runner.InvalidResearchRun, match="immutable publication"):
         runner.execute(args, byte_reader=lambda locator: b"")
