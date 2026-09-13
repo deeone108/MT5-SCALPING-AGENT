@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "task_id": "PH22B-REVIEW-026",
+  "phase_id": "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+  "phase": "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+  "assigned_role": "qa_reviewer",
+  "base_commit": "18ac77c4f59d9121778d2564f044fa6bba4c1946",
+  "branch": "task/ph22b-runtime-001-qa2",
+  "worktree": "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-runtime-001-qa2",
+  "objective": "Independently review the corrected Phase 22B durable-runtime implementation at c5351f81c2a0e8df6591559c5274b85b5b85aa08 without market-data access or implementation edits.",
+  "inputs": [
+    {
+      "path": "governance/tasks/PH22B-RUNTIME-001.json",
+      "sha256": "3caa3e3377021d1033de8a5ff8f106a07a4907a9a7a332da5323889692293a39",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "governance/results/PH22B-RUNTIME-001.json",
+      "sha256": "16da655302ad2444561d2e961cd30aa167f75df2aebc563141bb23dfe78a58e5",
+      "hash_mode": "raw_bytes"
+    },
+    {
+      "path": "research/phase22b_spec_v12.json",
+      "sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+      "hash_mode": "canonical_json"
+    }
+  ],
+  "allowed_paths": [
+    "governance/tasks/PH22B-REVIEW-026.json",
+    "governance/reviews/PH22B-RUNTIME-001-QA2.json",
+    "governance/results/PH22B-REVIEW-026.json",
+    "governance/state/project_state.json",
+    "governance/memory/project_ledger.json"
+  ],
+  "forbidden_paths": [
+    "research/",
+    "reports/",
+    "data/",
+    "src/",
+    "scripts/",
+    "tests/",
+    "governance/data_catalogs/phase22b_2019_2021_locators.json"
+  ],
+  "allowed_data": [],
+  "allowed_data_window": [],
+  "required_spec_hash": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+  "required_dataset_hash": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+  "required_tests": [
+    "focused durable-runtime suite",
+    "orchestration/governance suite",
+    "complete repository suite",
+    "schema and clean-worktree validation"
+  ],
+  "required_reviewers": ["qa_reviewer"],
+  "required_outputs": [
+    "independent QA review",
+    "schema-valid result manifest",
+    "authoritative next action"
+  ],
+  "completion_conditions": [
+    "session independence and durable provenance verified",
+    "atomic validated publication verified",
+    "failed-run quarantine and authority preservation verified",
+    "scientific specification remains unchanged",
+    "QA verdict committed"
+  ],
+  "prohibited_actions": [
+    "access market data or locator files",
+    "modify runtime implementation or frozen specification",
+    "launch Phase 22B research",
+    "unlock 2022/2023 or access 2024+",
+    "change strategy, PnL, execution, or LIVE authority"
+  ],
+  "status": "REVIEWING"
+}
