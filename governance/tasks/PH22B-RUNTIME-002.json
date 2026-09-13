@@ -1,4 +1,4 @@
-{
+﻿{
     "schema_version":  1,
     "task_id":  "PH22B-RUNTIME-002",
     "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
@@ -70,5 +70,5 @@
                                "change data authority",
                                "authorize strategy, PnL, execution, or LIVE"
                            ],
-    "status":  "IMPLEMENTED"
+    "status":  "COMPLETED"
 }
