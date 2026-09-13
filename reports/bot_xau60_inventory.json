@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "task_id": "BOT-03",
+  "baseline_commit": "d041841f1a213cb96dcb0bedbc1c1968555e34dd",
+  "status": "BLOCKED_SOURCE_NOT_AVAILABLE",
+  "tracked_xau60_source_found": false,
+  "stash_restored": false,
+  "market_data_accessed": false,
+  "strategies": [
+    {"name":"SMC Scalper v2.1","source_status":"NOT_FOUND_IN_SOURCE","integration_status":"NOT_INTEGRATED"},
+    {"name":"Trend Break + Trauma + RSI v2.1","source_status":"NOT_FOUND_IN_SOURCE","integration_status":"NOT_INTEGRATED"},
+    {"name":"CRT + TBS v2.1","source_status":"NOT_FOUND_IN_SOURCE","integration_status":"NOT_INTEGRATED"}
+  ],
+  "preserved_extraction": {
+    "historical_commit": "663cf48",
+    "files": ["external_hypotheses_registry.py", "external_repo_features.py", "signal_quality.py"],
+    "classification": "EXTRACTION_ONLY_UNTESTED_NOT_APPROVED_FOR_INTEGRATION",
+    "concrete_strategy_count": 0,
+    "license_provenance_resolved": false
+  },
+  "required_unblock": "FROZEN_XAU60_SOURCE_SNAPSHOT_WITH_COMMIT_PATH_LICENSE_AND_HASH_MANIFEST",
+  "next_authorized_action": "HUMAN_GATE_REQUIRED_PROVIDE_OR_AUTHORIZE_XAU60_SOURCE_SNAPSHOT"
+}
