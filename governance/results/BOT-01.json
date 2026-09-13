@@ -1,1 +1,92 @@
-{"schema_version":1,"task_id":"BOT-01","role":"qa_reviewer","status":"COMPLETE","base_commit":"54cf5e49404534b9efdb992a804d83dc6e3c5944","result_commit":null,"inputs":[{"path":"docs/PRESERVED_RESEARCH_INDEX.md","sha256":"47df5baef39324108440c56ac4e060cffb3b90e7fc6804b0ea10af129f322d0c"}],"artifacts":[{"path":"docs/PROJECT_COMPONENT_AUDIT.md","sha256":"fc5bea3f7eb70c72c74378621589915e90efe22142831e110a1b13d9f60b97c9"}],"commands":["tracked source/test/config/governance/metadata inspection","focused pytest suite"],"tests":[{"name":"focused BOT-01 verification","status":"PASSED","passed":57,"failed":0}],"data_accessed":[],"prohibitions_verified":["no market-data rows","no broker operations","no strategy/science changes","Phase 22 family inactive","LIVE false"],"handoff":{"to_role":"project_orchestrator","requested_decision":"BOT-02_COMPLETE_EXISTING_STRATEGY_INVENTORY","limitations":["metadata-only inventory","external extracted implementation absent from tracked baseline"]},"data_windows_accessed":[],"tests_executed":["57 focused strategy/backtester/risk/MT5/orchestration tests"],"review_status":[{"reviewer":"qa_reviewer","status":"COMPLETE"}],"end_time":"2026-09-14T00:00:00+00:00","safety_checks":[{"check":"orders","status":"NONE"},{"check":"authority","status":"UNCHANGED"}],"dataset_hash_used":"ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91","files_changed":["docs/PROJECT_COMPONENT_AUDIT.md","governance/results/BOT-01.json","governance/state/project_state.json","governance/tasks/BOT-01.json"],"test_results":[{"suite":"focused BOT-01","outcome":"PASS","passed":57,"duration_seconds":4.0}],"artifact_hashes":{"docs/PROJECT_COMPONENT_AUDIT.md":"fc5bea3f7eb70c72c74378621589915e90efe22142831e110a1b13d9f60b97c9"},"terminal_result":"BOT-01_COMPLETE","start_time":"2026-09-13T23:00:00+00:00","specification_hash_used":"12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"}
+{
+    "schema_version":  1,
+    "task_id":  "BOT-01",
+    "role":  "qa_reviewer",
+    "status":  "COMPLETE",
+    "base_commit":  "54cf5e49404534b9efdb992a804d83dc6e3c5944",
+    "result_commit":  "30f2670a2b977ba4f0fbb3aa3b2344f8d6374566",
+    "inputs":  [
+                   {
+                       "path":  "docs/PRESERVED_RESEARCH_INDEX.md",
+                       "sha256":  "47df5baef39324108440c56ac4e060cffb3b90e7fc6804b0ea10af129f322d0c"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "path":  "docs/PROJECT_COMPONENT_AUDIT.md",
+                          "sha256":  "fc5bea3f7eb70c72c74378621589915e90efe22142831e110a1b13d9f60b97c9"
+                      }
+                  ],
+    "commands":  [
+                     "tracked source/test/config/governance/metadata inspection",
+                     "focused pytest suite"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "focused BOT-01 verification",
+                      "status":  "PASSED",
+                      "passed":  57,
+                      "failed":  0
+                  }
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no market-data rows",
+                                  "no broker operations",
+                                  "no strategy/science changes",
+                                  "Phase 22 family inactive",
+                                  "LIVE false"
+                              ],
+    "handoff":  {
+                    "to_role":  "project_orchestrator",
+                    "requested_decision":  "BOT-02_COMPLETE_EXISTING_STRATEGY_INVENTORY",
+                    "limitations":  [
+                                        "metadata-only inventory",
+                                        "external extracted implementation absent from tracked baseline"
+                                    ]
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "57 focused strategy/backtester/risk/MT5/orchestration tests"
+                       ],
+    "review_status":  [
+                          {
+                              "reviewer":  "qa_reviewer",
+                              "status":  "COMPLETE"
+                          }
+                      ],
+    "end_time":  "2026-09-14T00:00:00+00:00",
+    "safety_checks":  [
+                          {
+                              "check":  "orders",
+                              "status":  "NONE"
+                          },
+                          {
+                              "check":  "authority",
+                              "status":  "UNCHANGED"
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "docs/PROJECT_COMPONENT_AUDIT.md",
+                          "governance/results/BOT-01.json"
+                      ],
+    "test_results":  [
+                         {
+                             "suite":  "focused BOT-01",
+                             "outcome":  "PASS",
+                             "passed":  57,
+                             "duration_seconds":  4.0
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "docs/PROJECT_COMPONENT_AUDIT.md":  "fc5bea3f7eb70c72c74378621589915e90efe22142831e110a1b13d9f60b97c9"
+                        },
+    "terminal_result":  "BOT-01_COMPLETE",
+    "start_time":  "2026-09-13T23:00:00+00:00",
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}

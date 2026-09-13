@@ -1,6 +1,6 @@
 {
     "active_tasks":  [
-                         "BOT-01"
+                         "BOT-02"
                      ],
     "allowed_data_windows":  [
                                  "2019",
@@ -21,7 +21,8 @@
                             "PH22B-RUNTIME-002",
                             "PH22B-REVIEW-027",
                             "PH22B-ORCH-002",
-                            "BOT-00"
+                            "BOT-00",
+                            "BOT-01"
                         ],
     "current_phase":  "MT5_AI_SCALPING_BOT",
     "data_access":  {
@@ -119,8 +120,8 @@
                     ],
     "master_mission":  "BUILD_A_COMPLETE_SAFE_AUTONOMOUS_MULTI_STRATEGY_MT5_AI_SCALPING_BOT_FOR_DEMO",
     "current_program":  "MT5_AI_SCALPING_BOT",
-    "current_milestone":  "BOT-01",
-    "next_authorized_action":  "BOT-01_REPOSITORY_COMPONENT_AUDIT",
+    "current_milestone":  "BOT-02",
+    "next_authorized_action":  "BOT-02_COMPLETE_EXISTING_STRATEGY_INVENTORY",
     "human_gate_required":  false,
     "preserved_research":  {
                                "phase_22":  "PRESERVED_INACTIVE_RESEARCH",
