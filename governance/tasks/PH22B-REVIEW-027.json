@@ -1,0 +1,90 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-REVIEW-027",
+    "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "assigned_role":  "qa_reviewer",
+    "base_commit":  "97e0bb5531db4248dd4ecbce50fb05a5860a78e9",
+    "branch":  "task/ph22b-review-027-qa",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-review-027-qa",
+    "objective":  "Independently review the Phase 22B supervisor identity type remediation at c26441075ac1984a4364f7d9d55d2ba4c3f29d9a without market-data access, worker launch, or implementation edits.",
+    "inputs":  [
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/tasks/PH22B-RUNTIME-002.json",
+                       "sha256":  "df93ad972a243f931bdfcbb5056c22fb1c95672caf6b628970fcb4bbba5fdb43"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/results/PH22B-RUNTIME-002.json",
+                       "sha256":  "64a3a45e443259c0564fca6b241f68668d5414bdeb74b745eba7c8e2a34c60e8"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-002.json",
+                       "sha256":  "229b670a6f002fd713d972abdd294adaa40336b8f9105aa7eb4a5917d641a236"
+                   },
+                   {
+                       "hash_mode":  "canonical_json",
+                       "path":  "research/phase22b_spec_v12.json",
+                       "sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+                   }
+               ],
+    "allowed_paths":  [
+                          "governance/tasks/PH22B-REVIEW-027.json",
+                          "governance/reviews/PH22B-RUNTIME-002-QA.json",
+                          "governance/results/PH22B-REVIEW-027.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/",
+                            "reports/",
+                            "data/",
+                            "src/",
+                            "scripts/",
+                            "tests/",
+                            "governance/state/",
+                            "governance/memory/",
+                            "governance/data_catalogs/"
+                        ],
+    "allowed_data":  [
+
+                     ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "canonical string-year serialization and one-time integer ingestion",
+                           "malformed, mixed, null, bool, float, duplicate, locked and forbidden values fail closed",
+                           "identity mismatch regressions",
+                           "failed predecessor permanence",
+                           "focused no-data tests",
+                           "orchestration tests",
+                           "complete repository tests",
+                           "schema and clean-worktree validation"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "required_outputs":  [
+                             "independent QA review",
+                             "schema-valid QA result manifest",
+                             "APPROVED or REJECTED verdict"
+                         ],
+    "completion_conditions":  [
+                                  "exact commits reviewed",
+                                  "edge cases independently reproduced",
+                                  "authority and frozen v12 unchanged",
+                                  "review evidence committed"
+                              ],
+    "prohibited_actions":  [
+                               "edit reviewed implementation",
+                               "access market-data catalogs, locators, or data",
+                               "launch Phase 22B science",
+                               "modify frozen v12",
+                               "change data/strategy/PnL/execution/LIVE authority",
+                               "advance phase"
+                           ],
+    "status":  "REVIEWING"
+}
