@@ -10,9 +10,9 @@ def test_integrated_project_state_is_valid_and_fail_closed():
     assert state["allowed_data_windows"] == ["2019", "2020", "2021"]
     assert state["locked_data_windows"] == ["2022", "2023"]
     assert state["forbidden_data_windows"] == ["2024+"]
-    assert state["active_tasks"] == ["PH22B-RI-002"]
-    assert state["status"] == "DISCOVERY_RUNNING"
-    assert state["phase_status"] == "DISCOVERY_RUNNING"
+    assert state["active_tasks"] == ["PH22B-RI-002", "PH22B-RUNTIME-003"]
+    assert state["status"] == "BLOCKED"
+    assert state["phase_status"] == "BLOCKED"
     assert state["gates"]["implementation"]["status"] == "PASSED"
     assert state["gates"]["implementation"]["evidence_sha256"] == "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262"
     assert state["gates"]["runtime_identity"]["status"] == "PASSED"

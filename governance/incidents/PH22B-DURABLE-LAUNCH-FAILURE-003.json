@@ -1,0 +1,37 @@
+{
+    "schema_version":  1,
+    "incident_id":  "PH22B-DURABLE-LAUNCH-FAILURE-003",
+    "run_id":  "phase22b_20260913T172727Z",
+    "classification":  "INVALID_FAILED_NON_SCIENTIFIC",
+    "status":  "INVALID_FAILED_NON_SCIENTIFIC",
+    "reason":  "SUPERVISOR_RELATIVE_STAGING_PATH_RESOLUTION_FAILURE",
+    "exit_code":  2,
+    "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "code_commit":  "c650081b3d7ced6739d63ccfed3967ea51b3ef28",
+    "durable_run_root":  "reports/_durable_runtime/phase22b_20260913T172727Z",
+    "state_sha256":  "3f7a5b414ec6b76c156ae289a9c2cbab84129f20cb3f97bfc98a01df84012eae",
+    "stderr_sha256":  "2829bfaf587ee26d19c6cf393e3993cbaa812557f5dfba165877bd66f910b01d",
+    "durable_stderr":  "supervisor identity absent",
+    "market_data_accessed":  false,
+    "scientific_evidence_accepted":  false,
+    "artifact_published":  false,
+    "run_id_reusable":  false,
+    "authorized_years":  [
+                             "2019",
+                             "2020",
+                             "2021"
+                         ],
+    "locked_years":  [
+                         "2022",
+                         "2023"
+                     ],
+    "forbidden":  [
+                      "2024+"
+                  ],
+    "strategy_authorized":  false,
+    "pnl_authorized":  false,
+    "execution_authorized":  false,
+    "live_authorized":  false,
+    "resolution_class":  "AGENT_RESOLVABLE",
+    "next_authorized_action":  "REMEDIATE_SUPERVISOR_OUTPUT_ROOT_TO_ABSOLUTE_PATH_BEFORE_DETACHED_LAUNCH"
+}

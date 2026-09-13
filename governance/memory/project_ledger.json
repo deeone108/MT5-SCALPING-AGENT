@@ -394,6 +394,29 @@
                           "live_authorized":  false,
                           "next_authorized_action":  "INSPECT_DURABLE_PHASE22B_RUN_TERMINAL_STATE_IN_FUTURE_SESSION",
                           "reference":  "governance/state/phase22b_active_run.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DURABLE_LAUNCH_FAILURE_003",
+                          "status":  "INVALID_FAILED_NON_SCIENTIFIC",
+                          "run_id":  "phase22b_20260913T172727Z",
+                          "reason":  "SUPERVISOR_RELATIVE_STAGING_PATH_RESOLUTION_FAILURE",
+                          "code_commit":  "c650081b3d7ced6739d63ccfed3967ea51b3ef28",
+                          "market_data_accessed":  false,
+                          "scientific_evidence_accepted":  false,
+                          "run_id_reusable":  false,
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "resolution_class":  "AGENT_RESOLVABLE",
+                          "next_authorized_action":  "PH22B-RUNTIME-003",
+                          "reference":  "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-003.json"
                       }
                   ],
     "holdout_access_history":  [
