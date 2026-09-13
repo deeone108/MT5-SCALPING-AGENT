@@ -1,0 +1,155 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-ORCH-001",
+    "role":  "project_orchestrator",
+    "status":  "COMPLETE",
+    "base_commit":  "28955c2df961c9cdfed881e88420450e3d1f3895",
+    "result_commit":  "8fc0ac8773a5915a2cd733e25f816dd249101c0d",
+    "inputs":  [
+                   {
+                       "sha256":  "d47597721c7fac0512746f3b5b341811264c74d75ab3f44225377cb692b6a823",
+                       "path":  "governance/reviews/PH22B-RUNTIME-001-QA2.json"
+                   },
+                   {
+                       "sha256":  "fc85e989e9865a3145cffeb0e08750fc950766a2da52200bbc031f880e86a8f5",
+                       "path":  "governance/results/PH22B-REVIEW-026.json"
+                   },
+                   {
+                       "sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                       "path":  "research/phase22b_spec_v12.json"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "sha256":  "abcdb0c2af2393a32628c28b5d374172741a8980c7061de81db4d18a272562d4",
+                          "path":  "governance/evidence/PH22B-RUNTIME-001-ORCHESTRATOR-ACCEPTANCE.json"
+                      },
+                      {
+                          "sha256":  "2c91ab45ca1ef6f6ad27866808fc0596fea69d5b00b1a6c003995f4cc81639ed",
+                          "path":  "governance/state/project_state.json"
+                      },
+                      {
+                          "sha256":  "2921c4d97b8881265abf62f0538eb1fe203d87bd4c28230dc48a87d91c2d64c3",
+                          "path":  "governance/memory/project_ledger.json"
+                      }
+                  ],
+    "commands":  [
+                     "git commit/linkage and changed-file verification",
+                     "python -m pytest tests/orchestration/test_integrated_state.py -q",
+                     "JSON Schema validation for project state, task manifest, and result manifest",
+                     "ledger/acceptance linkage validation",
+                     "git diff --check"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "integrated_state",
+                      "failed":  0,
+                      "passed":  6
+                  },
+                  {
+                      "name":  "project_state_schema",
+                      "passed":  true
+                  },
+                  {
+                      "name":  "task_manifest_schema",
+                      "passed":  true
+                  },
+                  {
+                      "name":  "result_manifest_schema",
+                      "passed":  true
+                  },
+                  {
+                      "name":  "ledger_acceptance_linkage",
+                      "passed":  true
+                  }
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no market data or locator access",
+                                  "no Phase 22B worker launched",
+                                  "frozen v12 unchanged",
+                                  "2019-2021 authority unchanged; 2022/2023 locked; 2024+ forbidden",
+                                  "no strategy, PnL, broker execution, or LIVE authority changed",
+                                  "failed predecessor remains permanently non-scientific and non-reusable"
+                              ],
+    "handoff":  {
+                    "to_role":  "project_orchestrator",
+                    "requested_decision":  "CREATE_AND_LAUNCH_NEW_DURABLE_PHASE22B_V12_RUN",
+                    "limitations":  [
+                                        "This checkpoint does not launch the worker or access market data.",
+                                        "A fresh run ID is mandatory; phase22b_20260912T130732Z cannot be reused.",
+                                        "Only the existing 2019-2021 development authority applies."
+                                    ]
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "6 integrated state/ledger tests passed",
+                           "project state and task/result JSON schemas passed",
+                           "QA evidence and ledger linkage passed",
+                           "git diff --check passed"
+                       ],
+    "review_status":  [
+                          {
+                              "review_commit":  "303694b9d5f0a8b065e51250887565ddadc1e463",
+                              "verdict":  "QA_APPROVED",
+                              "role":  "qa_reviewer"
+                          },
+                          {
+                              "verdict":  "ACCEPTED",
+                              "acceptance_commit":  "8fc0ac8773a5915a2cd733e25f816dd249101c0d",
+                              "role":  "project_orchestrator"
+                          }
+                      ],
+    "end_time":  "2026-09-13T12:54:03.9368966Z",
+    "safety_checks":  [
+                          {
+                              "name":  "market_data_access",
+                              "status":  "NOT_ACCESSED"
+                          },
+                          {
+                              "name":  "authority_preservation",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "failed_run_quarantine",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "worker_launch",
+                              "status":  "NOT_PERFORMED"
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "governance/tasks/PH22B-ORCH-001.json",
+                          "governance/evidence/PH22B-RUNTIME-001-ORCHESTRATOR-ACCEPTANCE.json",
+                          "governance/state/project_state.json",
+                          "governance/memory/project_ledger.json",
+                          "governance/results/PH22B-ORCH-001.json"
+                      ],
+    "test_results":  [
+                         {
+                             "scope":  "governance_transition",
+                             "failed":  0,
+                             "passed":  6
+                         },
+                         {
+                             "scope":  "schemas_and_linkage",
+                             "failed":  0,
+                             "passed":  4
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "governance/tasks/PH22B-ORCH-001.json":  "ab1bd77fb29f170249fcb2017c06dadd8e9b6d1854fab489882e3e0b5ff52105",
+                            "governance/evidence/PH22B-RUNTIME-001-ORCHESTRATOR-ACCEPTANCE.json":  "abcdb0c2af2393a32628c28b5d374172741a8980c7061de81db4d18a272562d4",
+                            "governance/state/project_state.json":  "2c91ab45ca1ef6f6ad27866808fc0596fea69d5b00b1a6c003995f4cc81639ed",
+                            "governance/memory/project_ledger.json":  "2921c4d97b8881265abf62f0538eb1fe203d87bd4c28230dc48a87d91c2d64c3"
+                        },
+    "terminal_result":  "RUNTIME_REMEDIATION_ACCEPTED_READY_FOR_DURABLE_RUN_LAUNCH",
+    "start_time":  "2026-09-13T12:54:03.9368966Z",
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}
