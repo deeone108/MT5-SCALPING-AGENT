@@ -244,7 +244,7 @@
                                                       "type":  "string"
                                                   },
                        "human_gate_required":  {
-                                                   "const":  false
+                                                   "type":  "boolean"
                                                },
                        "preserved_research":  {
                                                   "type":  "object",

@@ -1,1 +1,101 @@
-{"schema_version":1,"task_id":"BOT-03","role":"research_implementer","status":"BLOCKED","base_commit":"d041841f1a213cb96dcb0bedbc1c1968555e34dd","result_commit":null,"inputs":[{"path":"docs/EXISTING_STRATEGY_INVENTORY.md","sha256":"ff3d60a4d2cde67613ad51bae4a74854f07ed2abc8cb70f23708ee09d1ae120e"}],"artifacts":[{"path":"docs/XAU60_STRATEGY_VERIFICATION.md","sha256":"35abb9e626ad52dc51ae0f7fd84c5a036c05beeb873bc82db4308fc85a589132"},{"path":"reports/bot_xau60_inventory.json","sha256":"d878e4b7d7aa43ead6b70b6f9f74fdd7f1e1316bfe6986ef97327ea697bfa462"}],"commands":["tracked-tree and preserved-stash path inventory","historical committed provenance audit inspection","focused research-registry pytest suite"],"tests":[{"name":"research registry preservation","status":"PASSED","passed":17,"failed":0}],"data_accessed":[],"prohibitions_verified":["no market data","stash not restored","no external source fetched","no strategy invented or optimized","no Phase 22 reopening","no orders or LIVE"],"handoff":{"to_role":"project_orchestrator","requested_decision":"HUMAN_GATE_REQUIRED_PROVIDE_OR_AUTHORIZE_XAU60_SOURCE_SNAPSHOT","limitations":["XAU-60 upstream source absent from tracked baseline and stash","license and exact provenance unresolved","no claimed XAU-60 strategy can be verified or integrated"]},"data_windows_accessed":[],"tests_executed":["17 research registry tests"],"review_status":[{"reviewer":"research_implementer","status":"BLOCKED_SOURCE_NOT_AVAILABLE"}],"end_time":"2026-09-14T02:00:00+00:00","safety_checks":[{"check":"source fidelity","status":"FAIL_CLOSED"},{"check":"market/order authority","status":"UNCHANGED"}],"dataset_hash_used":"ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91","files_changed":["docs/XAU60_STRATEGY_VERIFICATION.md","reports/bot_xau60_inventory.json","governance/results/BOT-03.json"],"test_results":[{"suite":"research registry preservation","outcome":"PASS","passed":17,"duration_seconds":1.8}],"artifact_hashes":{"docs/XAU60_STRATEGY_VERIFICATION.md":"35abb9e626ad52dc51ae0f7fd84c5a036c05beeb873bc82db4308fc85a589132","reports/bot_xau60_inventory.json":"d878e4b7d7aa43ead6b70b6f9f74fdd7f1e1316bfe6986ef97327ea697bfa462"},"terminal_result":"BOT-03_BLOCKED_SOURCE_NOT_AVAILABLE","start_time":"2026-09-14T01:30:00+00:00","specification_hash_used":"12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"}
+{
+    "schema_version":  1,
+    "task_id":  "BOT-03",
+    "role":  "research_implementer",
+    "status":  "BLOCKED",
+    "base_commit":  "d041841f1a213cb96dcb0bedbc1c1968555e34dd",
+    "result_commit":  "f36b9269371575310e9eb112c70a12b11c4651f4",
+    "inputs":  [
+                   {
+                       "path":  "docs/EXISTING_STRATEGY_INVENTORY.md",
+                       "sha256":  "ff3d60a4d2cde67613ad51bae4a74854f07ed2abc8cb70f23708ee09d1ae120e"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "path":  "docs/XAU60_STRATEGY_VERIFICATION.md",
+                          "sha256":  "35abb9e626ad52dc51ae0f7fd84c5a036c05beeb873bc82db4308fc85a589132"
+                      },
+                      {
+                          "path":  "reports/bot_xau60_inventory.json",
+                          "sha256":  "d878e4b7d7aa43ead6b70b6f9f74fdd7f1e1316bfe6986ef97327ea697bfa462"
+                      }
+                  ],
+    "commands":  [
+                     "tracked-tree and preserved-stash path inventory",
+                     "historical committed provenance audit inspection",
+                     "focused research-registry pytest suite"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "research registry preservation",
+                      "status":  "PASSED",
+                      "passed":  17,
+                      "failed":  0
+                  }
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no market data",
+                                  "stash not restored",
+                                  "no external source fetched",
+                                  "no strategy invented or optimized",
+                                  "no Phase 22 reopening",
+                                  "no orders or LIVE"
+                              ],
+    "handoff":  {
+                    "to_role":  "project_orchestrator",
+                    "requested_decision":  "HUMAN_GATE_REQUIRED_PROVIDE_OR_AUTHORIZE_XAU60_SOURCE_SNAPSHOT",
+                    "limitations":  [
+                                        "XAU-60 upstream source absent from tracked baseline and stash",
+                                        "license and exact provenance unresolved",
+                                        "no claimed XAU-60 strategy can be verified or integrated"
+                                    ]
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "17 research registry tests"
+                       ],
+    "review_status":  [
+                          {
+                              "reviewer":  "research_implementer",
+                              "status":  "BLOCKED_SOURCE_NOT_AVAILABLE"
+                          }
+                      ],
+    "end_time":  "2026-09-14T02:00:00+00:00",
+    "safety_checks":  [
+                          {
+                              "check":  "source fidelity",
+                              "status":  "FAIL_CLOSED"
+                          },
+                          {
+                              "check":  "market/order authority",
+                              "status":  "UNCHANGED"
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "docs/XAU60_STRATEGY_VERIFICATION.md",
+                          "reports/bot_xau60_inventory.json",
+                          "governance/results/BOT-03.json"
+                      ],
+    "test_results":  [
+                         {
+                             "suite":  "research registry preservation",
+                             "outcome":  "PASS",
+                             "passed":  17,
+                             "duration_seconds":  1.8
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "docs/XAU60_STRATEGY_VERIFICATION.md":  "35abb9e626ad52dc51ae0f7fd84c5a036c05beeb873bc82db4308fc85a589132",
+                            "reports/bot_xau60_inventory.json":  "d878e4b7d7aa43ead6b70b6f9f74fdd7f1e1316bfe6986ef97327ea697bfa462"
+                        },
+    "terminal_result":  "BOT-03_BLOCKED_SOURCE_NOT_AVAILABLE",
+    "start_time":  "2026-09-14T01:30:00+00:00",
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}

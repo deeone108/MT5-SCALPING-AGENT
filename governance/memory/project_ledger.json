@@ -516,6 +516,21 @@
                           "phase22_reopened":  false,
                           "next_authorized_action":  "BOT-03_VERIFY_INTEGRATE_XAU60_STRATEGIES",
                           "reference":  "docs/EXISTING_STRATEGY_INVENTORY.md"
+                      },
+                      {
+                          "id":  "BOT_03_XAU60_SOURCE_VERIFICATION",
+                          "status":  "BLOCKED_SOURCE_NOT_AVAILABLE",
+                          "evidence_commit":  "f36b9269371575310e9eb112c70a12b11c4651f4",
+                          "verification_sha256":  "35abb9e626ad52dc51ae0f7fd84c5a036c05beeb873bc82db4308fc85a589132",
+                          "inventory_sha256":  "d878e4b7d7aa43ead6b70b6f9f74fdd7f1e1316bfe6986ef97327ea697bfa462",
+                          "source_status":  "NOT_FOUND_IN_TRACKED_BASELINE_OR_PRESERVED_STASH_INVENTORY",
+                          "network_accessed":  false,
+                          "stash_restored":  false,
+                          "strategy_integrated":  false,
+                          "phase22_reopened":  false,
+                          "human_gate_required":  true,
+                          "next_authorized_action":  "HUMAN_GATE_REQUIRED_PROVIDE_OR_AUTHORIZE_XAU60_SOURCE_SNAPSHOT",
+                          "reference":  "docs/XAU60_STRATEGY_VERIFICATION.md"
                       }
                   ],
     "holdout_access_history":  [

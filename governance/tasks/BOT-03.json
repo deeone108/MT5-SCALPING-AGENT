@@ -4,9 +4,9 @@
     "phase_id":  "MT5_AI_SCALPING_BOT",
     "phase":  "MT5_AI_SCALPING_BOT",
     "assigned_role":  "research_implementer",
-    "base_commit":  "01a809805cc134ab37e4d558daade76d711cd1ef",
-    "branch":  "task/bot-03-xau60-verification",
-    "worktree":  "TO_BE_CREATED_BY_PROJECT_ORCHESTRATOR",
+    "base_commit":  "d041841f1a213cb96dcb0bedbc1c1968555e34dd",
+    "branch":  "task/ph22b-runtime-001",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-runtime-001",
     "objective":  "Verify the supplied XAU-60 source and faithfully integrate concrete existing XAUUSD strategies into project-compatible adapters without inventing or optimizing strategy logic.",
     "inputs":  [
                    {
@@ -65,5 +65,5 @@
                                "submit broker orders",
                                "enable DEMO or LIVE"
                            ],
-    "status":  "READY"
+    "status":  "BLOCKED"
 }
