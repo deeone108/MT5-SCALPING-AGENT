@@ -1,0 +1,116 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-RUNTIME-002",
+    "role":  "research_implementer",
+    "status":  "COMPLETE",
+    "base_commit":  "50dfbc2ddde204229407e20d44d16a6cb3c6a0b9",
+    "result_commit":  "c26441075ac1984a4364f7d9d55d2ba4c3f29d9a",
+    "inputs":  [
+                   {
+                       "path":  "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-002.json",
+                       "sha256":  "6267533f28df4b53f3d086d94ddd2e25577ce4ccb7a7dadd7bec9d031b9a16c1"
+                   },
+                   {
+                       "path":  "research/phase22b_spec_v12.json",
+                       "sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "path":  "scripts/run_phase22b_development.py",
+                          "sha256":  "96a7c47fad49eb0537e9b08a086292bb2e8114ee4a376fee4b2e5621bdc7f72a"
+                      },
+                      {
+                          "path":  "tests/orchestration/test_phase22b_runner.py",
+                          "sha256":  "b00c2cf1c3d69d5ecb5d1cc5a6f5d1dd3867489c42512834f4c8fbeff8b12f43"
+                      }
+                  ],
+    "commands":  [
+                     "python -m pytest tests/orchestration/test_phase22b_runner.py tests/orchestration/test_runtime_supervisor.py tests/orchestration/test_phase22b_guarded_resolver.py -q",
+                     "python -m pytest tests/orchestration -q",
+                     "python -m pytest -q --tb=short"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "focused identity and no-data regressions",
+                      "passed":  true,
+                      "evidence":  "71 passed"
+                  },
+                  {
+                      "name":  "orchestration/governance",
+                      "passed":  true,
+                      "evidence":  "117 passed"
+                  },
+                  {
+                      "name":  "complete repository",
+                      "passed":  true,
+                      "evidence":  "658 passed, 13 warnings"
+                  }
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no market-data or locator access",
+                                  "frozen v12 unchanged",
+                                  "2022/2023 locked; 2024+ forbidden",
+                                  "no strategy/PnL/execution/LIVE changes",
+                                  "failed run ID not reused"
+                              ],
+    "handoff":  {
+                    "requested_decision":  "INDEPENDENT_QA_REVIEW_OF_SUPERVISOR_IDENTITY_REMEDIATION",
+                    "limitations":  [
+                                        "no durable research rerun before QA approval"
+                                    ],
+                    "to_role":  "qa_reviewer"
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "71 focused tests passed",
+                           "117 orchestration/governance tests passed",
+                           "658 complete repository tests passed, 13 warnings"
+                       ],
+    "review_status":  [
+                          {
+                              "decision":  "PENDING_INDEPENDENT_QA",
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "end_time":  "2026-09-13T17:05:59.0468829Z",
+    "safety_checks":  [
+                          {
+                              "name":  "no_market_data",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "authority_preserved",
+                              "status":  "PASSED"
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "scripts/run_phase22b_development.py",
+                          "tests/orchestration/test_phase22b_runner.py",
+                          "tests/orchestration/test_integrated_state.py",
+                          "governance/tasks/PH22B-RUNTIME-002.json",
+                          "governance/results/PH22B-RUNTIME-002.json",
+                          "governance/state/project_state.json",
+                          "governance/memory/project_ledger.json"
+                      ],
+    "test_results":  [
+                         {
+                             "name":  "canonical authorization identity",
+                             "status":  "PASSED",
+                             "evidence":  "focused no-data suite"
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "scripts/run_phase22b_development.py":  "96a7c47fad49eb0537e9b08a086292bb2e8114ee4a376fee4b2e5621bdc7f72a",
+                            "tests/orchestration/test_phase22b_runner.py":  "b00c2cf1c3d69d5ecb5d1cc5a6f5d1dd3867489c42512834f4c8fbeff8b12f43"
+                        },
+    "terminal_result":  "SUPERVISOR_IDENTITY_TYPE_MISMATCH_REMEDIATED_PENDING_INDEPENDENT_QA",
+    "start_time":  "2026-09-13T17:45:00Z",
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}

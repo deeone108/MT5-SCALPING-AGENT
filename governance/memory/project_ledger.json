@@ -297,6 +297,37 @@
                           "resolution_class":  "AGENT_RESOLVABLE",
                           "next_authorized_action":  "REMEDIATE_PHASE22B_SUPERVISOR_IDENTITY_TYPE_MISMATCH",
                           "reference":  "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-002.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_SUPERVISOR_IDENTITY_REMEDIATION_002",
+                          "status":  "SUPERVISOR_IDENTITY_TYPE_MISMATCH_REMEDIATED_PENDING_INDEPENDENT_QA",
+                          "implementation_commit":  "c26441075ac1984a4364f7d9d55d2ba4c3f29d9a",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "canonical_serialized_years":  [
+                                                             "2019",
+                                                             "2020",
+                                                             "2021"
+                                                         ],
+                          "canonical_internal_years":  [
+                                                           2019,
+                                                           2020,
+                                                           2021
+                                                       ],
+                          "failed_predecessor_run":  "phase22b_20260913T163443Z",
+                          "failed_predecessor_disposition":  "INVALID_FAILED_NON_SCIENTIFIC_PERMANENTLY_QUARANTINED",
+                          "market_data_accessed":  false,
+                          "scientific_methodology_changed":  false,
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "next_authorized_action":  "INDEPENDENT_QA_REVIEW_OF_SUPERVISOR_IDENTITY_REMEDIATION",
+                          "reference":  "governance/results/PH22B-RUNTIME-002.json"
                       }
                   ],
     "holdout_access_history":  [

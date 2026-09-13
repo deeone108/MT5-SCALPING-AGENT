@@ -21,8 +21,11 @@
     "allowed_paths":  [
                           "scripts/run_phase22b_development.py",
                           "tests/orchestration/test_phase22b_runner.py",
+                          "tests/orchestration/test_integrated_state.py",
                           "governance/tasks/PH22B-RUNTIME-002.json",
-                          "governance/results/PH22B-RUNTIME-002.json"
+                          "governance/results/PH22B-RUNTIME-002.json",
+                          "governance/state/project_state.json",
+                          "governance/memory/project_ledger.json"
                       ],
     "forbidden_paths":  [
                             "research/",
@@ -40,9 +43,12 @@
     "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
     "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
     "required_tests":  [
-                           "string-normalized supervisor identity",
-                           "integer identity rejected",
-                           "no-market-data regression"
+                           "canonical string-year serialization and integer-domain ingestion",
+                           "malformed and mixed year types fail closed",
+                           "2019-2021 exact authority; 2022/2023 locked; 2024+ forbidden",
+                           "specification, symbol, task, and run identity mismatches fail closed",
+                           "no-market-data regression",
+                           "failed predecessor remains quarantined"
                        ],
     "required_reviewers":  [
                                "qa_reviewer"
@@ -64,5 +70,5 @@
                                "change data authority",
                                "authorize strategy, PnL, execution, or LIVE"
                            ],
-    "status":  "READY"
+    "status":  "IMPLEMENTED"
 }

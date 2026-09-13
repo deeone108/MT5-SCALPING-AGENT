@@ -10,12 +10,12 @@ def test_integrated_project_state_is_valid_and_fail_closed():
     assert state["allowed_data_windows"] == ["2019", "2020", "2021"]
     assert state["locked_data_windows"] == ["2022", "2023"]
     assert state["forbidden_data_windows"] == ["2024+"]
-    assert state["active_tasks"] == ["PH22B-RI-002", "PH22B-RUNTIME-001"]
-    assert state["status"] == "DISCOVERY_RUNNING"
-    assert state["phase_status"] == "DISCOVERY_RUNNING"
+    assert state["active_tasks"] == ["PH22B-RI-002", "PH22B-RUNTIME-001", "PH22B-RUNTIME-002"]
+    assert state["status"] == "BLOCKED"
+    assert state["phase_status"] == "BLOCKED"
     assert state["gates"]["implementation"]["status"] == "PASSED"
     assert state["gates"]["implementation"]["evidence_sha256"] == "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262"
-    assert state["last_validated_commit"] == "613aed3fd69594e062c4ecfee7e52826d6f3a0a4"
+    assert state["last_validated_commit"] == "c26441075ac1984a4364f7d9d55d2ba4c3f29d9a"
     assert state["research_spec_hash"] == V12_SHA256
     assert state["spec_sha256"] == V12_SHA256
 def test_integrated_ledger_records_accepted_phase22a():
