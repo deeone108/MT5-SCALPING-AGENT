@@ -1,0 +1,151 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-RUNTIME-004",
+    "role":  "research_implementer",
+    "status":  "COMPLETE",
+    "base_commit":  "6967a0030be82bf2d57e5c6a8b59649f7d10bfe6",
+    "result_commit":  "2171ac2c6d5b7e8f8824faf7d64562164164bf60",
+    "inputs":  [
+                   {
+                       "path":  "governance/incidents/PH22B-DURABLE-RUNTIME-TERMINATION-004.json",
+                       "sha256":  "ae273ce823e74e0c2839de0f31bff1911dc76dde547f8eb856195a92e74e21ee"
+                   },
+                   {
+                       "path":  "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-003.json",
+                       "sha256":  "0255633d920113b3d2940993f2477f11f759b1cd1419a7d7593aff3b63d5bad6"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "path":  "src/mt5_scalping_agent/orchestration/runtime_supervisor.py",
+                          "sha256":  "fcddceb74d02106d05272588a1d3787f8ee2f4fe8081b89ed8818f8caae26abf"
+                      },
+                      {
+                          "path":  "scripts/run_phase22b_supervised.py",
+                          "sha256":  "cd1cc8106bcd9ff0e8686669b1a4938b42e0cc359bda4d80169091f7c7d61307"
+                      },
+                      {
+                          "path":  "scripts/run_phase22b_development.py",
+                          "sha256":  "c17c30d65fe31666e591dfb1c6a4262186a826453bc54b14da214886e9e5df47"
+                      },
+                      {
+                          "path":  "tests/orchestration/test_runtime_supervisor.py",
+                          "sha256":  "31adfd7dcd0f5efcc188c2e1d1e18ea8eaa32714d9fee7bba2fe57a80a00ab7a"
+                      },
+                      {
+                          "path":  "tests/orchestration/test_phase22b_runner.py",
+                          "sha256":  "3dac3831ce4620f1ffcec9f4b5ff3c3afe9ead677448eb05a4c127ca5419ff75"
+                      }
+                  ],
+    "commands":  [
+                     "pytest focused runtime/runner/resolver",
+                     "pytest orchestration",
+                     "pytest complete repository"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "focused runtime identity survival headless",
+                      "passed":  true,
+                      "evidence":  "79 passed"
+                  },
+                  {
+                      "name":  "orchestration/governance",
+                      "passed":  true,
+                      "evidence":  "126 passed"
+                  },
+                  {
+                      "name":  "complete repository",
+                      "passed":  true,
+                      "evidence":  "667 passed, 13 warnings"
+                  }
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no real research launch",
+                                  "no market data/catalog/locator access",
+                                  "frozen v12 unchanged",
+                                  "2022/2023 locked; 2024+ forbidden",
+                                  "no strategy/PnL/execution/LIVE changes",
+                                  "all prior failed run IDs remain non-reusable"
+                              ],
+    "handoff":  {
+                    "requested_decision":  "INDEPENDENT_QA_REVIEW_OF_PHASE22B_DURABLE_RUNTIME_REMEDIATION",
+                    "limitations":  [
+                                        "no real data run before independent QA and Orchestrator acceptance"
+                                    ],
+                    "to_role":  "qa_reviewer"
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "79 focused passed",
+                           "126 orchestration passed",
+                           "667 repository passed with 13 warnings"
+                       ],
+    "review_status":  [
+                          {
+                              "decision":  "PENDING_INDEPENDENT_QA",
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "end_time":  "2026-09-13T18:21:34.9290228Z",
+    "safety_checks":  [
+                          {
+                              "name":  "headless_windows",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "no_market_data",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "authority_unchanged",
+                              "status":  "PASSED"
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "src/mt5_scalping_agent/orchestration/runtime_supervisor.py",
+                          "scripts/run_phase22b_supervised.py",
+                          "scripts/run_phase22b_development.py",
+                          "tests/orchestration/test_runtime_supervisor.py",
+                          "tests/orchestration/test_phase22b_runner.py",
+                          "governance/tasks/PH22B-RUNTIME-004.json",
+                          "governance/results/PH22B-RUNTIME-004.json",
+                          "governance/state/phase22b_active_run.json",
+                          "governance/state/project_state.json",
+                          "governance/memory/project_ledger.json",
+                          "tests/orchestration/test_integrated_state.py"
+                      ],
+    "test_results":  [
+                         {
+                             "scope":  "focused",
+                             "passed":  79,
+                             "failed":  0
+                         },
+                         {
+                             "scope":  "orchestration",
+                             "passed":  126,
+                             "failed":  0
+                         },
+                         {
+                             "scope":  "repository",
+                             "passed":  667,
+                             "failed":  0,
+                             "warnings":  13
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "src/mt5_scalping_agent/orchestration/runtime_supervisor.py":  "fcddceb74d02106d05272588a1d3787f8ee2f4fe8081b89ed8818f8caae26abf",
+                            "scripts/run_phase22b_supervised.py":  "cd1cc8106bcd9ff0e8686669b1a4938b42e0cc359bda4d80169091f7c7d61307",
+                            "scripts/run_phase22b_development.py":  "c17c30d65fe31666e591dfb1c6a4262186a826453bc54b14da214886e9e5df47",
+                            "tests/orchestration/test_runtime_supervisor.py":  "31adfd7dcd0f5efcc188c2e1d1e18ea8eaa32714d9fee7bba2fe57a80a00ab7a",
+                            "tests/orchestration/test_phase22b_runner.py":  "3dac3831ce4620f1ffcec9f4b5ff3c3afe9ead677448eb05a4c127ca5419ff75"
+                        },
+    "terminal_result":  "DURABLE_RUNTIME_SURVIVAL_OUTPUT_BINDING_REMEDIATED_PENDING_INDEPENDENT_QA",
+    "start_time":  "2026-09-13T18:40:00Z",
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}

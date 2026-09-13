@@ -31,7 +31,8 @@
                           "governance/results/PH22B-RUNTIME-004.json",
                           "governance/state/project_state.json",
                           "governance/memory/project_ledger.json",
-                          "tests/orchestration/test_integrated_state.py"
+                          "tests/orchestration/test_integrated_state.py",
+                          "governance/state/phase22b_active_run.json"
                       ],
     "forbidden_paths":  [
                             "research/",
@@ -50,9 +51,12 @@
     "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
     "required_tests":  [
                            "absolute output-root binding across detached cwd",
-                           "durable supervisor/worker survival after launcher exits",
-                           "terminal state persistence",
-                           "no-data preflight",
+                           "Windows headless shell-free supervisor and worker",
+                           "Job Object breakaway and launcher/session independence",
+                           "supervisor and worker identity persistence",
+                           "heartbeat/stdout/stderr survive launcher exit",
+                           "native worker exit produces terminal failure without stale RUNNING",
+                           "missing/malformed/mismatched identity fails before data access",
                            "both failed run IDs remain non-reusable"
                        ],
     "required_reviewers":  [
@@ -76,5 +80,5 @@
                                "reuse failed run IDs",
                                "change data/strategy/PnL/execution/LIVE authority"
                            ],
-    "status":  "READY"
+    "status":  "IMPLEMENTED"
 }

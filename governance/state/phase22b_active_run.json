@@ -50,7 +50,7 @@
     "execution_authorized":  false,
     "live_authorized":  false,
     "monitoring_policy":  "NO_INTERACTIVE_POLLING_RESUME_FROM_DURABLE_STATE",
-    "next_authorized_action":  "DIAGNOSE_AND_REMEDIATE_PHASE22B_DURABLE_SUPERVISOR_PROCESS_SURVIVAL_AND_OUTPUT_ROOT_BINDING",
+    "next_authorized_action":  "INDEPENDENT_QA_REVIEW_OF_PHASE22B_DURABLE_RUNTIME_REMEDIATION",
     "human_gate_required":  false,
     "recorded_at_utc":  "2026-09-13T17:28:30.4081942Z",
     "current_supervisor_alive":  false,

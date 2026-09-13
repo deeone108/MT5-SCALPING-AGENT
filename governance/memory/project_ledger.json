@@ -447,6 +447,32 @@
                           "active_phase22b_processes":  0,
                           "next_authorized_action":  "DIAGNOSE_AND_REMEDIATE_PHASE22B_DURABLE_SUPERVISOR_PROCESS_SURVIVAL_AND_OUTPUT_ROOT_BINDING",
                           "reference":  "governance/tasks/PH22B-RUNTIME-004.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DURABLE_RUNTIME_REMEDIATION_004",
+                          "status":  "IMPLEMENTED_PENDING_INDEPENDENT_QA",
+                          "implementation_commit":  "2171ac2c6d5b7e8f8824faf7d64562164164bf60",
+                          "root_causes":  [
+                                              "relative run/output identity depended on cwd",
+                                              "Windows supervisor lacked Job Object breakaway",
+                                              "supervisor and worker headless behavior was not explicit"
+                                          ],
+                          "remediation":  [
+                                              "one canonical absolute run root across identity/launch/supervisor/worker",
+                                              "CREATE_NO_WINDOW plus CREATE_NEW_PROCESS_GROUP plus CREATE_BREAKAWAY_FROM_JOB",
+                                              "shell=False, stdin DEVNULL, durable stdout/stderr",
+                                              "terminal native exit and stale-state reconciliation tests"
+                                          ],
+                          "failed_runs":  [
+                                              "phase22b_20260913T172656Z",
+                                              "phase22b_20260913T172727Z"
+                                          ],
+                          "both_non_scientific":  true,
+                          "both_non_reusable":  true,
+                          "market_data_accessed":  false,
+                          "scientific_methodology_changed":  false,
+                          "next_authorized_action":  "INDEPENDENT_QA_REVIEW_OF_PHASE22B_DURABLE_RUNTIME_REMEDIATION",
+                          "reference":  "governance/results/PH22B-RUNTIME-004.json"
                       }
                   ],
     "holdout_access_history":  [

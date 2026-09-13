@@ -17,7 +17,7 @@ def test_integrated_project_state_is_valid_and_fail_closed():
     assert state["gates"]["implementation"]["evidence_sha256"] == "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262"
     assert state["gates"]["runtime_identity"]["status"] == "PASSED"
     assert state["gates"]["runtime_identity"]["evidence_sha256"] == "8693daa1b91898cf2b42aa218d52137cbcf7caee40bafa6f09dca07c633c1bb3"
-    assert state["last_validated_commit"] == "c26441075ac1984a4364f7d9d55d2ba4c3f29d9a"
+    assert state["last_validated_commit"] == "2171ac2c6d5b7e8f8824faf7d64562164164bf60"
     assert state["research_spec_hash"] == V12_SHA256
     assert state["spec_sha256"] == V12_SHA256
 def test_integrated_ledger_records_accepted_phase22a():
@@ -110,4 +110,4 @@ def test_phase22b_dual_runtime_failure_reconciliation_is_fail_closed():
     assert first["worker_present_at_reconciliation"] is False
     assert active["state"] == "INVALID"
     assert active["scientific_status"] == "INVALID_FAILED_NON_SCIENTIFIC"
-    assert active["next_authorized_action"] == "DIAGNOSE_AND_REMEDIATE_PHASE22B_DURABLE_SUPERVISOR_PROCESS_SURVIVAL_AND_OUTPUT_ROOT_BINDING"
+    assert active["next_authorized_action"] == "INDEPENDENT_QA_REVIEW_OF_PHASE22B_DURABLE_RUNTIME_REMEDIATION"
