@@ -1,0 +1,32 @@
+{
+    "schema_version":  1,
+    "approval_id":  "AUTONOMOUS-ORCHESTRATION-POLICY-20260913",
+    "authority":  "human_owner",
+    "source_sha256":  "fea1c20b8f691878f0b64d25ad1e01dc4c85e4da409a24373535d4b2e42c094a",
+    "effective_at_utc":  "2026-09-13T17:21:26.6207280Z",
+    "policy":  "Execute complete AGENT_RESOLVABLE remediation, independent-review, Orchestrator-acceptance, and durable-launch chains without human relay; stop only at HUMAN_GATE_REQUIRED or after verified detached launch.",
+    "human_gate_required":  [
+                                "protected data expansion",
+                                "scientific scope or frozen methodology change",
+                                "strategy/PnL/execution/LIVE authority expansion",
+                                "review override or safety weakening"
+                            ],
+    "preserved_boundaries":  {
+                                 "allowed_years":  [
+                                                       "2019",
+                                                       "2020",
+                                                       "2021"
+                                                   ],
+                                 "locked_years":  [
+                                                      "2022",
+                                                      "2023"
+                                                  ],
+                                 "forbidden":  [
+                                                   "2024+"
+                                               ],
+                                 "strategy_authorized":  false,
+                                 "pnl_authorized":  false,
+                                 "execution_authorized":  false,
+                                 "live_authorized":  false
+                             }
+}

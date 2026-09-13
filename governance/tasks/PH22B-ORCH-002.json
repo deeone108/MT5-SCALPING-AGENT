@@ -1,0 +1,77 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-ORCH-002",
+    "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "assigned_role":  "project_orchestrator",
+    "base_commit":  "a9414cd62c1c95ee20f1e5f563710845902fc423",
+    "branch":  "task/ph22b-runtime-001",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-runtime-001",
+    "objective":  "Accept independently approved supervisor identity remediation and authorize one fresh durable Phase 22B v12 run under unchanged authority.",
+    "inputs":  [
+                   {
+                       "path":  "governance/reviews/PH22B-RUNTIME-002-QA.json",
+                       "sha256":  "8693daa1b91898cf2b42aa218d52137cbcf7caee40bafa6f09dca07c633c1bb3"
+                   },
+                   {
+                       "path":  "governance/results/PH22B-REVIEW-027.json",
+                       "sha256":  "3b0209cca0e45e1add35b2c6b9505fb806921c296fa3c2b5ab6a921230974d8b"
+                   },
+                   {
+                       "path":  "governance/approvals/AUTONOMOUS-ORCHESTRATION-POLICY-20260913.json",
+                       "sha256":  "991010025aa092a14af92e9778c9c2ecd3950bc8bf64690aa2b293eadc83de64"
+                   }
+               ],
+    "allowed_paths":  [
+                          "governance/AUTONOMOUS_REMEDIATION.md",
+                          "governance/approvals/AUTONOMOUS-ORCHESTRATION-POLICY-20260913.json",
+                          "governance/tasks/PH22B-ORCH-002.json",
+                          "governance/evidence/PH22B-RUNTIME-002-ORCHESTRATOR-ACCEPTANCE.json",
+                          "governance/results/PH22B-ORCH-002.json",
+                          "governance/state/project_state.json",
+                          "governance/memory/project_ledger.json",
+                          "tests/orchestration/test_integrated_state.py"
+                      ],
+    "forbidden_paths":  [
+                            "research/",
+                            "governance/data_catalogs/",
+                            "src/mt5_scalping_agent/research/",
+                            "src/mt5_scalping_agent/strategies/",
+                            "src/mt5_scalping_agent/execution/"
+                        ],
+    "allowed_data":  [
+
+                     ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "QA evidence linkage",
+                           "governance schemas",
+                           "frozen v12 hash",
+                           "unchanged authority"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "required_outputs":  [
+                             "Orchestrator acceptance evidence",
+                             "launch-ready authoritative state"
+                         ],
+    "completion_conditions":  [
+                                  "QA verdict APPROVED",
+                                  "zero blocking findings",
+                                  "scientific and data authority unchanged",
+                                  "fresh run ID required"
+                              ],
+    "prohibited_actions":  [
+                               "access market data during acceptance",
+                               "modify frozen v12",
+                               "reuse failed run ID",
+                               "unlock 2022/2023 or access 2024+",
+                               "authorize strategy/PnL/execution/LIVE"
+                           ],
+    "status":  "COMPLETED"
+}

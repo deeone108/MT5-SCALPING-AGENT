@@ -328,6 +328,36 @@
                           "live_authorized":  false,
                           "next_authorized_action":  "INDEPENDENT_QA_REVIEW_OF_SUPERVISOR_IDENTITY_REMEDIATION",
                           "reference":  "governance/results/PH22B-RUNTIME-002.json"
+                      },
+                      {
+                          "id":  "AUTONOMOUS_ORCHESTRATION_POLICY_20260913",
+                          "status":  "ACTIVE",
+                          "approval_sha256":  "991010025aa092a14af92e9778c9c2ecd3950bc8bf64690aa2b293eadc83de64",
+                          "agent_resolvable_chaining":  true,
+                          "human_gate_scope":  "authority/scientific scope/reviewer override/safety weakening only",
+                          "reference":  "governance/approvals/AUTONOMOUS-ORCHESTRATION-POLICY-20260913.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_IDENTITY_REMEDIATION_ACCEPTANCE",
+                          "status":  "ACCEPTED_READY_FOR_FRESH_DURABLE_RUN",
+                          "implementation_commit":  "c26441075ac1984a4364f7d9d55d2ba4c3f29d9a",
+                          "qa_verdict":  "APPROVED",
+                          "qa_review_sha256":  "8693daa1b91898cf2b42aa218d52137cbcf7caee40bafa6f09dca07c633c1bb3",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "failed_predecessor":  "phase22b_20260913T163443Z",
+                          "failed_predecessor_disposition":  "INVALID_FAILED_NON_SCIENTIFIC_PERMANENTLY_QUARANTINED",
+                          "next_authorized_action":  "CREATE_AND_LAUNCH_NEW_DURABLE_PHASE22B_V12_RUN",
+                          "reference":  "governance/evidence/PH22B-RUNTIME-002-ORCHESTRATOR-ACCEPTANCE.json"
                       }
                   ],
     "holdout_access_history":  [

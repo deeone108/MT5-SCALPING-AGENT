@@ -1,8 +1,6 @@
 {
     "active_tasks":  [
-                         "PH22B-RI-002",
-                         "PH22B-RUNTIME-001",
-                         "PH22B-RUNTIME-002"
+                         "PH22B-RI-002"
                      ],
     "allowed_data_windows":  [
                                  "2019",
@@ -11,8 +9,7 @@
                              ],
     "base_commit":  "4ae2e3329e23574d66d89278931aeaa6756c7149",
     "blocked_tasks":  [
-                          "PH22B-RI-001",
-                          "PH22B-RI-002"
+                          "PH22B-RI-001"
                       ],
     "candidate_registry_hash":  "cb2995a541ac60bfcb6dde7123f5981af0892e044ef7b12278d153287a5862b3",
     "completed_tasks":  [
@@ -20,7 +17,10 @@
                             "PH22B-RL-010",
                             "PH22B-RUNTIME-001",
                             "PH22B-REVIEW-026",
-                            "PH22B-ORCH-001"
+                            "PH22B-ORCH-001",
+                            "PH22B-RUNTIME-002",
+                            "PH22B-REVIEW-027",
+                            "PH22B-ORCH-002"
                         ],
     "current_phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
     "data_access":  {
@@ -70,7 +70,12 @@
                                      "evidence_sha256":  "df47de4ea92e4ecfb87ee19b6397c23ca11625745a798f83d57156eabf445604",
                                      "reviewer_role":  "statistical_validator",
                                      "status":  "PASSED"
-                                 }
+                                 },
+                  "runtime_identity":  {
+                                           "status":  "PASSED",
+                                           "reviewer_role":  "qa_reviewer",
+                                           "evidence_sha256":  "8693daa1b91898cf2b42aa218d52137cbcf7caee40bafa6f09dca07c633c1bb3"
+                                       }
               },
     "last_validated_commit":  "c26441075ac1984a4364f7d9d55d2ba4c3f29d9a",
     "live_execution_authorized":  false,
@@ -80,7 +85,7 @@
                             ],
     "orchestrator":  "project_orchestrator",
     "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
-    "phase_status":  "BLOCKED",
+    "phase_status":  "DISCOVERY_RUNNING",
     "phase_transition_history":  [
                                      {
                                          "at_utc":  "2026-09-10T00:00:00+00:00",
@@ -100,7 +105,7 @@
                      },
     "schema_version":  1,
     "spec_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-    "status":  "BLOCKED",
+    "status":  "DISCOVERY_RUNNING",
     "transitions":  [
                         {
                             "at_utc":  "2026-09-10T00:00:00+00:00",

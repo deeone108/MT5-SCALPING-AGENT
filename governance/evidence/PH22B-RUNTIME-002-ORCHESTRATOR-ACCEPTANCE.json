@@ -1,0 +1,41 @@
+{
+    "schema_version":  1,
+    "acceptance_id":  "PH22B-RUNTIME-002-ORCHESTRATOR-ACCEPTANCE",
+    "role":  "project_orchestrator",
+    "decision":  "ACCEPTED",
+    "implementation_commit":  "c26441075ac1984a4364f7d9d55d2ba4c3f29d9a",
+    "handoff_commit":  "97e0bb5531db4248dd4ecbce50fb05a5860a78e9",
+    "qa_review_commit":  "9e46663575e29c5ab64b83a4aed2e7228bea296d",
+    "qa_result_commit":  "424181d14fe89d6638c759d524a7bc4fd228e2b7",
+    "qa_review_sha256":  "8693daa1b91898cf2b42aa218d52137cbcf7caee40bafa6f09dca07c633c1bb3",
+    "qa_result_sha256":  "3b0209cca0e45e1add35b2c6b9505fb806921c296fa3c2b5ab6a921230974d8b",
+    "qa_verdict":  "APPROVED",
+    "blocking_findings":  0,
+    "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "scientific_methodology_changed":  false,
+    "market_data_accessed":  false,
+    "authority_changed":  false,
+    "allowed_years":  [
+                          "2019",
+                          "2020",
+                          "2021"
+                      ],
+    "locked_years":  [
+                         "2022",
+                         "2023"
+                     ],
+    "forbidden":  [
+                      "2024+"
+                  ],
+    "strategy_authorized":  false,
+    "pnl_authorized":  false,
+    "execution_authorized":  false,
+    "live_authorized":  false,
+    "failed_predecessor":  {
+                               "run_id":  "phase22b_20260913T163443Z",
+                               "disposition":  "INVALID_FAILED_NON_SCIENTIFIC_PERMANENTLY_QUARANTINED",
+                               "reusable":  false
+                           },
+    "next_authorized_action":  "CREATE_AND_LAUNCH_NEW_DURABLE_PHASE22B_V12_RUN",
+    "accepted_at_utc":  "2026-09-13T17:21:26.7581709Z"
+}
