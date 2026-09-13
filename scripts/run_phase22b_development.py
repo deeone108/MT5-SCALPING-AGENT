@@ -44,6 +44,19 @@ def _validate_identity(value:str,n:int,name:str)->str:
     if len(value)!=n or not re.fullmatch("[0-9a-f]+",value): raise InvalidResearchRun(f"invalid {name}")
     return value
 
+def _canonical_authorized_years(value: object, name: str) -> tuple[int, ...]:
+    """Parse the repository JSON string-year contract into integer domain years."""
+    if not isinstance(value, list) or not value:
+        raise InvalidResearchRun(f"invalid {name}")
+    years: list[int] = []
+    for item in value:
+        if not isinstance(item, str) or re.fullmatch(r"[1-9][0-9]{3}", item) is None:
+            raise InvalidResearchRun(f"invalid {name}")
+        years.append(int(item))
+    if len(years) != len(set(years)):
+        raise InvalidResearchRun(f"invalid {name}")
+    return tuple(years)
+
 def _fixed_discovery_spread_pips(eligible: pd.DataFrame) -> float:
     """Freeze the v12 fixed-spread denominator from positive eligible quotes only."""
     if "spread_pips" not in eligible.columns:
@@ -64,8 +77,10 @@ def _private_output_root(args:argparse.Namespace,root:Path,run_id:str,code:str)-
     identity_path=output.parent/"identity.json"
     if not identity_path.is_file(): raise InvalidResearchRun("supervisor identity absent")
     identity=_read_json(identity_path)
-    expected={"run_id":run_id,"task_id":"PH22B-RI-002","specification_hash":SPEC_SHA256,"code_commit":code,"authorized_data_windows":list(YEARS),"authorized_symbols":list(PAIRS)}
+    expected={"run_id":run_id,"task_id":"PH22B-RI-002","specification_hash":SPEC_SHA256,"code_commit":code,"authorized_symbols":list(PAIRS)}
     if any(identity.get(key)!=value for key,value in expected.items()): raise InvalidResearchRun("supervisor identity mismatch")
+    if _canonical_authorized_years(identity.get("authorized_data_windows"), "supervisor authorized data windows") != YEARS:
+        raise InvalidResearchRun("supervisor identity mismatch")
     if Path(identity.get("authoritative_binding",{}).get("repository","")).resolve()!=root: raise InvalidResearchRun("supervisor repository binding mismatch")
     return output
 def _environment()->dict:

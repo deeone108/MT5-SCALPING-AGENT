@@ -104,7 +104,7 @@ def test_synthetic_runner_e2e_binds_authority_scores_validates_and_publishes(tmp
     monkeypatch.setattr(runner, "model_contract", lambda *args, **kwargs: {"response": "Y_RAW_ABS_60S_PIPS", "predictors": ["intercept", "exposure__WIDE"], "coefficient_names": ["intercept", "exposure__WIDE"]})
     run_id="phase22b_20260912T120000Z"; code="d" * 40
     runtime=root/"runtime"/run_id; private=runtime/"staging"; private.mkdir(parents=True)
-    identity={"run_id":run_id,"task_id":"PH22B-RI-002","specification_hash":runner.SPEC_SHA256,"code_commit":code,"authorized_data_windows":list(runner.YEARS),"authorized_symbols":list(runner.PAIRS),"authoritative_binding":{"repository":str(root.resolve())}}
+    identity={"run_id":run_id,"task_id":"PH22B-RI-002","specification_hash":runner.SPEC_SHA256,"code_commit":code,"authorized_data_windows":[str(year) for year in runner.YEARS],"authorized_symbols":list(runner.PAIRS),"authoritative_binding":{"repository":str(root.resolve())}}
     (runtime/"identity.json").write_text(json.dumps(identity),encoding="utf-8")
     args = argparse.Namespace(repository=root, control_plane_only=False, run_id=run_id, code_version=code, output_root=private)
     result = runner.execute(args, byte_reader=lambda locator: (_ for _ in ()).throw(AssertionError("synthetic E2E must not read market data")))
@@ -118,3 +118,62 @@ def test_synthetic_runner_e2e_binds_authority_scores_validates_and_publishes(tmp
     assert not (root / "governance/results/PH22B-RI-002.json").exists()
     with pytest.raises(runner.InvalidResearchRun, match="immutable publication"):
         runner.execute(args, byte_reader=lambda locator: b"")
+
+
+def _private_output_fixture(tmp_path: Path, **identity_updates):
+    root = _synthetic_repository(tmp_path)
+    run_id = "phase22b_20260913T180000Z"
+    code = "e" * 40
+    runtime = root / "runtime" / run_id
+    private = runtime / "staging"
+    private.mkdir(parents=True)
+    identity = {
+        "run_id": run_id, "task_id": "PH22B-RI-002",
+        "specification_hash": runner.SPEC_SHA256, "code_commit": code,
+        "authorized_data_windows": ["2019", "2020", "2021"],
+        "authorized_symbols": list(runner.PAIRS),
+        "authoritative_binding": {"repository": str(root.resolve())},
+    }
+    identity.update(identity_updates)
+    (runtime / "identity.json").write_text(json.dumps(identity), encoding="utf-8")
+    return root, run_id, code, argparse.Namespace(output_root=private)
+
+
+def test_string_year_manifest_round_trip_produces_canonical_integer_domain(tmp_path: Path) -> None:
+    serialized = json.loads(json.dumps({"years": ["2019", "2020", "2021"]}))
+    assert runner._canonical_authorized_years(serialized["years"], "years") == runner.YEARS
+
+
+def test_valid_supervisor_identity_matches_runner_without_data_read(tmp_path: Path) -> None:
+    root, run_id, code, args = _private_output_fixture(tmp_path)
+    assert runner._private_output_root(args, root, run_id, code) == args.output_root.resolve()
+
+
+@pytest.mark.parametrize("years", [
+    ["2022"], ["2023"], ["2024"], ["2019", "2020", "2021", "2022"],
+    ["2019.0", "2020", "2021"], ["02019", "2020", "2021"],
+    [2019, 2020, 2021], [2019.5, "2020", "2021"], [True, "2020", "2021"],
+    [None, "2020", "2021"], [], ["2019", "2019", "2021"],
+])
+def test_invalid_or_unauthorized_year_identity_fails_before_data_access(tmp_path: Path, years: object) -> None:
+    root, run_id, code, args = _private_output_fixture(tmp_path, authorized_data_windows=years)
+    with pytest.raises(runner.InvalidResearchRun):
+        runner._private_output_root(args, root, run_id, code)
+
+
+@pytest.mark.parametrize("update", [
+    {"specification_hash": "0" * 64}, {"authorized_symbols": ["EURUSD"]},
+    {"task_id": "PH22B-RI-001"}, {"run_id": "phase22b_20260913T180001Z"},
+])
+def test_non_year_supervisor_identity_mismatch_still_fails(tmp_path: Path, update: dict) -> None:
+    root, run_id, code, args = _private_output_fixture(tmp_path, **update)
+    with pytest.raises(runner.InvalidResearchRun, match="supervisor identity mismatch"):
+        runner._private_output_root(args, root, run_id, code)
+
+
+def test_failed_predecessor_is_immutable_non_scientific() -> None:
+    incident = json.loads((ROOT / "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-002.json").read_text(encoding="utf-8"))
+    assert incident["run_id"] == "phase22b_20260913T163443Z"
+    assert incident["classification"] == "INVALID_FAILED_NON_SCIENTIFIC"
+    assert incident["run_id_reusable"] is False
+    assert incident["market_data_accessed"] is False
