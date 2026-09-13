@@ -241,6 +241,33 @@
                           "live_authorized":  false,
                           "recovery_task":  "PH22B-RUNTIME-001",
                           "reference":  "governance/incidents/PH22B-RUNTIME-TERMINATION-001.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_RUNTIME_REMEDIATION_ACCEPTANCE",
+                          "status":  "RUNTIME_REMEDIATION_ACCEPTED_READY_FOR_DURABLE_RUN_LAUNCH",
+                          "implementation_commit":  "c5351f81c2a0e8df6591559c5274b85b5b85aa08",
+                          "qa_review_commit":  "303694b9d5f0a8b065e51250887565ddadc1e463",
+                          "qa_result_commit":  "0cfaadddf71188114c174c5f99b0aea29267ed8e",
+                          "qa_verdict":  "QA_APPROVED",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "failed_predecessor_run":  "phase22b_20260912T130732Z",
+                          "failed_predecessor_disposition":  "PERMANENTLY_QUARANTINED_NEVER_REUSABLE",
+                          "next_authorized_action":  "CREATE_AND_LAUNCH_NEW_DURABLE_PHASE22B_V12_RUN",
+                          "reference":  "governance/evidence/PH22B-RUNTIME-001-ORCHESTRATOR-ACCEPTANCE.json"
                       }
                   ],
     "holdout_access_history":  [

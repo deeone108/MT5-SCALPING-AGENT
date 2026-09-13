@@ -1,0 +1,70 @@
+{
+    "schema_version":  1,
+    "acceptance_id":  "PH22B-RUNTIME-001-ORCHESTRATOR-ACCEPTANCE",
+    "role":  "project_orchestrator",
+    "accepted_at_utc":  "2026-09-13T12:54:03.9368966Z",
+    "decision":  "ACCEPTED",
+    "implementation_commit":  "c5351f81c2a0e8df6591559c5274b85b5b85aa08",
+    "qa_review_commit":  "303694b9d5f0a8b065e51250887565ddadc1e463",
+    "qa_result_commit":  "0cfaadddf71188114c174c5f99b0aea29267ed8e",
+    "qa_verdict":  "QA_APPROVED",
+    "specification_path":  "research/phase22b_spec_v12.json",
+    "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "scientific_methodology_changed":  false,
+    "market_data_accessed_during_acceptance":  false,
+    "data_authority":  {
+                           "allowed":  [
+                                           "2019",
+                                           "2020",
+                                           "2021"
+                                       ],
+                           "locked":  [
+                                          "2022",
+                                          "2023"
+                                      ],
+                           "forbidden":  [
+                                             "2024+"
+                                         ]
+                       },
+    "authority":  {
+                      "strategy":  false,
+                      "pnl":  false,
+                      "broker_execution":  false,
+                      "live":  false
+                  },
+    "failed_predecessor":  {
+                               "run_id":  "phase22b_20260912T130732Z",
+                               "classification":  "INVALID_FAILED_NON_SCIENTIFIC",
+                               "scientific_evidence_accepted":  false,
+                               "run_id_reusable":  false,
+                               "disposition":  "PERMANENTLY_QUARANTINED_NEVER_REUSABLE",
+                               "reference":  "governance/incidents/PH22B-RUNTIME-TERMINATION-001.json"
+                           },
+    "accepted_test_evidence":  [
+                                   {
+                                       "scope":  "runtime",
+                                       "failed":  0,
+                                       "passed":  26
+                                   },
+                                   {
+                                       "scope":  "runtime_and_phase22b_runner",
+                                       "failed":  0,
+                                       "passed":  34
+                                   },
+                                   {
+                                       "scope":  "orchestration_governance",
+                                       "failed":  0,
+                                       "passed":  98
+                                   },
+                                   {
+                                       "scope":  "complete_repository",
+                                       "warnings":  13,
+                                       "failed":  0,
+                                       "passed":  639
+                                   }
+                               ],
+    "resulting_state":  "RUNTIME_REMEDIATION_ACCEPTED_READY_FOR_DURABLE_RUN_LAUNCH",
+    "next_authorized_action":  "CREATE_AND_LAUNCH_NEW_DURABLE_PHASE22B_V12_RUN",
+    "phase_advanced":  false,
+    "human_input_required":  false
+}

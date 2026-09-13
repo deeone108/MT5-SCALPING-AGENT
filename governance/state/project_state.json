@@ -15,7 +15,10 @@
     "candidate_registry_hash":  "cb2995a541ac60bfcb6dde7123f5981af0892e044ef7b12278d153287a5862b3",
     "completed_tasks":  [
                             "PHASE22A_phase22a_20260909T220000Z",
-                            "PH22B-RL-010"
+                            "PH22B-RL-010",
+                            "PH22B-RUNTIME-001",
+                            "PH22B-REVIEW-026",
+                            "PH22B-ORCH-001"
                         ],
     "current_phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
     "data_access":  {
