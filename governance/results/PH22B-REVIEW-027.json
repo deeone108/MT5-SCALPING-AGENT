@@ -1,0 +1,153 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-REVIEW-027",
+    "role":  "qa_reviewer",
+    "status":  "COMPLETE",
+    "base_commit":  "97e0bb5531db4248dd4ecbce50fb05a5860a78e9",
+    "result_commit":  "9e46663575e29c5ab64b83a4aed2e7228bea296d",
+    "inputs":  [
+                   {
+                       "sha256":  "df93ad972a243f931bdfcbb5056c22fb1c95672caf6b628970fcb4bbba5fdb43",
+                       "path":  "governance/tasks/PH22B-RUNTIME-002.json"
+                   },
+                   {
+                       "sha256":  "64a3a45e443259c0564fca6b241f68668d5414bdeb74b745eba7c8e2a34c60e8",
+                       "path":  "governance/results/PH22B-RUNTIME-002.json"
+                   },
+                   {
+                       "sha256":  "229b670a6f002fd713d972abdd294adaa40336b8f9105aa7eb4a5917d641a236",
+                       "path":  "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-002.json"
+                   },
+                   {
+                       "sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                       "path":  "research/phase22b_spec_v12.json"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "sha256":  "8693daa1b91898cf2b42aa218d52137cbcf7caee40bafa6f09dca07c633c1bb3",
+                          "path":  "governance/reviews/PH22B-RUNTIME-002-QA.json"
+                      }
+                  ],
+    "commands":  [
+                     "inspect exact c264410 implementation diff and 97e0bb handoff",
+                     "python -m pytest tests/orchestration/test_phase22b_runner.py tests/orchestration/test_runtime_supervisor.py tests/orchestration/test_phase22b_guarded_resolver.py -q",
+                     "independent in-memory identity edge-case matrix",
+                     "python -m pytest tests/orchestration -q",
+                     "python -m pytest -q --disable-warnings",
+                     "schema and git diff validation"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "focused_identity_no_data",
+                      "failed":  0,
+                      "passed":  71
+                  },
+                  {
+                      "name":  "independent_edge_matrix",
+                      "failed":  0,
+                      "passed":  1
+                  },
+                  {
+                      "name":  "orchestration",
+                      "failed":  0,
+                      "passed":  117
+                  },
+                  {
+                      "name":  "complete_repository",
+                      "warnings":  13,
+                      "failed":  0,
+                      "passed":  658
+                  }
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no market-data catalog, locator, or market data access",
+                                  "no Phase 22B worker launch",
+                                  "no reviewed implementation edit",
+                                  "frozen v12 unchanged",
+                                  "2019-2021 unchanged; 2022/2023 locked; 2024+ forbidden",
+                                  "no strategy/PnL/execution/LIVE changes",
+                                  "failed run phase22b_20260913T163443Z remains permanently non-scientific and non-reusable"
+                              ],
+    "handoff":  {
+                    "to_role":  "project_orchestrator",
+                    "requested_decision":  "ACCEPT_IDENTITY_REMEDIATION_QA_AND_AUTHORIZE_FRESH_DURABLE_PHASE22B_V12_RUN",
+                    "limitations":  [
+                                        "QA approval does not itself launch research or alter project state.",
+                                        "Fresh run ID required; phase22b_20260913T163443Z is permanently non-reusable."
+                                    ]
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "71 focused no-data tests passed",
+                           "independent edge matrix passed",
+                           "117 orchestration tests passed",
+                           "658 repository tests passed with 13 warnings"
+                       ],
+    "review_status":  [
+                          {
+                              "verdict":  "QA_APPROVED",
+                              "blocking_findings":  0,
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "end_time":  "2026-09-13T17:19:27.0737465Z",
+    "safety_checks":  [
+                          {
+                              "name":  "market_and_locator_access",
+                              "status":  "NOT_ACCESSED"
+                          },
+                          {
+                              "name":  "authority_preservation",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "failed_run_permanence",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "worker_launch",
+                              "status":  "NOT_PERFORMED"
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "governance/tasks/PH22B-REVIEW-027.json",
+                          "governance/reviews/PH22B-RUNTIME-002-QA.json",
+                          "governance/results/PH22B-REVIEW-027.json"
+                      ],
+    "test_results":  [
+                         {
+                             "scope":  "focused",
+                             "failed":  0,
+                             "passed":  71
+                         },
+                         {
+                             "scope":  "independent_edges",
+                             "failed":  0,
+                             "passed":  1
+                         },
+                         {
+                             "scope":  "orchestration",
+                             "failed":  0,
+                             "passed":  117
+                         },
+                         {
+                             "scope":  "complete_repository",
+                             "warnings":  13,
+                             "failed":  0,
+                             "passed":  658
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "governance/reviews/PH22B-RUNTIME-002-QA.json":  "8693daa1b91898cf2b42aa218d52137cbcf7caee40bafa6f09dca07c633c1bb3"
+                        },
+    "terminal_result":  "SUPERVISOR_IDENTITY_TYPE_MISMATCH_QA_APPROVED_PENDING_ORCHESTRATOR_ACCEPTANCE",
+    "start_time":  "2026-09-13T17:15:00Z",
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}
