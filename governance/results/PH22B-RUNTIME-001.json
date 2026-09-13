@@ -1,10 +1,10 @@
-{
+﻿{
     "schema_version":  1,
     "task_id":  "PH22B-RUNTIME-001",
     "role":  "research_implementer",
     "status":  "COMPLETE",
     "base_commit":  "1bdeb0c7d287e753d4e0d64aefffd5060f9624d9",
-    "result_commit":  "ebbc92e709563bcacd2e75201ffda6c4efe7d15c",
+    "result_commit":  "c5351f81c2a0e8df6591559c5274b85b5b85aa08",
     "inputs":  [
                    {
                        "sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
@@ -17,22 +17,31 @@
                ],
     "artifacts":  [
                       {
-                          "sha256":  "fa884331e8e1b317c036f96b8b8eafd18114a4ab8078506f0b714d01946890f3",
+                          "sha256":  "4d91780f95aa150a1d352648db0aedaefdd24c6c1e2944c45a0df3a84c7641b1",
                           "path":  "src/mt5_scalping_agent/orchestration/runtime_supervisor.py"
                       },
                       {
-                          "sha256":  "10700e13aec6eccd94dd16c808a90533f97f5e0fd6a12608bdb7d6c62d6309b4",
+                          "sha256":  "7a9e66d912f7422b42333daee4cb483ef7d077afa2a3d90eda414fc1b516a663",
                           "path":  "scripts/run_phase22b_supervised.py"
                       },
                       {
-                          "sha256":  "bb407c5f9cefeccf95fd3183e9d215ad1491a12067606c5067a252d90840f182",
+                          "sha256":  "82e3236dc2aa537a25bf35b55828e0e7e744c3c61ad4457bb5de010878551e32",
+                          "path":  "scripts/run_phase22b_development.py"
+                      },
+                      {
+                          "sha256":  "f6927a5f786bfe1367d4b6ae474e9839fb1b74936181046c275589a956542c0b",
                           "path":  "tests/orchestration/test_runtime_supervisor.py"
+                      },
+                      {
+                          "sha256":  "f5f2d90d4699802ce1b956d6c77d3b1105d1bdccc7f29c7cceeb3f6449282104",
+                          "path":  "tests/orchestration/test_phase22b_runner.py"
                       }
                   ],
     "commands":  [
-                     "python -m pytest tests/orchestration/test_runtime_supervisor.py -q",
-                     "python -m pytest tests/orchestration/test_runtime_supervisor.py tests/orchestration/test_runtime.py tests/orchestration/test_phase22b_runner.py tests/orchestration/test_phase22b_remediation.py -q",
-                     "python -m pytest tests/orchestration tests/research/test_phase22b_analysis.py tests/research/test_phase22b_mechanism.py --tb=short -q"
+                     "python -m pytest tests/orchestration/test_runtime_supervisor.py tests/orchestration/test_phase22b_runner.py -q",
+                     "python -m pytest tests/orchestration -q",
+                     "python -m pytest tests/orchestration/test_runtime_supervisor.py -q (repeated twice)",
+                     "python -m pytest -q --tb=short"
                  ],
     "tests":  [
                   {
@@ -132,7 +141,7 @@
                                   "failed run ID not reused"
                               ],
     "handoff":  {
-                    "requested_decision":  "independent runtime remediation review",
+                    "requested_decision":  "independent QA re-review of c5351f81c2a0e8df6591559c5274b85b5b85aa08",
                     "limitations":  [
                                         "no real research rerun before QA approval",
                                         "checkpoint/resume disabled; clean rerun only"
@@ -143,17 +152,18 @@
 
                               ],
     "tests_executed":  [
-                           "21 runtime tests",
-                           "47 targeted tests",
-                           "198 relevant regression tests"
+                           "34 focused tests passed after committed code/hash binding",
+                           "98 orchestration tests passed",
+                           "26 runtime tests passed twice consecutively",
+                           "639 complete repository tests passed"
                        ],
     "review_status":  [
                           {
-                              "decision":  "PENDING",
+                              "decision":  "PENDING_RE_REVIEW",
                               "role":  "qa_reviewer"
                           }
                       ],
-    "end_time":  "2026-09-12T22:19:13.6289733Z",
+    "end_time":  "2026-09-13T12:25:36.5806310Z",
     "safety_checks":  [
                           {
                               "name":  "no_market_data",
@@ -171,9 +181,11 @@
     "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
     "files_changed":  [
                           "src/mt5_scalping_agent/orchestration/runtime_supervisor.py",
-                          "src/mt5_scalping_agent/orchestration/__init__.py",
                           "scripts/run_phase22b_supervised.py",
+                          "scripts/run_phase22b_development.py",
                           "tests/orchestration/test_runtime_supervisor.py",
+                          "tests/orchestration/test_phase22b_runner.py",
+                          "governance/tasks/PH22B-RUNTIME-001.json",
                           "governance/results/PH22B-RUNTIME-001.json"
                       ],
     "test_results":  [
@@ -264,11 +276,13 @@
                          }
                      ],
     "artifact_hashes":  {
-                            "src/mt5_scalping_agent/orchestration/runtime_supervisor.py":  "fa884331e8e1b317c036f96b8b8eafd18114a4ab8078506f0b714d01946890f3",
-                            "tests/orchestration/test_runtime_supervisor.py":  "bb407c5f9cefeccf95fd3183e9d215ad1491a12067606c5067a252d90840f182",
-                            "scripts/run_phase22b_supervised.py":  "10700e13aec6eccd94dd16c808a90533f97f5e0fd6a12608bdb7d6c62d6309b4"
+                            "src/mt5_scalping_agent/orchestration/runtime_supervisor.py":  "4d91780f95aa150a1d352648db0aedaefdd24c6c1e2944c45a0df3a84c7641b1",
+                            "scripts/run_phase22b_supervised.py":  "7a9e66d912f7422b42333daee4cb483ef7d077afa2a3d90eda414fc1b516a663",
+                            "scripts/run_phase22b_development.py":  "82e3236dc2aa537a25bf35b55828e0e7e744c3c61ad4457bb5de010878551e32",
+                            "tests/orchestration/test_runtime_supervisor.py":  "f6927a5f786bfe1367d4b6ae474e9839fb1b74936181046c275589a956542c0b",
+                            "tests/orchestration/test_phase22b_runner.py":  "f5f2d90d4699802ce1b956d6c77d3b1105d1bdccc7f29c7cceeb3f6449282104"
                         },
-    "terminal_result":  "RUNTIME_REMEDIATION_COMPLETE_PENDING_INDEPENDENT_QA",
+    "terminal_result":  "RUNTIME_REMEDIATION_CORRECTED_PENDING_INDEPENDENT_QA",
     "start_time":  "2026-09-12T00:00:00Z",
     "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
 }

@@ -1,110 +1,114 @@
-{
-    "schema_version": 1,
-    "task_id": "PH22B-RUNTIME-001",
-    "phase": "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
-    "phase_id": "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
-    "assigned_role": "research_implementer",
-    "base_commit": "1bdeb0c7d287e753d4e0d64aefffd5060f9624d9",
-    "branch": "task/ph22b-runtime-001",
-    "worktree": "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-runtime-001",
-    "objective": "Implement scientifically neutral, durable Phase 22B worker supervision and crash provenance under frozen v12 before any new real research run.",
-    "inputs": [
-        {
-            "path": "human_recovery_brief_attachment_0714981d-08f1-45c5-9705-c0079fd9af87",
-            "sha256": "354c07f7bc25bfa1c55e4edbbdab38d45244a0a2c498a131fe4069a0c0922668",
-            "hash_mode": "raw_bytes"
-        },
-        {
-            "path": "research/phase22b_spec_v12.json",
-            "sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-            "hash_mode": "canonical_json"
-        },
-        {
-            "path": "governance/state/project_state.json",
-            "sha256": "d2c81cd7c4ee98f513119773ada411783ca33ffb3887e8ebb1ae31134229b72a",
-            "hash_mode": "canonical_json"
-        },
-        {
-            "path": "governance/incidents/PH22B-RUNTIME-TERMINATION-001.json",
-            "sha256": "e1b52cc0191a9b4be7edc45f50b1b03a219ef010b800b227bdb40bbefee25bed",
-            "hash_mode": "canonical_json"
-        }
-    ],
-    "allowed_paths": [
-        "src/mt5_scalping_agent/orchestration/runtime_supervisor.py",
-        "src/mt5_scalping_agent/orchestration/__init__.py",
-        "scripts/run_phase22b_supervised.py",
-        "scripts/run_phase22b_development.py",
-        "tests/orchestration/test_runtime_supervisor.py",
-        "tests/orchestration/test_phase22b_runner.py",
-        "governance/tasks/PH22B-RUNTIME-001.json",
-        "governance/results/PH22B-RUNTIME-001.json",
-        "governance/reviews/PH22B-RUNTIME-001-QA.json"
-    ],
-    "forbidden_paths": [
-        "research/phase22b_spec_v12.json",
-        "governance/state/project_state.json",
-        "governance/memory/project_ledger.json",
-        "governance/data_catalogs/",
-        "reports/phase22a/",
-        "reports/phase22_data_build/",
-        "src/mt5_scalping_agent/strategies/",
-        "src/mt5_scalping_agent/backtesting/",
-        "src/mt5_scalping_agent/risk/",
-        "src/mt5_scalping_agent/execution/"
-    ],
-    "allowed_data_window": [],
-    "allowed_data": [],
-    "required_spec_hash": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-    "required_dataset_hash": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
-    "required_tests": [
-        "durable-stdout-after-caller-interruption",
-        "durable-stderr-after-caller-interruption",
-        "persisted-exit-code",
-        "abnormal-death-failed-invalid",
-        "missing-result-never-success",
-        "partial-publication-not-evidence",
-        "atomic-publication",
-        "run-id-non-reuse",
-        "spec-hash-recorded-validated",
-        "code-commit-recorded",
-        "authorized-window-recorded",
-        "2022-2023-locked",
-        "2024-plus-forbidden",
-        "restart-no-authority-broadening",
-        "failed-artifacts-never-promoted",
-        "monitor-interruption-preserves-worker-provenance",
-        "output-root-private-staging-only",
-        "checkpoint-resume-equivalence-if-implemented"
-    ],
-    "required_reviewers": [
-        "qa_reviewer"
-    ],
-    "completion_conditions": [
-        "all required no-market-data tests pass",
-        "durable logs/lifecycle/failure state and atomic publication implemented",
-        "checkpointing omitted unless exact v12 equivalence is proved",
-        "independent QA approves runtime remediation",
-        "new real run uses a fresh run ID only after QA"
-    ],
-    "status": "READY",
-    "prohibited_actions": [
-        "access any market-data locator or research partition",
-        "reuse phase22b_20260912T130732Z",
-        "modify frozen v12 or scientific computation",
-        "unlock 2022/2023 or access 2024+",
-        "create strategy or PnL logic",
-        "change execution or LIVE authority",
-        "modify scripts/run_phase22b_development.py except narrow --output-root CLI and publication-root plumbing to supervisor-private staging",
-        "change scientific computation, result schemas, methodology, specification, seeds, or market-data path resolution",
-        "copy or stage arbitrary repository content into the supervisor-private output root"
-    ],
-    "required_outputs": [
-        "durable runtime supervisor",
-        "no-market-data regression evidence",
-        "schema-valid PH22B-RUNTIME-001 result manifest",
-        "independent QA handoff",
-        "explicit checkpoint policy",
-        "narrow reviewed --output-root plumbing with no scientific or data-path change"
-    ]
+﻿{
+    "schema_version":  1,
+    "task_id":  "PH22B-RUNTIME-001",
+    "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "assigned_role":  "research_implementer",
+    "base_commit":  "1bdeb0c7d287e753d4e0d64aefffd5060f9624d9",
+    "branch":  "task/ph22b-runtime-001",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-runtime-001",
+    "objective":  "Implement scientifically neutral, durable Phase 22B worker supervision and crash provenance under frozen v12 before any new real research run.",
+    "inputs":  [
+                   {
+                       "path":  "human_recovery_brief_attachment_0714981d-08f1-45c5-9705-c0079fd9af87",
+                       "sha256":  "354c07f7bc25bfa1c55e4edbbdab38d45244a0a2c498a131fe4069a0c0922668",
+                       "hash_mode":  "raw_bytes"
+                   },
+                   {
+                       "path":  "research/phase22b_spec_v12.json",
+                       "sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                       "hash_mode":  "canonical_json"
+                   },
+                   {
+                       "path":  "governance/state/project_state.json",
+                       "sha256":  "d2c81cd7c4ee98f513119773ada411783ca33ffb3887e8ebb1ae31134229b72a",
+                       "hash_mode":  "canonical_json"
+                   },
+                   {
+                       "path":  "governance/incidents/PH22B-RUNTIME-TERMINATION-001.json",
+                       "sha256":  "e1b52cc0191a9b4be7edc45f50b1b03a219ef010b800b227bdb40bbefee25bed",
+                       "hash_mode":  "canonical_json"
+                   }
+               ],
+    "allowed_paths":  [
+                          "src/mt5_scalping_agent/orchestration/runtime_supervisor.py",
+                          "src/mt5_scalping_agent/orchestration/__init__.py",
+                          "scripts/run_phase22b_supervised.py",
+                          "scripts/run_phase22b_development.py",
+                          "tests/orchestration/test_runtime_supervisor.py",
+                          "tests/orchestration/test_phase22b_runner.py",
+                          "governance/tasks/PH22B-RUNTIME-001.json",
+                          "governance/results/PH22B-RUNTIME-001.json",
+                          "governance/reviews/PH22B-RUNTIME-001-QA.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/phase22b_spec_v12.json",
+                            "governance/state/project_state.json",
+                            "governance/memory/project_ledger.json",
+                            "governance/data_catalogs/",
+                            "reports/phase22a/",
+                            "reports/phase22_data_build/",
+                            "src/mt5_scalping_agent/strategies/",
+                            "src/mt5_scalping_agent/backtesting/",
+                            "src/mt5_scalping_agent/risk/",
+                            "src/mt5_scalping_agent/execution/"
+                        ],
+    "allowed_data_window":  [
+
+                            ],
+    "allowed_data":  [
+
+                     ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "durable-stdout-after-caller-interruption",
+                           "durable-stderr-after-caller-interruption",
+                           "persisted-exit-code",
+                           "abnormal-death-failed-invalid",
+                           "missing-result-never-success",
+                           "partial-publication-not-evidence",
+                           "atomic-publication",
+                           "run-id-non-reuse",
+                           "spec-hash-recorded-validated",
+                           "code-commit-recorded",
+                           "authorized-window-recorded",
+                           "2022-2023-locked",
+                           "2024-plus-forbidden",
+                           "restart-no-authority-broadening",
+                           "failed-artifacts-never-promoted",
+                           "monitor-interruption-preserves-worker-provenance",
+                           "output-root-private-staging-only",
+                           "checkpoint-resume-equivalence-if-implemented"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "completion_conditions":  [
+                                  "all required no-market-data tests pass",
+                                  "durable logs/lifecycle/failure state and atomic publication implemented",
+                                  "checkpointing omitted unless exact v12 equivalence is proved",
+                                  "independent QA approves runtime remediation",
+                                  "new real run uses a fresh run ID only after QA"
+                              ],
+    "status":  "REVIEWING",
+    "prohibited_actions":  [
+                               "access any market-data locator or research partition",
+                               "reuse phase22b_20260912T130732Z",
+                               "modify frozen v12 or scientific computation",
+                               "unlock 2022/2023 or access 2024+",
+                               "create strategy or PnL logic",
+                               "change execution or LIVE authority",
+                               "modify scripts/run_phase22b_development.py except narrow --output-root CLI and publication-root plumbing to supervisor-private staging",
+                               "change scientific computation, result schemas, methodology, specification, seeds, or market-data path resolution",
+                               "copy or stage arbitrary repository content into the supervisor-private output root"
+                           ],
+    "required_outputs":  [
+                             "durable runtime supervisor",
+                             "no-market-data regression evidence",
+                             "schema-valid PH22B-RUNTIME-001 result manifest",
+                             "independent QA handoff",
+                             "explicit checkpoint policy",
+                             "narrow reviewed --output-root plumbing with no scientific or data-path change"
+                         ]
 }
