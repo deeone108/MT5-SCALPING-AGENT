@@ -10,7 +10,7 @@ def test_integrated_project_state_is_valid_and_fail_closed():
     assert state["allowed_data_windows"] == ["2019", "2020", "2021"]
     assert state["locked_data_windows"] == ["2022", "2023"]
     assert state["forbidden_data_windows"] == ["2024+"]
-    assert state["active_tasks"] == ["PH22B-RI-002", "PH22B-RUNTIME-003"]
+    assert state["active_tasks"] == ["PH22B-RI-002", "PH22B-RUNTIME-004"]
     assert state["status"] == "BLOCKED"
     assert state["phase_status"] == "BLOCKED"
     assert state["gates"]["implementation"]["status"] == "PASSED"
@@ -96,3 +96,18 @@ def test_phase22b_runtime_termination_is_permanently_non_scientific():
     assert record["run_id_reusable"] is False
     assert record["locked_windows"] == [2022, 2023]
     assert record["forbidden"] == "2024+"
+
+
+def test_phase22b_dual_runtime_failure_reconciliation_is_fail_closed():
+    first = load_json(ROOT / "governance/incidents/PH22B-DURABLE-RUNTIME-TERMINATION-004.json")
+    second = load_json(ROOT / "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-003.json")
+    active = load_json(ROOT / "governance/state/phase22b_active_run.json")
+    assert first["run_id"] == "phase22b_20260913T172656Z"
+    assert second["run_id"] == "phase22b_20260913T172727Z"
+    assert first["classification"] == second["classification"] == "INVALID_FAILED_NON_SCIENTIFIC"
+    assert first["run_id_reusable"] is second["run_id_reusable"] is False
+    assert first["supervisor_present_at_reconciliation"] is False
+    assert first["worker_present_at_reconciliation"] is False
+    assert active["state"] == "INVALID"
+    assert active["scientific_status"] == "INVALID_FAILED_NON_SCIENTIFIC"
+    assert active["next_authorized_action"] == "DIAGNOSE_AND_REMEDIATE_PHASE22B_DURABLE_SUPERVISOR_PROCESS_SURVIVAL_AND_OUTPUT_ROOT_BINDING"

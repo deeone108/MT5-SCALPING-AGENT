@@ -3,8 +3,8 @@
     "run_id":  "phase22b_20260913T172656Z",
     "task_id":  "PH22B-RI-002",
     "launch_task_id":  "PH22B-LAUNCH-002",
-    "state":  "RUNNING",
-    "scientific_status":  "PENDING_TERMINAL_RESULT",
+    "state":  "INVALID",
+    "scientific_status":  "INVALID_FAILED_NON_SCIENTIFIC",
     "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
     "code_commit":  "f987bf358caa6a821424019061ea053766100816",
     "dataset_root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
@@ -50,7 +50,12 @@
     "execution_authorized":  false,
     "live_authorized":  false,
     "monitoring_policy":  "NO_INTERACTIVE_POLLING_RESUME_FROM_DURABLE_STATE",
-    "next_authorized_action":  "INSPECT_DURABLE_PHASE22B_RUN_TERMINAL_STATE_IN_FUTURE_SESSION",
+    "next_authorized_action":  "DIAGNOSE_AND_REMEDIATE_PHASE22B_DURABLE_SUPERVISOR_PROCESS_SURVIVAL_AND_OUTPUT_ROOT_BINDING",
     "human_gate_required":  false,
-    "recorded_at_utc":  "2026-09-13T17:28:30.4081942Z"
+    "recorded_at_utc":  "2026-09-13T17:28:30.4081942Z",
+    "current_supervisor_alive":  false,
+    "current_worker_alive":  false,
+    "last_heartbeat_at":  "2026-09-13T17:28:44.122742+00:00",
+    "termination_reason":  "UNKNOWN_UNRECOVERABLE_RUNTIME_TERMINATION",
+    "incident_path":  "governance/incidents/PH22B-DURABLE-RUNTIME-TERMINATION-004.json"
 }

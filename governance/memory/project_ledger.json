@@ -417,6 +417,36 @@
                           "resolution_class":  "AGENT_RESOLVABLE",
                           "next_authorized_action":  "PH22B-RUNTIME-003",
                           "reference":  "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-003.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DURABLE_RUNTIME_TERMINATION_004",
+                          "status":  "INVALID_FAILED_NON_SCIENTIFIC",
+                          "run_id":  "phase22b_20260913T172656Z",
+                          "reason":  "UNKNOWN_UNRECOVERABLE_RUNTIME_TERMINATION",
+                          "last_heartbeat_at":  "2026-09-13T17:28:44.122742+00:00",
+                          "supervisor_pid":  25832,
+                          "worker_pid":  33084,
+                          "processes_present_at_reconciliation":  false,
+                          "scientific_evidence_accepted":  false,
+                          "run_id_reusable":  false,
+                          "authorized_data_access_extent":  "UNKNOWN_WITHIN_AUTHORIZED_2019_2021",
+                          "locked_or_forbidden_access_observed":  false,
+                          "reference":  "governance/incidents/PH22B-DURABLE-RUNTIME-TERMINATION-004.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DUAL_RUNTIME_FAILURE_RECONCILIATION",
+                          "status":  "BLOCKED_AGENT_RESOLVABLE",
+                          "invalid_runs":  [
+                                               "phase22b_20260913T172656Z",
+                                               "phase22b_20260913T172727Z"
+                                           ],
+                          "both_non_scientific":  true,
+                          "both_non_reusable":  true,
+                          "incident_172656":  "governance/incidents/PH22B-DURABLE-RUNTIME-TERMINATION-004.json",
+                          "incident_172727":  "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-003.json",
+                          "active_phase22b_processes":  0,
+                          "next_authorized_action":  "DIAGNOSE_AND_REMEDIATE_PHASE22B_DURABLE_SUPERVISOR_PROCESS_SURVIVAL_AND_OUTPUT_ROOT_BINDING",
+                          "reference":  "governance/tasks/PH22B-RUNTIME-004.json"
                       }
                   ],
     "holdout_access_history":  [
