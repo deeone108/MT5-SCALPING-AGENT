@@ -1,0 +1,68 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-RUNTIME-002",
+    "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "assigned_role":  "research_implementer",
+    "base_commit":  "c3c94981535663b1ca58fb9380f72d5863e9a8e7",
+    "branch":  "task/ph22b-runtime-001",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-runtime-001",
+    "objective":  "Correct the fail-closed string-versus-integer authorized-window identity comparison exposed by durable run phase22b_20260913T163443Z, without changing scientific or data authority.",
+    "inputs":  [
+                   {
+                       "path":  "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-002.json",
+                       "sha256":  "6267533f28df4b53f3d086d94ddd2e25577ce4ccb7a7dadd7bec9d031b9a16c1"
+                   },
+                   {
+                       "path":  "research/phase22b_spec_v12.json",
+                       "sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+                   }
+               ],
+    "allowed_paths":  [
+                          "scripts/run_phase22b_development.py",
+                          "tests/orchestration/test_phase22b_runner.py",
+                          "governance/tasks/PH22B-RUNTIME-002.json",
+                          "governance/results/PH22B-RUNTIME-002.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/",
+                            "governance/data_catalogs/",
+                            "src/mt5_scalping_agent/research/",
+                            "src/mt5_scalping_agent/strategies/",
+                            "src/mt5_scalping_agent/execution/"
+                        ],
+    "allowed_data":  [
+
+                     ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "string-normalized supervisor identity",
+                           "integer identity rejected",
+                           "no-market-data regression"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "required_outputs":  [
+                             "narrow identity-type remediation",
+                             "regression tests",
+                             "independent QA handoff"
+                         ],
+    "completion_conditions":  [
+                                  "identity comparison is deterministic",
+                                  "all no-data tests pass",
+                                  "QA approves before another launch"
+                              ],
+    "prohibited_actions":  [
+                               "access market data",
+                               "relaunch a worker",
+                               "modify frozen v12",
+                               "change data authority",
+                               "authorize strategy, PnL, execution, or LIVE"
+                           ],
+    "status":  "READY"
+}

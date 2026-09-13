@@ -268,6 +268,35 @@
                           "failed_predecessor_disposition":  "PERMANENTLY_QUARANTINED_NEVER_REUSABLE",
                           "next_authorized_action":  "CREATE_AND_LAUNCH_NEW_DURABLE_PHASE22B_V12_RUN",
                           "reference":  "governance/evidence/PH22B-RUNTIME-001-ORCHESTRATOR-ACCEPTANCE.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DURABLE_LAUNCH_FAILURE_002",
+                          "status":  "INVALID_FAILED_NON_SCIENTIFIC",
+                          "run_id":  "phase22b_20260913T163443Z",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "code_commit":  "c3c94981535663b1ca58fb9380f72d5863e9a8e7",
+                          "exit_code":  2,
+                          "reason":  "SUPERVISOR_IDENTITY_WINDOW_TYPE_MISMATCH",
+                          "market_data_accessed":  false,
+                          "scientific_evidence_accepted":  false,
+                          "run_id_reusable":  false,
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "resolution_class":  "AGENT_RESOLVABLE",
+                          "next_authorized_action":  "REMEDIATE_PHASE22B_SUPERVISOR_IDENTITY_TYPE_MISMATCH",
+                          "reference":  "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-002.json"
                       }
                   ],
     "holdout_access_history":  [

@@ -1,7 +1,8 @@
 {
     "active_tasks":  [
                          "PH22B-RI-002",
-                         "PH22B-RUNTIME-001"
+                         "PH22B-RUNTIME-001",
+                         "PH22B-RUNTIME-002"
                      ],
     "allowed_data_windows":  [
                                  "2019",
@@ -10,7 +11,8 @@
                              ],
     "base_commit":  "4ae2e3329e23574d66d89278931aeaa6756c7149",
     "blocked_tasks":  [
-                          "PH22B-RI-001"
+                          "PH22B-RI-001",
+                          "PH22B-RI-002"
                       ],
     "candidate_registry_hash":  "cb2995a541ac60bfcb6dde7123f5981af0892e044ef7b12278d153287a5862b3",
     "completed_tasks":  [
@@ -78,7 +80,7 @@
                             ],
     "orchestrator":  "project_orchestrator",
     "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
-    "phase_status":  "DISCOVERY_RUNNING",
+    "phase_status":  "BLOCKED",
     "phase_transition_history":  [
                                      {
                                          "at_utc":  "2026-09-10T00:00:00+00:00",
@@ -98,7 +100,7 @@
                      },
     "schema_version":  1,
     "spec_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-    "status":  "DISCOVERY_RUNNING",
+    "status":  "BLOCKED",
     "transitions":  [
                         {
                             "at_utc":  "2026-09-10T00:00:00+00:00",

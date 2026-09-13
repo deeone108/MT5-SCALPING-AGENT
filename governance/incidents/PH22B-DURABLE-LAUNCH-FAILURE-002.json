@@ -1,0 +1,50 @@
+{
+    "schema_version":  1,
+    "incident_id":  "PH22B-DURABLE-LAUNCH-FAILURE-002",
+    "detected_at_utc":  "2026-09-13T16:34:46.452270+00:00",
+    "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "task_id":  "PH22B-RI-002",
+    "run_id":  "phase22b_20260913T163443Z",
+    "classification":  "INVALID_FAILED_NON_SCIENTIFIC",
+    "terminal_state":  "FAILED",
+    "reason":  "SUPERVISOR_IDENTITY_WINDOW_TYPE_MISMATCH",
+    "worker_pid":  29704,
+    "supervisor_pid":  6452,
+    "exit_code":  2,
+    "stderr":  "PHASE_22B_INVALID_RESEARCH_RUN: supervisor identity mismatch",
+    "root_cause":  "Durable identity uses string authorized_data_windows while development runner compares against integer YEARS.",
+    "scientific_worker_started":  false,
+    "market_data_accessed":  false,
+    "result_manifest_published":  false,
+    "scientific_evidence_accepted":  false,
+    "run_id_reusable":  false,
+    "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "code_commit":  "c3c94981535663b1ca58fb9380f72d5863e9a8e7",
+    "authorized_windows":  [
+                               "2019",
+                               "2020",
+                               "2021"
+                           ],
+    "locked_windows":  [
+                           "2022",
+                           "2023"
+                       ],
+    "forbidden_windows":  [
+                              "2024+"
+                          ],
+    "strategy_authorized":  false,
+    "pnl_authorized":  false,
+    "execution_authorized":  false,
+    "live_authorized":  false,
+    "durable_run_root":  "reports/_durable_runtime/phase22b_20260913T163443Z",
+    "artifact_sha256":  {
+                            "identity.json":  "54750f2f45cba8901ccd68bbc98aef324864f9fcbde279d02f579ea238e2e647",
+                            "launch.json":  "0fb9f7ae015a73718837ae151fc3c8a611043b5e8713357a8420e7653ca6351f",
+                            "state.json":  "dfb83d41e895efb00428d245ff1b242b444da787f632c274b55d258ab029e313",
+                            "stdout.log":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                            "stderr.log":  "3a5d76ece420645b632cb702412b9f7617fcdcbcc43c77ab8f42afe0cac9cf7b",
+                            "supervisor_identity.json":  "781ac973c26dbb53796ad8ad0df64e22c75dcbb08268129d4cf2422c3bb56b03"
+                        },
+    "resolution_class":  "AGENT_RESOLVABLE",
+    "next_authorized_action":  "REMEDIATE_PHASE22B_SUPERVISOR_IDENTITY_TYPE_MISMATCH"
+}
