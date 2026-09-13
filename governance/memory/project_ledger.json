@@ -1,6 +1,6 @@
 {
     "schema_version":  1,
-    "current_phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "current_phase":  "MT5_AI_SCALPING_BOT",
     "live_execution_authorized":  false,
     "decisions":  [
                       {
@@ -473,6 +473,21 @@
                           "scientific_methodology_changed":  false,
                           "next_authorized_action":  "INDEPENDENT_QA_REVIEW_OF_PHASE22B_DURABLE_RUNTIME_REMEDIATION",
                           "reference":  "governance/results/PH22B-RUNTIME-004.json"
+                      },
+                      {
+                          "id":  "BOT_00_OWNER_PRIORITY_TRANSITION",
+                          "status":  "COMPLETED",
+                          "owner_directive_sha256":  "573750d82c6f28a6226a09dfb498b3f743b4b151d9cea7301881a78c4e3895f5",
+                          "master_mission":  "BUILD_COMPLETE_SAFE_AUTONOMOUS_MULTI_STRATEGY_MT5_AI_SCALPING_BOT_FOR_DEMO",
+                          "phase_22":  "PRESERVED_INACTIVE_RESEARCH",
+                          "phase_22a":  "COMPLETED_PRESERVED_RESEARCH",
+                          "phase_22b":  "SUSPENDED_PRESERVED_RESEARCH",
+                          "frozen_phase22b_v12_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "dataset_root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+                          "safety_and_data_locks_preserved":  true,
+                          "active_task":  "BOT-01",
+                          "next_authorized_action":  "BOT-01_REPOSITORY_COMPONENT_AUDIT",
+                          "reference":  "docs/PRESERVED_RESEARCH_INDEX.md"
                       }
                   ],
     "holdout_access_history":  [

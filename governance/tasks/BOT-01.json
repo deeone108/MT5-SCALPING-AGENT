@@ -1,0 +1,64 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-01",
+    "phase_id":  "MT5_AI_SCALPING_BOT",
+    "phase":  "MT5_AI_SCALPING_BOT",
+    "assigned_role":  "qa_reviewer",
+    "base_commit":  "3ea0d38cd374f8aa4e0635d4a7cee15a62069e29",
+    "branch":  "task/bot-01-component-audit",
+    "worktree":  "TO_BE_CREATED_BY_PROJECT_ORCHESTRATOR",
+    "objective":  "Perform a read-only repository/component audit supporting the existing-strategy tournament and working MT5 DEMO bot; identify present, missing, reusable, incomplete, and unsafe components without implementing changes.",
+    "inputs":  [
+                   {
+                       "sha256":  "47df5baef39324108440c56ac4e060cffb3b90e7fc6804b0ea10af129f322d0c",
+                       "path":  "docs/PRESERVED_RESEARCH_INDEX.md"
+                   }
+               ],
+    "allowed_paths":  [
+                          "docs/PROJECT_COMPONENT_AUDIT.md",
+                          "governance/results/BOT-01.json"
+                      ],
+    "forbidden_paths":  [
+                            "research/",
+                            "reports/",
+                            "data/",
+                            "src/",
+                            "scripts/",
+                            "config/"
+                        ],
+    "allowed_data":  [
+
+                     ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "source-backed component inventory",
+                           "no market-data access",
+                           "no code mutation",
+                           "safety authority audit"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "required_outputs":  [
+                             "docs/PROJECT_COMPONENT_AUDIT.md",
+                             "governance/results/BOT-01.json",
+                             "exact BOT-02 recommendation"
+                         ],
+    "completion_conditions":  [
+                                  "all repository components classified from source",
+                                  "gaps and reusable components recorded",
+                                  "no implementation performed"
+                              ],
+    "prohibited_actions":  [
+                               "access market data",
+                               "modify source/config/research",
+                               "start Phase 22B",
+                               "invent strategies",
+                               "enable DEMO orders or LIVE"
+                           ],
+    "status":  "READY"
+}

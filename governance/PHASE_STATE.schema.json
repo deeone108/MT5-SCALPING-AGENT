@@ -26,7 +26,13 @@
                      "dataset_root_hash",
                      "allowed_data_windows",
                      "current_phase",
-                     "safety_state"
+                     "safety_state",
+                     "master_mission",
+                     "current_program",
+                     "current_milestone",
+                     "next_authorized_action",
+                     "human_gate_required",
+                     "preserved_research"
                  ],
     "properties":  {
                        "schema_version":  {
@@ -224,7 +230,46 @@
                                          },
                        "safety_state":  {
                                             "type":  "object"
-                                        }
+                                        },
+                       "master_mission":  {
+                                              "type":  "string"
+                                          },
+                       "current_program":  {
+                                               "const":  "MT5_AI_SCALPING_BOT"
+                                           },
+                       "current_milestone":  {
+                                                 "type":  "string"
+                                             },
+                       "next_authorized_action":  {
+                                                      "type":  "string"
+                                                  },
+                       "human_gate_required":  {
+                                                   "const":  false
+                                               },
+                       "preserved_research":  {
+                                                  "type":  "object",
+                                                  "required":  [
+                                                                   "phase_22",
+                                                                   "phase_22a",
+                                                                   "phase_22b",
+                                                                   "phase22b_reopen_requires"
+                                                               ],
+                                                  "additionalProperties":  false,
+                                                  "properties":  {
+                                                                     "phase_22":  {
+                                                                                      "const":  "PRESERVED_INACTIVE_RESEARCH"
+                                                                                  },
+                                                                     "phase_22a":  {
+                                                                                       "const":  "COMPLETED_PRESERVED_RESEARCH"
+                                                                                   },
+                                                                     "phase_22b":  {
+                                                                                       "const":  "SUSPENDED_PRESERVED_RESEARCH"
+                                                                                   },
+                                                                     "phase22b_reopen_requires":  {
+                                                                                                      "const":  "REOPEN PHASE22B"
+                                                                                                  }
+                                                                 }
+                                              }
                    },
     "$defs":  {
                   "gate":  {

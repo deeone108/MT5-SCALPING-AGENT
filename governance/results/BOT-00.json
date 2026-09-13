@@ -1,0 +1,152 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-00",
+    "role":  "project_orchestrator",
+    "status":  "COMPLETE",
+    "base_commit":  "3ea0d38f8091626d976f22f35c0caa6b5113588f",
+    "result_commit":  null,
+    "inputs":  [
+                   {
+                       "sha256":  "573750d82c6f28a6226a09dfb498b3f743b4b151d9cea7301881a78c4e3895f5",
+                       "path":  "human_owner_directive_0e492903-4fc7-40b2-b144-0005aea706b2"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "sha256":  "47df5baef39324108440c56ac4e060cffb3b90e7fc6804b0ea10af129f322d0c",
+                          "path":  "docs/PRESERVED_RESEARCH_INDEX.md"
+                      },
+                      {
+                          "sha256":  "c41e195b7c94ec239c8c216bfa8a97a4e29ab8c929fae061bee608249cd628a4",
+                          "path":  "docs/DEFERRED_RESEARCH.md"
+                      },
+                      {
+                          "sha256":  "866656705faa21612bafa5f407640810bd7c2f9e5d048261fe14fdd007d17ad3",
+                          "path":  "governance/PHASE_STATE.schema.json"
+                      },
+                      {
+                          "sha256":  "5516f7fd41b9b5e4ad2d43a4858d5160355ce1384ffb892796a7c9dbc0ccd47b",
+                          "path":  "governance/state/project_state.json"
+                      },
+                      {
+                          "sha256":  "03266afb0ff64931bffa4e4379a350e0d698bb2824e5b6f0ac028e4b2ce586e3",
+                          "path":  "governance/memory/project_ledger.json"
+                      },
+                      {
+                          "sha256":  "5173112cfb173f2b24b00b9223fcb1f3e6395257cb71673a5f09604e030c14d6",
+                          "path":  "governance/tasks/BOT-00.json"
+                      },
+                      {
+                          "sha256":  "f0888041fcc70a4a480ebe3c3de73720797811fae897a3480a46b440aca850c9",
+                          "path":  "governance/tasks/BOT-01.json"
+                      },
+                      {
+                          "sha256":  "3f487a82a85189cd8b581c528ab0e5235ce44356237135c113627dca26e2b795",
+                          "path":  "tests/orchestration/test_integrated_state.py"
+                      }
+                  ],
+    "commands":  [
+                     "inspect authoritative repository state and owner directive",
+                     "validate schemas and governance regression tests"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "integrated_state",
+                      "failed":  0,
+                      "passed":  7
+                  },
+                  {
+                      "name":  "orchestration_governance",
+                      "failed":  0,
+                      "passed":  126
+                  },
+                  {
+                      "name":  "state_task_result_schemas",
+                      "passed":  true
+                  }
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no research/data access",
+                                  "no Phase 22B continuation",
+                                  "no scientific artifact mutation",
+                                  "no strategy/execution/LIVE change"
+                              ],
+    "handoff":  {
+                    "requested_decision":  "EXECUTE_BOT_01_REPOSITORY_COMPONENT_AUDIT",
+                    "limitations":  [
+                                        "BOT-01 is read-only",
+                                        "no market data or implementation"
+                                    ],
+                    "to_role":  "qa_reviewer"
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "7 integrated state tests passed",
+                           "126 orchestration tests passed",
+                           "4 schemas passed"
+                       ],
+    "review_status":  [
+                          {
+                              "verdict":  "BOT_00_COMPLETE",
+                              "role":  "project_orchestrator"
+                          }
+                      ],
+    "end_time":  "2026-09-13T18:28:00.9536159Z",
+    "safety_checks":  [
+                          {
+                              "name":  "legacy_research_preserved",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "live_execution_authorized",
+                              "status":  "FALSE"
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "docs/PRESERVED_RESEARCH_INDEX.md",
+                          "docs/DEFERRED_RESEARCH.md",
+                          "governance/PHASE_STATE.schema.json",
+                          "governance/state/project_state.json",
+                          "governance/memory/project_ledger.json",
+                          "governance/tasks/BOT-00.json",
+                          "governance/tasks/BOT-01.json",
+                          "tests/orchestration/test_integrated_state.py",
+                          "governance/results/BOT-00.json"
+                      ],
+    "test_results":  [
+                         {
+                             "scope":  "integrated_state",
+                             "failed":  0,
+                             "passed":  7
+                         },
+                         {
+                             "scope":  "orchestration",
+                             "failed":  0,
+                             "passed":  126
+                         },
+                         {
+                             "scope":  "schemas",
+                             "failed":  0,
+                             "passed":  4
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "docs/PRESERVED_RESEARCH_INDEX.md":  "47df5baef39324108440c56ac4e060cffb3b90e7fc6804b0ea10af129f322d0c",
+                            "docs/DEFERRED_RESEARCH.md":  "c41e195b7c94ec239c8c216bfa8a97a4e29ab8c929fae061bee608249cd628a4",
+                            "governance/PHASE_STATE.schema.json":  "866656705faa21612bafa5f407640810bd7c2f9e5d048261fe14fdd007d17ad3",
+                            "governance/state/project_state.json":  "5516f7fd41b9b5e4ad2d43a4858d5160355ce1384ffb892796a7c9dbc0ccd47b",
+                            "governance/memory/project_ledger.json":  "03266afb0ff64931bffa4e4379a350e0d698bb2824e5b6f0ac028e4b2ce586e3",
+                            "governance/tasks/BOT-00.json":  "5173112cfb173f2b24b00b9223fcb1f3e6395257cb71673a5f09604e030c14d6",
+                            "governance/tasks/BOT-01.json":  "f0888041fcc70a4a480ebe3c3de73720797811fae897a3480a46b440aca850c9",
+                            "tests/orchestration/test_integrated_state.py":  "3f487a82a85189cd8b581c528ab0e5235ce44356237135c113627dca26e2b795"
+                        },
+    "terminal_result":  "BOT_00_COMPLETE_BOT_01_PENDING",
+    "start_time":  "2026-09-13T18:28:00.9536159Z",
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}

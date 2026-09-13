@@ -1,0 +1,73 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-00",
+    "phase_id":  "MT5_AI_SCALPING_BOT",
+    "phase":  "MT5_AI_SCALPING_BOT",
+    "assigned_role":  "project_orchestrator",
+    "base_commit":  "3ea0d38cd374f8aa4e0635d4a7cee15a62069e29",
+    "branch":  "task/ph22b-runtime-001",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-runtime-001",
+    "objective":  "Preserve and suspend legacy research, remove it from the active queue, and establish the owner-priority MT5 AI scalping bot programme.",
+    "inputs":  [
+                   {
+                       "sha256":  "573750d82c6f28a6226a09dfb498b3f743b4b151d9cea7301881a78c4e3895f5",
+                       "path":  "human_owner_directive_0e492903-4fc7-40b2-b144-0005aea706b2"
+                   }
+               ],
+    "allowed_paths":  [
+                          "docs/PRESERVED_RESEARCH_INDEX.md",
+                          "docs/DEFERRED_RESEARCH.md",
+                          "governance/PHASE_STATE.schema.json",
+                          "governance/state/project_state.json",
+                          "governance/memory/project_ledger.json",
+                          "governance/tasks/BOT-00.json",
+                          "governance/tasks/BOT-01.json",
+                          "governance/results/BOT-00.json",
+                          "tests/orchestration/test_integrated_state.py"
+                      ],
+    "forbidden_paths":  [
+                            "research/",
+                            "reports/",
+                            "data/",
+                            "src/",
+                            "scripts/",
+                            "governance/incidents/",
+                            "governance/reviews/"
+                        ],
+    "allowed_data":  [
+
+                     ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "project state schema",
+                           "research preservation",
+                           "single active task",
+                           "safety and data locks"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "required_outputs":  [
+                             "preserved research index",
+                             "deferred research backlog",
+                             "bot programme state",
+                             "BOT-01 task"
+                         ],
+    "completion_conditions":  [
+                                  "old research preserved inactive",
+                                  "only BOT-01 active",
+                                  "all safety locks preserved"
+                              ],
+    "prohibited_actions":  [
+                               "delete or rewrite research",
+                               "continue Phase 22B",
+                               "access data",
+                               "implement strategy or execution",
+                               "enable LIVE"
+                           ],
+    "status":  "COMPLETED"
+}
