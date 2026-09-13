@@ -64,13 +64,14 @@ def _authoritative(repository:Path,specification_hash:str,code_commit:str,author
  if list(task.get("data_authorization",{}).get("symbols",[]))!=list(symbols):raise ValueError("symbol authority drift")
  return {"repository":str(root),"state_sha256":_canonical(state),"task_sha256":_canonical(task),"spec_sha256":_canonical(spec),"dataset_sha256":state["dataset_root_hash"],"task_id":task["task_id"],"authorization_id":task["data_authorization"]["authorization_id"],"benchmark_sha256":BENCHMARK_SHA256}
 def reserve_run(root:Path,*,repository:Path,run_id:str,task_id:str,specification_hash:str,code_commit:str,authorized_windows:Sequence[str],symbols:Sequence[str])->Path:
+ root=root.resolve()
  if specification_hash!=SPEC_V12:raise ValueError("frozen v12 specification hash mismatch")
  if set(authorized_windows)!={"2019","2020","2021"}:raise ValueError("authority must be exactly 2019-2021")
  binding=_authoritative(repository,specification_hash,code_commit,authorized_windows,symbols)
  if task_id!=binding["task_id"]:raise ValueError("task identity drift")
- run=root/run_id;run.mkdir(parents=True,exist_ok=False)
+ run=(root/run_id).resolve();run.mkdir(parents=True,exist_ok=False)
  for d in ("staging","quarantine"):(run/d).mkdir()
- identity={"run_id":run_id,"task_id":task_id,"specification_hash":specification_hash,"code_commit":code_commit,"authorized_data_windows":list(authorized_windows),"authorized_symbols":list(symbols),"created_at":_now(),"environment":{"python":sys.version,"platform":sys.platform,"executable":sys.executable},"checkpoint_policy":"DISABLED_NO_PROVEN_V12_RNG_EQUIVALENCE_CLEAN_RERUN_ONLY","authoritative_binding":binding}
+ identity={"run_root":str(run),"run_id":run_id,"task_id":task_id,"specification_hash":specification_hash,"code_commit":code_commit,"authorized_data_windows":list(authorized_windows),"authorized_symbols":list(symbols),"created_at":_now(),"environment":{"python":sys.version,"platform":sys.platform,"executable":sys.executable},"checkpoint_policy":"DISABLED_NO_PROVEN_V12_RNG_EQUIVALENCE_CLEAN_RERUN_ONLY","authoritative_binding":binding}
  _atomic_json(run/"identity.json",identity);_state(run,"CREATED",**identity);return run
 def _usage(pid:int)->dict:
  try:
@@ -111,15 +112,19 @@ def validate_and_publish(run:Path,required:Sequence[str])->dict:
   if source.resolve()!=target.resolve():shutil.copy2(source,target)
  if {"development_artifact.json","result_manifest.json"}<=set(sources):_validate_scientific(run,staging)
  identity=json.loads((run/"identity.json").read_text("utf-8"))
+ if not isinstance(identity,dict):raise ValueError("malformed run identity")
  hashes={n:_sha(staging/n) for n in sources};manifest={"validated_at":_now(),"artifacts":hashes,"run_id":identity["run_id"],"task_id":identity["task_id"],"specification_hash":identity["specification_hash"],"code_commit":identity["code_commit"],"authorized_data_windows":identity["authorized_data_windows"],"authorized_symbols":identity["authorized_symbols"],"authoritative_binding":identity["authoritative_binding"]};_atomic_json(staging/"publication_manifest.json",manifest)
  committed=run/"evidence"
  if committed.exists():raise ValueError("evidence already published")
  os.replace(staging,committed);staging.mkdir();return manifest
+def _worker_creation_flags() -> int:
+ return getattr(subprocess,"CREATE_NO_WINDOW",0x08000000) if os.name=="nt" else 0
 def supervise(run:Path,command:Sequence[str],*,required_artifacts:Sequence[str],heartbeat_seconds:float=.2)->int:
+ run=run.resolve()
  _state(run,"STARTING");out=open(run/"stdout.log","ab",buffering=0);err=open(run/"stderr.log","ab",buffering=0);started=_now()
  try:
-  proc=subprocess.Popen(list(command),cwd=str(run/"staging"),stdout=out,stderr=err)
-  _state(run,"RUNNING",pid=proc.pid,process_start=started,command=list(command),heartbeat_at=_now())
+  proc=subprocess.Popen(list(command),cwd=str(run/"staging"),stdin=subprocess.DEVNULL,stdout=out,stderr=err,close_fds=True,creationflags=_worker_creation_flags(),shell=False)
+  _state(run,"RUNNING",pid=proc.pid,process_start=started,command=list(command),worker_run_root=str(run),worker_headless=os.name=="nt",heartbeat_at=_now())
   while proc.poll() is None:_state(run,"RUNNING",pid=proc.pid,heartbeat_at=_now(),**_usage(proc.pid));time.sleep(heartbeat_seconds)
   code=proc.returncode;ended=_now()
   if code!=0:_quarantine(run,"failed-staging");_state(run,"FAILED",exit_code=code,exit_timestamp=ended,termination_reason="WORKER_NONZERO_EXIT");return code
@@ -133,14 +138,29 @@ def supervise(run:Path,command:Sequence[str],*,required_artifacts:Sequence[str],
   except Exception:pass
   _state(run,"FAILED",exit_code=None,exit_timestamp=_now(),termination_reason="SUPERVISOR_EXCEPTION",error=repr(exc));return 4
  finally:out.close();err.close()
+def _detached_creation_flags() -> int:
+ if os.name != "nt": return 0
+ # Explicitly headless and independent of host console and kill-on-close job.
+ return (getattr(subprocess, "CREATE_NO_WINDOW", 0x08000000) |
+         subprocess.CREATE_NEW_PROCESS_GROUP |
+         getattr(subprocess, "CREATE_BREAKAWAY_FROM_JOB", 0x01000000))
 def launch_detached(run:Path,command:Sequence[str],required_artifacts:Sequence[str])->int:
- _atomic_json(run/"launch.json",{"command":list(command),"required_artifacts":list(required_artifacts)})
- args=[sys.executable,"-m","mt5_scalping_agent.orchestration.runtime_supervisor","daemon",str(run)];flags=0
- if os.name=="nt":flags=subprocess.DETACHED_PROCESS|subprocess.CREATE_NEW_PROCESS_GROUP
- with open(run/"supervisor.log","ab",buffering=0) as log:proc=subprocess.Popen(args,stdin=subprocess.DEVNULL,stdout=log,stderr=log,close_fds=True,creationflags=flags,start_new_session=os.name!="nt")
- _atomic_json(run/"supervisor_identity.json",{"supervisor_pid":proc.pid,"launched_at":_now()});return proc.pid
+ run=run.resolve()
+ identity=json.loads((run/"identity.json").read_text("utf-8"))
+ if identity.get("run_root")!=str(run) or identity.get("run_id")!=run.name:raise ValueError("run root identity mismatch")
+ command=[str(item) for item in command]
+ _atomic_json(run/"launch.json",{"run_root":str(run),"run_id":run.name,"windows_headless":os.name=="nt","shell":False,"command":command,"required_artifacts":list(required_artifacts)})
+ args=[sys.executable,"-m","mt5_scalping_agent.orchestration.runtime_supervisor","daemon",str(run)]
+ flags=_detached_creation_flags()
+ with open(run/"supervisor.log","ab",buffering=0) as log:proc=subprocess.Popen(args,stdin=subprocess.DEVNULL,stdout=log,stderr=log,close_fds=True,creationflags=flags,start_new_session=os.name!="nt",env=dict(os.environ),shell=False)
+ _atomic_json(run/"supervisor_identity.json",{"run_root":str(run),"run_id":run.name,"supervisor_pid":proc.pid,"headless":os.name=="nt","shell":False,"launched_at":_now()});return proc.pid
 def main(argv=None)->int:
  args=list(sys.argv[1:] if argv is None else argv)
  if len(args)!=2 or args[0]!="daemon":return 64
- run=Path(args[1]);cfg=json.loads((run/"launch.json").read_text("utf-8"));return supervise(run,cfg["command"],required_artifacts=cfg["required_artifacts"])
+ supplied=Path(args[1])
+ if not supplied.is_absolute():return 65
+ run=supplied.resolve();cfg=json.loads((run/"launch.json").read_text("utf-8"));identity=json.loads((run/"identity.json").read_text("utf-8"))
+ if not isinstance(cfg,dict) or not isinstance(identity,dict):return 66
+ if cfg.get("run_root")!=str(run) or cfg.get("run_id")!=run.name or identity.get("run_root")!=str(run) or identity.get("run_id")!=run.name:return 66
+ return supervise(run,cfg["command"],required_artifacts=cfg["required_artifacts"])
 if __name__=="__main__":raise SystemExit(main())

@@ -94,3 +94,70 @@ def test_stale_absent_worker_is_deterministically_invalid_and_quarantined(tmp_pa
  from mt5_scalping_agent.orchestration.runtime_supervisor import _state,reconcile
  r=reserve(tmp_path);(r/"staging/partial").write_text("x");_state(r,"RUNNING",pid=99999999,heartbeat_at="2000-01-01T00:00:00+00:00")
  assert reconcile(r,stale_seconds=0)["state"]=="INVALID";assert (r/"quarantine/orphaned-staging/partial").exists()
+
+def test_reservation_canonicalizes_absolute_run_root_and_manifest_identity(tmp_path):
+ r=reserve(tmp_path);identity=json.loads((r/"identity.json").read_text());assert r.is_absolute();assert identity["run_root"]==str(r);assert identity["run_id"]==r.name
+
+def test_launch_manifest_and_supervisor_identity_share_absolute_run_root(tmp_path):
+ r=reserve(tmp_path);pid=launch_detached(r,worker("from pathlib import Path;Path('a').write_text('x')"),["a"]);assert pid>0
+ for _ in range(200):
+  if state(r)["state"] in {"SUCCEEDED","FAILED","INVALID"}:break
+  time.sleep(.03)
+ launch=json.loads((r/"launch.json").read_text());identity=json.loads((r/"identity.json").read_text());supervisor=json.loads((r/"supervisor_identity.json").read_text())
+ assert launch["run_root"]==identity["run_root"]==supervisor["run_root"]==str(r.resolve());assert launch["run_id"]==identity["run_id"]==supervisor["run_id"]==r.name
+
+def test_windows_detached_supervisor_and_worker_survive_launcher_exit_then_record_native_failure(tmp_path):
+ if os.name!="nt":pytest.skip("Windows process contract")
+ r=reserve(tmp_path);launcher=tmp_path/"short_launcher.py"
+ launcher.write_text("import sys\nfrom pathlib import Path\nfrom mt5_scalping_agent.orchestration.runtime_supervisor import launch_detached\nr=Path(sys.argv[1]).resolve()\ncmd=[sys.executable,'-c',\"import pathlib,sys,time;print('out',flush=True);print('err',file=sys.stderr,flush=True);stop=pathlib.Path('synthetic.stop');\\nwhile not stop.exists(): time.sleep(.05)\\nraise SystemExit(7)\"]\nlaunch_detached(r,cmd,[])\n",encoding="utf-8")
+ env={key:os.environ[key] for key in ("SYSTEMROOT","TEMP","TMP") if key in os.environ};env["PYTHONPATH"]=str(ROOT/"src")
+ caller=subprocess.Popen([sys.executable,str(launcher),str(r)],env=env,cwd=str(tmp_path));caller.wait(timeout=10);assert caller.returncode==0
+ for _ in range(200):
+  current=state(r)
+  if current.get("state")=="RUNNING" and current.get("pid"):break
+  time.sleep(.03)
+ first=state(r);assert first["state"]=="RUNNING";worker_pid=first["pid"];supervisor_pid=json.loads((r/"supervisor_identity.json").read_text())["supervisor_pid"]
+ def alive(pid):
+  import ctypes
+  handle=ctypes.windll.kernel32.OpenProcess(0x1000,False,pid)
+  if handle:ctypes.windll.kernel32.CloseHandle(handle)
+  return bool(handle)
+ assert alive(supervisor_pid) and alive(worker_pid);heartbeat=first["heartbeat_at"];time.sleep(.35);assert state(r)["heartbeat_at"]!=heartbeat
+ assert b"out" in (r/"stdout.log").read_bytes();assert b"err" in (r/"stderr.log").read_bytes()
+ (r/"staging/synthetic.stop").write_text("stop",encoding="utf-8")
+ for _ in range(300):
+  if state(r)["state"] in {"FAILED","INVALID"}:break
+  time.sleep(.03)
+ terminal=state(r);assert terminal["state"]=="FAILED";assert terminal["termination_reason"]=="WORKER_NONZERO_EXIT";assert terminal["exit_code"] is not None
+ assert not (r/"evidence").exists()
+
+def test_daemon_rejects_relative_or_mismatched_run_root(tmp_path):
+ from mt5_scalping_agent.orchestration.runtime_supervisor import main
+ assert main(["daemon","relative-run"])==65
+ r=reserve(tmp_path);launch_detached(r,worker("from pathlib import Path;Path('a').write_text('x')"),["a"])
+ for _ in range(200):
+  if state(r)["state"] in {"SUCCEEDED","FAILED","INVALID"}:break
+  time.sleep(.03)
+ launch=json.loads((r/"launch.json").read_text());launch["run_id"]="wrong";(r/"launch.json").write_text(json.dumps(launch))
+ assert main(["daemon",str(r)])==66
+
+
+def test_windows_creation_contract_is_headless_breakaway_and_shell_free():
+ from mt5_scalping_agent.orchestration.runtime_supervisor import _detached_creation_flags,_worker_creation_flags
+ if os.name!="nt":pytest.skip("Windows process contract")
+ assert _detached_creation_flags() & subprocess.CREATE_NO_WINDOW
+ assert _detached_creation_flags() & subprocess.CREATE_NEW_PROCESS_GROUP
+ assert _detached_creation_flags() & getattr(subprocess,"CREATE_BREAKAWAY_FROM_JOB",0x01000000)
+ assert not (_detached_creation_flags() & subprocess.DETACHED_PROCESS)
+ assert _worker_creation_flags() & subprocess.CREATE_NO_WINDOW
+
+def test_launch_records_headless_shell_free_absolute_executable(tmp_path):
+ r=reserve(tmp_path);pid=launch_detached(r,worker("from pathlib import Path;Path('a').write_text('x')"),["a"]);assert pid>0
+ for _ in range(200):
+  if state(r)["state"] in {"SUCCEEDED","FAILED","INVALID"}:break
+  time.sleep(.03)
+ launch=json.loads((r/"launch.json").read_text());supervisor=json.loads((r/"supervisor_identity.json").read_text())
+ assert Path(launch["command"][0]).is_absolute();assert launch["shell"] is False;assert supervisor["shell"] is False
+ if os.name=="nt":assert launch["windows_headless"] is True and supervisor["headless"] is True
+ assert not any(Path(part).name.lower() in {"cmd.exe","powershell.exe","pwsh.exe"} for part in launch["command"])
+ assert state(r)["worker_run_root"]==str(r.resolve())

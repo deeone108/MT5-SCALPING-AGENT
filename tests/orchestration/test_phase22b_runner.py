@@ -104,9 +104,9 @@ def test_synthetic_runner_e2e_binds_authority_scores_validates_and_publishes(tmp
     monkeypatch.setattr(runner, "model_contract", lambda *args, **kwargs: {"response": "Y_RAW_ABS_60S_PIPS", "predictors": ["intercept", "exposure__WIDE"], "coefficient_names": ["intercept", "exposure__WIDE"]})
     run_id="phase22b_20260912T120000Z"; code="d" * 40
     runtime=root/"runtime"/run_id; private=runtime/"staging"; private.mkdir(parents=True)
-    identity={"run_id":run_id,"task_id":"PH22B-RI-002","specification_hash":runner.SPEC_SHA256,"code_commit":code,"authorized_data_windows":[str(year) for year in runner.YEARS],"authorized_symbols":list(runner.PAIRS),"authoritative_binding":{"repository":str(root.resolve())}}
+    identity={"run_root":str(runtime.resolve()),"run_id":run_id,"task_id":"PH22B-RI-002","specification_hash":runner.SPEC_SHA256,"code_commit":code,"authorized_data_windows":[str(year) for year in runner.YEARS],"authorized_symbols":list(runner.PAIRS),"authoritative_binding":{"repository":str(root.resolve())}}
     (runtime/"identity.json").write_text(json.dumps(identity),encoding="utf-8")
-    args = argparse.Namespace(repository=root, control_plane_only=False, run_id=run_id, code_version=code, output_root=private)
+    args = argparse.Namespace(repository=root, control_plane_only=False, run_id=run_id, code_version=code, output_root=private.resolve(), supervisor_run_root=runtime.resolve())
     result = runner.execute(args, byte_reader=lambda locator: (_ for _ in ()).throw(AssertionError("synthetic E2E must not read market data")))
     assert result["status"] == "DEVELOPMENT_ARTIFACT_FROZEN_PENDING_REVIEW"
     artifact = json.loads(Path(result["artifact"]).read_text(encoding="utf-8"))
@@ -128,7 +128,7 @@ def _private_output_fixture(tmp_path: Path, **identity_updates):
     private = runtime / "staging"
     private.mkdir(parents=True)
     identity = {
-        "run_id": run_id, "task_id": "PH22B-RI-002",
+        "run_root": str(runtime.resolve()), "run_id": run_id, "task_id": "PH22B-RI-002",
         "specification_hash": runner.SPEC_SHA256, "code_commit": code,
         "authorized_data_windows": ["2019", "2020", "2021"],
         "authorized_symbols": list(runner.PAIRS),
@@ -136,7 +136,7 @@ def _private_output_fixture(tmp_path: Path, **identity_updates):
     }
     identity.update(identity_updates)
     (runtime / "identity.json").write_text(json.dumps(identity), encoding="utf-8")
-    return root, run_id, code, argparse.Namespace(output_root=private)
+    return root, run_id, code, argparse.Namespace(output_root=private.resolve(), supervisor_run_root=runtime.resolve())
 
 
 def test_string_year_manifest_round_trip_produces_canonical_integer_domain(tmp_path: Path) -> None:
@@ -177,3 +177,23 @@ def test_failed_predecessor_is_immutable_non_scientific() -> None:
     assert incident["classification"] == "INVALID_FAILED_NON_SCIENTIFIC"
     assert incident["run_id_reusable"] is False
     assert incident["market_data_accessed"] is False
+
+def test_output_root_and_supervisor_root_must_be_absolute_and_identical(tmp_path: Path) -> None:
+    root, run_id, code, args = _private_output_fixture(tmp_path)
+    args.output_root = Path("relative/staging")
+    with pytest.raises(runner.InvalidResearchRun, match="absolute"):
+        runner._private_output_root(args, root, run_id, code)
+    args.output_root = (root / "other" / "staging").resolve()
+    with pytest.raises(runner.InvalidResearchRun, match="does not match"):
+        runner._private_output_root(args, root, run_id, code)
+
+
+def test_missing_or_malformed_supervisor_run_identity_fails_before_reader(tmp_path: Path) -> None:
+    root, run_id, code, args = _private_output_fixture(tmp_path)
+    identity_path = args.supervisor_run_root / "identity.json"
+    identity_path.unlink()
+    with pytest.raises(runner.InvalidResearchRun, match="identity absent"):
+        runner._private_output_root(args, root, run_id, code)
+    identity_path.write_text("[]", encoding="utf-8")
+    with pytest.raises(runner.InvalidResearchRun, match="malformed supervisor identity"):
+        runner._private_output_root(args, root, run_id, code)

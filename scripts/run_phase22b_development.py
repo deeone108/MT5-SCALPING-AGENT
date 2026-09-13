@@ -70,14 +70,19 @@ def _fixed_discovery_spread_pips(eligible: pd.DataFrame) -> float:
         raise InvalidResearchRun("fixed discovery spread is nonpositive")
     return fixed
 def _private_output_root(args:argparse.Namespace,root:Path,run_id:str,code:str)->Path:
+    supervisor_run_root=getattr(args,"supervisor_run_root",None)
+    if supervisor_run_root is None or not supervisor_run_root.is_absolute(): raise InvalidResearchRun("absolute supervisor run root required")
+    supervisor_run_root=supervisor_run_root.resolve()
     candidate=getattr(args,"output_root",None)
-    if candidate is None: raise InvalidResearchRun("supervisor-private output root required")
+    if candidate is None or not candidate.is_absolute(): raise InvalidResearchRun("absolute supervisor-private output root required")
     output=candidate.resolve()
     if output.name!="staging": raise InvalidResearchRun("output root is not supervisor-private staging")
-    identity_path=output.parent/"identity.json"
+    if output.parent!=supervisor_run_root: raise InvalidResearchRun("output root does not match supervisor run root")
+    identity_path=supervisor_run_root/"identity.json"
     if not identity_path.is_file(): raise InvalidResearchRun("supervisor identity absent")
     identity=_read_json(identity_path)
-    expected={"run_id":run_id,"task_id":"PH22B-RI-002","specification_hash":SPEC_SHA256,"code_commit":code,"authorized_symbols":list(PAIRS)}
+    if not isinstance(identity,dict): raise InvalidResearchRun("malformed supervisor identity")
+    expected={"run_root":str(supervisor_run_root),"run_id":run_id,"task_id":"PH22B-RI-002","specification_hash":SPEC_SHA256,"code_commit":code,"authorized_symbols":list(PAIRS)}
     if any(identity.get(key)!=value for key,value in expected.items()): raise InvalidResearchRun("supervisor identity mismatch")
     if _canonical_authorized_years(identity.get("authorized_data_windows"), "supervisor authorized data windows") != YEARS:
         raise InvalidResearchRun("supervisor identity mismatch")
@@ -166,7 +171,7 @@ def execute(args:argparse.Namespace,*,byte_reader=None)->dict:
     _schema_shape(root,evidence,"PHASE22B_EVIDENCE.schema.json");_schema_shape(root,result);_atomic_pair(out,artifact,result_path,result)
     return {"status":"DEVELOPMENT_ARTIFACT_FROZEN_PENDING_REVIEW","artifact":str(out),"sha256":artifact_hash,"replay_sha256":replay_hash}
 def parser()->argparse.ArgumentParser:
-    p=argparse.ArgumentParser();p.add_argument("--repository",type=Path,default=Path.cwd());p.add_argument("--control-plane-only",action="store_true");p.add_argument("--run-id",default="");p.add_argument("--code-version",default="");p.add_argument("--output-root",type=Path,default=None);return p
+    p=argparse.ArgumentParser();p.add_argument("--repository",type=Path,default=Path.cwd());p.add_argument("--control-plane-only",action="store_true");p.add_argument("--run-id",default="");p.add_argument("--code-version",default="");p.add_argument("--output-root",type=Path,default=None);p.add_argument("--supervisor-run-root",type=Path,default=None);return p
 def main()->int:
     try: print(json.dumps(execute(parser().parse_args()),indent=2,sort_keys=True));return 0
     except Exception as exc: print(json.dumps({"status":"PHASE_22B_INVALID_RESEARCH_RUN","error":str(exc)}),file=sys.stderr);return 2
