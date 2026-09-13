@@ -1,0 +1,56 @@
+{
+    "schema_version":  1,
+    "run_id":  "phase22b_20260913T172656Z",
+    "task_id":  "PH22B-RI-002",
+    "launch_task_id":  "PH22B-LAUNCH-002",
+    "state":  "RUNNING",
+    "scientific_status":  "PENDING_TERMINAL_RESULT",
+    "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "code_commit":  "f987bf358caa6a821424019061ea053766100816",
+    "dataset_root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "authorized_windows":  [
+                               "2019",
+                               "2020",
+                               "2021"
+                           ],
+    "authorized_symbols":  [
+                               "EURUSD",
+                               "GBPUSD",
+                               "USDJPY",
+                               "USDCAD"
+                           ],
+    "locked_windows":  [
+                           "2022",
+                           "2023"
+                       ],
+    "forbidden":  [
+                      "2024+"
+                  ],
+    "supervisor_pid":  25832,
+    "worker_pid":  33084,
+    "durable_run_root":  "reports/_durable_runtime/phase22b_20260913T172656Z",
+    "state_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/state.json",
+    "heartbeat_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/state.json#heartbeat_at",
+    "stdout_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/stdout.log",
+    "stderr_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/stderr.log",
+    "identity_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/identity.json",
+    "launch_manifest_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/launch.json",
+    "initial_heartbeat_at":  "2026-09-13T17:28:30.178683+00:00",
+    "initial_supervisor_alive":  true,
+    "initial_worker_alive":  true,
+    "detached":  true,
+    "atomic_publication_required":  true,
+    "failed_predecessor":  {
+                               "run_id":  "phase22b_20260913T163443Z",
+                               "status":  "INVALID_FAILED_NON_SCIENTIFIC",
+                               "reusable":  false
+                           },
+    "strategy_authorized":  false,
+    "pnl_authorized":  false,
+    "execution_authorized":  false,
+    "live_authorized":  false,
+    "monitoring_policy":  "NO_INTERACTIVE_POLLING_RESUME_FROM_DURABLE_STATE",
+    "next_authorized_action":  "INSPECT_DURABLE_PHASE22B_RUN_TERMINAL_STATE_IN_FUTURE_SESSION",
+    "human_gate_required":  false,
+    "recorded_at_utc":  "2026-09-13T17:28:30.4081942Z"
+}

@@ -1,0 +1,116 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-LAUNCH-002",
+    "phase_id":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "phase":  "PHASE_22B_RETROSPECTIVE_DEVELOPMENT",
+    "assigned_role":  "project_orchestrator",
+    "base_commit":  "f987bf358caa6a821424019061ea053766100816",
+    "branch":  "task/ph22b-runtime-001",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/ph22b-runtime-001",
+    "objective":  "Create and launch one fresh detached durable Phase 22B v12 run after accepted runtime identity QA.",
+    "inputs":  [
+                   {
+                       "path":  "governance/evidence/PH22B-RUNTIME-002-ORCHESTRATOR-ACCEPTANCE.json",
+                       "sha256":  "a5a0abcd99de5075500ba583d274c191b2ba5c181c91e1029717c3497329e521"
+                   },
+                   {
+                       "path":  "research/phase22b_spec_v12.json",
+                       "sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+                   }
+               ],
+    "allowed_paths":  [
+                          "governance/tasks/PH22B-LAUNCH-002.json",
+                          "governance/results/PH22B-LAUNCH-002.json",
+                          "governance/state/phase22b_active_run.json",
+                          "governance/memory/project_ledger.json",
+                          "reports/_durable_runtime/phase22b_20260913T172656Z"
+                      ],
+    "forbidden_paths":  [
+                            "research/",
+                            "src/mt5_scalping_agent/research/",
+                            "src/mt5_scalping_agent/strategies/",
+                            "src/mt5_scalping_agent/execution/"
+                        ],
+    "allowed_data":  [
+                         {
+                             "root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+                             "partitions":  [
+                                                "EURUSD-2019",
+                                                "EURUSD-2020",
+                                                "EURUSD-2021",
+                                                "GBPUSD-2019",
+                                                "GBPUSD-2020",
+                                                "GBPUSD-2021",
+                                                "USDJPY-2019",
+                                                "USDJPY-2020",
+                                                "USDJPY-2021",
+                                                "USDCAD-2019",
+                                                "USDCAD-2020",
+                                                "USDCAD-2021"
+                                            ]
+                         }
+                     ],
+    "allowed_data_window":  [
+                                "2019",
+                                "2020",
+                                "2021"
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "control-plane no-data preflight",
+                           "durable runtime/runner/resolver regressions",
+                           "initial detached PID heartbeat logs and identity"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "required_outputs":  [
+                             "fresh non-reused run ID",
+                             "durable run identity/state/logs",
+                             "persisted active-run state"
+                         ],
+    "completion_conditions":  [
+                                  "supervisor and worker alive initially",
+                                  "heartbeat and logs persisted",
+                                  "exact v12 and authority identity",
+                                  "Codex stops monitoring"
+                              ],
+    "prohibited_actions":  [
+                               "reuse failed run ID",
+                               "modify v12",
+                               "unlock 2022/2023 or access 2024+",
+                               "authorize strategy/PnL/execution/LIVE",
+                               "continuous monitoring"
+                           ],
+    "status":  "COMPLETED",
+    "data_authorization":  {
+                               "authorization_id":  "PH22B-DEV-2019-2021-AUTH-001",
+                               "dataset_root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+                               "symbols":  [
+                                               "EURUSD",
+                                               "GBPUSD",
+                                               "USDJPY",
+                                               "USDCAD"
+                                           ],
+                               "years":  [
+                                             2019,
+                                             2020,
+                                             2021
+                                         ],
+                               "partitions":  [
+                                                  "EURUSD-2019",
+                                                  "EURUSD-2020",
+                                                  "EURUSD-2021",
+                                                  "GBPUSD-2019",
+                                                  "GBPUSD-2020",
+                                                  "GBPUSD-2021",
+                                                  "USDJPY-2019",
+                                                  "USDJPY-2020",
+                                                  "USDJPY-2021",
+                                                  "USDCAD-2019",
+                                                  "USDCAD-2020",
+                                                  "USDCAD-2021"
+                                              ]
+                           }
+}

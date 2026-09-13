@@ -358,6 +358,42 @@
                           "failed_predecessor_disposition":  "INVALID_FAILED_NON_SCIENTIFIC_PERMANENTLY_QUARANTINED",
                           "next_authorized_action":  "CREATE_AND_LAUNCH_NEW_DURABLE_PHASE22B_V12_RUN",
                           "reference":  "governance/evidence/PH22B-RUNTIME-002-ORCHESTRATOR-ACCEPTANCE.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DURABLE_RUN_LAUNCH_002",
+                          "status":  "RUNNING_DETACHED",
+                          "run_id":  "phase22b_20260913T172656Z",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "code_commit":  "f987bf358caa6a821424019061ea053766100816",
+                          "supervisor_pid":  25832,
+                          "worker_pid":  33084,
+                          "authorized_years":  [
+                                                   2019,
+                                                   2020,
+                                                   2021
+                                               ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "authorized_symbols":  [
+                                                     "EURUSD",
+                                                     "GBPUSD",
+                                                     "USDJPY",
+                                                     "USDCAD"
+                                                 ],
+                          "durable_state_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/state.json",
+                          "heartbeat_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/state.json#heartbeat_at",
+                          "stdout_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/stdout.log",
+                          "stderr_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/stderr.log",
+                          "failed_predecessor":  "phase22b_20260913T163443Z",
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "next_authorized_action":  "INSPECT_DURABLE_PHASE22B_RUN_TERMINAL_STATE_IN_FUTURE_SESSION",
+                          "reference":  "governance/state/phase22b_active_run.json"
                       }
                   ],
     "holdout_access_history":  [

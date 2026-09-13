@@ -1,0 +1,106 @@
+{
+    "schema_version":  1,
+    "task_id":  "PH22B-LAUNCH-002",
+    "role":  "project_orchestrator",
+    "status":  "COMPLETE",
+    "base_commit":  "f987bf358caa6a821424019061ea053766100816",
+    "result_commit":  "f987bf358caa6a821424019061ea053766100816",
+    "inputs":  [
+                   {
+                       "path":  "governance/evidence/PH22B-RUNTIME-002-ORCHESTRATOR-ACCEPTANCE.json",
+                       "sha256":  "a5a0abcd99de5075500ba583d274c191b2ba5c181c91e1029717c3497329e521"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "path":  "governance/state/phase22b_active_run.json",
+                          "sha256":  "86f4dfefc63f33c7229ff49474836cf8f8e55a2e6f96a570363d25205ecf76d1"
+                      }
+                  ],
+    "commands":  [
+                     "control-plane-only preflight",
+                     "71 focused launch preflight tests",
+                     "launch detached supervisor",
+                     "single initial health verification"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "control_plane",
+                      "passed":  true,
+                      "evidence":  "CONTROL_PLANE_VALIDATED_NO_DATA_READ"
+                  },
+                  {
+                      "name":  "focused_launch_preflight",
+                      "passed":  true,
+                      "evidence":  "71 passed"
+                  },
+                  {
+                      "name":  "initial_durable_health",
+                      "passed":  true,
+                      "evidence":  "RUNNING; supervisor and worker alive; heartbeat and logs present"
+                  }
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "failed run ID not reused",
+                                  "v12 unchanged",
+                                  "identity limited to 2019-2021 and four pairs",
+                                  "2022/2023 locked; 2024+ forbidden",
+                                  "no strategy/PnL/execution/LIVE changes"
+                              ],
+    "handoff":  {
+                    "requested_decision":  "INSPECT_DURABLE_PHASE22B_RUN_TERMINAL_STATE_IN_FUTURE_SESSION",
+                    "limitations":  [
+                                        "worker continues independently",
+                                        "no scientific result exists at launch checkpoint"
+                                    ],
+                    "to_role":  "project_orchestrator"
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "control plane passed without data read",
+                           "71 focused tests passed",
+                           "one initial detached health check passed"
+                       ],
+    "review_status":  [
+                          {
+                              "decision":  "DURABLE_LAUNCH_AUTHORIZED_BY_ACCEPTED_QA",
+                              "role":  "project_orchestrator"
+                          }
+                      ],
+    "end_time":  "2026-09-13T17:28:30.7146533Z",
+    "safety_checks":  [
+                          {
+                              "name":  "protected_boundaries",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "execution_live",
+                              "status":  "DISABLED"
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "governance/tasks/PH22B-LAUNCH-002.json",
+                          "governance/results/PH22B-LAUNCH-002.json",
+                          "governance/state/phase22b_active_run.json",
+                          "governance/memory/project_ledger.json"
+                      ],
+    "test_results":  [
+                         {
+                             "scope":  "launch_preflight",
+                             "passed":  71,
+                             "failed":  0
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "governance/state/phase22b_active_run.json":  "86f4dfefc63f33c7229ff49474836cf8f8e55a2e6f96a570363d25205ecf76d1"
+                        },
+    "terminal_result":  "DURABLE_PHASE22B_V12_RUN_LAUNCHED",
+    "start_time":  "2026-09-13T17:26:56Z",
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}
