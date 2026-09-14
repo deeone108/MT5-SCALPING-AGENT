@@ -4,25 +4,25 @@
     "phase_id":  "MT5_AI_SCALPING_BOT",
     "phase":  "MT5_AI_SCALPING_BOT",
     "assigned_role":  "qa_reviewer",
-    "base_commit":  "9d6a2863ea53a66384482c057cc418aa53f3202c",
+    "base_commit":  "aa1dc0915c1ebfc85aadadccb35254fe34348920",
     "branch":  "task/bot03-xau60-source-qa-001",
-    "worktree":  "TO_BE_CREATED_BY_PROJECT_ORCHESTRATOR",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/bot03-source-qa-001",
     "objective":  "Independently reproduce the corrected 13-file pinned XAU-60 immutable Git-blob root, license hash, checkout equivalence and payload-preservation claim before any adapter work is authorized.",
     "inputs":  [
                    {
                        "hash_mode":  "git_blob_bytes",
                        "path":  "governance/results/BOT-03-SOURCE-002.json",
-                       "sha256":  "a85c39aec783358bddc44ede3c3ad452677b3891748ceefe3eae9048da228d92"
+                       "sha256":  "256d5d65ece73050c4a74e9cba79a48c23af72ffd3278715e301db715cb315d8"
                    },
                    {
                        "hash_mode":  "git_blob_bytes",
                        "path":  "reports/bot_xau60_source_manifest.json",
-                       "sha256":  "61cb0a053b90f1074edb983ebfbcb603ea0d22f3e55b7a028ef95472bf54f348"
+                       "sha256":  "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c"
                    },
                    {
                        "hash_mode":  "git_blob_bytes",
                        "path":  "tests/test_xau60_source_integrity.py",
-                       "sha256":  "3f318d491927b67215b5f2658dba87bdfa79496bd147864f5ed7d080821e5494"
+                       "sha256":  "2619b945f398f60d3e4a4ffbd8f5d8bb9b05356db783a4f855d15a33d4f5ad2c"
                    }
                ],
     "allowed_paths":  [
@@ -81,5 +81,5 @@
                                "enable execution, DEMO or LIVE",
                                "advance BOT-03"
                            ],
-    "status":  "READY"
+    "status":  "REJECTED"
 }
