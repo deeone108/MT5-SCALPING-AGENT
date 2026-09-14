@@ -1,0 +1,67 @@
+{
+    "schema_version":  1,
+    "review_id":  "BOT-03-SOURCE-002-QA",
+    "task_id":  "BOT-03-SOURCE-QA-001",
+    "role":  "qa_reviewer",
+    "verdict":  "REJECTED",
+    "reviewed_commit":  "aa1dc0915c1ebfc85aadadccb35254fe34348920",
+    "reviewed_source_result_commit":  "5dd41cf6bf690ff4b641121b2568e8ab9fadae76",
+    "reviewed_at_utc":  "2026-09-14T17:04:17.0624746Z",
+    "blocking_findings":  2,
+    "findings":  [
+                     {
+                         "issue":  "governance/results/BOT-03-SOURCE-002.json is invalid against RESULT_MANIFEST.schema.json because inputs[1] contains the forbidden additional property meaning.",
+                         "required_remediation":  "Remove inputs[1].meaning and revalidate the complete result manifest against the committed schema.",
+                         "evidence":  "jsonschema error at inputs/1: Additional properties are not allowed (\u0027meaning\u0027 was unexpected).",
+                         "blocking":  true,
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "issue":  "The corrected source-manifest artifact hash contract is inconsistent: BOT-03-SOURCE-002 records unqualified artifact SHA-256 309b5602..., while the Windows checkout bytes at that path hash to 61cb0a05.... The QA task labels 61cb0a05... as git_blob_bytes, but the immutable Git blob actually hashes to 309b5602....",
+                         "required_remediation":  "Choose and document one repository-supported artifact-hash representation, correct the result and QA-task linkage consistently, and add a regression that validates the declared representation on Windows and from immutable Git objects.",
+                         "evidence":  "Independent reproduction: Git blob=309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c; checkout bytes=61cb0a053b90f1074edb983ebfbcb603ea0d22f3e55b7a028ef95472bf54f348.",
+                         "blocking":  true,
+                         "severity":  "HIGH"
+                     }
+                 ],
+    "verified":  [
+                     "authorized remote resolves HEAD and refs/heads/main to b877fdb1fcc5888b1443cf0214ea89f8040e8096",
+                     "temporary bare fetch independently reproduces upstream tree 3f50c25f048876650c1735dd645f358981529ab4",
+                     "upstream LICENSE independently reproduces SHA-256 3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805",
+                     "all 13 selected immutable Git blobs, sizes and fresh Windows worktree checkout equivalence pass",
+                     "aggregate root independently reproduces ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+                     "third_party payload has no diff between 65050b926f55c06eab3750a3299bcedae40e0e65 and source-result implementation 5dd41cf6bf690ff4b641121b2568e8ab9fadae76",
+                     "no unrelated source, market data, Phase 22, adapter, optimization, execution or LIVE access/change occurred"
+                 ],
+    "tests":  [
+                  {
+                      "command":  "python -m pytest tests/test_xau60_source_integrity.py tests/orchestration/test_integrated_state.py -q",
+                      "failed":  0,
+                      "passed":  10
+                  },
+                  {
+                      "command":  "RESULT_MANIFEST.schema.json validation of BOT-03-SOURCE-002",
+                      "failed":  1,
+                      "passed":  0
+                  },
+                  {
+                      "command":  "independent authorized remote pin/tree/license fetch",
+                      "failed":  0,
+                      "passed":  1
+                  },
+                  {
+                      "command":  "independent Git-blob/checkout/aggregate reproduction",
+                      "failed":  0,
+                      "passed":  13
+                  }
+              ],
+    "source_integrity":  "PASS",
+    "evidence_contract":  "FAIL",
+    "adapter_authorized":  false,
+    "market_data_accessed":  false,
+    "phase22_accessed":  false,
+    "execution_changed":  false,
+    "live_changed":  false,
+    "recommended_next_action":  "REMEDIATE_BOT03_SOURCE_RESULT_SCHEMA_AND_HASH_REPRESENTATION",
+    "next_gate":  "AGENT_RESOLVABLE_REMEDIATION_THEN_FRESH_INDEPENDENT_QA"
+}
