@@ -13,6 +13,8 @@ PIN = "b877fdb1fcc5888b1443cf0214ea89f8040e8096"
 PREFIX = f"third_party/xau60/{PIN}"
 SOURCE_PREFIX = f"{PREFIX}/source/"
 MANIFEST_PATH = ROOT / "reports" / "bot_xau60_source_manifest.json"
+MANIFEST_GIT_BLOB_SHA256 = "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c"
+MANIFEST_WINDOWS_CHECKOUT_SHA256 = "61cb0a053b90f1074edb983ebfbcb603ea0d22f3e55b7a028ef95472bf54f348"
 
 
 def _git_blob(relative_path: str) -> bytes:
@@ -67,3 +69,11 @@ def test_integrity_correction_preserves_original_claim_and_payload() -> None:
         "source_payload_changed": False,
         "source_logic_changed": False,
     }
+
+
+def test_source_manifest_hash_representations_are_explicit_and_not_conflated() -> None:
+    git_blob_hash = hashlib.sha256(_git_blob("reports/bot_xau60_source_manifest.json")).hexdigest()
+    checkout_hash = hashlib.sha256(MANIFEST_PATH.read_bytes()).hexdigest()
+    assert git_blob_hash == MANIFEST_GIT_BLOB_SHA256
+    assert checkout_hash == MANIFEST_WINDOWS_CHECKOUT_SHA256
+    assert git_blob_hash != checkout_hash

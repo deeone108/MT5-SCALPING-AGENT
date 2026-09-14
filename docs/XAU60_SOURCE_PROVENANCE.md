@@ -17,6 +17,8 @@ This evidence resolves the prior source-availability gate only. The earlier BOT-
 - Selected snapshot SHA-256: `ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7`
 - Deterministic manifest: `reports/bot_xau60_source_manifest.json`
 
+Repository evidence names hashes by byte representation. The authoritative hash for the source-manifest artifact is the immutable Git-object blob SHA-256 `309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c`. On the acquisition environment's Windows checkout, Git may materialize that JSON with CRLF bytes; that non-authoritative working-tree representation hashes to `61cb0a053b90f1074edb983ebfbcb603ea0d22f3e55b7a028ef95472bf54f348`. These two hashes describe distinct byte streams and must never be substituted for one another. The selected third-party payload remains separately protected by `source/** -text` and is byte-identical to its Git blobs.
+
 The snapshot lives at `third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/`. The upstream bytes are under `source/`; adjacent `THIRD_PARTY_SOURCE` and `READ_ONLY_REFERENCE` markers identify its status. The selected source files are byte-preserved and must not be edited in place. Canonical bytes are the immutable Git blob bytes. The scoped `.gitattributes` rule `source/** -text` prevents checkout conversion, including with Windows `core.autocrlf=true`.
 
 ## Integrity correction
