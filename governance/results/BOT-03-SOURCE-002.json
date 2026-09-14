@@ -4,7 +4,7 @@
     "role":  "data_engineer",
     "status":  "COMPLETE",
     "base_commit":  "65050b926f55c06eab3750a3299bcedae40e0e65",
-    "result_commit":  "5dd41cf6bf690ff4b641121b2568e8ab9fadae76",
+    "result_commit":  "02900723f28416f91692213c16a33d0bdf554afa",
     "start_time":  "2026-09-14T00:00:00Z",
     "end_time":  "2026-09-14T00:00:00Z",
     "inputs":  [
@@ -13,7 +13,6 @@
                        "path":  "governance/incidents/BOT-03-XAU60-SNAPSHOT-INTEGRITY-001.json"
                    },
                    {
-                       "meaning":  "pre-correction manifest recorded by task",
                        "path":  "reports/bot_xau60_source_manifest.json",
                        "sha256":  "ea1e09ab0d70021763905ac6aaadd7048cdf013874d4fa796174c836a7923b7f"
                    }
@@ -24,24 +23,27 @@
                           "path":  "reports/bot_xau60_source_manifest.json"
                       },
                       {
-                          "sha256":  "0337701a3628f8307c8bfa36003a8d828e4cdfa71dfaa9e373464a80fdf5f12d",
+                          "sha256":  "4c69273349d49295b7c05c78f930a3c5e346314d3405561547ae0dcce1ec030f",
                           "path":  "docs/XAU60_SOURCE_PROVENANCE.md"
                       },
                       {
-                          "sha256":  "3f318d491927b67215b5f2658dba87bdfa79496bd147864f5ed7d080821e5494",
+                          "sha256":  "2619b945f398f60d3e4a4ffbd8f5d8bb9b05356db783a4f855d15a33d4f5ad2c",
                           "path":  "tests/test_xau60_source_integrity.py"
                       }
                   ],
     "artifact_hashes":  {
-                            "corrected_source_manifest":  "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c",
-                            "provenance_document":  "0337701a3628f8307c8bfa36003a8d828e4cdfa71dfaa9e373464a80fdf5f12d",
+                            "git_blob_bytes:reports/bot_xau60_source_manifest.json":  "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c",
+                            "windows_worktree_bytes:reports/bot_xau60_source_manifest.json":  "61cb0a053b90f1074edb983ebfbcb603ea0d22f3e55b7a028ef95472bf54f348",
+                            "git_blob_bytes:docs/XAU60_SOURCE_PROVENANCE.md":  "4c69273349d49295b7c05c78f930a3c5e346314d3405561547ae0dcce1ec030f",
+                            "git_blob_bytes:tests/test_xau60_source_integrity.py":  "2619b945f398f60d3e4a4ffbd8f5d8bb9b05356db783a4f855d15a33d4f5ad2c",
                             "selected_snapshot_git_blob_root":  "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
                             "license_git_blob_sha256":  "3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805"
                         },
     "commands":  [
                      "git cat-file blob for each of 13 pinned paths",
                      "aggregate reproduction",
-                     "pytest in task and fresh detached worktrees"
+                     "pytest in task and fresh detached worktrees",
+                     "distinguish immutable Git-object blob and Windows working-tree hashes"
                  ],
     "tests":  [
                   {
@@ -62,7 +64,8 @@
                            "aggregate root",
                            "license hash",
                            "source pin",
-                           "fresh checkout bytes"
+                           "fresh checkout bytes",
+                           "source-manifest Git-object versus Windows working-tree representation separation"
                        ],
     "test_results":  [
                          {
@@ -71,6 +74,10 @@
                          },
                          {
                              "name":  "fresh Windows checkout equivalence",
+                             "status":  "PASSED"
+                         },
+                         {
+                             "name":  "source-manifest representation separation",
                              "status":  "PASSED"
                          }
                      ],
@@ -119,9 +126,10 @@
                               ],
     "terminal_result":  "XAU60_SOURCE_INTEGRITY_CORRECTED_PENDING_INDEPENDENT_QA",
     "handoff":  {
-                    "requested_decision":  "INDEPENDENTLY_REPRODUCE_SOURCE_INTEGRITY",
+                    "requested_decision":  "CREATE_FRESH_INDEPENDENT_SOURCE_INTEGRITY_QA",
                     "limitations":  [
-                                        "adapter assignment remains withheld until independent QA approval"
+                                        "adapter assignment remains withheld until fresh independent QA approval",
+                                        "artifact hashes are authoritative Git-object blob hashes unless explicitly labelled windows_worktree_bytes"
                                     ],
                     "to_role":  "qa_reviewer"
                 }
