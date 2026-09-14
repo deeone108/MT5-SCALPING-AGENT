@@ -1,0 +1,121 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-03-ADAPTER-001",
+    "role":  "research_implementer",
+    "status":  "COMPLETE",
+    "base_commit":  "795cdfed377884c802494e7e5926afcf60c623cf",
+    "result_commit":  null,
+    "inputs":  [
+                   {
+                       "path":  "governance/approvals/BOT-03-XAU60-ADAPTER-001.json",
+                       "sha256":  "7c89e60de272f220f0c339458c34a7dbe77599e5ca62f3ae6352a2d497c41719"
+                   },
+                   {
+                       "path":  "reports/bot_xau60_source_manifest.json",
+                       "sha256":  "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c"
+                   },
+                   {
+                       "path":  "third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/source",
+                       "sha256":  "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "path":  "src/mt5_scalping_agent/strategies/xau60/adapters.py",
+                          "sha256":  "2d910775a8d7570a6f651c7e4456d6a287e6dfb1dc422eb92bb4793009ed0eef"
+                      },
+                      {
+                          "path":  "src/mt5_scalping_agent/strategies/xau60/__init__.py",
+                          "sha256":  "27ebb474a646091afd2dc6d5c4debc0ee31c49b0f419a210d552f3b696162a26"
+                      },
+                      {
+                          "path":  "tests/test_xau60_adapters.py",
+                          "sha256":  "09ae71e719b5a531de0f72f2ad7b235b8dd33c7e5e7c2cf53391fe568faeb45f"
+                      }
+                  ],
+    "commands":  [
+                     "read pinned upstream strategies/helpers/configuration",
+                     "focused synthetic adapter/source-integrity/strategy/registry pytest suite",
+                     "adaptation: TradeSignal -\u003e SignalProposal preserves direction/entry/SL/TP/comment and intentionally excludes execution-only lot/magic",
+                     "adaptation: bar-open timestamps require full M15/H1/M5 completion by observed_at; invalid/gapped/duplicate input fails closed",
+                     "adaptation: upstream YAML values preserved as native dictionaries; omitted values remain upstream class defaults"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "focused XAU-60 adapter and preservation suite",
+                      "status":  "PASSED",
+                      "passed":  46,
+                      "failed":  0
+                  }
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "third_party payload unchanged",
+                                  "exactly three adapters",
+                                  "no market data/catalog/locator",
+                                  "no backtest/PnL/optimization",
+                                  "no risk/execution changes",
+                                  "no Phase 22 reopening",
+                                  "no DEMO/LIVE"
+                              ],
+    "handoff":  {
+                    "to_role":  "qa_reviewer",
+                    "requested_decision":  "INDEPENDENT_QA_REVIEW_BOT03_XAU60_ADAPTERS",
+                    "limitations":  [
+                                        "upstream ta dependency is optional and absent from the current virtual environment; default loading fails closed with an explicit error until the governed environment supplies it",
+                                        "adapters are not registered or trading-authorized",
+                                        "position-close and trailing callbacks remain upstream objects and are not connected to execution"
+                                    ]
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "46 focused tests with PYTHONPATH bound to isolated worktree"
+                       ],
+    "review_status":  [
+                          {
+                              "reviewer":  "qa_reviewer",
+                              "status":  "PENDING_INDEPENDENT_REVIEW"
+                          }
+                      ],
+    "end_time":  "2026-09-14T03:00:00+00:00",
+    "safety_checks":  [
+                          {
+                              "check":  "pinned source mutation",
+                              "status":  "PASS_NONE"
+                          },
+                          {
+                              "check":  "broker authority",
+                              "status":  "UNCHANGED_FALSE"
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "src/mt5_scalping_agent/strategies/xau60/__init__.py",
+                          "src/mt5_scalping_agent/strategies/xau60/adapters.py",
+                          "config/strategies/xau60/smc_scalper.json",
+                          "config/strategies/xau60/trend_break_trauma.json",
+                          "config/strategies/xau60/crt_tbs.json",
+                          "tests/test_xau60_adapters.py",
+                          "governance/results/BOT-03-ADAPTER-001.json"
+                      ],
+    "test_results":  [
+                         {
+                             "suite":  "focused XAU-60",
+                             "outcome":  "PASS",
+                             "passed":  46,
+                             "duration_seconds":  2.32
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "upstream_source_root":  "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+                            "adapters":  "2d910775a8d7570a6f651c7e4456d6a287e6dfb1dc422eb92bb4793009ed0eef",
+                            "tests":  "09ae71e719b5a531de0f72f2ad7b235b8dd33c7e5e7c2cf53391fe568faeb45f"
+                        },
+    "terminal_result":  "BOT03_XAU60_ADAPTERS_IMPLEMENTED_PENDING_INDEPENDENT_QA",
+    "start_time":  "2026-09-14T02:15:00+00:00",
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}
