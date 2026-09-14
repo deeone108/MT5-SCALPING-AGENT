@@ -1,0 +1,85 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-03-SOURCE-QA-001",
+    "phase_id":  "MT5_AI_SCALPING_BOT",
+    "phase":  "MT5_AI_SCALPING_BOT",
+    "assigned_role":  "qa_reviewer",
+    "base_commit":  "9d6a2863ea53a66384482c057cc418aa53f3202c",
+    "branch":  "task/bot03-xau60-source-qa-001",
+    "worktree":  "TO_BE_CREATED_BY_PROJECT_ORCHESTRATOR",
+    "objective":  "Independently reproduce the corrected 13-file pinned XAU-60 immutable Git-blob root, license hash, checkout equivalence and payload-preservation claim before any adapter work is authorized.",
+    "inputs":  [
+                   {
+                       "hash_mode":  "git_blob_bytes",
+                       "path":  "governance/results/BOT-03-SOURCE-002.json",
+                       "sha256":  "a85c39aec783358bddc44ede3c3ad452677b3891748ceefe3eae9048da228d92"
+                   },
+                   {
+                       "hash_mode":  "git_blob_bytes",
+                       "path":  "reports/bot_xau60_source_manifest.json",
+                       "sha256":  "61cb0a053b90f1074edb983ebfbcb603ea0d22f3e55b7a028ef95472bf54f348"
+                   },
+                   {
+                       "hash_mode":  "git_blob_bytes",
+                       "path":  "tests/test_xau60_source_integrity.py",
+                       "sha256":  "3f318d491927b67215b5f2658dba87bdfa79496bd147864f5ed7d080821e5494"
+                   }
+               ],
+    "allowed_paths":  [
+                          "governance/tasks/BOT-03-SOURCE-QA-001.json",
+                          "governance/reviews/BOT-03-SOURCE-002-QA.json",
+                          "governance/results/BOT-03-SOURCE-QA-001.json"
+                      ],
+    "forbidden_paths":  [
+                            "third_party/",
+                            "reports/",
+                            "docs/",
+                            "src/",
+                            "research/",
+                            "data/",
+                            "governance/state/",
+                            "governance/memory/",
+                            "governance/data_catalogs/"
+                        ],
+    "allowed_data":  [
+
+                     ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "independently reproduce all 13 immutable Git blob hashes and sizes",
+                           "independently reproduce aggregate root ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+                           "independently reproduce LICENSE SHA-256 3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805",
+                           "verify no third_party payload changed between 65050b926f55c06eab3750a3299bcedae40e0e65 and implementation commit",
+                           "verify fresh-checkout equivalence and source pin",
+                           "validate source/result provenance including any artifact-hash discrepancy"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "required_outputs":  [
+                             "independent QA review",
+                             "schema-valid QA result manifest",
+                             "APPROVED or REJECTED verdict",
+                             "explicit adapter-authorization recommendation"
+                         ],
+    "completion_conditions":  [
+                                  "exact remediation commits reviewed",
+                                  "13-file root and license independently reproduce",
+                                  "payload-preservation and checkout equivalence verified",
+                                  "provenance discrepancies classified",
+                                  "review evidence committed"
+                              ],
+    "prohibited_actions":  [
+                               "edit reviewed source, manifest, provenance or tests",
+                               "implement adapters",
+                               "access market data or Phase 22",
+                               "optimize or evaluate strategies",
+                               "enable execution, DEMO or LIVE",
+                               "advance BOT-03"
+                           ],
+    "status":  "READY"
+}

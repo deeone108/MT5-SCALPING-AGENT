@@ -1,7 +1,7 @@
 {
     "active_tasks":  [
                          "BOT-03",
-                         "BOT-03-SOURCE-002"
+                         "BOT-03-SOURCE-QA-001"
                      ],
     "allowed_data_windows":  [
                                  "2019",
@@ -24,7 +24,8 @@
                             "PH22B-ORCH-002",
                             "BOT-00",
                             "BOT-01",
-                            "BOT-02"
+                            "BOT-02",
+                            "BOT-03-SOURCE-002"
                         ],
     "current_phase":  "MT5_AI_SCALPING_BOT",
     "data_access":  {
@@ -123,7 +124,7 @@
     "master_mission":  "BUILD_A_COMPLETE_SAFE_AUTONOMOUS_MULTI_STRATEGY_MT5_AI_SCALPING_BOT_FOR_DEMO",
     "current_program":  "MT5_AI_SCALPING_BOT",
     "current_milestone":  "BOT-03",
-    "next_authorized_action":  "REMEDIATE_PINNED_XAU60_SNAPSHOT_BYTE_HASH_MISMATCH",
+    "next_authorized_action":  "INDEPENDENT_XAU60_SOURCE_INTEGRITY_QA",
     "human_gate_required":  false,
     "preserved_research":  {
                                "phase_22":  "PRESERVED_INACTIVE_RESEARCH",

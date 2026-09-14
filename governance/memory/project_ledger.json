@@ -543,6 +543,23 @@
                           "adapter_assignment_withheld":  true,
                           "next_authorized_action":  "REMEDIATE_PINNED_XAU60_SNAPSHOT_BYTE_HASH_MISMATCH",
                           "reference":  "governance/incidents/BOT-03-XAU60-SNAPSHOT-INTEGRITY-001.json"
+                      },
+                      {
+                          "id":  "BOT_03_XAU60_SOURCE_INTEGRITY_REMEDIATED_PENDING_QA",
+                          "status":  "PENDING_INDEPENDENT_QA",
+                          "implementation_commit":  "5dd41cf6bf690ff4b641121b2568e8ab9fadae76",
+                          "handoff_commit":  "1339334",
+                          "integrated_head":  "9d6a286",
+                          "pinned_commit":  "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
+                          "selected_snapshot_git_blob_root":  "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+                          "license_git_blob_sha256":  "3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805",
+                          "file_count":  13,
+                          "payload_changed":  false,
+                          "human_gate_required":  false,
+                          "adapter_assignment_withheld":  true,
+                          "qa_task":  "BOT-03-SOURCE-QA-001",
+                          "next_authorized_action":  "INDEPENDENT_XAU60_SOURCE_INTEGRITY_QA",
+                          "reference":  "governance/results/BOT-03-SOURCE-002.json"
                       }
                   ],
     "holdout_access_history":  [
