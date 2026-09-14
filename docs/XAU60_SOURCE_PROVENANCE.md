@@ -14,7 +14,7 @@ This evidence resolves the prior source-availability gate only. The earlier BOT-
 - Upstream Git tree: `3f50c25f048876650c1735dd645f358981529ab4`
 - Fetch timestamp: `2026-09-14T00:07:31Z`
 - License: MIT, `LICENSE` SHA-256 `48465bd353ff6f3baaa8293f12d1cee63e30e4669739f673497886dfe972430d`
-- Selected snapshot SHA-256: `1aa2051a46426f4be33e9a98f56998f434a600ce2f94af6cb8cc3eca7a2e231e`
+- Selected snapshot SHA-256: `9da0c41f95f99da967c3bc543b370b0513c95529ee97eb70731768291223f7f0`
 - Deterministic manifest: `reports/bot_xau60_source_manifest.json`
 
 The snapshot lives at `third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/`. The upstream bytes are under `source/`; adjacent `THIRD_PARTY_SOURCE` and `READ_ONLY_REFERENCE` markers identify its status. The selected source files are byte-preserved and must not be edited in place.

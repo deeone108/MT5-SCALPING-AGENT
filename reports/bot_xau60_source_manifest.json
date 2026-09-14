@@ -15,7 +15,7 @@
     "snapshot":  {
                      "location":  "third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/source",
                      "aggregate_algorithm":  "sha256 over UTF-8 sorted records path NUL sha256 NUL size LF",
-                     "sha256":  "1aa2051a46426f4be33e9a98f56998f434a600ce2f94af6cb8cc3eca7a2e231e",
+                     "sha256":  "9da0c41f95f99da967c3bc543b370b0513c95529ee97eb70731768291223f7f0",
                      "file_count":  13,
                      "files":  [
                                    {
