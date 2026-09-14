@@ -1,0 +1,154 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-03-ADAPTER-QA-001",
+    "role":  "qa_reviewer",
+    "status":  "COMPLETE",
+    "base_commit":  "7db6e886a34883162384b83b5ad5a70e44548efa",
+    "result_commit":  "ec7d262a2f6a4303196c96130a756e9568a9e498",
+    "inputs":  [
+                   {
+                       "sha256":  "69a76782c8289ed1f7c3315fbd4c2317ce3685f13d7330da8dd14bbdf6cc0000",
+                       "path":  "governance/tasks/BOT-03-ADAPTER-001.json"
+                   },
+                   {
+                       "sha256":  "5018a6048aa52ded09fdffecfaaf5570ad6e7e099f5d9e0217723b148ed57bba",
+                       "path":  "governance/results/BOT-03-ADAPTER-001.json"
+                   },
+                   {
+                       "sha256":  "7c89e60de272f220f0c339458c34a7dbe77599e5ca62f3ae6352a2d497c41719",
+                       "path":  "governance/approvals/BOT-03-XAU60-ADAPTER-001.json"
+                   },
+                   {
+                       "sha256":  "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c",
+                       "path":  "reports/bot_xau60_source_manifest.json"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "sha256":  "962f9195a3d78f0985fd13f7013e57eb48cf9c97867d9e21058a484374b20b5d",
+                          "path":  "governance/reviews/BOT-03-ADAPTER-001-QA.json"
+                      }
+                  ],
+    "commands":  [
+                     "inspect exact c68d632, cd37a81 and 7db6e88 commits against pinned source/defaults",
+                     "focused adapter/source/strategy/domain pytest",
+                     "default real-adapter construction in governed environment",
+                     "malformed upstream output boundary probes",
+                     "task/result schema and protected-path diff checks",
+                     "complete repository pytest"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "focused",
+                      "failed":  0,
+                      "passed":  32
+                  },
+                  {
+                      "name":  "default_real_adapter_construction",
+                      "failed":  3,
+                      "passed":  0
+                  },
+                  {
+                      "name":  "wrong_symbol_output_rejection",
+                      "failed":  1,
+                      "passed":  0
+                  },
+                  {
+                      "name":  "schemas_and_scope",
+                      "failed":  0,
+                      "passed":  3
+                  },
+                  {
+                      "name":  "complete_repository",
+                      "warnings":  13,
+                      "failed":  2,
+                      "passed":  684
+                  }
+              ],
+    "data_accessed":  [
+
+                      ],
+    "prohibitions_verified":  [
+                                  "no network dependency installation",
+                                  "no market data, catalog, locator or Phase 22 access",
+                                  "no reviewed implementation/source/config/test edits",
+                                  "no adapter remediation by reviewer",
+                                  "no optimization/backtest/PnL",
+                                  "no risk/execution/DEMO/LIVE changes"
+                              ],
+    "handoff":  {
+                    "to_role":  "project_orchestrator",
+                    "requested_decision":  "CREATE_AGENT_RESOLVABLE_BOT03_ADAPTER_REMEDIATION",
+                    "limitations":  [
+                                        "Adapters are not accepted or registration-authorized.",
+                                        "Govern ta dependency, prove real pinned parity, reject cross-symbol/malformed output, and clear full-suite failures before fresh QA.",
+                                        "Pinned third-party source remains immutable."
+                                    ]
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "32 focused tests passed",
+                           "3 real default constructors failed due missing ta",
+                           "wrong-symbol upstream output was accepted",
+                           "3 schema/scope checks passed",
+                           "684 full-suite tests passed and 2 governance tests failed"
+                       ],
+    "review_status":  [
+                          {
+                              "verdict":  "REJECTED",
+                              "blocking_findings":  4,
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "end_time":  "2026-09-14T17:36:49.3489237Z",
+    "safety_checks":  [
+                          {
+                              "name":  "market_and_phase22_access",
+                              "status":  "NOT_ACCESSED"
+                          },
+                          {
+                              "name":  "source_payload",
+                              "status":  "UNCHANGED"
+                          },
+                          {
+                              "name":  "adapter_registration",
+                              "status":  "WITHHELD"
+                          },
+                          {
+                              "name":  "execution_and_live",
+                              "status":  "UNCHANGED"
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "governance/tasks/BOT-03-ADAPTER-QA-001.json",
+                          "governance/reviews/BOT-03-ADAPTER-001-QA.json",
+                          "governance/results/BOT-03-ADAPTER-QA-001.json"
+                      ],
+    "test_results":  [
+                         {
+                             "scope":  "focused",
+                             "failed":  0,
+                             "passed":  32
+                         },
+                         {
+                             "scope":  "runtime_contract",
+                             "failed":  4,
+                             "passed":  0
+                         },
+                         {
+                             "scope":  "complete_repository",
+                             "warnings":  13,
+                             "failed":  2,
+                             "passed":  684
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "governance/reviews/BOT-03-ADAPTER-001-QA.json":  "962f9195a3d78f0985fd13f7013e57eb48cf9c97867d9e21058a484374b20b5d"
+                        },
+    "terminal_result":  "BOT03_XAU60_ADAPTERS_QA_REJECTED_AGENT_RESOLVABLE",
+    "start_time":  "2026-09-14T18:30:00Z",
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}
