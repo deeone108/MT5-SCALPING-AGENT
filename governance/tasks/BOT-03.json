@@ -65,5 +65,5 @@
                                "submit broker orders",
                                "enable DEMO or LIVE"
                            ],
-    "status":  "BLOCKED"
+    "status":  "READY"
 }

@@ -577,6 +577,29 @@
                           "qa_task":  "BOT-03-SOURCE-QA-002",
                           "next_authorized_action":  "INDEPENDENT_XAU60_SOURCE_INTEGRITY_QA_REVIEW",
                           "reference":  "governance/tasks/BOT-03-SOURCE-QA-002.json"
+                      },
+                      {
+                          "id":  "BOT_03_XAU60_ADAPTER_IMPLEMENTATION_AUTHORIZED",
+                          "status":  "AUTHORIZED_NOT_STARTED",
+                          "authorization_sha256":  "7c89e60de272f220f0c339458c34a7dbe77599e5ca62f3ae6352a2d497c41719",
+                          "qa_approval_commit":  "3d78316237d52734dede4448eaf1cbcceeb5b943",
+                          "qa_verdict":  "APPROVED",
+                          "pinned_commit":  "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
+                          "selected_snapshot_git_blob_root":  "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+                          "strategies":  [
+                                             "SMC Scalper v2.1",
+                                             "Trend Break + Trauma + RSI v2.1",
+                                             "CRT + TBS v2.1"
+                                         ],
+                          "adapter_task":  "BOT-03-ADAPTER-001",
+                          "adapter_implementation_started":  false,
+                          "market_data_authorized":  false,
+                          "optimization_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "human_gate_required":  false,
+                          "next_authorized_action":  "IMPLEMENT_BOT03_XAU60_ADAPTERS_FROM_PINNED_SOURCE",
+                          "reference":  "governance/tasks/BOT-03-ADAPTER-001.json"
                       }
                   ],
     "holdout_access_history":  [

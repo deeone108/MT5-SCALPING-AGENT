@@ -10,9 +10,9 @@ def test_integrated_project_state_is_valid_and_fail_closed():
     assert state["allowed_data_windows"] == ["2019", "2020", "2021"]
     assert state["locked_data_windows"] == ["2022", "2023"]
     assert state["forbidden_data_windows"] == ["2024+"]
-    assert state["active_tasks"] == ["BOT-03", "BOT-03-SOURCE-QA-002"]
-    assert state["status"] == "BLOCKED"
-    assert state["phase_status"] == "BLOCKED"
+    assert state["active_tasks"] == ["BOT-03", "BOT-03-ADAPTER-001"]
+    assert state["status"] == "PROPOSED"
+    assert state["phase_status"] == "PROPOSED"
     assert state["gates"]["implementation"]["status"] == "PASSED"
     assert state["gates"]["implementation"]["evidence_sha256"] == "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262"
     assert state["gates"]["runtime_identity"]["status"] == "PASSED"
@@ -22,7 +22,7 @@ def test_integrated_project_state_is_valid_and_fail_closed():
     assert state["spec_sha256"] == V12_SHA256
     assert state["current_program"] == "MT5_AI_SCALPING_BOT"
     assert state["current_milestone"] == "BOT-03"
-    assert state["next_authorized_action"] == "INDEPENDENT_XAU60_SOURCE_INTEGRITY_QA_REVIEW"
+    assert state["next_authorized_action"] == "IMPLEMENT_BOT03_XAU60_ADAPTERS_FROM_PINNED_SOURCE"
     assert state["human_gate_required"] is False
     assert state["preserved_research"]["phase_22b"] == "SUSPENDED_PRESERVED_RESEARCH"
 def test_integrated_ledger_records_accepted_phase22a():

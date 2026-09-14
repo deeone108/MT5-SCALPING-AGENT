@@ -1,0 +1,31 @@
+{
+    "schema_version":  1,
+    "authorization_id":  "BOT03_XAU60_ADAPTER_IMPLEMENTATION",
+    "authorized_by":  "human_owner",
+    "authorized_at_utc":  "2026-09-14T00:00:00Z",
+    "authorization_source":  "inline human-owner authorization in active project instruction",
+    "pinned_upstream_commit":  "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
+    "pinned_source_root":  "third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/source",
+    "selected_snapshot_git_blob_root":  "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+    "authorized_strategies":  [
+                                  "SMC Scalper v2.1",
+                                  "Trend Break + Trauma + RSI v2.1",
+                                  "CRT + TBS v2.1"
+                              ],
+    "scope":  [
+                  "create faithful project-native adapters",
+                  "create native static configuration preserving upstream defaults",
+                  "create deterministic synthetic behavioral, provenance and no-lookahead tests",
+                  "produce independent QA handoff"
+              ],
+    "prohibited":  [
+                       "modify pinned source",
+                       "invent, combine, tune or optimize strategy logic",
+                       "access market data, catalogs or locators",
+                       "run backtests or calculate PnL",
+                       "modify risk or execution systems",
+                       "submit orders or enable DEMO/LIVE",
+                       "reopen Phase 22 research"
+                   ],
+    "live_execution_authorized":  false
+}

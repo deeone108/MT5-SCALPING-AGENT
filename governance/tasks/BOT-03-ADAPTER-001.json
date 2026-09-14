@@ -1,0 +1,92 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-03-ADAPTER-001",
+    "phase_id":  "MT5_AI_SCALPING_BOT",
+    "phase":  "MT5_AI_SCALPING_BOT",
+    "assigned_role":  "research_implementer",
+    "base_commit":  "3d78316237d52734dede4448eaf1cbcceeb5b943",
+    "branch":  "task/bot03-xau60-adapter-001",
+    "worktree":  "TO_BE_CREATED_BY_PROJECT_ORCHESTRATOR",
+    "objective":  "Implement faithful project-native adapters for exactly SMC Scalper v2.1, Trend Break + Trauma + RSI v2.1, and CRT + TBS v2.1 from the pinned XAU-60 source, preserving behavior and defaults without optimization, market data, backtesting economics, execution, DEMO, or LIVE integration.",
+    "inputs":  [
+                   {
+                       "sha256":  "7c89e60de272f220f0c339458c34a7dbe77599e5ca62f3ae6352a2d497c41719",
+                       "path":  "governance/approvals/BOT-03-XAU60-ADAPTER-001.json"
+                   },
+                   {
+                       "sha256":  "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c",
+                       "path":  "reports/bot_xau60_source_manifest.json"
+                   },
+                   {
+                       "sha256":  "287b2c0741a00032307fa68fa5678158a8666fbb68ff8d98f24eebbb922f0ea1",
+                       "path":  "governance/results/BOT-03-SOURCE-QA-002.json"
+                   },
+                   {
+                       "sha256":  "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+                       "path":  "third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/source"
+                   }
+               ],
+    "allowed_paths":  [
+                          "src/mt5_scalping_agent/strategies/xau60/",
+                          "config/strategies/xau60/",
+                          "tests/test_xau60_adapters.py",
+                          "tests/fixtures/xau60/",
+                          "governance/tasks/BOT-03-ADAPTER-001.json",
+                          "governance/results/BOT-03-ADAPTER-001.json"
+                      ],
+    "forbidden_paths":  [
+                            "third_party/",
+                            "research/",
+                            "reports/",
+                            "data/",
+                            "governance/data_catalogs/",
+                            "src/mt5_scalping_agent/execution/",
+                            "src/mt5_scalping_agent/risk/",
+                            "src/mt5_scalping_agent/backtesting/"
+                        ],
+    "allowed_data":  [
+
+                     ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "deterministic synthetic behavioral parity tests for each of exactly three adapters",
+                           "provenance binding to pin b877fdb1fcc5888b1443cf0214ea89f8040e8096 and root ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+                           "preservation of upstream v2.1 defaults and signal semantics",
+                           "causal/no-lookahead validation",
+                           "invalid or insufficient synthetic inputs fail closed",
+                           "no market-data/catalog/locator access",
+                           "no backtest, optimization, PnL, risk, execution, DEMO or LIVE integration",
+                           "pinned third_party payload remains unchanged"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "required_outputs":  [
+                             "exactly three faithful native adapters",
+                             "native static configurations preserving upstream defaults",
+                             "deterministic synthetic tests",
+                             "adaptation/provenance mapping in result manifest",
+                             "independent QA handoff"
+                         ],
+    "completion_conditions":  [
+                                  "all three authorized strategies adapted and no others",
+                                  "every compatibility translation documented without scientific or strategic invention",
+                                  "focused tests pass",
+                                  "implementation committed and frozen pending independent QA",
+                                  "BOT-03 is not advanced by implementer"
+                              ],
+    "prohibited_actions":  [
+                               "modify pinned third-party source or Phase 22 artifacts",
+                               "invent, combine, tune or optimize strategy logic",
+                               "access market data, catalogs or locators",
+                               "run strategy selection, backtests, profitability or PnL",
+                               "modify risk, backtesting or execution code",
+                               "submit orders or enable DEMO/LIVE",
+                               "self-approve or advance BOT-03"
+                           ],
+    "status":  "READY"
+}
