@@ -64,7 +64,7 @@
     "src/mt5_scalping_agent/risk/"
   ],
   "phase": "MT5_AI_SCALPING_BOT",
-  "status": "READY",
+  "status": "COMPLETED",
   "required_dataset_hash": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
   "required_tests": [
     "authorization hash reproduction",

@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "task_id": "BOT-03-SOURCE-001",
+  "role": "data_engineer",
+  "status": "COMPLETE",
+  "base_commit": "61f83260dfd2623910795c16791aed6c50b8e72e",
+  "result_commit": "ae8588939732bebdb6f49caf45d9f1785d92fd65",
+  "inputs": [
+    {
+      "path": "governance/approvals/XAU60-PUBLIC-SOURCE-ACCESS-001.json",
+      "sha256": "2d557e62e85cbe965f9c2c05633c010c7e4558f4325af91189e582f69b6271db"
+    },
+    {
+      "path": "governance/results/BOT-03.json",
+      "sha256": "8906eb8c90960c7b873b8bf1701848b133987b3415a35bd2a8786d76a0b49380"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "docs/XAU60_SOURCE_PROVENANCE.md",
+      "sha256": "a7a58dc6bfbefd751fb22ad17c6f948a38d97f6675a0f1767384a5263ae9a227"
+    },
+    {
+      "path": "reports/bot_xau60_source_manifest.json",
+      "sha256": "b32a4c4cc698e262442ca4bd1cc37a22e0cf6726aaea130db4e3f31789873cf9"
+    },
+    {
+      "path": "third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/source/LICENSE",
+      "sha256": "48465bd353ff6f3baaa8293f12d1cee63e30e4669739f673497886dfe972430d"
+    },
+    {
+      "path": "third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/THIRD_PARTY_SOURCE",
+      "sha256": "b8a461c7cd34e7bb571daf14859623ad938a4eb435a2b288faf813a71bc158ce"
+    },
+    {
+      "path": "third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/READ_ONLY_REFERENCE",
+      "sha256": "6f9edad57d35f31b720478c7961410b98081a61a76848c3019e1511fb772f1ae"
+    }
+  ],
+  "commands": [
+    "git ls-remote --symref against the sole authorized canonical URL",
+    "single-branch main clone without tags for provenance inspection",
+    "git commit/tree/default-branch/license verification",
+    "direct Python AST import/class inventory",
+    "deterministic selected-tree hash reproduction",
+    "focused research-registry preservation tests"
+  ],
+  "tests": [
+    {
+      "name": "research registry preservation",
+      "status": "PASSED",
+      "passed": 17,
+      "failed": 0
+    },
+    {
+      "name": "source provenance and dependency closure",
+      "status": "PASSED",
+      "passed": 13,
+      "failed": 0
+    },
+    {
+      "name": "selected Python source parse",
+      "status": "PASSED",
+      "passed": 7,
+      "failed": 0
+    }
+  ],
+  "data_accessed": [
+    "PUBLIC_SOURCE:https://github.com/lordgaruda/XAU-60@b877fdb1fcc5888b1443cf0214ea89f8040e8096"
+  ],
+  "prohibitions_verified": [
+    "no unrelated repository access",
+    "no upstream modification or remote write",
+    "no market data",
+    "no adapters or strategy invention",
+    "no parameter optimization or profitability evaluation",
+    "no Phase 22 reopening",
+    "no orders, execution or LIVE"
+  ],
+  "handoff": {
+    "to_role": "project_orchestrator",
+    "requested_decision": "ASSIGN_BOT03_ADAPTER_IMPLEMENTATION_FROM_PINNED_SOURCE",
+    "limitations": [
+      "source acquisition does not validate adapter behavior",
+      "upstream package initializer and parallel execution platform deliberately excluded",
+      "independent QA remains required after adapter implementation"
+    ]
+  },
+  "data_windows_accessed": [],
+  "tests_executed": [
+    "17 focused registry tests",
+    "13 file-level SHA-256 and size checks plus aggregate-root reproduction",
+    "7 Python AST parse checks",
+    "task/result schema validation"
+  ],
+  "review_status": [
+    {
+      "reviewer": "data_engineer",
+      "status": "SOURCE_ACQUISITION_COMPLETE_PENDING_ORCHESTRATOR_HANDOFF"
+    }
+  ],
+  "end_time": "2026-09-14T00:13:11Z",
+  "safety_checks": [
+    {
+      "check": "canonical repository scope",
+      "status": "PASSED"
+    },
+    {
+      "check": "license compatibility",
+      "status": "PASSED_MIT"
+    },
+    {
+      "check": "market/order authority",
+      "status": "UNCHANGED"
+    },
+    {
+      "check": "third-party snapshot isolation",
+      "status": "PASSED_READ_ONLY_REFERENCE"
+    }
+  ],
+  "dataset_hash_used": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+  "files_changed": [
+    "governance/approvals/XAU60-PUBLIC-SOURCE-ACCESS-001.json",
+    "governance/tasks/BOT-03-SOURCE-001.json",
+    "governance/results/BOT-03-SOURCE-001.json",
+    "docs/XAU60_SOURCE_PROVENANCE.md",
+    "reports/bot_xau60_source_manifest.json",
+    "third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/"
+  ],
+  "test_results": [
+    {
+      "suite": "focused research-registry preservation",
+      "outcome": "PASS",
+      "passed": 17,
+      "failed": 0
+    },
+    {
+      "suite": "deterministic source provenance",
+      "outcome": "PASS",
+      "snapshot_sha256": "9da0c41f95f99da967c3bc543b370b0513c95529ee97eb70731768291223f7f0"
+    }
+  ],
+  "artifact_hashes": {
+    "authorization": "2d557e62e85cbe965f9c2c05633c010c7e4558f4325af91189e582f69b6271db",
+    "provenance_document": "a7a58dc6bfbefd751fb22ad17c6f948a38d97f6675a0f1767384a5263ae9a227",
+    "source_manifest": "b32a4c4cc698e262442ca4bd1cc37a22e0cf6726aaea130db4e3f31789873cf9",
+    "selected_snapshot_root": "9da0c41f95f99da967c3bc543b370b0513c95529ee97eb70731768291223f7f0",
+    "license": "48465bd353ff6f3baaa8293f12d1cee63e30e4669739f673497886dfe972430d"
+  },
+  "terminal_result": "XAU60_PINNED_SOURCE_ACQUIRED_PENDING_ADAPTER_IMPLEMENTATION",
+  "start_time": "2026-09-14T00:00:00Z",
+  "specification_hash_used": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}
