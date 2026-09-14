@@ -1,0 +1,89 @@
+{
+    "schema_version":  1,
+    "review_id":  "BOT-03-ADAPTER-001-QA",
+    "task_id":  "BOT-03-ADAPTER-QA-001",
+    "role":  "qa_reviewer",
+    "verdict":  "REJECTED",
+    "reviewed_commits":  [
+                             "c68d6327930a27ccb160f20085410551bf7480ca",
+                             "cd37a811f79252d429e20154e813f0507675196b",
+                             "7db6e886a34883162384b83b5ad5a70e44548efa"
+                         ],
+    "reviewed_at_utc":  "2026-09-14T17:36:11.0391133Z",
+    "blocking_findings":  4,
+    "findings":  [
+                     {
+                         "issue":  "All three default adapter constructors fail because upstream dependency \u0027ta\u0027 is absent and not declared in pyproject.toml.",
+                         "required_remediation":  "Add a governed, version-bounded \u0027ta\u0027 dependency and prove clean-environment/default construction for all three adapters without network-dependent runtime installation.",
+                         "evidence":  "SMCScalperAdapter, TrendBreakTraumaAdapter and CRTTBSAdapter each raise RuntimeError before initialization; importlib reports ta unavailable.",
+                         "blocking":  true,
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "issue":  "Behavioral parity is not demonstrated against the real pinned strategy classes.",
+                         "required_remediation":  "After governing the dependency, add deterministic direct-pinned-versus-adapter parity fixtures for each strategy, covering defaults, no-signal and signal paths, session/state behavior, warmup, and fresh-instance replay.",
+                         "evidence":  "All signal/default/determinism tests inject RecordingUpstream mocks; because ta is absent, no test executes a pinned analyze path or compares direct-upstream and adapter outputs/state on identical causal fixtures.",
+                         "blocking":  true,
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "issue":  "Adapter output validation permits cross-symbol contamination.",
+                         "required_remediation":  "Fail closed unless emitted symbol equals the validated requested XAUUSD symbol; add wrong/missing symbol, unsupported direction, non-finite prices and malformed output regressions.",
+                         "evidence":  "An XAUUSD request with an injected upstream signal carrying symbol EURUSD returns a valid BUY SignalProposal for EURUSD.",
+                         "blocking":  true,
+                         "severity":  "HIGH"
+                     },
+                     {
+                         "issue":  "The complete repository suite is not green at the review commit.",
+                         "required_remediation":  "Route the two pre-existing governance failures through a separate bounded remediation and obtain a clean complete-suite result before adapter acceptance.",
+                         "evidence":  "684 passed, 2 failed, 13 warnings; failures are governance example/transition assertions in tests/governance/test_agent_orchestration_design.py.",
+                         "blocking":  true,
+                         "severity":  "MEDIUM"
+                     }
+                 ],
+    "verified":  [
+                     "source pin b877fdb1fcc5888b1443cf0214ea89f8040e8096, MIT license and selected root ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7 remain bound",
+                     "third_party, research, data, backtesting, risk and execution paths unchanged by adapter commits",
+                     "exactly three adapter classes are exported",
+                     "upstream entry/stop/target values are copied without repricing in mock translation tests",
+                     "completed-bar, chronological cadence, duplicate, missing, non-finite, OHLCV, symbol input and timezone guards exist",
+                     "static dictionaries match the behaviorally relevant checked-in YAML values and omitted sections defer to pinned class defaults",
+                     "no market data, Phase 22, optimization, PnL, execution, DEMO or LIVE access/change occurred"
+                 ],
+    "tests":  [
+                  {
+                      "command":  "python -m pytest tests/test_xau60_adapters.py tests/test_xau60_source_integrity.py tests/strategies tests/domain -q",
+                      "failed":  0,
+                      "passed":  32
+                  },
+                  {
+                      "command":  "default construction for all three adapters",
+                      "failed":  3,
+                      "passed":  0
+                  },
+                  {
+                      "command":  "malformed upstream wrong-symbol test",
+                      "failed":  1,
+                      "passed":  0
+                  },
+                  {
+                      "command":  "task/result schema and protected-path validation",
+                      "failed":  0,
+                      "passed":  3
+                  },
+                  {
+                      "command":  "python -m pytest -q --disable-warnings",
+                      "warnings":  13,
+                      "failed":  2,
+                      "passed":  684
+                  }
+              ],
+    "market_data_accessed":  false,
+    "phase22_accessed":  false,
+    "optimization_or_pnl":  false,
+    "execution_changed":  false,
+    "live_changed":  false,
+    "adapter_acceptance":  false,
+    "recommended_next_action":  "REMEDIATE_BOT03_XAU60_ADAPTER_DEPENDENCY_PARITY_AND_OUTPUT_VALIDATION",
+    "next_gate":  "AGENT_RESOLVABLE_REMEDIATION_THEN_FRESH_INDEPENDENT_QA"
+}
