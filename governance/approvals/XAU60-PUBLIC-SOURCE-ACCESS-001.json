@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "authorization_id": "XAU60_PUBLIC_SOURCE_ACCESS",
+  "authorized_by": "human_owner",
+  "authorized_at_utc": "2026-09-14T00:00:00Z",
+  "source_instruction": "C:/Users/derek/.codex/attachments/fd9a5dee-e2cd-4a87-9c08-ace597b07aeb/pasted-text.txt",
+  "source_instruction_sha256": "cbabe4de5809f38f4ed233b866b1b5731d3b88cd2eef33bebe19036f1c5608fe",
+  "canonical_repository_url": "https://github.com/lordgaruda/XAU-60",
+  "expected_owner": "lordgaruda",
+  "expected_repository": "XAU-60",
+  "expected_default_branch": "main",
+  "scope": [
+    "fetch public repository",
+    "resolve and pin main HEAD",
+    "inspect repository history, source, license, configuration, indicators and helpers",
+    "create reproducible minimum-complete read-only source snapshot",
+    "create provenance and hash manifests"
+  ],
+  "prohibited": [
+    "push, issue or pull-request activity",
+    "unrelated repository access or broad GitHub search",
+    "upstream source modification",
+    "market-data access",
+    "parameter optimization",
+    "Phase 22B reopening",
+    "broker order submission",
+    "LIVE enablement"
+  ],
+  "resolves": "HUMAN_GATE_REQUIRED_PROVIDE_OR_AUTHORIZE_XAU60_SOURCE_SNAPSHOT"
+}

@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "task_id": "BOT-03-SOURCE-001",
+  "phase_id": "MT5_AI_SCALPING_BOT",
+  "assigned_role": "data_engineer",
+  "base_commit": "61f83260dfd2623910795c16791aed6c50b8e72e",
+  "branch": "task/bot03-xau60-acquisition",
+  "worktree": "C:/Users/derek/Desktop/Vcodeee/.worktrees/bot03-xau60-acquisition",
+  "objective": "Acquire, verify and pin the human-authorized public XAU-60 source snapshot and its minimum complete strategy dependency closure; stop before adapters.",
+  "allowed_paths": [
+    "governance/approvals/XAU60-PUBLIC-SOURCE-ACCESS-001.json",
+    "governance/tasks/BOT-03-SOURCE-001.json",
+    "governance/results/BOT-03-SOURCE-001.json",
+    "third_party/xau60/",
+    "docs/XAU60_SOURCE_PROVENANCE.md",
+    "reports/bot_xau60_source_manifest.json"
+  ],
+  "allowed_data": [],
+  "prohibited_actions": [
+    "modify upstream snapshot",
+    "access unrelated repositories",
+    "access market data",
+    "implement adapters",
+    "invent or optimize strategies",
+    "reopen Phase 22B",
+    "submit broker orders",
+    "enable DEMO or LIVE"
+  ],
+  "required_outputs": [
+    "explicit owner authorization artifact",
+    "canonical repository and default-branch verification",
+    "exact commit and tree pin",
+    "verified license and hash",
+    "deterministic source manifest",
+    "minimum complete strategy dependency closure",
+    "source-path and dependency map",
+    "implementation handoff"
+  ],
+  "allowed_data_window": [],
+  "required_spec_hash": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+  "completion_conditions": [
+    "canonical upstream identity verified",
+    "moving branch resolved to full commit",
+    "license permits intended reference use",
+    "three named strategies re-evaluated from actual source",
+    "snapshot marked THIRD_PARTY_SOURCE and READ_ONLY_REFERENCE",
+    "no adapter implementation or market-data access"
+  ],
+  "inputs": [
+    {
+      "path": "governance/approvals/XAU60-PUBLIC-SOURCE-ACCESS-001.json",
+      "sha256": "8906eb8c90960c7b873b8bf1701848b133987b3415a35bd2a8786d76a0b49380"
+    },
+    {
+      "path": "governance/results/BOT-03.json",
+      "sha256": "8906eb8c90960c7b873b8bf1701848b133987b3415a35bd2a8786d76a0b49380"
+    }
+  ],
+  "forbidden_paths": [
+    "research/phase22b_spec_v12.json",
+    "governance/data_catalogs/",
+    "data/",
+    "src/mt5_scalping_agent/execution/",
+    "src/mt5_scalping_agent/risk/"
+  ],
+  "phase": "MT5_AI_SCALPING_BOT",
+  "status": "READY",
+  "required_dataset_hash": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+  "required_tests": [
+    "authorization hash reproduction",
+    "task schema validation",
+    "source manifest hash reproduction",
+    "dependency closure verification"
+  ],
+  "required_reviewers": [
+    "qa_reviewer"
+  ]
+}
