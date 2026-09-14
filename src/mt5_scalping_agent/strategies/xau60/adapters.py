@@ -176,7 +176,7 @@ class CRTTBSAdapter(_Adapter):
     name = "xau60_crt_tbs_v2_1"
     timeframe = "M5"
     interval = timedelta(minutes=5)
-    minimum_bars = 6
+    minimum_bars = 20
     default_config = {
         "name": "CRT TBS", "enabled": True, "symbols": ["XAUUSD"],
         "timeframe": "M5", "range_timeframe": "H1", "magic_number": 789789,

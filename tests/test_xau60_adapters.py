@@ -57,7 +57,7 @@ def bars(periods: int, interval: timedelta, *, spread: bool = True) -> pd.DataFr
     [
         (SMCScalperAdapter, timedelta(minutes=15), 50, "M15"),
         (TrendBreakTraumaAdapter, timedelta(hours=1), 50, "H1"),
-        (CRTTBSAdapter, timedelta(minutes=5), 6, "M5"),
+        (CRTTBSAdapter, timedelta(minutes=5), 20, "M5"),
     ],
 )
 def test_pinned_provenance_defaults_and_deterministic_no_signal(adapter_type, interval, minimum, timeframe):
@@ -87,7 +87,7 @@ def test_pinned_provenance_defaults_and_deterministic_no_signal(adapter_type, in
     [
         (SMCScalperAdapter, timedelta(minutes=15), 50, _Signal.BUY, 2000, 1990, 2020),
         (TrendBreakTraumaAdapter, timedelta(hours=1), 50, _Signal.SELL, 2000, 2010, 1980),
-        (CRTTBSAdapter, timedelta(minutes=5), 6, _Signal.BUY, 2000, 1990, 2020),
+        (CRTTBSAdapter, timedelta(minutes=5), 20, _Signal.BUY, 2000, 1990, 2020),
     ],
 )
 def test_exact_upstream_signal_fields_translate_without_repricing(
@@ -109,7 +109,7 @@ def test_exact_upstream_signal_fields_translate_without_repricing(
     ("adapter_type", "interval", "minimum"),
     [(SMCScalperAdapter, timedelta(minutes=15), 50),
      (TrendBreakTraumaAdapter, timedelta(hours=1), 50),
-     (CRTTBSAdapter, timedelta(minutes=5), 6)],
+     (CRTTBSAdapter, timedelta(minutes=5), 20)],
 )
 def test_incomplete_latest_bar_is_never_exposed(adapter_type, interval, minimum):
     upstream = RecordingUpstream()
