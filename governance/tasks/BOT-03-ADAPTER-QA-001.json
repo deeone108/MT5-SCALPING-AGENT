@@ -1,0 +1,92 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-03-ADAPTER-QA-001",
+    "phase_id":  "MT5_AI_SCALPING_BOT",
+    "phase":  "MT5_AI_SCALPING_BOT",
+    "assigned_role":  "qa_reviewer",
+    "base_commit":  "7db6e886a34883162384b83b5ad5a70e44548efa",
+    "branch":  "task/bot03-adapter-qa-001",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/bot03-adapter-qa-001",
+    "objective":  "Independently review the three pinned XAU-60 adapters for behavioral fidelity, causality, deterministic safety, dependency reproducibility and scope compliance.",
+    "inputs":  [
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/tasks/BOT-03-ADAPTER-001.json",
+                       "sha256":  "69a76782c8289ed1f7c3315fbd4c2317ce3685f13d7330da8dd14bbdf6cc0000"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/results/BOT-03-ADAPTER-001.json",
+                       "sha256":  "5018a6048aa52ded09fdffecfaaf5570ad6e7e099f5d9e0217723b148ed57bba"
+                   },
+                   {
+                       "hash_mode":  "raw_bytes",
+                       "path":  "governance/approvals/BOT-03-XAU60-ADAPTER-001.json",
+                       "sha256":  "7c89e60de272f220f0c339458c34a7dbe77599e5ca62f3ae6352a2d497c41719"
+                   },
+                   {
+                       "hash_mode":  "git_blob_bytes",
+                       "path":  "reports/bot_xau60_source_manifest.json",
+                       "sha256":  "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c"
+                   }
+               ],
+    "allowed_paths":  [
+                          "governance/tasks/BOT-03-ADAPTER-QA-001.json",
+                          "governance/reviews/BOT-03-ADAPTER-001-QA.json",
+                          "governance/results/BOT-03-ADAPTER-QA-001.json"
+                      ],
+    "forbidden_paths":  [
+                            "third_party/",
+                            "src/",
+                            "config/",
+                            "tests/",
+                            "research/",
+                            "reports/",
+                            "data/",
+                            "governance/state/",
+                            "governance/memory/",
+                            "governance/data_catalogs/"
+                        ],
+    "allowed_data":  [
+
+                     ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "pinned source/license/root and payload immutability",
+                           "exact defaults and source-to-adapter parity for three strategies",
+                           "causal completed bars and invalid inputs/outputs fail closed",
+                           "deterministic replay and state/session/timeframe/symbol behavior",
+                           "governed dependency reproducibility",
+                           "focused and complete repository tests",
+                           "no market data, Phase 22, execution or LIVE"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "required_outputs":  [
+                             "independent APPROVED or REJECTED review",
+                             "schema-valid result manifest",
+                             "exact remediation or next handoff"
+                         ],
+    "completion_conditions":  [
+                                  "exact commits reviewed",
+                                  "runtime dependencies reproducible",
+                                  "behavioral parity evidenced",
+                                  "all safety boundaries preserved",
+                                  "review evidence committed"
+                              ],
+    "prohibited_actions":  [
+                               "edit reviewed adapters/config/tests/source",
+                               "install network dependencies",
+                               "access market data or Phase 22",
+                               "implement adapters",
+                               "optimize or calculate PnL",
+                               "change execution, DEMO or LIVE",
+                               "advance BOT-03"
+                           ],
+    "status":  "REVIEWING"
+}
