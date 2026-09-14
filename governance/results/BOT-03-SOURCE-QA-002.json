@@ -1,0 +1,151 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-03-SOURCE-QA-002",
+    "role":  "qa_reviewer",
+    "status":  "COMPLETE",
+    "base_commit":  "d32be7df9c91419f900ae3ae6cb2969600af026f",
+    "result_commit":  "447f65625b74bc5dc78472cad50572584c854199",
+    "inputs":  [
+                   {
+                       "sha256":  "256d5d65ece73050c4a74e9cba79a48c23af72ffd3278715e301db715cb315d8",
+                       "path":  "governance/results/BOT-03-SOURCE-002.json"
+                   },
+                   {
+                       "sha256":  "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c",
+                       "path":  "reports/bot_xau60_source_manifest.json"
+                   },
+                   {
+                       "sha256":  "035059c356ec2562aa70d16583f83f449185f193baef68189b5c428965720eb8",
+                       "path":  "governance/results/BOT-03-SOURCE-QA-001.json"
+                   },
+                   {
+                       "sha256":  "5ef4b43fd1b8637a265c70e6a7b1b762b805b9fc4eed392cc0f2c626141151d2",
+                       "path":  "governance/reviews/BOT-03-SOURCE-002-QA.json"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "sha256":  "ea2245f29ccef63ea57b8a060360bf33e1112e8e45d6610ecd8952e84d4432be",
+                          "path":  "governance/reviews/BOT-03-SOURCE-002-QA-002.json"
+                      }
+                  ],
+    "commands":  [
+                     "validate SOURCE-002 and QA task/result schemas",
+                     "reproduce Git-object and Windows checkout manifest hashes",
+                     "reproduce all 13 blob hashes/sizes, aggregate and license",
+                     "git diff 65050b9..ba3662b -- third_party/xau60",
+                     "python -m pytest tests/test_xau60_source_integrity.py tests/orchestration/test_integrated_state.py -q"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "schemas",
+                      "failed":  0,
+                      "passed":  4
+                  },
+                  {
+                      "name":  "focused_source_and_state",
+                      "failed":  0,
+                      "passed":  11
+                  },
+                  {
+                      "name":  "immutable_blob_records",
+                      "failed":  0,
+                      "passed":  13
+                  },
+                  {
+                      "name":  "aggregate_and_license",
+                      "failed":  0,
+                      "passed":  2
+                  },
+                  {
+                      "name":  "payload_immutability",
+                      "failed":  0,
+                      "passed":  1
+                  }
+              ],
+    "data_accessed":  [
+                          "committed PUBLIC_SOURCE Git objects only"
+                      ],
+    "prohibitions_verified":  [
+                                  "no network access",
+                                  "no market data or Phase 22",
+                                  "no adapter implementation",
+                                  "no strategy optimization/evaluation",
+                                  "no execution, DEMO or LIVE change",
+                                  "reviewed evidence and third_party payload not edited"
+                              ],
+    "handoff":  {
+                    "to_role":  "project_orchestrator",
+                    "requested_decision":  "AUTHORIZE_BOT03_XAU60_ADAPTER_IMPLEMENTATION_FROM_PINNED_SOURCE",
+                    "limitations":  [
+                                        "QA approval covers source identity, immutable closure and evidence contract only.",
+                                        "Adapters require a separate implementation task and independent behavioral review.",
+                                        "No parameter tuning, market-data access, execution integration, DEMO or LIVE is authorized."
+                                    ]
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "4 manifest schemas passed",
+                           "11 focused tests passed",
+                           "13 immutable blob hashes/sizes reproduced",
+                           "aggregate and license reproduced",
+                           "payload unchanged"
+                       ],
+    "review_status":  [
+                          {
+                              "verdict":  "APPROVED",
+                              "blocking_findings":  0,
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "end_time":  "2026-09-14T17:15:50.6827041Z",
+    "safety_checks":  [
+                          {
+                              "name":  "market_and_phase22_access",
+                              "status":  "NOT_ACCESSED"
+                          },
+                          {
+                              "name":  "payload_immutability",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "adapter_scope",
+                              "status":  "PENDING_SEPARATE_TASK"
+                          },
+                          {
+                              "name":  "execution_and_live",
+                              "status":  "UNCHANGED"
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "governance/tasks/BOT-03-SOURCE-QA-002.json",
+                          "governance/reviews/BOT-03-SOURCE-002-QA-002.json",
+                          "governance/results/BOT-03-SOURCE-QA-002.json"
+                      ],
+    "test_results":  [
+                         {
+                             "scope":  "schemas",
+                             "failed":  0,
+                             "passed":  4
+                         },
+                         {
+                             "scope":  "focused",
+                             "failed":  0,
+                             "passed":  11
+                         },
+                         {
+                             "scope":  "source_integrity",
+                             "failed":  0,
+                             "passed":  16
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "governance/reviews/BOT-03-SOURCE-002-QA-002.json":  "ea2245f29ccef63ea57b8a060360bf33e1112e8e45d6610ecd8952e84d4432be"
+                        },
+    "terminal_result":  "BOT03_XAU60_SOURCE_EVIDENCE_QA_APPROVED_PENDING_ORCHESTRATOR_ACCEPTANCE",
+    "start_time":  "2026-09-14T17:20:00Z",
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}
