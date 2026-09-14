@@ -1,0 +1,145 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-03-SOURCE-QA-001",
+    "role":  "qa_reviewer",
+    "status":  "COMPLETE",
+    "base_commit":  "aa1dc0915c1ebfc85aadadccb35254fe34348920",
+    "result_commit":  "af40f0d06887ec8918b704ef7c7412df5d3eaea6",
+    "inputs":  [
+                   {
+                       "sha256":  "a61f7da2a586f419bc560b4b90dac7b7a2ed3dc94626787ace403d9bcdbcb059",
+                       "path":  "governance/tasks/BOT-03-SOURCE-QA-001.json"
+                   },
+                   {
+                       "sha256":  "a85c39aec783358bddc44ede3c3ad452677b3891748ceefe3eae9048da228d92",
+                       "path":  "governance/results/BOT-03-SOURCE-002.json"
+                   },
+                   {
+                       "sha256":  "61cb0a053b90f1074edb983ebfbcb603ea0d22f3e55b7a028ef95472bf54f348",
+                       "path":  "reports/bot_xau60_source_manifest.json"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "sha256":  "1b7b5ee31a9e1f42534b28227e561006b17487cbd4f1f4f2533e7614f1421cad",
+                          "path":  "governance/reviews/BOT-03-SOURCE-002-QA.json"
+                      }
+                  ],
+    "commands":  [
+                     "inspect authorization/provenance/manifest/snapshot/incident and exact commits",
+                     "git diff --exit-code 65050b9 5dd41cf -- third_party/xau60",
+                     "python -m pytest tests/test_xau60_source_integrity.py tests/orchestration/test_integrated_state.py -q",
+                     "validate BOT-03-SOURCE-002 against RESULT_MANIFEST.schema.json",
+                     "independently reproduce manifest Git-blob and Windows checkout hashes",
+                     "authorized git ls-remote and temporary bare fetch of exact pinned XAU-60 commit"
+                 ],
+    "tests":  [
+                  {
+                      "name":  "focused_source_and_state",
+                      "failed":  0,
+                      "passed":  10
+                  },
+                  {
+                      "name":  "source_blob_records",
+                      "failed":  0,
+                      "passed":  13
+                  },
+                  {
+                      "name":  "aggregate_root",
+                      "passed":  true
+                  },
+                  {
+                      "name":  "remote_pin_tree_license",
+                      "passed":  true
+                  },
+                  {
+                      "name":  "source_result_schema",
+                      "errors":  1,
+                      "passed":  false
+                  }
+              ],
+    "data_accessed":  [
+                          "PUBLIC_SOURCE:https://github.com/lordgaruda/XAU-60@b877fdb1fcc5888b1443cf0214ea89f8040e8096"
+                      ],
+    "prohibitions_verified":  [
+                                  "no market data or Phase 22 access",
+                                  "no third_party or reviewed evidence edits",
+                                  "no adapters or strategy evaluation",
+                                  "no unrelated repository access",
+                                  "no execution, DEMO, or LIVE changes",
+                                  "reviewer did not remediate rejected evidence"
+                              ],
+    "handoff":  {
+                    "to_role":  "project_orchestrator",
+                    "requested_decision":  "CREATE_AGENT_RESOLVABLE_BOT03_SOURCE_EVIDENCE_REMEDIATION",
+                    "limitations":  [
+                                        "Adapter authorization remains withheld.",
+                                        "Source payload integrity passes; rejection is limited to the machine-readable evidence contract.",
+                                        "Fresh independent QA is required after remediation."
+                                    ]
+                },
+    "data_windows_accessed":  [
+
+                              ],
+    "tests_executed":  [
+                           "10 focused source-integrity/state tests passed",
+                           "13 immutable Git blob hashes and sizes reproduced",
+                           "aggregate root, remote pin, tree and license reproduced",
+                           "BOT-03-SOURCE-002 result schema failed with one forbidden-property error",
+                           "manifest Git blob versus checkout representation discrepancy reproduced"
+                       ],
+    "review_status":  [
+                          {
+                              "verdict":  "REJECTED",
+                              "blocking_findings":  2,
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "end_time":  "2026-09-14T17:04:56.1863094Z",
+    "safety_checks":  [
+                          {
+                              "name":  "market_and_phase22_access",
+                              "status":  "NOT_ACCESSED"
+                          },
+                          {
+                              "name":  "third_party_payload_unchanged",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "adapter_authority",
+                              "status":  "WITHHELD"
+                          },
+                          {
+                              "name":  "execution_and_live",
+                              "status":  "UNCHANGED"
+                          }
+                      ],
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "files_changed":  [
+                          "governance/reviews/BOT-03-SOURCE-002-QA.json",
+                          "governance/results/BOT-03-SOURCE-QA-001.json"
+                      ],
+    "test_results":  [
+                         {
+                             "scope":  "focused",
+                             "failed":  0,
+                             "passed":  10
+                         },
+                         {
+                             "scope":  "evidence_schema",
+                             "failed":  1,
+                             "passed":  0
+                         },
+                         {
+                             "scope":  "source_integrity",
+                             "failed":  0,
+                             "passed":  15
+                         }
+                     ],
+    "artifact_hashes":  {
+                            "governance/reviews/BOT-03-SOURCE-002-QA.json":  "1b7b5ee31a9e1f42534b28227e561006b17487cbd4f1f4f2533e7614f1421cad"
+                        },
+    "terminal_result":  "BOT03_XAU60_SOURCE_EVIDENCE_REJECTED_AGENT_RESOLVABLE",
+    "start_time":  "2026-09-14T17:00:00Z",
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f"
+}
