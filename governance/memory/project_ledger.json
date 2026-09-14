@@ -531,6 +531,18 @@
                           "human_gate_required":  true,
                           "next_authorized_action":  "HUMAN_GATE_REQUIRED_PROVIDE_OR_AUTHORIZE_XAU60_SOURCE_SNAPSHOT",
                           "reference":  "docs/XAU60_STRATEGY_VERIFICATION.md"
+                      },
+                      {
+                          "id":  "BOT_03_XAU60_SOURCE_ACQUISITION_INTEGRITY",
+                          "status":  "BLOCKED_AGENT_RESOLVABLE",
+                          "acquisition_commit":  "a93121b168227f9e0b89cc1ae930cee2d267f5d3",
+                          "pinned_commit":  "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
+                          "declared_snapshot_sha256":  "9da0c41f95f99da967c3bc543b370b0513c95529ee97eb70731768291223f7f0",
+                          "mismatched_git_blobs":  13,
+                          "source_human_gate_resolved":  true,
+                          "adapter_assignment_withheld":  true,
+                          "next_authorized_action":  "REMEDIATE_PINNED_XAU60_SNAPSHOT_BYTE_HASH_MISMATCH",
+                          "reference":  "governance/incidents/BOT-03-XAU60-SNAPSHOT-INTEGRITY-001.json"
                       }
                   ],
     "holdout_access_history":  [

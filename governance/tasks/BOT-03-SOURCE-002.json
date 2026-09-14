@@ -1,0 +1,74 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-03-SOURCE-002",
+    "phase_id":  "MT5_AI_SCALPING_BOT",
+    "phase":  "MT5_AI_SCALPING_BOT",
+    "assigned_role":  "data_engineer",
+    "base_commit":  "a93121b168227f9e0b89cc1ae930cee2d267f5d3",
+    "branch":  "task/bot03-xau60-source-integrity",
+    "worktree":  "TO_BE_CREATED_BY_PROJECT_ORCHESTRATOR",
+    "objective":  "Correct the pinned XAU-60 snapshot byte/manifest mismatch so immutable Git blobs, sizes, aggregate root, license and provenance reproduce exactly without changing source semantics or scope.",
+    "inputs":  [
+                   {
+                       "sha256":  "07d6871fab35442e5367a57985bbaab33a48258ecf9fa3701a1661f8fb3dccaa",
+                       "path":  "governance/incidents/BOT-03-XAU60-SNAPSHOT-INTEGRITY-001.json"
+                   },
+                   {
+                       "sha256":  "ea1e09ab0d70021763905ac6aaadd7048cdf013874d4fa796174c836a7923b7f",
+                       "path":  "reports/bot_xau60_source_manifest.json"
+                   }
+               ],
+    "allowed_paths":  [
+                          "third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/",
+                          "reports/bot_xau60_source_manifest.json",
+                          "docs/XAU60_SOURCE_PROVENANCE.md",
+                          "governance/results/BOT-03-SOURCE-001.json",
+                          "governance/results/BOT-03-SOURCE-002.json",
+                          "governance/tasks/BOT-03-SOURCE-002.json",
+                          "tests/"
+                      ],
+    "forbidden_paths":  [
+                            "src/",
+                            "research/",
+                            "data/",
+                            "governance/data_catalogs/",
+                            "src/mt5_scalping_agent/execution/"
+                        ],
+    "allowed_data":  [
+
+                     ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "all 13 immutable Git blob SHA-256 and sizes reproduce",
+                           "aggregate root reproduces from sorted records",
+                           "license hash reproduces",
+                           "fresh checkout equivalence",
+                           "no source semantic change"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "required_outputs":  [
+                             "reproducible pinned snapshot",
+                             "corrected manifest/provenance",
+                             "independent QA handoff"
+                         ],
+    "completion_conditions":  [
+                                  "zero blob/hash/size mismatches",
+                                  "aggregate and license hashes reproduce",
+                                  "QA approves before adapter task"
+                              ],
+    "prohibited_actions":  [
+                               "implement adapters",
+                               "change upstream strategy semantics",
+                               "access market data",
+                               "optimize strategies",
+                               "reopen Phase 22B",
+                               "enable execution or LIVE"
+                           ],
+    "status":  "READY"
+}

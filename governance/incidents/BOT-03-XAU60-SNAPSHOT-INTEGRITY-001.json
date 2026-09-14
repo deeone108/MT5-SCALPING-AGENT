@@ -1,0 +1,16 @@
+{
+    "schema_version":  1,
+    "incident_id":  "BOT-03-XAU60-SNAPSHOT-INTEGRITY-001",
+    "classification":  "AGENT_RESOLVABLE_SOURCE_INTEGRITY_FAILURE",
+    "acquisition_commit":  "a93121b168227f9e0b89cc1ae930cee2d267f5d3",
+    "pinned_upstream_commit":  "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
+    "declared_snapshot_sha256":  "9da0c41f95f99da967c3bc543b370b0513c95529ee97eb70731768291223f7f0",
+    "affected_files":  13,
+    "finding":  "Every committed selected-source blob differs from declared SHA-256 and size; committed LF bytes do not match manifest values derived from CRLF bytes.",
+    "working_tree_only":  false,
+    "adapter_authorized":  false,
+    "market_data_accessed":  false,
+    "source_gate_human_authorization_received":  true,
+    "resolution":  "Rebuild or correct the pinned snapshot and manifest so immutable Git blob hashes, sizes, aggregate root, license hash, provenance and result all reproduce exactly; independent QA before adapter assignment.",
+    "next_authorized_action":  "REMEDIATE_PINNED_XAU60_SNAPSHOT_BYTE_HASH_MISMATCH"
+}
