@@ -1,0 +1,128 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-03-SOURCE-002",
+    "role":  "data_engineer",
+    "status":  "COMPLETE",
+    "base_commit":  "65050b926f55c06eab3750a3299bcedae40e0e65",
+    "result_commit":  "5dd41cf6bf690ff4b641121b2568e8ab9fadae76",
+    "start_time":  "2026-09-14T00:00:00Z",
+    "end_time":  "2026-09-14T00:00:00Z",
+    "inputs":  [
+                   {
+                       "sha256":  "07d6871fab35442e5367a57985bbaab33a48258ecf9fa3701a1661f8fb3dccaa",
+                       "path":  "governance/incidents/BOT-03-XAU60-SNAPSHOT-INTEGRITY-001.json"
+                   },
+                   {
+                       "meaning":  "pre-correction manifest recorded by task",
+                       "path":  "reports/bot_xau60_source_manifest.json",
+                       "sha256":  "ea1e09ab0d70021763905ac6aaadd7048cdf013874d4fa796174c836a7923b7f"
+                   }
+               ],
+    "artifacts":  [
+                      {
+                          "sha256":  "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c",
+                          "path":  "reports/bot_xau60_source_manifest.json"
+                      },
+                      {
+                          "sha256":  "0337701a3628f8307c8bfa36003a8d828e4cdfa71dfaa9e373464a80fdf5f12d",
+                          "path":  "docs/XAU60_SOURCE_PROVENANCE.md"
+                      },
+                      {
+                          "sha256":  "3f318d491927b67215b5f2658dba87bdfa79496bd147864f5ed7d080821e5494",
+                          "path":  "tests/test_xau60_source_integrity.py"
+                      }
+                  ],
+    "artifact_hashes":  {
+                            "corrected_source_manifest":  "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c",
+                            "provenance_document":  "0337701a3628f8307c8bfa36003a8d828e4cdfa71dfaa9e373464a80fdf5f12d",
+                            "selected_snapshot_git_blob_root":  "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+                            "license_git_blob_sha256":  "3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805"
+                        },
+    "commands":  [
+                     "git cat-file blob for each of 13 pinned paths",
+                     "aggregate reproduction",
+                     "pytest in task and fresh detached worktrees"
+                 ],
+    "tests":  [
+                  {
+                      "status":  "PASSED",
+                      "name":  "task-worktree Git blob integrity",
+                      "failed":  0,
+                      "passed":  3
+                  },
+                  {
+                      "status":  "PASSED",
+                      "name":  "fresh Windows checkout equivalence",
+                      "failed":  0,
+                      "passed":  3
+                  }
+              ],
+    "tests_executed":  [
+                           "13 Git blob hashes and sizes",
+                           "aggregate root",
+                           "license hash",
+                           "source pin",
+                           "fresh checkout bytes"
+                       ],
+    "test_results":  [
+                         {
+                             "name":  "xau60 source integrity",
+                             "status":  "PASSED"
+                         },
+                         {
+                             "name":  "fresh Windows checkout equivalence",
+                             "status":  "PASSED"
+                         }
+                     ],
+    "files_changed":  [
+                          "reports/bot_xau60_source_manifest.json",
+                          "docs/XAU60_SOURCE_PROVENANCE.md",
+                          "tests/test_xau60_source_integrity.py",
+                          "governance/tasks/BOT-03-SOURCE-002.json",
+                          "governance/results/BOT-03-SOURCE-002.json"
+                      ],
+    "data_accessed":  [
+                          "already-pinned PUBLIC_SOURCE Git blobs only"
+                      ],
+    "data_windows_accessed":  [
+
+                              ],
+    "specification_hash_used":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "dataset_hash_used":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "safety_checks":  [
+                          {
+                              "name":  "third-party payload unchanged",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "market data and Phase 22 not accessed",
+                              "status":  "PASSED"
+                          },
+                          {
+                              "name":  "orders and LIVE unchanged",
+                              "status":  "PASSED"
+                          }
+                      ],
+    "review_status":  [
+                          {
+                              "decision":  "PENDING",
+                              "role":  "qa_reviewer"
+                          }
+                      ],
+    "prohibitions_verified":  [
+                                  "no repository refetch",
+                                  "no unrelated repository access",
+                                  "no source logic or payload modification",
+                                  "no adapters",
+                                  "no market data or Phase 22 access",
+                                  "no optimization, orders, execution or LIVE"
+                              ],
+    "terminal_result":  "XAU60_SOURCE_INTEGRITY_CORRECTED_PENDING_INDEPENDENT_QA",
+    "handoff":  {
+                    "requested_decision":  "INDEPENDENTLY_REPRODUCE_SOURCE_INTEGRITY",
+                    "limitations":  [
+                                        "adapter assignment remains withheld until independent QA approval"
+                                    ],
+                    "to_role":  "qa_reviewer"
+                }
+}

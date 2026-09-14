@@ -4,9 +4,9 @@
     "phase_id":  "MT5_AI_SCALPING_BOT",
     "phase":  "MT5_AI_SCALPING_BOT",
     "assigned_role":  "data_engineer",
-    "base_commit":  "a93121b168227f9e0b89cc1ae930cee2d267f5d3",
+    "base_commit":  "65050b926f55c06eab3750a3299bcedae40e0e65",
     "branch":  "task/bot03-xau60-source-integrity",
-    "worktree":  "TO_BE_CREATED_BY_PROJECT_ORCHESTRATOR",
+    "worktree":  "C:/Users/derek/Desktop/Vcodeee/.worktrees/bot03-xau60-source-integrity",
     "objective":  "Correct the pinned XAU-60 snapshot byte/manifest mismatch so immutable Git blobs, sizes, aggregate root, license and provenance reproduce exactly without changing source semantics or scope.",
     "inputs":  [
                    {
@@ -70,5 +70,5 @@
                                "reopen Phase 22B",
                                "enable execution or LIVE"
                            ],
-    "status":  "READY"
+    "status":  "FROZEN_PENDING_REVIEW"
 }
