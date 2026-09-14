@@ -1,0 +1,1 @@
+{"name":"SMC Scalper","version":"2.1.0","symbol":"XAUUSD","timeframe":"M15","upstream_commit":"b877fdb1fcc5888b1443cf0214ea89f8040e8096","static_defaults":"SMCScalperAdapter.default_config"}
