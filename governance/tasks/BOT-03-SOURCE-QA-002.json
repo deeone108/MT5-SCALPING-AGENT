@@ -1,0 +1,89 @@
+{
+    "schema_version":  1,
+    "task_id":  "BOT-03-SOURCE-QA-002",
+    "phase_id":  "MT5_AI_SCALPING_BOT",
+    "phase":  "MT5_AI_SCALPING_BOT",
+    "assigned_role":  "qa_reviewer",
+    "base_commit":  "ba3662b618e2dfe3b8c1bbe37805e182b383a26d",
+    "branch":  "task/bot03-xau60-source-qa-002",
+    "worktree":  "TO_BE_CREATED_BY_PROJECT_ORCHESTRATOR",
+    "objective":  "Independently review the remediated XAU-60 source evidence contract and reproduce the pinned 13-file Git-object root, license, hash representations and unchanged payload before adapter authority may be considered.",
+    "inputs":  [
+                   {
+                       "sha256":  "256d5d65ece73050c4a74e9cba79a48c23af72ffd3278715e301db715cb315d8",
+                       "path":  "governance/results/BOT-03-SOURCE-002.json"
+                   },
+                   {
+                       "sha256":  "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c",
+                       "path":  "reports/bot_xau60_source_manifest.json"
+                   },
+                   {
+                       "sha256":  "035059c356ec2562aa70d16583f83f449185f193baef68189b5c428965720eb8",
+                       "path":  "governance/results/BOT-03-SOURCE-QA-001.json"
+                   },
+                   {
+                       "sha256":  "5ef4b43fd1b8637a265c70e6a7b1b762b805b9fc4eed392cc0f2c626141151d2",
+                       "path":  "governance/reviews/BOT-03-SOURCE-002-QA.json"
+                   },
+                   {
+                       "sha256":  "2619b945f398f60d3e4a4ffbd8f5d8bb9b05356db783a4f855d15a33d4f5ad2c",
+                       "path":  "tests/test_xau60_source_integrity.py"
+                   }
+               ],
+    "allowed_paths":  [
+                          "governance/tasks/BOT-03-SOURCE-QA-002.json",
+                          "governance/reviews/BOT-03-SOURCE-002-QA-002.json",
+                          "governance/results/BOT-03-SOURCE-QA-002.json"
+                      ],
+    "forbidden_paths":  [
+                            "third_party/",
+                            "reports/",
+                            "docs/",
+                            "src/",
+                            "research/",
+                            "data/",
+                            "governance/state/",
+                            "governance/memory/",
+                            "governance/data_catalogs/"
+                        ],
+    "allowed_data":  [
+
+                     ],
+    "allowed_data_window":  [
+
+                            ],
+    "required_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "required_dataset_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "required_tests":  [
+                           "validate BOT-03-SOURCE-002 against RESULT_MANIFEST schema",
+                           "independently reproduce 13 immutable Git-object blob hashes and aggregate ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+                           "independently reproduce LICENSE 3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805",
+                           "verify Git-object and Windows-worktree hash representations are explicit and correct",
+                           "verify no third_party payload change across remediation",
+                           "run focused source-integrity and governance tests"
+                       ],
+    "required_reviewers":  [
+                               "qa_reviewer"
+                           ],
+    "required_outputs":  [
+                             "fresh independent QA review",
+                             "schema-valid QA result manifest",
+                             "APPROVED or REJECTED verdict",
+                             "explicit adapter-authority recommendation"
+                         ],
+    "completion_conditions":  [
+                                  "exact rejection and remediation commits reviewed",
+                                  "all evidence contracts validate or rejection records exact blockers",
+                                  "root, license, hash representations and payload preservation independently reproduced",
+                                  "review evidence committed"
+                              ],
+    "prohibited_actions":  [
+                               "edit reviewed implementation or evidence",
+                               "implement adapters",
+                               "access market data or Phase 22",
+                               "optimize or evaluate strategies",
+                               "enable execution, DEMO or LIVE",
+                               "advance BOT-03"
+                           ],
+    "status":  "READY"
+}

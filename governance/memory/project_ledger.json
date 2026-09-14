@@ -560,6 +560,23 @@
                           "qa_task":  "BOT-03-SOURCE-QA-001",
                           "next_authorized_action":  "INDEPENDENT_XAU60_SOURCE_INTEGRITY_QA",
                           "reference":  "governance/results/BOT-03-SOURCE-002.json"
+                      },
+                      {
+                          "id":  "BOT_03_XAU60_SOURCE_EVIDENCE_REMEDIATED_PENDING_FRESH_QA",
+                          "status":  "PENDING_INDEPENDENT_QA",
+                          "qa_rejection_commit":  "f07effd875011ea8d9dcad498d21038eb40a3acf",
+                          "remediation_head":  "ba3662b618e2dfe3b8c1bbe37805e182b383a26d",
+                          "source_result_git_blob_sha256":  "256d5d65ece73050c4a74e9cba79a48c23af72ffd3278715e301db715cb315d8",
+                          "source_manifest_git_blob_sha256":  "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c",
+                          "selected_snapshot_git_blob_root":  "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+                          "license_git_blob_sha256":  "3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805",
+                          "file_count":  13,
+                          "payload_changed":  false,
+                          "human_gate_required":  false,
+                          "adapter_assignment_withheld":  true,
+                          "qa_task":  "BOT-03-SOURCE-QA-002",
+                          "next_authorized_action":  "INDEPENDENT_XAU60_SOURCE_INTEGRITY_QA_REVIEW",
+                          "reference":  "governance/tasks/BOT-03-SOURCE-QA-002.json"
                       }
                   ],
     "holdout_access_history":  [
