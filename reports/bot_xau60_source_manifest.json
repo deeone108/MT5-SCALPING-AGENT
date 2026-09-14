@@ -1,221 +1,231 @@
 {
-    "schema_version":  1,
-    "source_type":  "THIRD_PARTY_SOURCE",
-    "usage":  "READ_ONLY_REFERENCE",
-    "canonical_repository_url":  "https://github.com/lordgaruda/XAU-60",
-    "resolved_default_branch":  "main",
-    "pinned_commit":  "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
-    "upstream_tree_hash":  "3f50c25f048876650c1735dd645f358981529ab4",
-    "fetched_at_utc":  "2026-09-14T00:07:31Z",
-    "license":  {
-                    "type":  "MIT",
-                    "path":  "LICENSE",
-                    "sha256":  "48465bd353ff6f3baaa8293f12d1cee63e30e4669739f673497886dfe972430d"
-                },
-    "snapshot":  {
-                     "location":  "third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/source",
-                     "aggregate_algorithm":  "sha256 over UTF-8 sorted records path NUL sha256 NUL size LF",
-                     "sha256":  "9da0c41f95f99da967c3bc543b370b0513c95529ee97eb70731768291223f7f0",
-                     "file_count":  13,
-                     "files":  [
-                                   {
-                                       "path":  "config/strategies/crt_tbs.yaml",
-                                       "sha256":  "601417347c0be13d58a50f15a68d1452d14fd690673c5568733b8b15e0926586",
-                                       "size_bytes":  556
-                                   },
-                                   {
-                                       "path":  "config/strategies/smc_scalper.yaml",
-                                       "sha256":  "81af2ae72da200e7087679f09fa9032c7ace9fb6f34a8245dbf484e8e6a34340",
-                                       "size_bytes":  751
-                                   },
-                                   {
-                                       "path":  "config/strategies/trend_break_trauma.yaml",
-                                       "sha256":  "9bf663fdf9ec682c61a8d809b50da4d4b04688fde36514b4936bb624647087bf",
-                                       "size_bytes":  776
-                                   },
-                                   {
-                                       "path":  "core/strategy_base.py",
-                                       "sha256":  "c648fb55fbec75bc2c40fd4daad093c7310216271e9734a2a257ba73626bfc77",
-                                       "size_bytes":  5526
-                                   },
-                                   {
-                                       "path":  "indicators/common.py",
-                                       "sha256":  "bf52f76b352ca710cb441c6adf685c8b0f67e4e2e6ad3f20aee31a6bf3f778a7",
-                                       "size_bytes":  7711
-                                   },
-                                   {
-                                       "path":  "indicators/smc_utils.py",
-                                       "sha256":  "29de2b86df2aa1dee117fd5b91dc8b78551cd48a5396ebd6bff020e204232b4c",
-                                       "size_bytes":  18284
-                                   },
-                                   {
-                                       "path":  "indicators/trend_utils.py",
-                                       "sha256":  "61e4d05f8fd5cc64883599fa5001898ad59b5fc1564b7817a870884a1c7a8999",
-                                       "size_bytes":  10798
-                                   },
-                                   {
-                                       "path":  "LICENSE",
-                                       "sha256":  "48465bd353ff6f3baaa8293f12d1cee63e30e4669739f673497886dfe972430d",
-                                       "size_bytes":  1085
-                                   },
-                                   {
-                                       "path":  "README.md",
-                                       "sha256":  "f03818ff2a99e4d5f36be876323ff705b38a94f920fe994e9bc7dc124413efa3",
-                                       "size_bytes":  15530
-                                   },
-                                   {
-                                       "path":  "requirements.txt",
-                                       "sha256":  "fa977ff271e72145ac476650f77da58fa13368c52a62d61b0e66aec79c28c727",
-                                       "size_bytes":  686
-                                   },
-                                   {
-                                       "path":  "strategies/crt_tbs.py",
-                                       "sha256":  "a22bb88e35b5b70ae49dca2db52deebbfbd3ef0273b5e11a2461f52ea1719c33",
-                                       "size_bytes":  32293
-                                   },
-                                   {
-                                       "path":  "strategies/smc_scalper.py",
-                                       "sha256":  "5ff75405294a9591eefe6877a015b6551295b980fa9129c67d945da5e7ed1de8",
-                                       "size_bytes":  23338
-                                   },
-                                   {
-                                       "path":  "strategies/trend_break_trauma.py",
-                                       "sha256":  "ddfe9e4ba7f1f2f70ec79f474637437248c27e3de678205074ed12f30b856098",
-                                       "size_bytes":  25308
-                                   }
-                               ]
-                 },
-    "strategies":  [
-                       {
-                           "requested_name":  "SMC Scalper v2.1",
-                           "status":  "FOUND_IN_SOURCE",
-                           "class":  "SMCScalper",
-                           "version":  "2.1.0",
-                           "source":  "strategies/smc_scalper.py",
-                           "class_lines":  "76-623",
-                           "config":  "config/strategies/smc_scalper.yaml",
-                           "timeframe":  "M15",
-                           "default_symbols":  [
-                                                   "XAUUSD"
-                                               ],
-                           "internal_dependencies":  [
-                                                         "core/strategy_base.py",
-                                                         "indicators/smc_utils.py",
-                                                         "indicators/common.py"
-                                                     ],
-                           "external_dependencies":  [
-                                                         "pandas",
-                                                         "numpy",
-                                                         "ta"
-                                                     ],
-                           "market_data_columns":  [
-                                                       "open",
-                                                       "high",
-                                                       "low",
-                                                       "close",
-                                                       "volume",
-                                                       "spread",
-                                                       "time"
-                                                   ],
-                           "entry_region":  "218-426",
-                           "stop_region":  "428-451",
-                           "target_region":  "453-475",
-                           "exit_region":  "534-621"
-                       },
-                       {
-                           "requested_name":  "Trend Break + Trauma + RSI v2.1",
-                           "status":  "FOUND_IN_SOURCE",
-                           "class":  "TrendBreakTrauma",
-                           "version":  "2.1.0",
-                           "source":  "strategies/trend_break_trauma.py",
-                           "class_lines":  "78-689",
-                           "config":  "config/strategies/trend_break_trauma.yaml",
-                           "timeframe":  "H1",
-                           "default_symbols":  [
-                                                   "XAUUSD"
-                                               ],
-                           "internal_dependencies":  [
-                                                         "core/strategy_base.py",
-                                                         "indicators/trend_utils.py",
-                                                         "indicators/common.py"
-                                                     ],
-                           "external_dependencies":  [
-                                                         "pandas",
-                                                         "numpy",
-                                                         "ta"
-                                                     ],
-                           "market_data_columns":  [
-                                                       "open",
-                                                       "high",
-                                                       "low",
-                                                       "close",
-                                                       "volume",
-                                                       "time"
-                                                   ],
-                           "entry_region":  "238-533",
-                           "exit_region":  "535-687"
-                       },
-                       {
-                           "requested_name":  "CRT + TBS v2.1",
-                           "status":  "FOUND_IN_SOURCE",
-                           "class":  "CRTStrategy",
-                           "version":  "2.1.0",
-                           "source":  "strategies/crt_tbs.py",
-                           "class_lines":  "116-886",
-                           "config":  "config/strategies/crt_tbs.yaml",
-                           "timeframe":  "M5",
-                           "context_timeframe":  "H1",
-                           "default_symbols":  [
-                                                   "XAUUSD"
-                                               ],
-                           "internal_dependencies":  [
-                                                         "core/strategy_base.py",
-                                                         "indicators/common.py"
-                                                     ],
-                           "external_dependencies":  [
-                                                         "pandas",
-                                                         "numpy",
-                                                         "ta",
-                                                         "pytz"
-                                                     ],
-                           "market_data_columns":  [
-                                                       "open",
-                                                       "high",
-                                                       "low",
-                                                       "close",
-                                                       "volume",
-                                                       "time"
-                                                   ],
-                           "entry_region":  "290-820",
-                           "stop_target_region":  "740-820",
-                           "exit_region":  "822-884"
-                       }
-                   ],
-    "closure":  {
-                    "included":  [
-                                     "LICENSE",
-                                     "README.md",
-                                     "requirements.txt",
-                                     "strategies/smc_scalper.py",
-                                     "strategies/trend_break_trauma.py",
-                                     "strategies/crt_tbs.py",
-                                     "indicators/common.py",
-                                     "indicators/smc_utils.py",
-                                     "indicators/trend_utils.py",
-                                     "core/strategy_base.py",
-                                     "config/strategies/smc_scalper.yaml",
-                                     "config/strategies/trend_break_trauma.yaml",
-                                     "config/strategies/crt_tbs.yaml"
-                                 ],
-                    "excluded_platform_components":  [
-                                                         "core/mt5_connector.py",
-                                                         "core/risk_manager.py",
-                                                         "core/trade_executor.py",
-                                                         "core/account_manager.py",
-                                                         "alerts/",
-                                                         "ui/",
-                                                         "main.py"
-                                                     ],
-                    "rationale":  "Selected strategy definitions, direct indicator/helper modules, abstract strategy contract, exact configurations, license, dependency declaration and README. Execution, account, UI and alert platform code is intentionally excluded."
-                }
+  "schema_version": 1,
+  "source_type": "THIRD_PARTY_SOURCE",
+  "usage": "READ_ONLY_REFERENCE",
+  "canonical_repository_url": "https://github.com/lordgaruda/XAU-60",
+  "resolved_default_branch": "main",
+  "pinned_commit": "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
+  "upstream_tree_hash": "3f50c25f048876650c1735dd645f358981529ab4",
+  "fetched_at_utc": "2026-09-14T00:07:31Z",
+  "license": {
+    "type": "MIT",
+    "path": "LICENSE",
+    "sha256": "3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805"
+  },
+  "snapshot": {
+    "location": "third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/source",
+    "aggregate_algorithm": "sha256 over UTF-8 sorted records path NUL git_blob_sha256 NUL git_blob_size LF",
+    "sha256": "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+    "file_count": 13,
+    "files": [
+      {
+        "path": "config/strategies/crt_tbs.yaml",
+        "sha256": "be006ccb4c478eb196e16fb45fbc03d5ad850aad61b3669408b8816dfdb8bfc9",
+        "size_bytes": 527
+      },
+      {
+        "path": "config/strategies/smc_scalper.yaml",
+        "sha256": "b2a1294115900c1d0ba9bdce57e58cc347394064808dc963c2121d2471650e1f",
+        "size_bytes": 706
+      },
+      {
+        "path": "config/strategies/trend_break_trauma.yaml",
+        "sha256": "858e2599202c1297cea092fb5450bbb202ab8d5f7d5a064656fde3f41b155493",
+        "size_bytes": 733
+      },
+      {
+        "path": "core/strategy_base.py",
+        "sha256": "427ea014a327c735cd89b40a503ea13be128d01f37eeff2300a904255c0ce365",
+        "size_bytes": 5335
+      },
+      {
+        "path": "indicators/common.py",
+        "sha256": "5170ef530539d5fcf578fcdef666c07b630d4894bbee5680a3eaf727d2d0edd9",
+        "size_bytes": 7412
+      },
+      {
+        "path": "indicators/smc_utils.py",
+        "sha256": "0d3985e2369c6cc0176b761482a036ec103fe052c3dafe041c78d19e41d6047d",
+        "size_bytes": 17734
+      },
+      {
+        "path": "indicators/trend_utils.py",
+        "sha256": "b126158ff555e03fa4cd0db4dd5a532ebd184a63c0cc8c98dff4ba680a3f071b",
+        "size_bytes": 10445
+      },
+      {
+        "path": "LICENSE",
+        "sha256": "3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805",
+        "size_bytes": 1064
+      },
+      {
+        "path": "README.md",
+        "sha256": "5cc2a721e1f3f46598f181cf500df098947238fb6874f797120e476f46e05c0e",
+        "size_bytes": 15016
+      },
+      {
+        "path": "requirements.txt",
+        "sha256": "0f6d578d99b0b255de9b449e38f9ae2cf2324ab831bf6192a103e15f3f1b255d",
+        "size_bytes": 651
+      },
+      {
+        "path": "strategies/crt_tbs.py",
+        "sha256": "1dfdf05fc25822a0fe1a37aeffc7ab1aa7033b6a12b45d6db28259f70a608497",
+        "size_bytes": 31407
+      },
+      {
+        "path": "strategies/smc_scalper.py",
+        "sha256": "d56e5d3ef1387c5f1ac10ce9064f7a55911697c6257e237c67b699e361603643",
+        "size_bytes": 22715
+      },
+      {
+        "path": "strategies/trend_break_trauma.py",
+        "sha256": "33143f44d73cc9bf30bf5108c3fdfc40d85f355264bb84d6cfd33c3868b67ea0",
+        "size_bytes": 24619
+      }
+    ],
+    "byte_representation": "immutable_git_blob_bytes",
+    "checkout_policy": "source/** -text"
+  },
+  "strategies": [
+    {
+      "requested_name": "SMC Scalper v2.1",
+      "status": "FOUND_IN_SOURCE",
+      "class": "SMCScalper",
+      "version": "2.1.0",
+      "source": "strategies/smc_scalper.py",
+      "class_lines": "76-623",
+      "config": "config/strategies/smc_scalper.yaml",
+      "timeframe": "M15",
+      "default_symbols": [
+        "XAUUSD"
+      ],
+      "internal_dependencies": [
+        "core/strategy_base.py",
+        "indicators/smc_utils.py",
+        "indicators/common.py"
+      ],
+      "external_dependencies": [
+        "pandas",
+        "numpy",
+        "ta"
+      ],
+      "market_data_columns": [
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "spread",
+        "time"
+      ],
+      "entry_region": "218-426",
+      "stop_region": "428-451",
+      "target_region": "453-475",
+      "exit_region": "534-621"
+    },
+    {
+      "requested_name": "Trend Break + Trauma + RSI v2.1",
+      "status": "FOUND_IN_SOURCE",
+      "class": "TrendBreakTrauma",
+      "version": "2.1.0",
+      "source": "strategies/trend_break_trauma.py",
+      "class_lines": "78-689",
+      "config": "config/strategies/trend_break_trauma.yaml",
+      "timeframe": "H1",
+      "default_symbols": [
+        "XAUUSD"
+      ],
+      "internal_dependencies": [
+        "core/strategy_base.py",
+        "indicators/trend_utils.py",
+        "indicators/common.py"
+      ],
+      "external_dependencies": [
+        "pandas",
+        "numpy",
+        "ta"
+      ],
+      "market_data_columns": [
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "time"
+      ],
+      "entry_region": "238-533",
+      "exit_region": "535-687"
+    },
+    {
+      "requested_name": "CRT + TBS v2.1",
+      "status": "FOUND_IN_SOURCE",
+      "class": "CRTStrategy",
+      "version": "2.1.0",
+      "source": "strategies/crt_tbs.py",
+      "class_lines": "116-886",
+      "config": "config/strategies/crt_tbs.yaml",
+      "timeframe": "M5",
+      "context_timeframe": "H1",
+      "default_symbols": [
+        "XAUUSD"
+      ],
+      "internal_dependencies": [
+        "core/strategy_base.py",
+        "indicators/common.py"
+      ],
+      "external_dependencies": [
+        "pandas",
+        "numpy",
+        "ta",
+        "pytz"
+      ],
+      "market_data_columns": [
+        "open",
+        "high",
+        "low",
+        "close",
+        "volume",
+        "time"
+      ],
+      "entry_region": "290-820",
+      "stop_target_region": "740-820",
+      "exit_region": "822-884"
+    }
+  ],
+  "closure": {
+    "included": [
+      "LICENSE",
+      "README.md",
+      "requirements.txt",
+      "strategies/smc_scalper.py",
+      "strategies/trend_break_trauma.py",
+      "strategies/crt_tbs.py",
+      "indicators/common.py",
+      "indicators/smc_utils.py",
+      "indicators/trend_utils.py",
+      "core/strategy_base.py",
+      "config/strategies/smc_scalper.yaml",
+      "config/strategies/trend_break_trauma.yaml",
+      "config/strategies/crt_tbs.yaml"
+    ],
+    "excluded_platform_components": [
+      "core/mt5_connector.py",
+      "core/risk_manager.py",
+      "core/trade_executor.py",
+      "core/account_manager.py",
+      "alerts/",
+      "ui/",
+      "main.py"
+    ],
+    "rationale": "Selected strategy definitions, direct indicator/helper modules, abstract strategy contract, exact configurations, license, dependency declaration and README. Execution, account, UI and alert platform code is intentionally excluded."
+  },
+  "integrity_correction": {
+    "incident_id": "BOT-03-XAU60-SNAPSHOT-INTEGRITY-001",
+    "original_declared_snapshot_sha256": "9da0c41f95f99da967c3bc543b370b0513c95529ee97eb70731768291223f7f0",
+    "original_hash_basis": "CRLF working-tree bytes",
+    "corrected_hash_basis": "immutable Git blob bytes",
+    "source_payload_changed": false,
+    "source_logic_changed": false
+  }
 }

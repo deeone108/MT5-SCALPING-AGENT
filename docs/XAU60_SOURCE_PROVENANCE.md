@@ -13,11 +13,17 @@ This evidence resolves the prior source-availability gate only. The earlier BOT-
 - Pinned commit: `b877fdb1fcc5888b1443cf0214ea89f8040e8096`
 - Upstream Git tree: `3f50c25f048876650c1735dd645f358981529ab4`
 - Fetch timestamp: `2026-09-14T00:07:31Z`
-- License: MIT, `LICENSE` SHA-256 `48465bd353ff6f3baaa8293f12d1cee63e30e4669739f673497886dfe972430d`
-- Selected snapshot SHA-256: `9da0c41f95f99da967c3bc543b370b0513c95529ee97eb70731768291223f7f0`
+- License: MIT, immutable Git-blob `LICENSE` SHA-256 `3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805`
+- Selected snapshot SHA-256: `ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7`
 - Deterministic manifest: `reports/bot_xau60_source_manifest.json`
 
-The snapshot lives at `third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/`. The upstream bytes are under `source/`; adjacent `THIRD_PARTY_SOURCE` and `READ_ONLY_REFERENCE` markers identify its status. The selected source files are byte-preserved and must not be edited in place.
+The snapshot lives at `third_party/xau60/b877fdb1fcc5888b1443cf0214ea89f8040e8096/`. The upstream bytes are under `source/`; adjacent `THIRD_PARTY_SOURCE` and `READ_ONLY_REFERENCE` markers identify its status. The selected source files are byte-preserved and must not be edited in place. Canonical bytes are the immutable Git blob bytes. The scoped `.gitattributes` rule `source/** -text` prevents checkout conversion, including with Windows `core.autocrlf=true`.
+
+## Integrity correction
+
+The original acquisition recorded selected-snapshot root `9da0c41f95f99da967c3bc543b370b0513c95529ee97eb70731768291223f7f0` and license hash `48465bd353ff6f3baaa8293f12d1cee63e30e4669739f673497886dfe972430d`. Those values were calculated from CRLF working-tree representations while Git stored LF blobs. Incident `BOT-03-XAU60-SNAPSHOT-INTEGRITY-001` therefore withheld adapter assignment.
+
+BOT-03-SOURCE-002 corrects the manifest to the already committed Git blob bytes. It does not replace, download, normalize, or otherwise alter any selected source payload, and it preserves the original acquisition record as historical evidence. The upstream URL, pinned commit, tree identity, selected file set, strategy interpretation, and acquisition timestamp are unchanged.
 
 ## Minimum complete strategy closure
 
@@ -55,10 +61,10 @@ The compact YAML omits several source-default controls (sweep/range/HTF/exit/fil
 
 ## Provenance and safety boundaries
 
-The full upstream Git tree hash identifies the complete pinned repository. The selected snapshot hash identifies the deliberately limited source closure using sorted records `path NUL sha256 NUL size LF`. Individual file hashes are in the JSON manifest.
+The full upstream Git tree hash identifies the complete pinned repository. The selected snapshot hash identifies the deliberately limited source closure using UTF-8 sorted records `path NUL git_blob_sha256 NUL git_blob_size LF`. Individual file hashes are in the JSON manifest.
 
 This acquisition did not access market data, enumerate protected partitions, reopen Phase 22, perform profitability analysis, optimize parameters, import the upstream execution platform, or enable broker/LIVE functionality.
 
 ## Handoff
 
-Next work is a separately assigned Research Implementer task: create project-native, provenance-linked adapters from this immutable source and focused source-fidelity/no-lookahead tests. That work requires independent QA and must not modify this snapshot.
+Next work is independent source-integrity QA. Adapter assignment remains withheld until QA reproduces all 13 Git blob hashes and sizes, the aggregate root, license hash, pinned source identity, and Windows checkout equivalence. A later, separately assigned Research Implementer task may create project-native, provenance-linked adapters only after that gate passes.
