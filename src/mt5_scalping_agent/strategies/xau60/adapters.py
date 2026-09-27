@@ -72,19 +72,63 @@ class _Adapter:
         signal = self._upstream.analyze(symbol, frame)
         if signal is None:
             return self._no_trade(symbol, now, "upstream strategy emitted no signal")
-        direction_name = getattr(signal.signal, "name", str(signal.signal))
-        if direction_name == "HOLD":
+        validated = self._validated_signal(symbol, signal)
+        if validated is None:
             return self._no_trade(symbol, now, "upstream strategy emitted HOLD")
-        direction = TradeDirection[direction_name]
+        direction, entry_price, stop_loss, take_profit, comment = validated
         return SignalProposal(
-            symbol=signal.symbol,
+            symbol=symbol,
             direction=direction,
             strategy=self.name,
             generated_at=now,
-            entry_price=float(signal.entry_price),
-            stop_loss=float(signal.stop_loss),
-            take_profit=float(signal.take_profit),
-            reasons=(str(signal.comment),),
+            entry_price=entry_price,
+            stop_loss=stop_loss,
+            take_profit=take_profit,
+            reasons=(comment,),
+        )
+
+    def _validated_signal(
+        self, requested_symbol: str, signal: Any
+    ) -> tuple[TradeDirection, float, float, float, str] | None:
+        emitted_symbol = getattr(signal, "symbol", None)
+        if emitted_symbol != requested_symbol:
+            raise XAU60InputError(
+                f"upstream symbol mismatch: expected {requested_symbol}, got {emitted_symbol!r}"
+            )
+
+        raw_direction = getattr(signal, "signal", None)
+        direction_name = getattr(raw_direction, "name", None)
+        if direction_name not in {"BUY", "SELL", "HOLD"}:
+            raise XAU60InputError(f"unsupported upstream direction: {direction_name!r}")
+        if direction_name == "HOLD":
+            return None
+
+        prices: dict[str, float] = {}
+        for field in ("entry_price", "stop_loss", "take_profit"):
+            raw_value = getattr(signal, field, None)
+            try:
+                value = float(raw_value)
+            except (TypeError, ValueError) as exc:
+                raise XAU60InputError(f"invalid upstream {field}") from exc
+            if not isfinite(value) or value <= 0:
+                raise XAU60InputError(f"invalid upstream {field}")
+            prices[field] = value
+
+        if direction_name == "BUY" and not (
+            prices["stop_loss"] < prices["entry_price"] < prices["take_profit"]
+        ):
+            raise XAU60InputError("invalid upstream BUY price geometry")
+        if direction_name == "SELL" and not (
+            prices["take_profit"] < prices["entry_price"] < prices["stop_loss"]
+        ):
+            raise XAU60InputError("invalid upstream SELL price geometry")
+
+        return (
+            TradeDirection[direction_name],
+            prices["entry_price"],
+            prices["stop_loss"],
+            prices["take_profit"],
+            str(getattr(signal, "comment", "")),
         )
 
     def _validated_frame(
