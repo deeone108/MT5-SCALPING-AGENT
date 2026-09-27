@@ -21,4 +21,19 @@ __all__ = [
     "TradeIntent",
     "backtest_summary",
     "trade_record",
+    "EVALUATION_STRATEGIES",
+    "EvaluationBuildContext",
+    "StrategyEvaluationSpec",
+    "XAU60BacktestStrategy",
+    "build_evaluation_strategy",
+    "evaluation_spec",
 ]
+
+from mt5_scalping_agent.backtesting.evaluation import (
+    EVALUATION_STRATEGIES,
+    EvaluationBuildContext,
+    StrategyEvaluationSpec,
+    XAU60BacktestStrategy,
+    build_evaluation_strategy,
+    evaluation_spec,
+)
