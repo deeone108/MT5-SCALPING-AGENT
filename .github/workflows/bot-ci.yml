@@ -1,0 +1,50 @@
+name: Bot CI
+
+on:
+  pull_request:
+    branches: [bot-integration]
+  push:
+    branches:
+      - bot-integration
+      - "bot*-remediation"
+      - "bot*-implementation"
+  workflow_dispatch:
+
+concurrency:
+  group: bot-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Focused XAU-60 adapter tests
+        shell: pwsh
+        run: |
+          python -m pytest tests/test_xau60_adapters.py tests/test_xau60_source_integrity.py -q
+
+      - name: Governance tests
+        shell: pwsh
+        run: |
+          python -m pytest tests/governance -q
+
+      - name: Full repository suite
+        shell: pwsh
+        run: |
+          python -m pytest -q --disable-warnings

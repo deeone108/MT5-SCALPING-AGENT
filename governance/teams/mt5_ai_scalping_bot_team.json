@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "team_id": "MT5_AI_SCALPING_BOT_TEAM",
+  "purpose": "Build the MT5 AI scalping bot through bounded implementation branches, independent QA review, and safety-gated integration.",
+  "agents": [
+    {
+      "agent_id": "BOT-ORCHESTRATOR-001",
+      "role": "project_orchestrator",
+      "charter": "agents/orchestrator.md",
+      "responsibility": "Own milestone sequencing, task assignment, integration decisions, and authoritative state."
+    },
+    {
+      "agent_id": "BOT-IMPLEMENTER-001",
+      "role": "research_implementer",
+      "charter": "agents/research_implementer.md",
+      "responsibility": "Implement strategy adapters, market-data plumbing, and bounded bot components without self-approval."
+    },
+    {
+      "agent_id": "BOT-BACKTEST-001",
+      "role": "backtest_engineer",
+      "charter": "agents/backtest_engineer.md",
+      "responsibility": "Own common-cost strategy tournament execution and reproducible performance artifacts."
+    },
+    {
+      "agent_id": "BOT-QA-001",
+      "role": "qa_reviewer",
+      "charter": "agents/qa_reviewer.md",
+      "responsibility": "Independently review every implementation PR, inspect diffs and CI, and reject incomplete contracts."
+    },
+    {
+      "agent_id": "BOT-SAFETY-001",
+      "role": "safety_reviewer",
+      "charter": "agents/safety_reviewer.md",
+      "responsibility": "Review any risk, execution, account-mode, order, or LIVE-adjacent change before integration."
+    },
+    {
+      "agent_id": "BOT-STATS-001",
+      "role": "statistical_validator",
+      "charter": "agents/statistical_validator.md",
+      "responsibility": "Validate tournament comparisons and guard against misleading profitability claims."
+    },
+    {
+      "agent_id": "BOT-DOCS-001",
+      "role": "documentation_agent",
+      "charter": "agents/documentation_agent.md",
+      "responsibility": "Maintain concise operator and architecture documentation after accepted changes."
+    }
+  ],
+  "pull_request_policy": {
+    "base_branch": "bot-integration",
+    "ci_required": true,
+    "qa_review_required": true,
+    "safety_review_required_for": [
+      "src/mt5_scalping_agent/risk/",
+      "src/mt5_scalping_agent/execution/",
+      "account-mode gates",
+      "order submission",
+      "LIVE authority"
+    ],
+    "implementer_may_self_approve": false,
+    "merge_only_after_blocking_findings_resolved": true
+  },
+  "scope_guardrails": {
+    "phase22b_reopen_allowed": false,
+    "live_execution_authorized": false,
+    "new_strategy_search_authorized": false,
+    "parameter_optimization_authorized": false
+  }
+}
