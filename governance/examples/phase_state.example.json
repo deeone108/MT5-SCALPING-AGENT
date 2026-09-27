@@ -1,88 +1,89 @@
 {
-    "schema_version":  1,
-    "phase_id":  "PHASE_22A",
-    "status":  "DESIGN_FROZEN",
-    "base_commit":  "d7c79e40d98316bf957f0e7428d464b959b0206a",
-    "spec_sha256":  "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
-    "orchestrator":  "project_orchestrator",
-    "gates":  {
-                  "data":  {
-                               "status":  "PASSED",
-                               "reviewer_role":  "qa_reviewer",
-                               "evidence_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91"
-                           },
-                  "freeze":  {
-                                 "status":  "PASSED",
-                                 "reviewer_role":  "qa_reviewer",
-                                 "evidence_sha256":  "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323"
-                             },
-                  "implementation":  {
-                                         "status":  "PENDING",
-                                         "reviewer_role":  "qa_reviewer",
-                                         "evidence_sha256":  null
-                                     },
-                  "statistics":  {
-                                     "status":  "PENDING",
-                                     "reviewer_role":  "statistical_validator",
-                                     "evidence_sha256":  null
-                                 },
-                  "qa":  {
-                             "status":  "PENDING",
-                             "reviewer_role":  "qa_reviewer",
-                             "evidence_sha256":  null
-                         },
-                  "safety":  {
-                                 "status":  "NOT_REQUIRED",
-                                 "reviewer_role":  "safety_reviewer",
-                                 "evidence_sha256":  null
-                             }
-              },
-    "data_access":  {
-                        "allowed_partitions":  [
-                                                   "DISCOVERY"
-                                               ],
-                        "locked_partitions":  [
-                                                  "CONFIRMATION",
-                                                  "INTERNAL_HOLDOUT"
-                                              ],
-                        "unlock_manifest_sha256":  null
-                    },
-    "transitions":  [
-
-                    ],
-    "candidate_registry_hash":  null,
-    "forbidden_data_windows":  [
-                                   "2024+"
-                               ],
-    "active_tasks":  [
-
-                     ],
-    "phase_transition_history":  [
-
-                                 ],
-    "completed_tasks":  [
-
-                        ],
-    "live_execution_authorized":  false,
-    "research_spec_hash":  "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
-    "blocked_tasks":  [
-
-                      ],
-    "locked_data_windows":  [
-                                "2022",
-                                "2023"
-                            ],
-    "last_validated_commit":  "d7c79e40d98316bf957f0e7428d464b959b0206a",
-    "phase_status":  "DESIGN_FROZEN",
-    "dataset_root_hash":  "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-    "allowed_data_windows":  [
-                                 "2019",
-                                 "2020",
-                                 "2021"
-                             ],
-    "current_phase":  "PHASE_22A",
-    "safety_state":  {
-                         "status":  "ENFORCED",
-                         "order_submission":  false
-                     }
+    "schema_version": 1,
+    "phase_id": "PHASE_22A",
+    "status": "DESIGN_FROZEN",
+    "base_commit": "d7c79e40d98316bf957f0e7428d464b959b0206a",
+    "spec_sha256": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
+    "orchestrator": "project_orchestrator",
+    "gates": {
+        "data": {
+            "status": "PASSED",
+            "reviewer_role": "qa_reviewer",
+            "evidence_sha256": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91"
+        },
+        "freeze": {
+            "status": "PASSED",
+            "reviewer_role": "qa_reviewer",
+            "evidence_sha256": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323"
+        },
+        "implementation": {
+            "status": "PENDING",
+            "reviewer_role": "qa_reviewer",
+            "evidence_sha256": null
+        },
+        "statistics": {
+            "status": "PENDING",
+            "reviewer_role": "statistical_validator",
+            "evidence_sha256": null
+        },
+        "qa": {
+            "status": "PENDING",
+            "reviewer_role": "qa_reviewer",
+            "evidence_sha256": null
+        },
+        "safety": {
+            "status": "NOT_REQUIRED",
+            "reviewer_role": "safety_reviewer",
+            "evidence_sha256": null
+        }
+    },
+    "data_access": {
+        "allowed_partitions": [
+            "DISCOVERY"
+        ],
+        "locked_partitions": [
+            "CONFIRMATION",
+            "INTERNAL_HOLDOUT"
+        ],
+        "unlock_manifest_sha256": null
+    },
+    "transitions": [],
+    "candidate_registry_hash": null,
+    "forbidden_data_windows": [
+        "2024+"
+    ],
+    "active_tasks": [],
+    "phase_transition_history": [],
+    "completed_tasks": [],
+    "live_execution_authorized": false,
+    "research_spec_hash": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
+    "blocked_tasks": [],
+    "locked_data_windows": [
+        "2022",
+        "2023"
+    ],
+    "last_validated_commit": "d7c79e40d98316bf957f0e7428d464b959b0206a",
+    "phase_status": "DESIGN_FROZEN",
+    "dataset_root_hash": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "allowed_data_windows": [
+        "2019",
+        "2020",
+        "2021"
+    ],
+    "current_phase": "PHASE_22A",
+    "safety_state": {
+        "status": "ENFORCED",
+        "order_submission": false
+    },
+    "master_mission": "BUILD_A_COMPLETE_SAFE_AUTONOMOUS_MULTI_STRATEGY_MT5_AI_SCALPING_BOT_FOR_DEMO",
+    "current_program": "MT5_AI_SCALPING_BOT",
+    "current_milestone": "BOT-00",
+    "next_authorized_action": "BOT-01_REPOSITORY_COMPONENT_AUDIT",
+    "human_gate_required": false,
+    "preserved_research": {
+        "phase_22": "PRESERVED_INACTIVE_RESEARCH",
+        "phase_22a": "COMPLETED_PRESERVED_RESEARCH",
+        "phase_22b": "SUSPENDED_PRESERVED_RESEARCH",
+        "phase22b_reopen_requires": "REOPEN PHASE22B"
+    }
 }

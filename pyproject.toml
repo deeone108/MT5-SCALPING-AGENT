@@ -19,6 +19,8 @@ dependencies = [
     "dukascopy-python==4.0.1",
     "requests>=2.31,<3",
     "pyarrow>=17,<22",
+    "ta>=0.10.2,<0.12",
+    "pytz>=2023.3,<2027",
 ]
 
 [project.optional-dependencies]

@@ -37,6 +37,7 @@ def validate(instance, schema: dict, root: dict) -> None:
             "string": isinstance(instance, str),
             "null": instance is None,
             "integer": isinstance(instance, int) and not isinstance(instance, bool),
+            "boolean": isinstance(instance, bool),
         }
         if not any(matches.get(choice, False) for choice in choices):
             raise ValueError(f"type mismatch: expected {choices}")
