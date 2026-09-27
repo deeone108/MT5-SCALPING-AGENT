@@ -26,6 +26,13 @@ from mt5_scalping_agent.data.sessions import (
 )
 from mt5_scalping_agent.data.tick_analysis import TickAnalysisError, analyze_tick_spreads
 from mt5_scalping_agent.data.tick_capture import TickCaptureError, TickSpreadRecorder
+from mt5_scalping_agent.data.instruments import (
+    InstrumentMetadataError,
+    InstrumentSpec,
+    instrument_spec_from_mt5,
+    load_instrument_spec,
+    resolve_broker_symbol,
+)
 from mt5_scalping_agent.data.mt5_client import (
     ConnectionStatus,
     MT5ConnectionError,
@@ -39,6 +46,8 @@ __all__ = [
     "DukascopyM1Client",
     "HistDataError",
     "HistDataM1Client",
+    "InstrumentMetadataError",
+    "InstrumentSpec",
     "LocalArchiveError",
     "LocalResearchArchive",
     "DUKASCOPY_PROVENANCE",
@@ -55,6 +64,9 @@ __all__ = [
     "MT5ConnectionError",
     "MT5DataError",
     "MT5ReadOnlyClient",
+    "instrument_spec_from_mt5",
+    "load_instrument_spec",
+    "resolve_broker_symbol",
     "resample_m1_to_m5",
     "session_bounds_utc",
     "session_name",
