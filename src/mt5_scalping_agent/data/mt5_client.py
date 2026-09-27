@@ -72,6 +72,13 @@ class MT5ReadOnlyClient:
             terminal_version=getattr(terminal, "build", None),
         )
 
+    def list_symbols(self) -> list[dict[str, Any]]:
+        """Return broker symbol metadata without selecting or trading anything."""
+        symbols = self._mt5.symbols_get()
+        if symbols is None:
+            raise MT5DataError(f"Unable to retrieve broker symbols: {self._last_error()}")
+        return [self._named_value(symbol, "symbol metadata") for symbol in symbols]
+
     def select_symbol(self, symbol: str) -> None:
         """Make a symbol visible to the terminal before requesting data."""
         self._require_nonempty_symbol(symbol)
