@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from types import SimpleNamespace
-
 import pytest
 
 from mt5_scalping_agent.data import (
@@ -10,6 +8,8 @@ from mt5_scalping_agent.data import (
     load_instrument_spec,
     resolve_broker_symbol,
 )
+from mt5_scalping_agent.risk import AccountRiskState, RiskEngine, RiskLimits, TradePlan
+from mt5_scalping_agent.domain import TradeDirection
 
 
 def xau_info(**overrides):
@@ -130,3 +130,70 @@ def test_load_instrument_spec_never_selects_ambiguous_symbol():
         load_instrument_spec(client, "XAUUSD")
 
     assert client.selected == []
+
+
+@pytest.mark.parametrize(
+    ("canonical", "broker", "digits", "point", "tick_size", "tick_value"),
+    [
+        ("EURUSD", "EURUSD", 5, 0.00001, 0.00001, 1.0),
+        ("USDJPY", "USDJPYm", 3, 0.001, 0.001, 0.67),
+        ("XAUUSD", "XAUUSDm", 2, 0.01, 0.01, 1.0),
+    ],
+)
+def test_instrument_normalization_is_not_fx_or_gold_hard_coded(
+    canonical, broker, digits, point, tick_size, tick_value
+):
+    info = xau_info(
+        name=broker,
+        digits=digits,
+        point=point,
+        trade_tick_size=tick_size,
+        trade_tick_value=tick_value,
+    )
+    spec = instrument_spec_from_mt5(
+        canonical,
+        broker,
+        info,
+        {"bid": 100.0, "ask": 100.0 + point * 2},
+    )
+
+    assert spec.canonical_symbol == canonical
+    assert spec.broker_symbol == broker
+    assert spec.point == point
+    assert spec.tick_size == tick_size
+    assert spec.tick_value == tick_value
+
+
+def test_xauusd_risk_sizing_uses_broker_tick_value_not_fx_pip_constants():
+    spec = instrument_spec_from_mt5(
+        "XAUUSD",
+        "XAUUSDm",
+        xau_info(),
+        {"bid": 2650.10, "ask": 2650.11},
+    )
+    engine = RiskEngine(
+        RiskLimits(
+            risk_percent_per_trade=0.5,
+            max_spread_points=5.0,
+            min_reward_risk_ratio=1.5,
+        )
+    )
+    plan = TradePlan(
+        symbol="XAUUSDm",
+        direction=TradeDirection.BUY,
+        entry_price=2650.0,
+        stop_loss=2645.0,
+        take_profit=2660.0,
+        spread_points=spec.spread_points,
+    )
+    account = AccountRiskState(
+        equity=10_000.0,
+        balance=10_000.0,
+        peak_equity=10_000.0,
+    )
+
+    decision = engine.assess(plan, account, spec.to_risk_spec())
+
+    assert decision.allowed is True
+    assert decision.risk_amount == pytest.approx(50.0)
+    assert decision.volume_lots == pytest.approx(0.10)
