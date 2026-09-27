@@ -1,635 +1,621 @@
 {
-    "schema_version": 1,
-    "current_phase": "MT5_AI_SCALPING_BOT",
-    "live_execution_authorized": false,
-    "decisions": [
-        {
-            "id": "PHASE_21_CLOSED",
-            "status": "CLOSED_FOR_THIS_HYPOTHESIS",
-            "reference": "docs/PHASE_21_FAILURE_POSTMORTEM.md"
-        },
-        {
-            "id": "JFOREX_PATH",
-            "status": "ABANDONED_FOR_OPERATIONAL_COMPLEXITY",
-            "reference": "docs/PHASE_22_DATA_SOURCE_DECISION.md"
-        },
-        {
-            "id": "PHASE_22_DATASET",
-            "status": "PHASE_22_DATA_READY",
-            "provider": "ROBOFOREX_MT5",
-            "normalized_root_sha256": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
-            "reference": "docs/PHASE_22_MT5_DATASET_COMPLETION.md"
-        },
-        {
-            "id": "PHASE_22A_COMPLETION",
-            "status": "PHASE_22A_ROBUST_PHENOMENON_FOUND",
-            "run_id": "phase22a_20260909T220000Z",
-            "commit": "4ae2e3329e23574d66d89278931aeaa6756c7149",
-            "specification_sha256": "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
-            "dataset_root_sha256": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
-            "final_report_sha256": "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a",
-            "discovery_survivors": 55,
-            "confirmation_survivors": 36,
-            "holdout_survivors": 26,
-            "concentration_qualified": 22,
-            "leading_phenomenon": "P22A_SPR_ABS_15s_60s",
-            "accessed_through_year": 2023,
-            "accessed_2024_plus": false,
-            "reference": "reports/phase22a/phase22a_20260909T220000Z/final_report.json"
-        },
-        {
-            "reference": "docs/PROJECT_MISSION_AND_ROADMAP.md",
-            "status": "ACTIVE",
-            "id": "MASTER_PROJECT_MISSION"
-        },
-        {
-            "specification_sha256": "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
-            "status": "APPROVED",
-            "id": "PHASE_22B_V6_REVIEW",
-            "reference": "governance/results/PH22B-REVIEW-009.json"
-        },
-        {
-            "id": "PHASE_22B_DEVELOPMENT_ACCESS",
-            "approval_sha256": "2649058a3326c37cdb6c4d0dc0946f70fadc3ae7b1d6c35a0022fcade950f41b",
-            "forbidden": "2024+",
-            "years": [
-                2019,
-                2020,
-                2021
-            ],
-            "locked": [
-                2022,
-                2023
-            ],
-            "status": "AUTHORIZED",
-            "symbols": [
-                "EURUSD",
-                "GBPUSD",
-                "USDJPY",
-                "USDCAD"
-            ],
-            "reference": "governance/approvals/PH22B-DEV-2019-2021-AUTH-001.json"
-        },
-        {
-            "id": "PHASE_22B_IMPLEMENTATION_ATTEMPT_001",
-            "status": "PHASE_22B_INVALID_RESEARCH_RUN",
-            "task_id": "PH22B-RI-001",
-            "incident_sha256": "e6c56489cdfdc90e97675ce9c0a34944e93b32554323f267e37b2d88bf4dff8c",
-            "market_content_opened": false,
-            "locked_metadata_exposed": "at least 2022 filenames",
-            "next_gate": "HUMAN_GATE_REQUIRED",
-            "reference": "governance/incidents/PH22B-RI-001-LOCKED-DATA-ENUMERATION.json"
-        },
-        {
-            "id": "PHASE_22B_IMPLEMENTATION_ATTEMPT_002",
-            "status": "AUTHORIZED_FRESH_ISOLATED_TASK",
-            "task_id": "PH22B-RI-002",
-            "human_approval_sha256": "d945e57498d6a79f3a550ed2ce61868f2f69aa0653854ca41602ed0ee1a2cc6c",
-            "data_authority": "unchanged 2019-2021 four pairs",
-            "locked": [
-                2022,
-                2023
-            ],
-            "forbidden": "2024+",
-            "reference": "governance/tasks/PH22B-RI-002.json"
-        },
-        {
-            "id": "PHASE_22B_V7_DETERMINISM_AUTHORIZATION",
-            "status": "AUTHORIZED",
-            "approval_sha256": "f32b61d98c287b475a3398933af85f890af3652e2247d76ce33d3e603a53b452",
-            "scope": "implementation-semantic clarification only",
-            "standing_autonomy": true,
-            "locked": [
-                2022,
-                2023
-            ],
-            "forbidden": "2024+",
-            "reference": "governance/approvals/PH22B-V7-DETERMINISM-AUTH-001.json"
-        },
-        {
-            "id": "PHASE_22B_V7_FREEZE",
-            "status": "APPROVED",
-            "specification_sha256": "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
-            "commit": "9a0287f76422fc2954f0441b3e59394a4007557b",
-            "statistical_review_sha256": "0abab008d273952004f99a0f150852166f272fa7ac1620754410230f830f7c27",
-            "qa_review_sha256": "38f2e1d8cfc299a6506f2dfb2ee9a61b16987889429cbe01b5a9ebcbc66ff15c",
-            "v6_preserved": true,
-            "protected_authority_unchanged": true,
-            "next_task": "PH22B-RI-002",
-            "reference": "governance/results/PH22B-RL-010.json"
-        },
-        {
-            "id": "PHASE_22B_V12_FREEZE_BINDING",
-            "status": "APPROVED_FOR_IMPLEMENTATION_REVIEW",
-            "specification_path": "research/phase22b_spec_v12.json",
-            "specification_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-            "statistical_review_sha256": "e50224aff5acefefa4752d5023970c464536b8e620023b483eabc2b0e73d005f",
-            "qa_review_sha256": "a828b735e564fa0afbefec67e208fefe5858db08e5c22c1cb0259c6d1386a0a1",
-            "active_task": "PH22B-RI-002",
-            "allowed_years": [
-                2019,
-                2020,
-                2021
-            ],
-            "locked_years": [
-                2022,
-                2023
-            ],
-            "forbidden": "2024+",
-            "strategy_authorized": false,
-            "pnl_authorized": false,
-            "execution_authorized": false,
-            "live_authorized": false,
-            "phase_advanced": false,
-            "data_authority_changed": false,
-            "reference": "governance/tasks/PH22B-RI-002.json"
-        },
-        {
-            "id": "PHASE_22B_V12_IMPLEMENTATION_READINESS",
-            "status": "AUTHORIZED_2019_2021_DEVELOPMENT_EXECUTION",
-            "reviewed_implementation_commit": "e548dd244812a689b49666e98e56e2b27facddd7",
-            "specification_path": "research/phase22b_spec_v12.json",
-            "specification_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-            "statistical_review_sha256": "014098ccd3b158e6e3047914c8e8828cfba9eaafaaba380792e088d4ae37004b",
-            "statistical_result_sha256": "8b9e9ab1e69011d5c87558a08779ef34adf7624a84bb9cddf6b208862ba4b416",
-            "qa_review_sha256": "441bfda1e0889baf5990176b3421240496cfd7ed926230893cfbee0f385fcd6e",
-            "qa_result_sha256": "01d79f0dd43b8461ae04243d34c4112e2305dd9d2889b0c616324989c0a8822a",
-            "active_task": "PH22B-RI-002",
-            "allowed_years": [
-                2019,
-                2020,
-                2021
-            ],
-            "locked_years": [
-                2022,
-                2023
-            ],
-            "forbidden": "2024+",
-            "confirmation_unlocked": false,
-            "phase_advanced": false,
-            "strategy_authorized": false,
-            "pnl_authorized": false,
-            "execution_authorized": false,
-            "live_authorized": false,
-            "reference": "governance/results/PH22B-REVIEW-019.json"
-        },
-        {
-            "id": "PHASE_22B_FAILED_RUN_20260912T124222Z",
-            "status": "FAIL_CLOSED_NO_ARTIFACTS",
-            "run_id": "phase22b_20260912T124222Z",
-            "research_evidence_accepted": false,
-            "development_artifact_published": false,
-            "result_manifest_published": false,
-            "failure_disposition": "IMPLEMENTATION_CORRECTED_AND_INDEPENDENTLY_REVIEWED",
-            "superseded_implementation_commit": "54b2d1cabc58fe417d6ebcf288a3ff2082f8aa90",
-            "corrected_implementation_commit": "613aed3fd69594e062c4ecfee7e52826d6f3a0a4",
-            "protected_boundaries_changed": false,
-            "reference": "governance/reviews/PH22B-V12-POST-FAILURE-STAT-REVIEW-002.json"
-        },
-        {
-            "id": "PHASE_22B_V12_IMPLEMENTATION_READINESS_613AED3",
-            "status": "AUTHORIZED_2019_2021_DEVELOPMENT_EXECUTION",
-            "reviewed_implementation_commit": "613aed3fd69594e062c4ecfee7e52826d6f3a0a4",
-            "specification_path": "research/phase22b_spec_v12.json",
-            "specification_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-            "statistical_review_sha256": "df47de4ea92e4ecfb87ee19b6397c23ca11625745a798f83d57156eabf445604",
-            "statistical_result_sha256": "1ee26947adb46c29508c1e268d42f9eaf6ffe127950c71b36782f5a883326e85",
-            "qa_review_sha256": "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262",
-            "qa_result_sha256": "0e8c4b0f6d57179d5dd80588d12ef32e87e147456b6994626cecec64e1679a85",
-            "active_task": "PH22B-RI-002",
-            "allowed_years": [
-                2019,
-                2020,
-                2021
-            ],
-            "locked_years": [
-                2022,
-                2023
-            ],
-            "forbidden": "2024+",
-            "confirmation_unlocked": false,
-            "phase_advanced": false,
-            "strategy_authorized": false,
-            "pnl_authorized": false,
-            "execution_authorized": false,
-            "live_authorized": false,
-            "reference": "governance/results/PH22B-REVIEW-023.json"
-        },
-        {
-            "id": "PHASE_22B_RUNTIME_TERMINATION_001",
-            "status": "INVALID_FAILED_NON_SCIENTIFIC",
-            "run_id": "phase22b_20260912T130732Z",
-            "reason": "UNKNOWN_UNRECOVERABLE_RUNTIME_TERMINATION",
-            "artifact_published": false,
-            "result_manifest_published": false,
-            "scientific_evidence_accepted": false,
-            "run_id_reusable": false,
-            "authorized_windows": [
-                2019,
-                2020,
-                2021
-            ],
-            "locked_windows": [
-                2022,
-                2023
-            ],
-            "forbidden": "2024+",
-            "phase_advanced": false,
-            "strategy_authorized": false,
-            "pnl_authorized": false,
-            "execution_authorized": false,
-            "live_authorized": false,
-            "recovery_task": "PH22B-RUNTIME-001",
-            "reference": "governance/incidents/PH22B-RUNTIME-TERMINATION-001.json"
-        },
-        {
-            "id": "PHASE_22B_RUNTIME_REMEDIATION_ACCEPTANCE",
-            "status": "RUNTIME_REMEDIATION_ACCEPTED_READY_FOR_DURABLE_RUN_LAUNCH",
-            "implementation_commit": "c5351f81c2a0e8df6591559c5274b85b5b85aa08",
-            "qa_review_commit": "303694b9d5f0a8b065e51250887565ddadc1e463",
-            "qa_result_commit": "0cfaadddf71188114c174c5f99b0aea29267ed8e",
-            "qa_verdict": "QA_APPROVED",
-            "specification_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-            "allowed_years": [
-                2019,
-                2020,
-                2021
-            ],
-            "locked_years": [
-                2022,
-                2023
-            ],
-            "forbidden": "2024+",
-            "strategy_authorized": false,
-            "pnl_authorized": false,
-            "execution_authorized": false,
-            "live_authorized": false,
-            "failed_predecessor_run": "phase22b_20260912T130732Z",
-            "failed_predecessor_disposition": "PERMANENTLY_QUARANTINED_NEVER_REUSABLE",
-            "next_authorized_action": "CREATE_AND_LAUNCH_NEW_DURABLE_PHASE22B_V12_RUN",
-            "reference": "governance/evidence/PH22B-RUNTIME-001-ORCHESTRATOR-ACCEPTANCE.json"
-        },
-        {
-            "id": "PHASE_22B_DURABLE_LAUNCH_FAILURE_002",
-            "status": "INVALID_FAILED_NON_SCIENTIFIC",
-            "run_id": "phase22b_20260913T163443Z",
-            "specification_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-            "code_commit": "c3c94981535663b1ca58fb9380f72d5863e9a8e7",
-            "exit_code": 2,
-            "reason": "SUPERVISOR_IDENTITY_WINDOW_TYPE_MISMATCH",
-            "market_data_accessed": false,
-            "scientific_evidence_accepted": false,
-            "run_id_reusable": false,
-            "allowed_years": [
-                2019,
-                2020,
-                2021
-            ],
-            "locked_years": [
-                2022,
-                2023
-            ],
-            "forbidden": "2024+",
-            "strategy_authorized": false,
-            "pnl_authorized": false,
-            "execution_authorized": false,
-            "live_authorized": false,
-            "resolution_class": "AGENT_RESOLVABLE",
-            "next_authorized_action": "REMEDIATE_PHASE22B_SUPERVISOR_IDENTITY_TYPE_MISMATCH",
-            "reference": "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-002.json"
-        },
-        {
-            "id": "PHASE_22B_SUPERVISOR_IDENTITY_REMEDIATION_002",
-            "status": "SUPERVISOR_IDENTITY_TYPE_MISMATCH_REMEDIATED_PENDING_INDEPENDENT_QA",
-            "implementation_commit": "c26441075ac1984a4364f7d9d55d2ba4c3f29d9a",
-            "specification_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-            "canonical_serialized_years": [
-                "2019",
-                "2020",
-                "2021"
-            ],
-            "canonical_internal_years": [
-                2019,
-                2020,
-                2021
-            ],
-            "failed_predecessor_run": "phase22b_20260913T163443Z",
-            "failed_predecessor_disposition": "INVALID_FAILED_NON_SCIENTIFIC_PERMANENTLY_QUARANTINED",
-            "market_data_accessed": false,
-            "scientific_methodology_changed": false,
-            "locked_years": [
-                2022,
-                2023
-            ],
-            "forbidden": "2024+",
-            "strategy_authorized": false,
-            "pnl_authorized": false,
-            "execution_authorized": false,
-            "live_authorized": false,
-            "next_authorized_action": "INDEPENDENT_QA_REVIEW_OF_SUPERVISOR_IDENTITY_REMEDIATION",
-            "reference": "governance/results/PH22B-RUNTIME-002.json"
-        },
-        {
-            "id": "AUTONOMOUS_ORCHESTRATION_POLICY_20260913",
-            "status": "ACTIVE",
-            "approval_sha256": "991010025aa092a14af92e9778c9c2ecd3950bc8bf64690aa2b293eadc83de64",
-            "agent_resolvable_chaining": true,
-            "human_gate_scope": "authority/scientific scope/reviewer override/safety weakening only",
-            "reference": "governance/approvals/AUTONOMOUS-ORCHESTRATION-POLICY-20260913.json"
-        },
-        {
-            "id": "PHASE_22B_IDENTITY_REMEDIATION_ACCEPTANCE",
-            "status": "ACCEPTED_READY_FOR_FRESH_DURABLE_RUN",
-            "implementation_commit": "c26441075ac1984a4364f7d9d55d2ba4c3f29d9a",
-            "qa_verdict": "APPROVED",
-            "qa_review_sha256": "8693daa1b91898cf2b42aa218d52137cbcf7caee40bafa6f09dca07c633c1bb3",
-            "specification_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-            "allowed_years": [
-                2019,
-                2020,
-                2021
-            ],
-            "locked_years": [
-                2022,
-                2023
-            ],
-            "forbidden": "2024+",
-            "failed_predecessor": "phase22b_20260913T163443Z",
-            "failed_predecessor_disposition": "INVALID_FAILED_NON_SCIENTIFIC_PERMANENTLY_QUARANTINED",
-            "next_authorized_action": "CREATE_AND_LAUNCH_NEW_DURABLE_PHASE22B_V12_RUN",
-            "reference": "governance/evidence/PH22B-RUNTIME-002-ORCHESTRATOR-ACCEPTANCE.json"
-        },
-        {
-            "id": "PHASE_22B_DURABLE_RUN_LAUNCH_002",
-            "status": "RUNNING_DETACHED",
-            "run_id": "phase22b_20260913T172656Z",
-            "specification_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-            "code_commit": "f987bf358caa6a821424019061ea053766100816",
-            "supervisor_pid": 25832,
-            "worker_pid": 33084,
-            "authorized_years": [
-                2019,
-                2020,
-                2021
-            ],
-            "locked_years": [
-                2022,
-                2023
-            ],
-            "forbidden": "2024+",
-            "authorized_symbols": [
-                "EURUSD",
-                "GBPUSD",
-                "USDJPY",
-                "USDCAD"
-            ],
-            "durable_state_path": "reports/_durable_runtime/phase22b_20260913T172656Z/state.json",
-            "heartbeat_path": "reports/_durable_runtime/phase22b_20260913T172656Z/state.json#heartbeat_at",
-            "stdout_path": "reports/_durable_runtime/phase22b_20260913T172656Z/stdout.log",
-            "stderr_path": "reports/_durable_runtime/phase22b_20260913T172656Z/stderr.log",
-            "failed_predecessor": "phase22b_20260913T163443Z",
-            "strategy_authorized": false,
-            "pnl_authorized": false,
-            "execution_authorized": false,
-            "live_authorized": false,
-            "next_authorized_action": "INSPECT_DURABLE_PHASE22B_RUN_TERMINAL_STATE_IN_FUTURE_SESSION",
-            "reference": "governance/state/phase22b_active_run.json"
-        },
-        {
-            "id": "PHASE_22B_DURABLE_LAUNCH_FAILURE_003",
-            "status": "INVALID_FAILED_NON_SCIENTIFIC",
-            "run_id": "phase22b_20260913T172727Z",
-            "reason": "SUPERVISOR_RELATIVE_STAGING_PATH_RESOLUTION_FAILURE",
-            "code_commit": "c650081b3d7ced6739d63ccfed3967ea51b3ef28",
-            "market_data_accessed": false,
-            "scientific_evidence_accepted": false,
-            "run_id_reusable": false,
-            "allowed_years": [
-                2019,
-                2020,
-                2021
-            ],
-            "locked_years": [
-                2022,
-                2023
-            ],
-            "forbidden": "2024+",
-            "resolution_class": "AGENT_RESOLVABLE",
-            "next_authorized_action": "PH22B-RUNTIME-003",
-            "reference": "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-003.json"
-        },
-        {
-            "id": "PHASE_22B_DURABLE_RUNTIME_TERMINATION_004",
-            "status": "INVALID_FAILED_NON_SCIENTIFIC",
-            "run_id": "phase22b_20260913T172656Z",
-            "reason": "UNKNOWN_UNRECOVERABLE_RUNTIME_TERMINATION",
-            "last_heartbeat_at": "2026-09-13T17:28:44.122742+00:00",
-            "supervisor_pid": 25832,
-            "worker_pid": 33084,
-            "processes_present_at_reconciliation": false,
-            "scientific_evidence_accepted": false,
-            "run_id_reusable": false,
-            "authorized_data_access_extent": "UNKNOWN_WITHIN_AUTHORIZED_2019_2021",
-            "locked_or_forbidden_access_observed": false,
-            "reference": "governance/incidents/PH22B-DURABLE-RUNTIME-TERMINATION-004.json"
-        },
-        {
-            "id": "PHASE_22B_DUAL_RUNTIME_FAILURE_RECONCILIATION",
-            "status": "BLOCKED_AGENT_RESOLVABLE",
-            "invalid_runs": [
-                "phase22b_20260913T172656Z",
-                "phase22b_20260913T172727Z"
-            ],
-            "both_non_scientific": true,
-            "both_non_reusable": true,
-            "incident_172656": "governance/incidents/PH22B-DURABLE-RUNTIME-TERMINATION-004.json",
-            "incident_172727": "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-003.json",
-            "active_phase22b_processes": 0,
-            "next_authorized_action": "DIAGNOSE_AND_REMEDIATE_PHASE22B_DURABLE_SUPERVISOR_PROCESS_SURVIVAL_AND_OUTPUT_ROOT_BINDING",
-            "reference": "governance/tasks/PH22B-RUNTIME-004.json"
-        },
-        {
-            "id": "PHASE_22B_DURABLE_RUNTIME_REMEDIATION_004",
-            "status": "IMPLEMENTED_PENDING_INDEPENDENT_QA",
-            "implementation_commit": "2171ac2c6d5b7e8f8824faf7d64562164164bf60",
-            "root_causes": [
-                "relative run/output identity depended on cwd",
-                "Windows supervisor lacked Job Object breakaway",
-                "supervisor and worker headless behavior was not explicit"
-            ],
-            "remediation": [
-                "one canonical absolute run root across identity/launch/supervisor/worker",
-                "CREATE_NO_WINDOW plus CREATE_NEW_PROCESS_GROUP plus CREATE_BREAKAWAY_FROM_JOB",
-                "shell=False, stdin DEVNULL, durable stdout/stderr",
-                "terminal native exit and stale-state reconciliation tests"
-            ],
-            "failed_runs": [
-                "phase22b_20260913T172656Z",
-                "phase22b_20260913T172727Z"
-            ],
-            "both_non_scientific": true,
-            "both_non_reusable": true,
-            "market_data_accessed": false,
-            "scientific_methodology_changed": false,
-            "next_authorized_action": "INDEPENDENT_QA_REVIEW_OF_PHASE22B_DURABLE_RUNTIME_REMEDIATION",
-            "reference": "governance/results/PH22B-RUNTIME-004.json"
-        },
-        {
-            "id": "BOT_00_OWNER_PRIORITY_TRANSITION",
-            "status": "COMPLETED",
-            "owner_directive_sha256": "573750d82c6f28a6226a09dfb498b3f743b4b151d9cea7301881a78c4e3895f5",
-            "master_mission": "BUILD_COMPLETE_SAFE_AUTONOMOUS_MULTI_STRATEGY_MT5_AI_SCALPING_BOT_FOR_DEMO",
-            "phase_22": "PRESERVED_INACTIVE_RESEARCH",
-            "phase_22a": "COMPLETED_PRESERVED_RESEARCH",
-            "phase_22b": "SUSPENDED_PRESERVED_RESEARCH",
-            "frozen_phase22b_v12_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-            "dataset_root_sha256": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
-            "safety_and_data_locks_preserved": true,
-            "active_task": "BOT-01",
-            "next_authorized_action": "BOT-01_REPOSITORY_COMPONENT_AUDIT",
-            "reference": "docs/PRESERVED_RESEARCH_INDEX.md"
-        },
-        {
-            "id": "BOT_01_REPOSITORY_COMPONENT_AUDIT",
-            "status": "COMPLETED",
-            "audit_commit": "30f2670a2b977ba4f0fbb3aa3b2344f8d6374566",
-            "audit_sha256": "fc5bea3f7eb70c72c74378621589915e90efe22142831e110a1b13d9f60b97c9",
-            "tests_passed": 57,
-            "data_accessed": false,
-            "phase22_reopened": false,
-            "strategy_changed": false,
-            "live_authorized": false,
-            "next_authorized_action": "BOT-02_COMPLETE_EXISTING_STRATEGY_INVENTORY",
-            "reference": "docs/PROJECT_COMPONENT_AUDIT.md"
-        },
-        {
-            "id": "BOT_02_EXISTING_STRATEGY_INVENTORY",
-            "status": "COMPLETED",
-            "inventory_commit": "a9030a7e1d5b525b196affa55cdb77e347105fb8",
-            "inventory_sha256": "ff3d60a4d2cde67613ad51bae4a74854f07ed2abc8cb70f23708ee09d1ae120e",
-            "registered_strategy_count": 14,
-            "all_registered_research_status": "REJECTED",
-            "implemented_unregistered_count": 6,
-            "tests_passed": 40,
-            "data_accessed": false,
-            "strategy_changed": false,
-            "phase22_reopened": false,
-            "next_authorized_action": "BOT-03_VERIFY_INTEGRATE_XAU60_STRATEGIES",
-            "reference": "docs/EXISTING_STRATEGY_INVENTORY.md"
-        },
-        {
-            "id": "BOT_03_XAU60_SOURCE_VERIFICATION",
-            "status": "BLOCKED_SOURCE_NOT_AVAILABLE",
-            "evidence_commit": "f36b9269371575310e9eb112c70a12b11c4651f4",
-            "verification_sha256": "35abb9e626ad52dc51ae0f7fd84c5a036c05beeb873bc82db4308fc85a589132",
-            "inventory_sha256": "d878e4b7d7aa43ead6b70b6f9f74fdd7f1e1316bfe6986ef97327ea697bfa462",
-            "source_status": "NOT_FOUND_IN_TRACKED_BASELINE_OR_PRESERVED_STASH_INVENTORY",
-            "network_accessed": false,
-            "stash_restored": false,
-            "strategy_integrated": false,
-            "phase22_reopened": false,
-            "human_gate_required": true,
-            "next_authorized_action": "HUMAN_GATE_REQUIRED_PROVIDE_OR_AUTHORIZE_XAU60_SOURCE_SNAPSHOT",
-            "reference": "docs/XAU60_STRATEGY_VERIFICATION.md"
-        },
-        {
-            "id": "BOT_03_XAU60_SOURCE_ACQUISITION_INTEGRITY",
-            "status": "BLOCKED_AGENT_RESOLVABLE",
-            "acquisition_commit": "a93121b168227f9e0b89cc1ae930cee2d267f5d3",
-            "pinned_commit": "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
-            "declared_snapshot_sha256": "9da0c41f95f99da967c3bc543b370b0513c95529ee97eb70731768291223f7f0",
-            "mismatched_git_blobs": 13,
-            "source_human_gate_resolved": true,
-            "adapter_assignment_withheld": true,
-            "next_authorized_action": "REMEDIATE_PINNED_XAU60_SNAPSHOT_BYTE_HASH_MISMATCH",
-            "reference": "governance/incidents/BOT-03-XAU60-SNAPSHOT-INTEGRITY-001.json"
-        },
-        {
-            "id": "BOT_03_XAU60_SOURCE_INTEGRITY_REMEDIATED_PENDING_QA",
-            "status": "PENDING_INDEPENDENT_QA",
-            "implementation_commit": "5dd41cf6bf690ff4b641121b2568e8ab9fadae76",
-            "handoff_commit": "1339334",
-            "integrated_head": "9d6a286",
-            "pinned_commit": "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
-            "selected_snapshot_git_blob_root": "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
-            "license_git_blob_sha256": "3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805",
-            "file_count": 13,
-            "payload_changed": false,
-            "human_gate_required": false,
-            "adapter_assignment_withheld": true,
-            "qa_task": "BOT-03-SOURCE-QA-001",
-            "next_authorized_action": "INDEPENDENT_XAU60_SOURCE_INTEGRITY_QA",
-            "reference": "governance/results/BOT-03-SOURCE-002.json"
-        },
-        {
-            "id": "BOT_03_XAU60_SOURCE_EVIDENCE_REMEDIATED_PENDING_FRESH_QA",
-            "status": "PENDING_INDEPENDENT_QA",
-            "qa_rejection_commit": "f07effd875011ea8d9dcad498d21038eb40a3acf",
-            "remediation_head": "ba3662b618e2dfe3b8c1bbe37805e182b383a26d",
-            "source_result_git_blob_sha256": "256d5d65ece73050c4a74e9cba79a48c23af72ffd3278715e301db715cb315d8",
-            "source_manifest_git_blob_sha256": "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c",
-            "selected_snapshot_git_blob_root": "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
-            "license_git_blob_sha256": "3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805",
-            "file_count": 13,
-            "payload_changed": false,
-            "human_gate_required": false,
-            "adapter_assignment_withheld": true,
-            "qa_task": "BOT-03-SOURCE-QA-002",
-            "next_authorized_action": "INDEPENDENT_XAU60_SOURCE_INTEGRITY_QA_REVIEW",
-            "reference": "governance/tasks/BOT-03-SOURCE-QA-002.json"
-        },
-        {
-            "id": "BOT_03_XAU60_ADAPTER_IMPLEMENTATION_AUTHORIZED",
-            "status": "AUTHORIZED_NOT_STARTED",
-            "authorization_sha256": "7c89e60de272f220f0c339458c34a7dbe77599e5ca62f3ae6352a2d497c41719",
-            "qa_approval_commit": "3d78316237d52734dede4448eaf1cbcceeb5b943",
-            "qa_verdict": "APPROVED",
-            "pinned_commit": "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
-            "selected_snapshot_git_blob_root": "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
-            "strategies": [
-                "SMC Scalper v2.1",
-                "Trend Break + Trauma + RSI v2.1",
-                "CRT + TBS v2.1"
-            ],
-            "adapter_task": "BOT-03-ADAPTER-001",
-            "adapter_implementation_started": false,
-            "market_data_authorized": false,
-            "optimization_authorized": false,
-            "execution_authorized": false,
-            "live_authorized": false,
-            "human_gate_required": false,
-            "next_authorized_action": "IMPLEMENT_BOT03_XAU60_ADAPTERS_FROM_PINNED_SOURCE",
-            "reference": "governance/tasks/BOT-03-ADAPTER-001.json"
-        },
-        {
-            "id": "BOT_03_04_INTEGRATION_AND_EXTERNAL_SOURCE_AUDIT",
-            "status": "COMPLETED",
-            "bot03_integration_commit": "a3b2f980d38e54eca5d1d428e24dc3813c88ec75",
-            "xau60_pinned_commit": "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
-            "midas_repository": "andyluu98/midas-agent",
-            "midas_pinned_commit": "289ac184bee091ce7e80fbb89aeaaf856b21f2cd",
-            "midas_classification": "AI_ORCHESTRATION_AND_COMPOSITE_SIGNAL_FRAMEWORK",
-            "tournament_decision": "XAU60_STRATEGIES_INCLUDED_MIDAS_NOT_A_FIXED_PARAMETER_BASELINE",
-            "phase22b_reopened": false,
-            "live_authorized": false,
-            "next_authorized_action": "BOT-05_XAUUSD_INSTRUMENT_NORMALIZATION",
-            "reference": "reports/bot_external_source_inventory.json"
-        }
-    ],
-    "holdout_access_history": [
-        {
-            "phase": "PHASE_22A",
-            "partition": "2023_INTERNAL_HOLDOUT",
-            "opened_after": "2022_SURVIVORS_FROZEN",
-            "survivor_artifact_sha256": "94036c2e5491b7217e0d42d6b5c18ea5d76ee4024efc7cc6a10c101f6f6d3025",
-            "accessed_2024_plus": false
-        }
-    ],
-    "rejected_hypothesis_families": [
-        {
-            "family": "PHASE_21",
-            "status": "CLOSED_FOR_THIS_HYPOTHESIS",
-            "reference": "docs/PHASE_21_FAILURE_POSTMORTEM.md"
-        }
-    ]
+    "schema_version":  1,
+    "current_phase":  "MT5_AI_SCALPING_BOT",
+    "live_execution_authorized":  false,
+    "decisions":  [
+                      {
+                          "id":  "PHASE_21_CLOSED",
+                          "status":  "CLOSED_FOR_THIS_HYPOTHESIS",
+                          "reference":  "docs/PHASE_21_FAILURE_POSTMORTEM.md"
+                      },
+                      {
+                          "id":  "JFOREX_PATH",
+                          "status":  "ABANDONED_FOR_OPERATIONAL_COMPLEXITY",
+                          "reference":  "docs/PHASE_22_DATA_SOURCE_DECISION.md"
+                      },
+                      {
+                          "id":  "PHASE_22_DATASET",
+                          "status":  "PHASE_22_DATA_READY",
+                          "provider":  "ROBOFOREX_MT5",
+                          "normalized_root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+                          "reference":  "docs/PHASE_22_MT5_DATASET_COMPLETION.md"
+                      },
+                      {
+                          "id":  "PHASE_22A_COMPLETION",
+                          "status":  "PHASE_22A_ROBUST_PHENOMENON_FOUND",
+                          "run_id":  "phase22a_20260909T220000Z",
+                          "commit":  "4ae2e3329e23574d66d89278931aeaa6756c7149",
+                          "specification_sha256":  "11581b33dcd0616d25ad39cc2de37db6e4bbba62e49ea1d283b1a3449d988323",
+                          "dataset_root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+                          "final_report_sha256":  "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a",
+                          "discovery_survivors":  55,
+                          "confirmation_survivors":  36,
+                          "holdout_survivors":  26,
+                          "concentration_qualified":  22,
+                          "leading_phenomenon":  "P22A_SPR_ABS_15s_60s",
+                          "accessed_through_year":  2023,
+                          "accessed_2024_plus":  false,
+                          "reference":  "reports/phase22a/phase22a_20260909T220000Z/final_report.json"
+                      },
+                      {
+                          "reference":  "docs/PROJECT_MISSION_AND_ROADMAP.md",
+                          "status":  "ACTIVE",
+                          "id":  "MASTER_PROJECT_MISSION"
+                      },
+                      {
+                          "specification_sha256":  "343b6918acb62a68065eb16ecfc7fd05704fe8a77695d8417f7f81062475d56d",
+                          "status":  "APPROVED",
+                          "id":  "PHASE_22B_V6_REVIEW",
+                          "reference":  "governance/results/PH22B-REVIEW-009.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DEVELOPMENT_ACCESS",
+                          "approval_sha256":  "2649058a3326c37cdb6c4d0dc0946f70fadc3ae7b1d6c35a0022fcade950f41b",
+                          "forbidden":  "2024+",
+                          "years":  [
+                                        2019,
+                                        2020,
+                                        2021
+                                    ],
+                          "locked":  [
+                                         2022,
+                                         2023
+                                     ],
+                          "status":  "AUTHORIZED",
+                          "symbols":  [
+                                          "EURUSD",
+                                          "GBPUSD",
+                                          "USDJPY",
+                                          "USDCAD"
+                                      ],
+                          "reference":  "governance/approvals/PH22B-DEV-2019-2021-AUTH-001.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_IMPLEMENTATION_ATTEMPT_001",
+                          "status":  "PHASE_22B_INVALID_RESEARCH_RUN",
+                          "task_id":  "PH22B-RI-001",
+                          "incident_sha256":  "e6c56489cdfdc90e97675ce9c0a34944e93b32554323f267e37b2d88bf4dff8c",
+                          "market_content_opened":  false,
+                          "locked_metadata_exposed":  "at least 2022 filenames",
+                          "next_gate":  "HUMAN_GATE_REQUIRED",
+                          "reference":  "governance/incidents/PH22B-RI-001-LOCKED-DATA-ENUMERATION.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_IMPLEMENTATION_ATTEMPT_002",
+                          "status":  "AUTHORIZED_FRESH_ISOLATED_TASK",
+                          "task_id":  "PH22B-RI-002",
+                          "human_approval_sha256":  "d945e57498d6a79f3a550ed2ce61868f2f69aa0653854ca41602ed0ee1a2cc6c",
+                          "data_authority":  "unchanged 2019-2021 four pairs",
+                          "locked":  [
+                                         2022,
+                                         2023
+                                     ],
+                          "forbidden":  "2024+",
+                          "reference":  "governance/tasks/PH22B-RI-002.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_V7_DETERMINISM_AUTHORIZATION",
+                          "status":  "AUTHORIZED",
+                          "approval_sha256":  "f32b61d98c287b475a3398933af85f890af3652e2247d76ce33d3e603a53b452",
+                          "scope":  "implementation-semantic clarification only",
+                          "standing_autonomy":  true,
+                          "locked":  [
+                                         2022,
+                                         2023
+                                     ],
+                          "forbidden":  "2024+",
+                          "reference":  "governance/approvals/PH22B-V7-DETERMINISM-AUTH-001.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_V7_FREEZE",
+                          "status":  "APPROVED",
+                          "specification_sha256":  "fc70cd7a195b5fd9fd72256e1721eb46f6dc90567df4012c8af90d35f0e4499d",
+                          "commit":  "9a0287f76422fc2954f0441b3e59394a4007557b",
+                          "statistical_review_sha256":  "0abab008d273952004f99a0f150852166f272fa7ac1620754410230f830f7c27",
+                          "qa_review_sha256":  "38f2e1d8cfc299a6506f2dfb2ee9a61b16987889429cbe01b5a9ebcbc66ff15c",
+                          "v6_preserved":  true,
+                          "protected_authority_unchanged":  true,
+                          "next_task":  "PH22B-RI-002",
+                          "reference":  "governance/results/PH22B-RL-010.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_V12_FREEZE_BINDING",
+                          "status":  "APPROVED_FOR_IMPLEMENTATION_REVIEW",
+                          "specification_path":  "research/phase22b_spec_v12.json",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "statistical_review_sha256":  "e50224aff5acefefa4752d5023970c464536b8e620023b483eabc2b0e73d005f",
+                          "qa_review_sha256":  "a828b735e564fa0afbefec67e208fefe5858db08e5c22c1cb0259c6d1386a0a1",
+                          "active_task":  "PH22B-RI-002",
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "phase_advanced":  false,
+                          "data_authority_changed":  false,
+                          "reference":  "governance/tasks/PH22B-RI-002.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_V12_IMPLEMENTATION_READINESS",
+                          "status":  "AUTHORIZED_2019_2021_DEVELOPMENT_EXECUTION",
+                          "reviewed_implementation_commit":  "e548dd244812a689b49666e98e56e2b27facddd7",
+                          "specification_path":  "research/phase22b_spec_v12.json",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "statistical_review_sha256":  "014098ccd3b158e6e3047914c8e8828cfba9eaafaaba380792e088d4ae37004b",
+                          "statistical_result_sha256":  "8b9e9ab1e69011d5c87558a08779ef34adf7624a84bb9cddf6b208862ba4b416",
+                          "qa_review_sha256":  "441bfda1e0889baf5990176b3421240496cfd7ed926230893cfbee0f385fcd6e",
+                          "qa_result_sha256":  "01d79f0dd43b8461ae04243d34c4112e2305dd9d2889b0c616324989c0a8822a",
+                          "active_task":  "PH22B-RI-002",
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "confirmation_unlocked":  false,
+                          "phase_advanced":  false,
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "reference":  "governance/results/PH22B-REVIEW-019.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_FAILED_RUN_20260912T124222Z",
+                          "status":  "FAIL_CLOSED_NO_ARTIFACTS",
+                          "run_id":  "phase22b_20260912T124222Z",
+                          "research_evidence_accepted":  false,
+                          "development_artifact_published":  false,
+                          "result_manifest_published":  false,
+                          "failure_disposition":  "IMPLEMENTATION_CORRECTED_AND_INDEPENDENTLY_REVIEWED",
+                          "superseded_implementation_commit":  "54b2d1cabc58fe417d6ebcf288a3ff2082f8aa90",
+                          "corrected_implementation_commit":  "613aed3fd69594e062c4ecfee7e52826d6f3a0a4",
+                          "protected_boundaries_changed":  false,
+                          "reference":  "governance/reviews/PH22B-V12-POST-FAILURE-STAT-REVIEW-002.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_V12_IMPLEMENTATION_READINESS_613AED3",
+                          "status":  "AUTHORIZED_2019_2021_DEVELOPMENT_EXECUTION",
+                          "reviewed_implementation_commit":  "613aed3fd69594e062c4ecfee7e52826d6f3a0a4",
+                          "specification_path":  "research/phase22b_spec_v12.json",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "statistical_review_sha256":  "df47de4ea92e4ecfb87ee19b6397c23ca11625745a798f83d57156eabf445604",
+                          "statistical_result_sha256":  "1ee26947adb46c29508c1e268d42f9eaf6ffe127950c71b36782f5a883326e85",
+                          "qa_review_sha256":  "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262",
+                          "qa_result_sha256":  "0e8c4b0f6d57179d5dd80588d12ef32e87e147456b6994626cecec64e1679a85",
+                          "active_task":  "PH22B-RI-002",
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "confirmation_unlocked":  false,
+                          "phase_advanced":  false,
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "reference":  "governance/results/PH22B-REVIEW-023.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_RUNTIME_TERMINATION_001",
+                          "status":  "INVALID_FAILED_NON_SCIENTIFIC",
+                          "run_id":  "phase22b_20260912T130732Z",
+                          "reason":  "UNKNOWN_UNRECOVERABLE_RUNTIME_TERMINATION",
+                          "artifact_published":  false,
+                          "result_manifest_published":  false,
+                          "scientific_evidence_accepted":  false,
+                          "run_id_reusable":  false,
+                          "authorized_windows":  [
+                                                     2019,
+                                                     2020,
+                                                     2021
+                                                 ],
+                          "locked_windows":  [
+                                                 2022,
+                                                 2023
+                                             ],
+                          "forbidden":  "2024+",
+                          "phase_advanced":  false,
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "recovery_task":  "PH22B-RUNTIME-001",
+                          "reference":  "governance/incidents/PH22B-RUNTIME-TERMINATION-001.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_RUNTIME_REMEDIATION_ACCEPTANCE",
+                          "status":  "RUNTIME_REMEDIATION_ACCEPTED_READY_FOR_DURABLE_RUN_LAUNCH",
+                          "implementation_commit":  "c5351f81c2a0e8df6591559c5274b85b5b85aa08",
+                          "qa_review_commit":  "303694b9d5f0a8b065e51250887565ddadc1e463",
+                          "qa_result_commit":  "0cfaadddf71188114c174c5f99b0aea29267ed8e",
+                          "qa_verdict":  "QA_APPROVED",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "failed_predecessor_run":  "phase22b_20260912T130732Z",
+                          "failed_predecessor_disposition":  "PERMANENTLY_QUARANTINED_NEVER_REUSABLE",
+                          "next_authorized_action":  "CREATE_AND_LAUNCH_NEW_DURABLE_PHASE22B_V12_RUN",
+                          "reference":  "governance/evidence/PH22B-RUNTIME-001-ORCHESTRATOR-ACCEPTANCE.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DURABLE_LAUNCH_FAILURE_002",
+                          "status":  "INVALID_FAILED_NON_SCIENTIFIC",
+                          "run_id":  "phase22b_20260913T163443Z",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "code_commit":  "c3c94981535663b1ca58fb9380f72d5863e9a8e7",
+                          "exit_code":  2,
+                          "reason":  "SUPERVISOR_IDENTITY_WINDOW_TYPE_MISMATCH",
+                          "market_data_accessed":  false,
+                          "scientific_evidence_accepted":  false,
+                          "run_id_reusable":  false,
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "resolution_class":  "AGENT_RESOLVABLE",
+                          "next_authorized_action":  "REMEDIATE_PHASE22B_SUPERVISOR_IDENTITY_TYPE_MISMATCH",
+                          "reference":  "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-002.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_SUPERVISOR_IDENTITY_REMEDIATION_002",
+                          "status":  "SUPERVISOR_IDENTITY_TYPE_MISMATCH_REMEDIATED_PENDING_INDEPENDENT_QA",
+                          "implementation_commit":  "c26441075ac1984a4364f7d9d55d2ba4c3f29d9a",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "canonical_serialized_years":  [
+                                                             "2019",
+                                                             "2020",
+                                                             "2021"
+                                                         ],
+                          "canonical_internal_years":  [
+                                                           2019,
+                                                           2020,
+                                                           2021
+                                                       ],
+                          "failed_predecessor_run":  "phase22b_20260913T163443Z",
+                          "failed_predecessor_disposition":  "INVALID_FAILED_NON_SCIENTIFIC_PERMANENTLY_QUARANTINED",
+                          "market_data_accessed":  false,
+                          "scientific_methodology_changed":  false,
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "next_authorized_action":  "INDEPENDENT_QA_REVIEW_OF_SUPERVISOR_IDENTITY_REMEDIATION",
+                          "reference":  "governance/results/PH22B-RUNTIME-002.json"
+                      },
+                      {
+                          "id":  "AUTONOMOUS_ORCHESTRATION_POLICY_20260913",
+                          "status":  "ACTIVE",
+                          "approval_sha256":  "991010025aa092a14af92e9778c9c2ecd3950bc8bf64690aa2b293eadc83de64",
+                          "agent_resolvable_chaining":  true,
+                          "human_gate_scope":  "authority/scientific scope/reviewer override/safety weakening only",
+                          "reference":  "governance/approvals/AUTONOMOUS-ORCHESTRATION-POLICY-20260913.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_IDENTITY_REMEDIATION_ACCEPTANCE",
+                          "status":  "ACCEPTED_READY_FOR_FRESH_DURABLE_RUN",
+                          "implementation_commit":  "c26441075ac1984a4364f7d9d55d2ba4c3f29d9a",
+                          "qa_verdict":  "APPROVED",
+                          "qa_review_sha256":  "8693daa1b91898cf2b42aa218d52137cbcf7caee40bafa6f09dca07c633c1bb3",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "failed_predecessor":  "phase22b_20260913T163443Z",
+                          "failed_predecessor_disposition":  "INVALID_FAILED_NON_SCIENTIFIC_PERMANENTLY_QUARANTINED",
+                          "next_authorized_action":  "CREATE_AND_LAUNCH_NEW_DURABLE_PHASE22B_V12_RUN",
+                          "reference":  "governance/evidence/PH22B-RUNTIME-002-ORCHESTRATOR-ACCEPTANCE.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DURABLE_RUN_LAUNCH_002",
+                          "status":  "RUNNING_DETACHED",
+                          "run_id":  "phase22b_20260913T172656Z",
+                          "specification_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "code_commit":  "f987bf358caa6a821424019061ea053766100816",
+                          "supervisor_pid":  25832,
+                          "worker_pid":  33084,
+                          "authorized_years":  [
+                                                   2019,
+                                                   2020,
+                                                   2021
+                                               ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "authorized_symbols":  [
+                                                     "EURUSD",
+                                                     "GBPUSD",
+                                                     "USDJPY",
+                                                     "USDCAD"
+                                                 ],
+                          "durable_state_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/state.json",
+                          "heartbeat_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/state.json#heartbeat_at",
+                          "stdout_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/stdout.log",
+                          "stderr_path":  "reports/_durable_runtime/phase22b_20260913T172656Z/stderr.log",
+                          "failed_predecessor":  "phase22b_20260913T163443Z",
+                          "strategy_authorized":  false,
+                          "pnl_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "next_authorized_action":  "INSPECT_DURABLE_PHASE22B_RUN_TERMINAL_STATE_IN_FUTURE_SESSION",
+                          "reference":  "governance/state/phase22b_active_run.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DURABLE_LAUNCH_FAILURE_003",
+                          "status":  "INVALID_FAILED_NON_SCIENTIFIC",
+                          "run_id":  "phase22b_20260913T172727Z",
+                          "reason":  "SUPERVISOR_RELATIVE_STAGING_PATH_RESOLUTION_FAILURE",
+                          "code_commit":  "c650081b3d7ced6739d63ccfed3967ea51b3ef28",
+                          "market_data_accessed":  false,
+                          "scientific_evidence_accepted":  false,
+                          "run_id_reusable":  false,
+                          "allowed_years":  [
+                                                2019,
+                                                2020,
+                                                2021
+                                            ],
+                          "locked_years":  [
+                                               2022,
+                                               2023
+                                           ],
+                          "forbidden":  "2024+",
+                          "resolution_class":  "AGENT_RESOLVABLE",
+                          "next_authorized_action":  "PH22B-RUNTIME-003",
+                          "reference":  "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-003.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DURABLE_RUNTIME_TERMINATION_004",
+                          "status":  "INVALID_FAILED_NON_SCIENTIFIC",
+                          "run_id":  "phase22b_20260913T172656Z",
+                          "reason":  "UNKNOWN_UNRECOVERABLE_RUNTIME_TERMINATION",
+                          "last_heartbeat_at":  "2026-09-13T17:28:44.122742+00:00",
+                          "supervisor_pid":  25832,
+                          "worker_pid":  33084,
+                          "processes_present_at_reconciliation":  false,
+                          "scientific_evidence_accepted":  false,
+                          "run_id_reusable":  false,
+                          "authorized_data_access_extent":  "UNKNOWN_WITHIN_AUTHORIZED_2019_2021",
+                          "locked_or_forbidden_access_observed":  false,
+                          "reference":  "governance/incidents/PH22B-DURABLE-RUNTIME-TERMINATION-004.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DUAL_RUNTIME_FAILURE_RECONCILIATION",
+                          "status":  "BLOCKED_AGENT_RESOLVABLE",
+                          "invalid_runs":  [
+                                               "phase22b_20260913T172656Z",
+                                               "phase22b_20260913T172727Z"
+                                           ],
+                          "both_non_scientific":  true,
+                          "both_non_reusable":  true,
+                          "incident_172656":  "governance/incidents/PH22B-DURABLE-RUNTIME-TERMINATION-004.json",
+                          "incident_172727":  "governance/incidents/PH22B-DURABLE-LAUNCH-FAILURE-003.json",
+                          "active_phase22b_processes":  0,
+                          "next_authorized_action":  "DIAGNOSE_AND_REMEDIATE_PHASE22B_DURABLE_SUPERVISOR_PROCESS_SURVIVAL_AND_OUTPUT_ROOT_BINDING",
+                          "reference":  "governance/tasks/PH22B-RUNTIME-004.json"
+                      },
+                      {
+                          "id":  "PHASE_22B_DURABLE_RUNTIME_REMEDIATION_004",
+                          "status":  "IMPLEMENTED_PENDING_INDEPENDENT_QA",
+                          "implementation_commit":  "2171ac2c6d5b7e8f8824faf7d64562164164bf60",
+                          "root_causes":  [
+                                              "relative run/output identity depended on cwd",
+                                              "Windows supervisor lacked Job Object breakaway",
+                                              "supervisor and worker headless behavior was not explicit"
+                                          ],
+                          "remediation":  [
+                                              "one canonical absolute run root across identity/launch/supervisor/worker",
+                                              "CREATE_NO_WINDOW plus CREATE_NEW_PROCESS_GROUP plus CREATE_BREAKAWAY_FROM_JOB",
+                                              "shell=False, stdin DEVNULL, durable stdout/stderr",
+                                              "terminal native exit and stale-state reconciliation tests"
+                                          ],
+                          "failed_runs":  [
+                                              "phase22b_20260913T172656Z",
+                                              "phase22b_20260913T172727Z"
+                                          ],
+                          "both_non_scientific":  true,
+                          "both_non_reusable":  true,
+                          "market_data_accessed":  false,
+                          "scientific_methodology_changed":  false,
+                          "next_authorized_action":  "INDEPENDENT_QA_REVIEW_OF_PHASE22B_DURABLE_RUNTIME_REMEDIATION",
+                          "reference":  "governance/results/PH22B-RUNTIME-004.json"
+                      },
+                      {
+                          "id":  "BOT_00_OWNER_PRIORITY_TRANSITION",
+                          "status":  "COMPLETED",
+                          "owner_directive_sha256":  "573750d82c6f28a6226a09dfb498b3f743b4b151d9cea7301881a78c4e3895f5",
+                          "master_mission":  "BUILD_COMPLETE_SAFE_AUTONOMOUS_MULTI_STRATEGY_MT5_AI_SCALPING_BOT_FOR_DEMO",
+                          "phase_22":  "PRESERVED_INACTIVE_RESEARCH",
+                          "phase_22a":  "COMPLETED_PRESERVED_RESEARCH",
+                          "phase_22b":  "SUSPENDED_PRESERVED_RESEARCH",
+                          "frozen_phase22b_v12_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+                          "dataset_root_sha256":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+                          "safety_and_data_locks_preserved":  true,
+                          "active_task":  "BOT-01",
+                          "next_authorized_action":  "BOT-01_REPOSITORY_COMPONENT_AUDIT",
+                          "reference":  "docs/PRESERVED_RESEARCH_INDEX.md"
+                      },
+                      {
+                          "id":  "BOT_01_REPOSITORY_COMPONENT_AUDIT",
+                          "status":  "COMPLETED",
+                          "audit_commit":  "30f2670a2b977ba4f0fbb3aa3b2344f8d6374566",
+                          "audit_sha256":  "fc5bea3f7eb70c72c74378621589915e90efe22142831e110a1b13d9f60b97c9",
+                          "tests_passed":  57,
+                          "data_accessed":  false,
+                          "phase22_reopened":  false,
+                          "strategy_changed":  false,
+                          "live_authorized":  false,
+                          "next_authorized_action":  "BOT-02_COMPLETE_EXISTING_STRATEGY_INVENTORY",
+                          "reference":  "docs/PROJECT_COMPONENT_AUDIT.md"
+                      },
+                      {
+                          "id":  "BOT_02_EXISTING_STRATEGY_INVENTORY",
+                          "status":  "COMPLETED",
+                          "inventory_commit":  "a9030a7e1d5b525b196affa55cdb77e347105fb8",
+                          "inventory_sha256":  "ff3d60a4d2cde67613ad51bae4a74854f07ed2abc8cb70f23708ee09d1ae120e",
+                          "registered_strategy_count":  14,
+                          "all_registered_research_status":  "REJECTED",
+                          "implemented_unregistered_count":  6,
+                          "tests_passed":  40,
+                          "data_accessed":  false,
+                          "strategy_changed":  false,
+                          "phase22_reopened":  false,
+                          "next_authorized_action":  "BOT-03_VERIFY_INTEGRATE_XAU60_STRATEGIES",
+                          "reference":  "docs/EXISTING_STRATEGY_INVENTORY.md"
+                      },
+                      {
+                          "id":  "BOT_03_XAU60_SOURCE_VERIFICATION",
+                          "status":  "BLOCKED_SOURCE_NOT_AVAILABLE",
+                          "evidence_commit":  "f36b9269371575310e9eb112c70a12b11c4651f4",
+                          "verification_sha256":  "35abb9e626ad52dc51ae0f7fd84c5a036c05beeb873bc82db4308fc85a589132",
+                          "inventory_sha256":  "d878e4b7d7aa43ead6b70b6f9f74fdd7f1e1316bfe6986ef97327ea697bfa462",
+                          "source_status":  "NOT_FOUND_IN_TRACKED_BASELINE_OR_PRESERVED_STASH_INVENTORY",
+                          "network_accessed":  false,
+                          "stash_restored":  false,
+                          "strategy_integrated":  false,
+                          "phase22_reopened":  false,
+                          "human_gate_required":  true,
+                          "next_authorized_action":  "HUMAN_GATE_REQUIRED_PROVIDE_OR_AUTHORIZE_XAU60_SOURCE_SNAPSHOT",
+                          "reference":  "docs/XAU60_STRATEGY_VERIFICATION.md"
+                      },
+                      {
+                          "id":  "BOT_03_XAU60_SOURCE_ACQUISITION_INTEGRITY",
+                          "status":  "BLOCKED_AGENT_RESOLVABLE",
+                          "acquisition_commit":  "a93121b168227f9e0b89cc1ae930cee2d267f5d3",
+                          "pinned_commit":  "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
+                          "declared_snapshot_sha256":  "9da0c41f95f99da967c3bc543b370b0513c95529ee97eb70731768291223f7f0",
+                          "mismatched_git_blobs":  13,
+                          "source_human_gate_resolved":  true,
+                          "adapter_assignment_withheld":  true,
+                          "next_authorized_action":  "REMEDIATE_PINNED_XAU60_SNAPSHOT_BYTE_HASH_MISMATCH",
+                          "reference":  "governance/incidents/BOT-03-XAU60-SNAPSHOT-INTEGRITY-001.json"
+                      },
+                      {
+                          "id":  "BOT_03_XAU60_SOURCE_INTEGRITY_REMEDIATED_PENDING_QA",
+                          "status":  "PENDING_INDEPENDENT_QA",
+                          "implementation_commit":  "5dd41cf6bf690ff4b641121b2568e8ab9fadae76",
+                          "handoff_commit":  "1339334",
+                          "integrated_head":  "9d6a286",
+                          "pinned_commit":  "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
+                          "selected_snapshot_git_blob_root":  "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+                          "license_git_blob_sha256":  "3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805",
+                          "file_count":  13,
+                          "payload_changed":  false,
+                          "human_gate_required":  false,
+                          "adapter_assignment_withheld":  true,
+                          "qa_task":  "BOT-03-SOURCE-QA-001",
+                          "next_authorized_action":  "INDEPENDENT_XAU60_SOURCE_INTEGRITY_QA",
+                          "reference":  "governance/results/BOT-03-SOURCE-002.json"
+                      },
+                      {
+                          "id":  "BOT_03_XAU60_SOURCE_EVIDENCE_REMEDIATED_PENDING_FRESH_QA",
+                          "status":  "PENDING_INDEPENDENT_QA",
+                          "qa_rejection_commit":  "f07effd875011ea8d9dcad498d21038eb40a3acf",
+                          "remediation_head":  "ba3662b618e2dfe3b8c1bbe37805e182b383a26d",
+                          "source_result_git_blob_sha256":  "256d5d65ece73050c4a74e9cba79a48c23af72ffd3278715e301db715cb315d8",
+                          "source_manifest_git_blob_sha256":  "309b56027547fbc9911e161440ebc659f2a9e7d80dee3b400ff1112c95aa276c",
+                          "selected_snapshot_git_blob_root":  "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+                          "license_git_blob_sha256":  "3b16cae9c4651b3710152d98b3c8cac75a9268ab230333538a131466927cb805",
+                          "file_count":  13,
+                          "payload_changed":  false,
+                          "human_gate_required":  false,
+                          "adapter_assignment_withheld":  true,
+                          "qa_task":  "BOT-03-SOURCE-QA-002",
+                          "next_authorized_action":  "INDEPENDENT_XAU60_SOURCE_INTEGRITY_QA_REVIEW",
+                          "reference":  "governance/tasks/BOT-03-SOURCE-QA-002.json"
+                      },
+                      {
+                          "id":  "BOT_03_XAU60_ADAPTER_IMPLEMENTATION_AUTHORIZED",
+                          "status":  "AUTHORIZED_NOT_STARTED",
+                          "authorization_sha256":  "7c89e60de272f220f0c339458c34a7dbe77599e5ca62f3ae6352a2d497c41719",
+                          "qa_approval_commit":  "3d78316237d52734dede4448eaf1cbcceeb5b943",
+                          "qa_verdict":  "APPROVED",
+                          "pinned_commit":  "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
+                          "selected_snapshot_git_blob_root":  "ea6f51dc468e2baec323ba5b37ee7e37543a897cef99db546f8a63ef10858dd7",
+                          "strategies":  [
+                                             "SMC Scalper v2.1",
+                                             "Trend Break + Trauma + RSI v2.1",
+                                             "CRT + TBS v2.1"
+                                         ],
+                          "adapter_task":  "BOT-03-ADAPTER-001",
+                          "adapter_implementation_started":  false,
+                          "market_data_authorized":  false,
+                          "optimization_authorized":  false,
+                          "execution_authorized":  false,
+                          "live_authorized":  false,
+                          "human_gate_required":  false,
+                          "next_authorized_action":  "IMPLEMENT_BOT03_XAU60_ADAPTERS_FROM_PINNED_SOURCE",
+                          "reference":  "governance/tasks/BOT-03-ADAPTER-001.json"
+                      }
+                  ],
+    "holdout_access_history":  [
+                                   {
+                                       "phase":  "PHASE_22A",
+                                       "partition":  "2023_INTERNAL_HOLDOUT",
+                                       "opened_after":  "2022_SURVIVORS_FROZEN",
+                                       "survivor_artifact_sha256":  "94036c2e5491b7217e0d42d6b5c18ea5d76ee4024efc7cc6a10c101f6f6d3025",
+                                       "accessed_2024_plus":  false
+                                   }
+                               ],
+    "rejected_hypothesis_families":  [
+                                         {
+                                             "family":  "PHASE_21",
+                                             "status":  "CLOSED_FOR_THIS_HYPOTHESIS",
+                                             "reference":  "docs/PHASE_21_FAILURE_POSTMORTEM.md"
+                                         }
+                                     ]
 }
