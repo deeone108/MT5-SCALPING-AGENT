@@ -44,6 +44,12 @@ class FakeMT5:
     def terminal_info(self):
         return SimpleNamespace(name="MetaTrader 5", build="5000")
 
+    def symbols_get(self):
+        return [
+            SimpleNamespace(_asdict=lambda: {"name": "EURUSD", "point": 0.00001}),
+            SimpleNamespace(_asdict=lambda: {"name": "XAUUSDm", "point": 0.01}),
+        ]
+
     def symbol_select(self, symbol, visible):
         self.selected_symbols.append((symbol, visible))
         return True
@@ -115,6 +121,7 @@ def test_reads_account_symbol_and_tick_data() -> None:
     terminal = FakeMT5()
     client = MT5ReadOnlyClient(load_settings({}), terminal)
 
+    assert [item["name"] for item in client.list_symbols()] == ["EURUSD", "XAUUSDm"]
     client.select_symbol("EURUSD")
 
     assert terminal.selected_symbols == [("EURUSD", True)]
