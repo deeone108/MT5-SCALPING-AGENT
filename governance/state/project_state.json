@@ -1,137 +1,139 @@
 {
-    "active_tasks": [
-        "BOT-05"
-    ],
-    "allowed_data_windows": [
-        "2019",
-        "2020",
-        "2021"
-    ],
-    "base_commit": "4ae2e3329e23574d66d89278931aeaa6756c7149",
-    "blocked_tasks": [],
-    "candidate_registry_hash": "cb2995a541ac60bfcb6dde7123f5981af0892e044ef7b12278d153287a5862b3",
-    "completed_tasks": [
-        "PHASE22A_phase22a_20260909T220000Z",
-        "PH22B-RL-010",
-        "PH22B-RUNTIME-001",
-        "PH22B-REVIEW-026",
-        "PH22B-ORCH-001",
-        "PH22B-RUNTIME-002",
-        "PH22B-REVIEW-027",
-        "PH22B-ORCH-002",
-        "BOT-00",
-        "BOT-01",
-        "BOT-02",
-        "BOT-03-SOURCE-002",
-        "BOT-03-SOURCE-QA-001",
-        "BOT-03-SOURCE-QA-002",
-        "BOT-03",
-        "BOT-03-ADAPTER-001",
-        "BOT-04"
-    ],
-    "current_phase": "MT5_AI_SCALPING_BOT",
-    "data_access": {
-        "allowed_partitions": [
-            "2019",
-            "2020",
-            "2021"
-        ],
-        "locked_partitions": [
-            "2022",
-            "2023",
-            "2024+"
-        ],
-        "unlock_manifest_sha256": "2649058a3326c37cdb6c4d0dc0946f70fadc3ae7b1d6c35a0022fcade950f41b"
-    },
-    "dataset_root_hash": "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
-    "forbidden_data_windows": [
-        "2024+"
-    ],
-    "gates": {
-        "data": {
-            "evidence_sha256": "c59da3c714e839f847606af664c47c8e72d629148538cb5ece8f73427e54710d",
-            "reviewer_role": "data_engineer",
-            "status": "PASSED"
-        },
-        "freeze": {
-            "evidence_sha256": "c654e0358e534d70ce7d9d63883f50e3f381731b051a254fa83c0ce0facea2f6",
-            "reviewer_role": "research_lead",
-            "status": "PASSED"
-        },
-        "implementation": {
-            "evidence_sha256": "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262",
-            "reviewer_role": "qa_reviewer",
-            "status": "PASSED"
-        },
-        "qa": {
-            "evidence_sha256": "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262",
-            "reviewer_role": "qa_reviewer",
-            "status": "PASSED"
-        },
-        "safety": {
-            "evidence_sha256": null,
-            "reviewer_role": "safety_reviewer",
-            "status": "NOT_REQUIRED"
-        },
-        "statistics": {
-            "evidence_sha256": "df47de4ea92e4ecfb87ee19b6397c23ca11625745a798f83d57156eabf445604",
-            "reviewer_role": "statistical_validator",
-            "status": "PASSED"
-        },
-        "runtime_identity": {
-            "status": "PASSED",
-            "reviewer_role": "qa_reviewer",
-            "evidence_sha256": "8693daa1b91898cf2b42aa218d52137cbcf7caee40bafa6f09dca07c633c1bb3"
-        }
-    },
-    "last_validated_commit": "a3b2f980d38e54eca5d1d428e24dc3813c88ec75",
-    "live_execution_authorized": false,
-    "locked_data_windows": [
-        "2022",
-        "2023"
-    ],
-    "orchestrator": "project_orchestrator",
-    "phase_id": "MT5_AI_SCALPING_BOT",
-    "phase_status": "PROPOSED",
-    "phase_transition_history": [
-        {
-            "at_utc": "2026-09-10T00:00:00+00:00",
-            "authorized_by": "project_orchestrator",
-            "evidence_sha256": "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a",
-            "from": "PHASE_22A",
-            "human_owner_approval_sha256": null,
-            "to": "PHASE_22B_PENDING_DESIGN"
-        }
-    ],
-    "research_spec_hash": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-    "safety_state": {
-        "execution_api": false,
-        "live_activation_requires_human_owner": true,
-        "order_submission": false,
-        "status": "ENFORCED"
-    },
-    "schema_version": 1,
-    "spec_sha256": "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
-    "status": "PROPOSED",
-    "transitions": [
-        {
-            "at_utc": "2026-09-10T00:00:00+00:00",
-            "authorized_by": "project_orchestrator",
-            "evidence_sha256": "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a",
-            "from": "PHASE_22A",
-            "human_owner_approval_sha256": null,
-            "to": "PHASE_22B_PENDING_DESIGN"
-        }
-    ],
-    "master_mission": "BUILD_A_COMPLETE_SAFE_AUTONOMOUS_MULTI_STRATEGY_MT5_AI_SCALPING_BOT_FOR_DEMO",
-    "current_program": "MT5_AI_SCALPING_BOT",
-    "current_milestone": "BOT-05",
-    "next_authorized_action": "BOT-05_XAUUSD_INSTRUMENT_NORMALIZATION",
-    "human_gate_required": false,
-    "preserved_research": {
-        "phase_22": "PRESERVED_INACTIVE_RESEARCH",
-        "phase_22a": "COMPLETED_PRESERVED_RESEARCH",
-        "phase_22b": "SUSPENDED_PRESERVED_RESEARCH",
-        "phase22b_reopen_requires": "REOPEN PHASE22B"
-    }
+    "active_tasks":  [
+                         "BOT-05"
+                     ],
+    "allowed_data_windows":  [
+                                 "2019",
+                                 "2020",
+                                 "2021"
+                             ],
+    "base_commit":  "4ae2e3329e23574d66d89278931aeaa6756c7149",
+    "blocked_tasks":  [
+
+                      ],
+    "candidate_registry_hash":  "cb2995a541ac60bfcb6dde7123f5981af0892e044ef7b12278d153287a5862b3",
+    "completed_tasks":  [
+                            "PHASE22A_phase22a_20260909T220000Z",
+                            "PH22B-RL-010",
+                            "PH22B-RUNTIME-001",
+                            "PH22B-REVIEW-026",
+                            "PH22B-ORCH-001",
+                            "PH22B-RUNTIME-002",
+                            "PH22B-REVIEW-027",
+                            "PH22B-ORCH-002",
+                            "BOT-00",
+                            "BOT-01",
+                            "BOT-02",
+                            "BOT-03-SOURCE-002",
+                            "BOT-03-SOURCE-QA-001",
+                            "BOT-03-SOURCE-QA-002",
+                            "BOT-03",
+                            "BOT-03-ADAPTER-001",
+                            "BOT-04"
+                        ],
+    "current_phase":  "MT5_AI_SCALPING_BOT",
+    "data_access":  {
+                        "allowed_partitions":  [
+                                                   "2019",
+                                                   "2020",
+                                                   "2021"
+                                               ],
+                        "locked_partitions":  [
+                                                  "2022",
+                                                  "2023",
+                                                  "2024+"
+                                              ],
+                        "unlock_manifest_sha256":  "2649058a3326c37cdb6c4d0dc0946f70fadc3ae7b1d6c35a0022fcade950f41b"
+                    },
+    "dataset_root_hash":  "ae0f5b70f686c1b0fff05c0b71f9efb7c3d5da4983eba0df895989dbf6572a91",
+    "forbidden_data_windows":  [
+                                   "2024+"
+                               ],
+    "gates":  {
+                  "data":  {
+                               "evidence_sha256":  "c59da3c714e839f847606af664c47c8e72d629148538cb5ece8f73427e54710d",
+                               "reviewer_role":  "data_engineer",
+                               "status":  "PASSED"
+                           },
+                  "freeze":  {
+                                 "evidence_sha256":  "c654e0358e534d70ce7d9d63883f50e3f381731b051a254fa83c0ce0facea2f6",
+                                 "reviewer_role":  "research_lead",
+                                 "status":  "PASSED"
+                             },
+                  "implementation":  {
+                                         "evidence_sha256":  "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262",
+                                         "reviewer_role":  "qa_reviewer",
+                                         "status":  "PASSED"
+                                     },
+                  "qa":  {
+                             "evidence_sha256":  "79ba4c3fc004b317c799f5d4ff1edae13dad5828d32c9e0343ce3400dd03a262",
+                             "reviewer_role":  "qa_reviewer",
+                             "status":  "PASSED"
+                         },
+                  "safety":  {
+                                 "evidence_sha256":  null,
+                                 "reviewer_role":  "safety_reviewer",
+                                 "status":  "NOT_REQUIRED"
+                             },
+                  "statistics":  {
+                                     "evidence_sha256":  "df47de4ea92e4ecfb87ee19b6397c23ca11625745a798f83d57156eabf445604",
+                                     "reviewer_role":  "statistical_validator",
+                                     "status":  "PASSED"
+                                 },
+                  "runtime_identity":  {
+                                           "status":  "PASSED",
+                                           "reviewer_role":  "qa_reviewer",
+                                           "evidence_sha256":  "8693daa1b91898cf2b42aa218d52137cbcf7caee40bafa6f09dca07c633c1bb3"
+                                       }
+              },
+    "last_validated_commit":  "a3b2f980d38e54eca5d1d428e24dc3813c88ec75",
+    "live_execution_authorized":  false,
+    "locked_data_windows":  [
+                                "2022",
+                                "2023"
+                            ],
+    "orchestrator":  "project_orchestrator",
+    "phase_id":  "MT5_AI_SCALPING_BOT",
+    "phase_status":  "PROPOSED",
+    "phase_transition_history":  [
+                                     {
+                                         "at_utc":  "2026-09-10T00:00:00+00:00",
+                                         "authorized_by":  "project_orchestrator",
+                                         "evidence_sha256":  "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a",
+                                         "from":  "PHASE_22A",
+                                         "human_owner_approval_sha256":  null,
+                                         "to":  "PHASE_22B_PENDING_DESIGN"
+                                     }
+                                 ],
+    "research_spec_hash":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "safety_state":  {
+                         "execution_api":  false,
+                         "live_activation_requires_human_owner":  true,
+                         "order_submission":  false,
+                         "status":  "ENFORCED"
+                     },
+    "schema_version":  1,
+    "spec_sha256":  "12eb328ccc433a4dd75128fafdfb56fe293e30c96bc0962510554b218621610f",
+    "status":  "PROPOSED",
+    "transitions":  [
+                        {
+                            "at_utc":  "2026-09-10T00:00:00+00:00",
+                            "authorized_by":  "project_orchestrator",
+                            "evidence_sha256":  "05910f453b7ccff64748fe90ff35b3195ccb1c5fa5653f21cd954a8a4112ee4a",
+                            "from":  "PHASE_22A",
+                            "human_owner_approval_sha256":  null,
+                            "to":  "PHASE_22B_PENDING_DESIGN"
+                        }
+                    ],
+    "master_mission":  "BUILD_A_COMPLETE_SAFE_AUTONOMOUS_MULTI_STRATEGY_MT5_AI_SCALPING_BOT_FOR_DEMO",
+    "current_program":  "MT5_AI_SCALPING_BOT",
+    "current_milestone":  "BOT-05",
+    "next_authorized_action":  "BOT-05_XAUUSD_INSTRUMENT_NORMALIZATION",
+    "human_gate_required":  false,
+    "preserved_research":  {
+                               "phase_22":  "PRESERVED_INACTIVE_RESEARCH",
+                               "phase_22a":  "COMPLETED_PRESERVED_RESEARCH",
+                               "phase_22b":  "SUSPENDED_PRESERVED_RESEARCH",
+                               "phase22b_reopen_requires":  "REOPEN PHASE22B"
+                           }
 }
