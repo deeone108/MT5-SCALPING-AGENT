@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "milestone": "BOT-04",
+  "purpose": "Verify the previously supplied/approved external-repository work without expanding the strategy-search scope.",
+  "sources": [
+    {
+      "name": "XAU-60",
+      "repository": "lordgaruda/XAU-60",
+      "pinned_commit": "b877fdb1fcc5888b1443cf0214ea89f8040e8096",
+      "status": "VERIFIED_INTEGRATED",
+      "classification": "CONCRETE_DETERMINISTIC_STRATEGIES",
+      "integrated_strategies": [
+        "SMC Scalper v2.1",
+        "Trend Break + Trauma + RSI v2.1",
+        "CRT + TBS v2.1"
+      ],
+      "action": "INCLUDE_IN_XAUUSD_STRATEGY_TOURNAMENT"
+    },
+    {
+      "name": "midas-agent",
+      "repository": "andyluu98/midas-agent",
+      "pinned_commit": "289ac184bee091ce7e80fbb89aeaaf856b21f2cd",
+      "git_tree": "278d3ffa3ae9200202ade74b6654f40a795fd44f",
+      "license_verified_from_source": "Apache-2.0",
+      "status": "VERIFIED_PUBLIC_SOURCE_NOT_VENDORED",
+      "classification": "AI_ORCHESTRATION_AND_COMPOSITE_SIGNAL_FRAMEWORK",
+      "evidence": [
+        "README identifies an 8-agent XAUUSD M15 framework.",
+        "ultimate_gold_hunter.py combines Kronos H1/M15/M5 forecasting, TradingView M15 analysis, an LLM council, a deterministic M15-neutral no-trade gate and deterministic SL/risk constraints.",
+        "Trade direction is not produced by one self-contained fixed-parameter deterministic strategy suitable for the baseline tournament."
+      ],
+      "action": "DEFER_RUNTIME_IDEAS_TO_BOT_15_AI_SUPERVISOR;DO_NOT_ADD_AS_BASELINE_TOURNAMENT_STRATEGY"
+    },
+    {
+      "name": "external_repo_features.py",
+      "status": "NOT_FOUND_IN_TRACKED_REPOSITORY",
+      "action": "NON_BLOCKING"
+    },
+    {
+      "name": "external_hypotheses_registry.py",
+      "status": "NOT_FOUND_IN_TRACKED_REPOSITORY",
+      "action": "NON_BLOCKING"
+    },
+    {
+      "name": "signal_quality.py",
+      "status": "NOT_FOUND_IN_TRACKED_REPOSITORY",
+      "action": "NON_BLOCKING"
+    }
+  ],
+  "scope_guards": {
+    "broad_repository_search_performed": false,
+    "parameter_optimization_performed": false,
+    "market_data_accessed": false,
+    "phase22b_reopened": false,
+    "execution_changed": false,
+    "live_changed": false
+  },
+  "conclusion": "BOT-04_COMPLETE. XAU-60 provides the external deterministic tournament candidates. Midas Agent is retained as a later AI-supervisor/orchestration reference rather than being misrepresented as a deterministic baseline strategy.",
+  "next_authorized_action": "BOT-05_XAUUSD_INSTRUMENT_NORMALIZATION"
+}
