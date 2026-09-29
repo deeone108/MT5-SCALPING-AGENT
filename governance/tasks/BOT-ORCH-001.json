@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "task_id": "BOT-ORCH-001",
+  "role": "Project Orchestrator",
+  "objective": "Restore bounded autonomous handoffs for AGENT_RESOLVABLE engineering work without expanding data, strategy, execution, DEMO, or LIVE authority.",
+  "base_ref": "bot-integration",
+  "branch": "bot-orchestration-recovery",
+  "allowed_mutations": [
+    "governance/tasks/BOT-ORCH-001.json",
+    "docs/BOT_ORCHESTRATION_RECOVERY.md"
+  ],
+  "prohibitions": [
+    "No market-data access",
+    "No strategy or PnL work",
+    "No broker connectivity or order submission",
+    "No DEMO/LIVE authority",
+    "No gate bypass",
+    "No automatic merge"
+  ],
+  "acceptance": [
+    "Document deterministic stalled-work recovery and escalation",
+    "Require task/result manifests",
+    "Require independent review after remediation",
+    "Preserve HUMAN_GATE_REQUIRED categories",
+    "Define heartbeat and deadlock handling"
+  ]
+}
